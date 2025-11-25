@@ -134,14 +134,14 @@ export default FabStore;
 function TopNav({ search, onSearchChange, readOnly, onRequestLogin, onRequestDemo }) {
   const navItems = ["Home", "Apps", "Solutions", "About"];
   return (
-    <header className="sticky top-0 z-10 bg-white/70 backdrop-blur-xl border-b border-white/40 shadow-[0_10px_30px_rgba(15,14,63,0.12)] text-gray-900">
-      <div className="w-full px-4 lg:px-10 py-4 flex items-center gap-6 flex-wrap">
+    <header className="sticky top-0 z-20 bg-white/95 backdrop-blur-xl border-b border-white/60 shadow-[0_12px_30px_rgba(15,14,63,0.08)] text-gray-900">
+      <div className="w-full px-4 lg:px-12 py-4 flex items-center gap-6 flex-wrap">
         <div className="flex items-center gap-4 flex-1 min-w-[280px]">
           <div className="flex items-center gap-2">
-            <img src="/tp-logo.svg" alt="TP.ai" className="h-8 w-auto" />
+            <img src="/tp-logo.svg" alt="TP.ai" className="h-9 w-auto" />
             <div>
-              <p className="text-xs uppercase tracking-[0.4em] text-gray-400">TP.ai</p>
-              <p className="text-sm font-semibold text-gray-900">FAB Store</p>
+              <p className="text-[11px] uppercase tracking-[0.35em] text-gray-400">TP.ai</p>
+              <p className="text-base font-semibold text-gray-900">FAB Store</p>
             </div>
           </div>
           <span className="hidden sm:block h-6 w-px bg-gray-200" />
@@ -149,35 +149,36 @@ function TopNav({ search, onSearchChange, readOnly, onRequestLogin, onRequestDem
             {navItems.map((item, idx) => (
               <button
                 key={item}
-                className={`pb-1 border-b-2 transition ${
-                  idx === 0 ? "text-gray-900 border-gray-900" : "border-transparent hover:text-[#612D91]"
+                className={`relative pb-2 transition ${
+                  idx === 0 ? "text-gray-900" : "text-gray-500 hover:text-[#5C36C8]"
                 }`}
               >
                 {item}
+                {idx === 0 && <span className="absolute left-0 right-0 bottom-0 h-[2px] rounded-full bg-gray-900" />}
               </button>
             ))}
           </nav>
         </div>
         <div className="flex items-center gap-3 flex-1 justify-end min-w-[260px]">
-          <div className="relative flex-1 min-w-[200px] md:min-w-[280px]">
-            <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+          <div className="relative flex-1 min-w-[220px] md:min-w-[320px]">
+            <Search className="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
             <input
               value={search}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder="Search apps, solutions, industries"
-              className="w-full pl-10 pr-4 py-2.5 rounded-full border border-gray-200 bg-white text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#CBB7FF]/50"
+              className="w-full pl-12 pr-4 py-2.5 rounded-full border border-white shadow-[0_12px_40px_rgba(22,19,70,0.12)] bg-white text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#D9CCFF]/60"
             />
           </div>
           <button
             type="button"
             onClick={onRequestDemo}
-            className="hidden sm:inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-[#4C2DBF] bg-[#E8E2FF] border border-[#D3C5FF] hover:bg-white"
+            className="hidden sm:inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-[#4C2DBF] bg-[#EFE9FF] border border-[#E0D3FF] hover:bg-white transition-colors shadow-sm"
           >
             Request demo
           </button>
           <button
             onClick={readOnly ? onRequestLogin : undefined}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[#612D91] to-[#A960FF] text-sm font-semibold text-white shadow-[0_10px_25px_rgba(99,42,191,0.25)]"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[#8E49FF] via-[#7C3AED] to-[#5C2DB1] text-sm font-semibold text-white shadow-[0_10px_25px_rgba(109,53,207,0.3)]"
           >
             <User className="w-4 h-4" />
             {readOnly ? "Sign in" : "Manage"}

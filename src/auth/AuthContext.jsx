@@ -3,8 +3,9 @@ import { createContext, useContext, useMemo, useState } from "react";
 const AuthContext = createContext(null);
 
 const DEFAULT_USER = {
-  name: "Demo Analyst",
-  email: "analyst@teleperformance.com",
+  name: "Vinod",
+  email: "vinod@tp.ai",
+  avatar: "/vkv.jpeg",
 };
 
 export function AuthProvider({ children }) {

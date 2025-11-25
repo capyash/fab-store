@@ -49,45 +49,41 @@ export default function StoreFooter() {
   ];
 
   return (
-    <footer className="relative overflow-hidden bg-gradient-to-br from-[#0E0931] via-[#161045] to-[#23165E] border-t border-white/10 mt-auto text-white">
-      <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_20%_30%,rgba(147,112,255,0.3),transparent_45%),radial-gradient(circle_at_80%_20%,rgba(0,227,255,0.22),transparent_40%)]" />
-      <div className="absolute inset-0 opacity-[0.2] bg-[linear-gradient(120deg,rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:200px_200px]" />
+    <footer className="relative overflow-hidden bg-gradient-to-br from-[#0B0A24] via-[#121036] to-[#1F1457] border-t border-white/10 mt-auto text-white">
+      <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_15%_25%,rgba(147,112,255,0.35),transparent_45%),radial-gradient(circle_at_85%_15%,rgba(0,227,255,0.25),transparent_40%)]" />
+      <div className="absolute inset-0 opacity-[0.12] bg-[linear-gradient(120deg,rgba(255,255,255,0.07)_1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:220px_220px]" />
       <div className="relative">
       {/* Upper Section - Navigation Links */}
-      <div className="w-full px-6 lg:px-12 py-12">
+      <div className="w-full px-6 lg:px-16 py-12">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
           {Object.entries(footerLinks).map(([title, links]) => (
-            <div key={title} className="space-y-3">
-              <h3 className="text-sm font-semibold text-white">
+            <div key={title} className="space-y-4">
+              <h3 className="text-sm font-semibold text-white tracking-wide">
                 {title}
               </h3>
               <ul className="space-y-2">
                 {links.map((link) => (
                   <li key={link}>
-                    <a
-                      href="#"
-                      className="text-sm text-white/70 hover:text-white transition-colors"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        // Handle navigation if needed
-                      }}
+                    <button
+                      type="button"
+                      className="text-sm text-[#96ABFF] hover:text-white transition-colors"
                     >
                       {link}
-                    </a>
+                    </button>
                   </li>
                 ))}
               </ul>
             </div>
           ))}
         </div>
-        <p className="mt-10 text-xs text-white/50">
+        <p className="mt-12 text-xs text-white/60 max-w-3xl leading-relaxed">
           TP.ai is the AI product and platform vertical of Teleperformance, building production-grade AI solutions for regulated industries.
         </p>
       </div>
 
       {/* Lower Section - Utility and Legal Links */}
       <div className="border-t border-white/10 bg-white/5">
-        <div className="w-full px-6 lg:px-12 py-6">
+        <div className="w-full px-6 lg:px-16 py-6">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             {/* Left side - Language & Privacy */}
             <div className="flex flex-wrap items-center gap-4">
@@ -95,7 +91,7 @@ export default function StoreFooter() {
               <div className="relative">
                 <button
                   onClick={() => setLanguageOpen(!languageOpen)}
-                  className="flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors"
+                  className="flex items-center gap-2 text-sm text-[#96ABFF] hover:text-white transition-colors"
                 >
                   <Globe className="w-4 h-4" />
                   <span>English (United States)</span>
@@ -106,7 +102,7 @@ export default function StoreFooter() {
                   />
                 </button>
                 {languageOpen && (
-                  <div className="absolute bottom-full left-0 mb-2 w-48 bg-[#0F1025] border border-white/10 rounded-lg shadow-2xl py-2 z-50">
+                  <div className="absolute bottom-full left-0 mb-2 w-48 bg-[#0F1025] border border-white/15 rounded-lg shadow-2xl py-2 z-50">
                     {["English (United States)", "Español", "Français", "Deutsch"].map(
                       (lang) => (
                         <button
@@ -125,7 +121,7 @@ export default function StoreFooter() {
               {/* Privacy Choices */}
               <button
                 onClick={() => setPrivacyChoicesOpen(!privacyChoicesOpen)}
-                className="flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors"
+                className="flex items-center gap-2 text-sm text-[#96ABFF] hover:text-white transition-colors"
               >
                 <div className="relative w-4 h-4">
                   <Check className="w-3 h-3 absolute top-0 left-0 text-green-600" />
@@ -136,21 +132,13 @@ export default function StoreFooter() {
             </div>
 
             {/* Right side - Legal Links */}
-            <div className="flex flex-wrap items-center gap-4 text-sm text-white/70">
-              {legalLinks.map((link, idx) => (
-                <a
-                  key={link}
-                  href="#"
-                  className="hover:text-white transition-colors"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    // Handle navigation if needed
-                  }}
-                >
+            <div className="flex flex-wrap items-center gap-4 text-sm text-[#96ABFF]">
+              {legalLinks.map((link) => (
+                <button key={link} className="hover:text-white transition-colors">
                   {link}
-                </a>
+                </button>
               ))}
-              <span className="text-white/50">
+              <span className="text-white/60">
                 © TP.ai · a Teleperformance company · {new Date().getFullYear()}
               </span>
             </div>

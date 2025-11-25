@@ -25,12 +25,12 @@ export default function FabStoreLogin({ onBack }) {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden flex items-center justify-center px-4 py-8 bg-gradient-to-br from-[#F9F7FF] via-[#EEF2FF] to-white">
+    <div className="min-h-screen relative overflow-hidden flex items-center justify-center px-4 py-10 bg-gradient-to-br from-[#F9F8FF] via-[#F1F0FF] to-[#F6FAFF]">
       {/* Animated background elements */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-[520px] h-[520px] bg-[rgba(155,138,255,0.25)] blur-[200px] animate-pulse" />
-        <div className="absolute bottom-0 right-1/5 w-[540px] h-[540px] bg-[rgba(118,196,255,0.2)] blur-[220px] animate-pulse" style={{ animationDelay: "1.2s" }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[780px] h-[780px] bg-[rgba(255,208,233,0.22)] blur-[240px]" />
+        <div className="absolute top-[-80px] left-1/4 w-[520px] h-[520px] bg-[rgba(109,53,207,0.18)] blur-[220px]" />
+        <div className="absolute bottom-[-60px] right-1/5 w-[540px] h-[540px] bg-[rgba(87,198,255,0.14)] blur-[240px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[780px] h-[780px] bg-[rgba(255,208,233,0.16)] blur-[260px]" />
       </div>
 
       {/* Grid pattern overlay */}
@@ -49,7 +49,7 @@ export default function FabStoreLogin({ onBack }) {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             onClick={onBack}
-            className="absolute -top-16 left-0 flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-[#5C36C8] hover:text-white bg-white border border-[#E1DBFF] shadow-[0_8px_25px_rgba(92,54,200,0.15)] transition-all"
+            className="absolute -top-16 left-0 inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-[#5C36C8] bg-white/95 border border-[#DCD3FF] shadow-[0_10px_30px_rgba(92,54,200,0.12)] hover:-translate-x-[2px] transition-all"
           >
             <ArrowRight className="w-4 h-4 rotate-180" />
             Back to Store
@@ -65,14 +65,14 @@ export default function FabStoreLogin({ onBack }) {
             className="space-y-8 text-gray-900"
           >
             <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#E1DBFF] bg-white text-[#5C36C8] font-semibold">
-                <Sparkles className="w-4 h-4 text-[#F4B000]" />
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#E4DAFF] bg-white text-[#5C36C8] font-semibold shadow-sm">
+                <Sparkles className="w-4 h-4 text-[#FDBA5C]" />
                 TP.ai FAB
               </div>
               <h1 className="text-4xl md:text-5xl font-bold leading-tight">
                 Unlock every experience
                 <br />
-                <span className="bg-gradient-to-r from-amber-300 to-cyan-300 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[#F9DEFF] via-[#C3A1FF] to-[#7AD5FF] bg-clip-text text-transparent">
                   with one identity
                 </span>
               </h1>
@@ -113,9 +113,9 @@ export default function FabStoreLogin({ onBack }) {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="w-full"
           >
-            <div className="bg-white rounded-[28px] border border-gray-100 p-8 shadow-[0_30px_80px_rgba(15,14,63,0.15)]">
+            <div className="bg-white rounded-[32px] border border-white/70 p-8 shadow-[0_35px_90px_rgba(34,22,95,0.17)]">
               <div className="flex items-center justify-center gap-3 mb-6">
-                <div className="p-2 rounded-xl bg-gradient-to-br from-[#F5B437] to-[#6C4DE5] text-white">
+                <div className="p-2 rounded-xl bg-gradient-to-br from-[#7B4CFF] to-[#5B35C1] text-white shadow-lg">
                   <Lock className="w-6 h-6" />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900">Sign in to FAB</h2>
@@ -136,7 +136,7 @@ export default function FabStoreLogin({ onBack }) {
                   <label className="text-sm font-medium text-gray-700">Email</label>
                   <input
                     type="email"
-                    className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#CBB7FF]/50 focus:border-[#CBB7FF]/50 transition-all"
+                  className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#D3C6FF]/60 focus:border-[#D3C6FF]/60 transition-all"
                     placeholder="you@tp.ai"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -149,7 +149,7 @@ export default function FabStoreLogin({ onBack }) {
                   <label className="text-sm font-medium text-gray-700">Password</label>
                   <input
                     type="password"
-                    className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#CBB7FF]/50 focus:border-[#CBB7FF]/50 transition-all"
+                  className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#D3C6FF]/60 focus:border-[#D3C6FF]/60 transition-all"
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -181,7 +181,7 @@ export default function FabStoreLogin({ onBack }) {
                   disabled={loading}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full bg-gradient-to-r from-[#F5B437] via-[#88EA99] to-[#3EC6F7] text-gray-900 rounded-xl py-3.5 text-sm font-semibold hover:shadow-lg hover:shadow-[#3EC6F7]/25 disabled:opacity-70 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
+                  className="w-full bg-gradient-to-r from-[#8F4BFF] via-[#A45BFF] to-[#4F8BFF] text-white rounded-xl py-3.5 text-sm font-semibold hover:shadow-lg hover:shadow-[#8F4BFF]/25 disabled:opacity-70 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
                 >
                   {loading ? (
                     <>

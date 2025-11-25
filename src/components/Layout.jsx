@@ -5,7 +5,7 @@ import { useDemoMode } from "../contexts/DemoModeContext";
 import Sidebar from "./Sidebar";
 
 const TP_LOGO = "/tp-logo.svg";
-const AVATAR_FALLBACK = "/kv.jpeg";
+const AVATAR_FALLBACK = "/vkv.jpeg";
 
 export default function Layout({ children, onNavigate, active }) {
   const { user, logout } = useAuth();
