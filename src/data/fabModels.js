@@ -1,0 +1,157 @@
+export const fabModels = [
+  {
+    id: "lead-scoring",
+    name: "Lead Scoring Fabric",
+    category: "Growth Intelligence",
+    maturity: "Production",
+    signal: "Live",
+    description:
+      "Rank every inbound lead using behavioral signals, intent enrichments, and historical win curves to prioritize outreach that converts.",
+    inputs: ["CRM + MAP exhaust", "Intent topics", "Revenue history"],
+    outputs: ["Priority tier", "Win probability", "Next-touch play"],
+    metrics: [
+      { label: "Lift vs control", value: "+23%" },
+      { label: "Refresh cadence", value: "4 hrs" },
+    ],
+    stack: ["GPT-4o mini", "XGBoost", "FAB feature store"],
+    ctaLabel: "Preview modal",
+  },
+  {
+    id: "propensity",
+    name: "Propensity Modal",
+    category: "Customer Science",
+    maturity: "Pilot",
+    signal: "High velocity",
+    description:
+      "Detect churn and upsell propensity for each member with sequence models that blend conversation embeddings and account telemetry.",
+    inputs: ["Interaction summaries", "Usage telemetry", "NPS deltas"],
+    outputs: ["Churn risk", "Upsell moment", "Confidence band"],
+    metrics: [
+      { label: "Signals fused", value: "37" },
+      { label: "Explainers", value: "Top 5 drivers" },
+    ],
+    stack: ["Time-series LLM", "Vector DB", "Explainability kit"],
+    ctaLabel: "Add to blueprint",
+  },
+  {
+    id: "classification",
+    name: "Claims Classification Studio",
+    category: "Operational AI",
+    maturity: "Production",
+    signal: "SOC2 ready",
+    description:
+      "Auto-triage claims into denial, reconsideration, and fast-path buckets with audit-ready rationales mapped to SOP chapters.",
+    inputs: ["Claim packets", "SOP graph", "Denial codes"],
+    outputs: ["Routing bucket", "Reason trace", "SOP excerpt"],
+    metrics: [
+      { label: "First pass accuracy", value: "97.1%" },
+      { label: "Setup time", value: "< 2 weeks" },
+    ],
+    stack: ["FAB RAG", "Sonnet 3.5", "SOP compiler"],
+    ctaLabel: "Launch modal",
+  },
+  {
+    id: "recommender",
+    name: "Next Best Action Recommender",
+    category: "Engagement",
+    maturity: "Beta",
+    signal: "FAB core",
+    description:
+      "Curate sequenced follow-ups across chat, voice, and human outreach with guardrails that respect compliance envelopes.",
+    inputs: ["Journey graph", "Offer library", "Agent feedback"],
+    outputs: ["Action recipe", "Channel mix", "Guardrail notes"],
+    metrics: [
+      { label: "CSAT delta", value: "+11 pts" },
+      { label: "Automation", value: "72%" },
+    ],
+    stack: ["Policy engine", "CoT planners", "Realtime orchestration"],
+    ctaLabel: "Request route",
+  },
+  {
+    id: "fraud-triage",
+    name: "Fraud Triage Sentinel",
+    category: "Risk",
+    maturity: "Preview",
+    signal: "Zero trust",
+    description:
+      "Score claims and transactions for anomaly risk with hybrid graph + LLM reasoning, surfacing proof packs for investigators.",
+    inputs: ["Transaction graph", "Device DNA", "Adjudication notes"],
+    outputs: ["Risk score", "Counter-party cluster", "Evidence pack"],
+    metrics: [
+      { label: "False positives", value: "-38%" },
+      { label: "Traceability", value: "Full chain" },
+    ],
+    stack: ["Graph neural nets", "LLM judge", "Evidence vault"],
+    ctaLabel: "Inspect signals",
+  },
+  {
+    id: "sentiment-intel",
+    name: "Omni Sentiment Fusion",
+    category: "Experience Intelligence",
+    maturity: "Production",
+    signal: "CX leverage",
+    description:
+      "Blend real-time voice emotion, chat semantics, and post-contact surveys to flag deteriorating sentiment before it hits the dashboard.",
+    inputs: ["Voice tone maps", "Chat embeddings", "CSAT/NPS"],
+    outputs: ["Sentiment trend", "Escalation trigger", "Recovery script"],
+    metrics: [
+      { label: "Coverage", value: "100% contacts" },
+      { label: "Detection lead", value: "15 mins sooner" },
+    ],
+    stack: ["Signal fusion", "LLM classifiers", "Voice analytics"],
+    ctaLabel: "Stream insights",
+  },
+  {
+    id: "compliance-qa",
+    name: "Compliance QA Modal",
+    category: "Trust & Safety",
+    maturity: "Pilot",
+    signal: "Audit spine",
+    description:
+      "Automate 100% interaction reviews with Teleperformance QA rubrics, red-flag policies, and narrative rationales ready for regulators.",
+    inputs: ["Call transcripts", "QA scorecards", "Policy library"],
+    outputs: ["QA score", "Violation trace", "Coaching snippet"],
+    metrics: [
+      { label: "Coverage uplift", value: "x10" },
+      { label: "Audit prep time", value: "-70%" },
+    ],
+    stack: ["FAB rubrics", "LLM judges", "Evidence vault"],
+    ctaLabel: "Review interactions",
+  },
+  {
+    id: "agent-coach",
+    name: "Agent Coaching Reactor",
+    category: "Operations",
+    maturity: "Beta",
+    signal: "Human+AI",
+    description:
+      "Surface individualized coaching plans that tie KPI drift to skills, SOP gaps, and best-practice clips from top performers.",
+    inputs: ["KPI telemetry", "Interaction clips", "SOP graph"],
+    outputs: ["Coaching card", "Skill focus", "Reference clip"],
+    metrics: [
+      { label: "Ramp speed", value: "35% faster" },
+      { label: "Variance drop", value: "-18%" },
+    ],
+    stack: ["Performance lake", "Vector recall", "Coach studio"],
+    ctaLabel: "Spin up plan",
+  },
+  {
+    id: "collections-nudge",
+    name: "Collections Nudge Lab",
+    category: "Revenue",
+    maturity: "Preview",
+    signal: "Reg compliant",
+    description:
+      "Design compliant outreach sequences for receivables and micro-collections, balancing empathy, promise-to-pay history, and channel mix.",
+    inputs: ["Promise-to-pay", "CRM notes", "Compliance constraints"],
+    outputs: ["Nudge recipe", "Channel cadence", "Risk posture"],
+    metrics: [
+      { label: "Recovery uplift", value: "+12%" },
+      { label: "Agent hours saved", value: "420 / mo" },
+    ],
+    stack: ["Policy aware planner", "LLM copywork", "Compliance guardrails"],
+    ctaLabel: "Test sequence",
+  },
+];
+
+

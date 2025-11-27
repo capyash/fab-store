@@ -6,6 +6,27 @@
 import { Sparkles, AlertCircle, Info, Zap, FileText } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { SCENARIO_SOPS, SOP_INDEX } from "../data/sops";
+
+const SectionLabel = ({ children }) => (
+  <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-gray-500 dark:text-gray-400 mb-1 select-none">
+    {children}
+  </p>
+);
+
+const DetailPill = ({ label, value }) => {
+  if (!value && value !== 0) return null;
+  return (
+    <div className="px-3 py-1.5 rounded-lg border border-white/60 dark:border-white/10 bg-white/70 dark:bg-white/5 text-gray-700 dark:text-gray-200 shadow-sm">
+      <p className="text-[9px] uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 mb-0.5">
+        {label}
+      </p>
+      <p className="text-xs font-semibold">
+        {value}
+      </p>
+    </div>
+  );
+};
 
 export default function ReasoningCard({ step, index, onSOPView, claim, isStreaming = false, isComplete = false, progress = 0 }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -109,6 +130,84 @@ export default function ReasoningCard({ step, index, onSOPView, claim, isStreami
   const normalizedStep = step?.role ? step : (step ? { ...step, role: "ai-step" } : null);
   const confidence = normalizedStep?.confidence || 0;
   const actualProgress = isComplete ? 100 : (progress > 0 ? progress : (isStreaming ? 75 : 0));
+  const scenarioTag = normalizedStep?.scenario || claim?.scenario || null;
+  const scenarioKey = scenarioTag && SCENARIO_SOPS[scenarioTag] ? scenarioTag : null;
+  const claimStatusKey = claim?.status && SOP_INDEX[claim.status] ? claim.status : null;
+
+  const formatCurrency = (value) => {
+    if (!value && value !== 0) return null;
+    return `$${Number(value).toLocaleString()}`;
+  };
+
+  const getClaimAge = () => {
+    if (!claim?.date) return null;
+    const days = Math.max(0, Math.floor((new Date() - new Date(claim.date)) / (1000 * 60 * 60 * 24)));
+    return `${days} day${days === 1 ? "" : "s"} ago`;
+  };
+
+  const resolveScenarioByPage = (page) => {
+    if (!page) return null;
+    const cleaned = page.replace(/Page\s*/i, "");
+    const entry = Object.entries(SCENARIO_SOPS).find(([, sop]) =>
+      sop.page?.toLowerCase().includes(cleaned.toLowerCase())
+    );
+    return entry ? entry[0] : null;
+  };
+
+  const findStatusBySopRef = (ref) => {
+    if (!ref) return null;
+    const normalized = ref.replace(/SOP\s*/i, "").trim();
+    const entry = Object.entries(SOP_INDEX).find(([, sop]) =>
+      sop.title?.toLowerCase().includes(normalized.toLowerCase())
+    );
+    return entry ? entry[0] : null;
+  };
+
+  const getFallbackSopRef = () => {
+    if (scenarioKey) {
+      const scenarioTitle = SCENARIO_SOPS[scenarioKey]?.title;
+      const match = scenarioTitle?.match(/SOP\s*([\d.]+)/i);
+      if (match) return `SOP ${match[1]}`;
+      return scenarioTitle || scenarioKey;
+    }
+    if (claimStatusKey) {
+      const statusTitle = SOP_INDEX[claimStatusKey]?.title;
+      if (statusTitle) {
+        const match = statusTitle.match(/SOP\s*([\d.]+)/i);
+        return match ? `SOP ${match[1]}` : statusTitle;
+      }
+      return claimStatusKey;
+    }
+    return null;
+  };
+
+  const handleSOPClick = (ref) => {
+    const safeScenario = scenarioKey || null;
+    const safeStatus = claimStatusKey || null;
+
+    if (!ref) {
+      onSOPView?.(safeScenario || safeStatus, safeScenario, safeStatus, null);
+      return;
+    }
+
+    const pageMatch = ref.match(/Page\s*(\d+)/i);
+    const sopMatch = ref.match(/(\d+(?:\.\d+){0,2})/);
+
+    if (pageMatch) {
+      const scenarioFromPage = resolveScenarioByPage(pageMatch[0]) || safeScenario;
+      const statusForPage = safeStatus || findStatusBySopRef(pageMatch[0]);
+      onSOPView?.(scenarioFromPage || statusForPage || pageMatch[0], scenarioFromPage, statusForPage, null);
+      return;
+    }
+
+    if (sopMatch) {
+      const statusFromRef = findStatusBySopRef(sopMatch[1]) || safeStatus;
+      onSOPView?.(statusFromRef || sopMatch[1], safeScenario, statusFromRef, null);
+      return;
+    }
+
+    onSOPView?.(ref, safeScenario, safeStatus, null);
+  };
 
   // Get confidence color
   const getConfidenceColor = (conf) => {
@@ -125,15 +224,15 @@ export default function ReasoningCard({ step, index, onSOPView, claim, isStreami
     return "bg-orange-100 dark:bg-orange-900/30";
   };
 
-  // Extract key points from text
-  const getKeyPoints = (text) => {
-    if (!text) return [];
-    const sentences = text.split(/[.!?]\s+/).filter(s => s.trim().length > 20);
-    return sentences.slice(0, 2);
-  };
-
-  const keyPoints = getKeyPoints(normalizedStep?.text);
-  const displayText = normalizedStep?.text?.substring(0, 100) || "Processing...";
+  const fallbackTexts = [
+    "Analyzing claim metadata and diagnosis codes.",
+    "Matching claim against standard operating procedures.",
+    "Evaluating risk factors and compliance.",
+  ];
+  const primaryText = normalizedStep?.text || fallbackTexts[index] || "Processing...";
+  const matchedSopRefs = normalizedStep?.sopRefs?.length
+    ? normalizedStep.sopRefs
+    : (getFallbackSopRef() ? [getFallbackSopRef()] : []);
 
   return (
     <motion.div
@@ -187,7 +286,7 @@ export default function ReasoningCard({ step, index, onSOPView, claim, isStreami
                   animate={{ scale: 1 }}
                   transition={{ type: "spring", delay: 0.3 }}
                 >
-                  {Math.round(confidence * 100)}%
+                  {Math.round(confidence * 100)}% Confidence
                 </motion.span>
               )}
             </div>
@@ -195,90 +294,189 @@ export default function ReasoningCard({ step, index, onSOPView, claim, isStreami
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 min-h-0 mb-3">
-          {normalizedStep ? (
-            <motion.p
-              className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed mb-2"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: index * 0.15 + 0.1 }}
-              style={{
-                display: "-webkit-box",
-                WebkitLineClamp: 3,
-                WebkitBoxOrient: "vertical",
-                overflow: "hidden"
-              }}
-            >
-              {isStreaming ? (
-                <>
-                  {normalizedStep.text || "Processing..."}
-                  <span className="inline-block w-1 h-3 bg-[#612D91] ml-1 animate-pulse" />
-                </>
-              ) : (
-                displayText + (normalizedStep.text?.length > 100 ? "..." : "")
+        <div className="flex-1 min-h-0 mb-3 space-y-4">
+          {index === 0 && (
+            <>
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 + 0.1 }}
+              >
+                <SectionLabel>Analysis Summary</SectionLabel>
+                <p className="text-sm text-gray-800 dark:text-gray-100 leading-relaxed">
+                  {isStreaming ? (
+                    <>
+                      {primaryText}
+                      <span className="inline-block w-1 h-3 bg-[#612D91] ml-1 animate-pulse" />
+                    </>
+                  ) : (
+                    primaryText
+                  )}
+                </p>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 + 0.2 }}
+              >
+                <SectionLabel>Claim Details</SectionLabel>
+                <div className="flex flex-wrap gap-2">
+                  <DetailPill label="Amount" value={formatCurrency(claim?.amount)} />
+                  <DetailPill label="Age" value={getClaimAge()} />
+                </div>
+              </motion.div>
+            </>
+          )}
+
+          {index === 1 && (
+            <>
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 + 0.1 }}
+              >
+                <SectionLabel>SOP Match Result</SectionLabel>
+                <p className="text-sm text-gray-800 dark:text-gray-100 leading-relaxed">
+                  {primaryText}
+                </p>
+              </motion.div>
+
+              {matchedSopRefs.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 + 0.2 }}
+                >
+                  <SectionLabel>Matched SOPs</SectionLabel>
+                  <div className="flex flex-wrap gap-1.5">
+                    {matchedSopRefs.map((ref, idx) => {
+                      const sopMatch = ref.match(/(\d+(?:\.\d+){0,2})/);
+                      const sopNum = sopMatch ? sopMatch[1] : ref;
+                      return (
+                        <motion.button
+                          key={idx}
+                          onClick={() => handleSOPClick(sopNum)}
+                          className="px-2.5 py-1 rounded text-[10px] font-semibold bg-white/80 dark:bg-gray-800/80 text-[#612D91] dark:text-[#A64AC9] hover:bg-white dark:hover:bg-gray-700 transition-all shadow-sm hover:shadow-md border border-[#612D91]/20 dark:border-[#A64AC9]/30 flex items-center gap-1"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <FileText className="w-2.5 h-2.5" />
+                          {sopNum ? `SOP ${sopNum}` : ref}
+                        </motion.button>
+                      );
+                    })}
+                    {scenarioTag && (
+                      <span className="px-2.5 py-1 rounded text-[10px] font-semibold bg-white/60 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 capitalize">
+                        {scenarioTag.replace(/-/g, " ")}
+                      </span>
+                    )}
+                    {normalizedStep.text && normalizedStep.text.match(/Page\s+(\d+)/i) && (() => {
+                      const match = normalizedStep.text.match(/Page\s+(\d+)/i);
+                      const label = `Page ${match[1]}`;
+                      return (
+                        <motion.button
+                          key="page-tag"
+                          onClick={() => handleSOPClick(label)}
+                          className="px-2.5 py-1 rounded text-[10px] font-semibold bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          {label}
+                        </motion.button>
+                      );
+                    })()}
+                  </div>
+                </motion.div>
               )}
-            </motion.p>
-          ) : (
+
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 + 0.3 }}
+              >
+                <SectionLabel>Match Criteria</SectionLabel>
+                <div className="flex flex-wrap gap-1.5">
+                  {scenarioTag && (
+                    <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-purple-100/60 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 border border-purple-300/50 dark:border-purple-600/40 capitalize">
+                      {scenarioTag.replace(/-/g, " ")}
+                    </span>
+                  )}
+                  {claim?.cptCode && (
+                    <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-purple-100/60 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 border border-purple-300/50 dark:border-purple-600/40">
+                      CPT: {claim.cptCode}
+                    </span>
+                  )}
+                  {claim?.icd10Code && (
+                    <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-purple-100/60 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 border border-purple-300/50 dark:border-purple-600/40">
+                      ICD-10: {claim.icd10Code}
+                    </span>
+                  )}
+                  {normalizedStep?.text && (
+                    <>
+                      {(normalizedStep.text.toLowerCase().includes("prior auth") || normalizedStep.text.toLowerCase().includes("prior-auth")) && (
+                        <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-purple-100/60 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 border border-purple-300/50 dark:border-purple-600/40">
+                          prior auth
+                        </span>
+                      )}
+                      {normalizedStep.text.toLowerCase().includes("authorization") && (
+                        <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-purple-100/60 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 border border-purple-300/50 dark:border-purple-600/40">
+                          authorization
+                        </span>
+                      )}
+                    </>
+                  )}
+                </div>
+              </motion.div>
+            </>
+          )}
+
+          {index === 2 && (
+            <>
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 + 0.1 }}
+              >
+                <SectionLabel>Risk Assessment</SectionLabel>
+                <p className="text-sm text-gray-800 dark:text-gray-100 leading-relaxed">
+                  {primaryText}
+                </p>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 + 0.2 }}
+              >
+                <SectionLabel>Risk Indicators</SectionLabel>
+                <div className="flex flex-wrap gap-1.5">
+                  {claim?.amount && claim.amount < 2000 && (
+                    <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-orange-100/70 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 border border-orange-300/50 dark:border-orange-600/50">
+                      Low value
+                    </span>
+                  )}
+                  {claim?.date && Math.floor((new Date() - new Date(claim.date)) / (1000 * 60 * 60 * 24)) < 7 && (
+                    <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-orange-100/70 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 border border-orange-300/50 dark:border-orange-600/50">
+                      Low timeline
+                    </span>
+                  )}
+                  {claim?.status && (
+                    <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-orange-100/70 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 border border-orange-300/50 dark:border-orange-600/50">
+                      Status: {claim.status}
+                    </span>
+                  )}
+                </div>
+              </motion.div>
+            </>
+          )}
+
+          {!normalizedStep && (
             <motion.div
-              className="space-y-1.5 mb-2"
+              className="space-y-1.5"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: index * 0.15 + 0.1 }}
             >
               <div className="h-3 w-full bg-gray-200/50 dark:bg-gray-800/50 rounded animate-pulse" />
               <div className="h-3 w-4/5 bg-gray-200/50 dark:bg-gray-800/50 rounded animate-pulse" />
-            </motion.div>
-          )}
-
-          {/* Key Points */}
-          {keyPoints.length > 0 && !isStreaming && (
-            <motion.ul
-              className="space-y-1 text-[10px] text-gray-600 dark:text-gray-400"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: index * 0.2 + 0.2 }}
-            >
-              {keyPoints.map((point, idx) => (
-                <li key={idx} className="flex items-start gap-1.5">
-                  <span className={`${config.iconColor} mt-0.5 shrink-0 font-bold`}>•</span>
-                  <span style={{
-                    display: "-webkit-box",
-                    WebkitLineClamp: 1,
-                    WebkitBoxOrient: "vertical",
-                    overflow: "hidden"
-                  }}>{point.substring(0, 55)}</span>
-                </li>
-              ))}
-            </motion.ul>
-          )}
-
-          {/* SOP References - Compact */}
-          {normalizedStep?.sopRefs && normalizedStep.sopRefs.length > 0 && !isStreaming && (
-            <motion.div
-              className="mt-2 flex flex-wrap gap-1.5"
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.2 + 0.3 }}
-            >
-              {normalizedStep.sopRefs.slice(0, 2).map((ref, idx) => (
-                <motion.button
-                  key={idx}
-                  onClick={() => {
-                    if (ref.includes("Page") || ref.match(/^\d+$/)) {
-                      const pageNum = ref.replace("Page ", "").replace("page ", "");
-                      onSOPView?.(pageNum, null, claim?.status, null);
-                    } else {
-                      onSOPView?.(ref, null, claim?.status, null);
-                    }
-                  }}
-                  className="px-2 py-1 rounded text-[10px] font-semibold bg-white/80 dark:bg-gray-800/80 text-[#612D91] dark:text-[#A64AC9] hover:bg-white dark:hover:bg-gray-700 transition-all shadow-sm hover:shadow-md border border-[#612D91]/20 dark:border-[#A64AC9]/30 flex items-center gap-1"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <FileText className="w-2.5 h-2.5" />
-                  {ref.length > 12 ? ref.substring(0, 12) + "..." : ref}
-                </motion.button>
-              ))}
             </motion.div>
           )}
         </div>

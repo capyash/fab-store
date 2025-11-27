@@ -3,10 +3,10 @@ import { motion } from "framer-motion";
 import { useAuth } from "../auth/AuthContext";
 import { Sparkles, Lock, ArrowRight, Zap, Shield, Globe } from "lucide-react";
 
-export default function FabStoreLogin({ onBack }) {
+export default function FabStoreLogin({ onBack, onLoginSuccess }) {
   const { login } = useAuth();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email] = useState("vinod@tp.ai");
+  const [password] = useState("vkvs_nbt");
   const [remember, setRemember] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -17,6 +17,9 @@ export default function FabStoreLogin({ onBack }) {
     setLoading(true);
     try {
       await login({ email: email.trim(), password, remember });
+      if (onLoginSuccess) {
+        onLoginSuccess();
+      }
     } catch (err) {
       setError(err?.message || "Login failed");
     } finally {
@@ -136,12 +139,9 @@ export default function FabStoreLogin({ onBack }) {
                   <label className="text-sm font-medium text-gray-700">Email</label>
                   <input
                     type="email"
-                  className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#D3C6FF]/60 focus:border-[#D3C6FF]/60 transition-all"
-                    placeholder="you@tp.ai"
+                    className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#D3C6FF]/60 focus:border-[#D3C6FF]/60 transition-all"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    autoFocus
-                    required
+                    readOnly
                   />
                 </div>
 
@@ -149,11 +149,9 @@ export default function FabStoreLogin({ onBack }) {
                   <label className="text-sm font-medium text-gray-700">Password</label>
                   <input
                     type="password"
-                  className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#D3C6FF]/60 focus:border-[#D3C6FF]/60 transition-all"
-                    placeholder="••••••••"
+                    className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#D3C6FF]/60 focus:border-[#D3C6FF]/60 transition-all"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
+                    readOnly
                   />
                 </div>
 

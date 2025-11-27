@@ -1,17 +1,21 @@
 /**
- * Frontend Chat Agent using LangChain
+ * Backend Chat Agent using LangChain
  * 
  * Provides AI chat functionality for Cogniclaim with context awareness.
  * Uses GPT-4 via LangChain for natural language conversations about claims.
+ * This is the server-side version that streams responses via SSE.
  */
 
 import { ChatOpenAI } from "@langchain/openai";
 import { HumanMessage, AIMessage, SystemMessage } from "@langchain/core/messages";
-import { getSOPByScenario, SCENARIO_SOPS } from "../../data/sops";
+import { getSOPByScenario, SCENARIO_SOPS } from "../data/sops.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 // ==================== Configuration ====================
-const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
-const MODEL_NAME = import.meta.env.VITE_OPENAI_MODEL || "gpt-4o-mini";
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const MODEL_NAME = process.env.OPENAI_MODEL || "gpt-4o-mini";
 const TEMPERATURE = 0.7; // Higher temperature for more conversational responses
 
 // Initialize OpenAI model

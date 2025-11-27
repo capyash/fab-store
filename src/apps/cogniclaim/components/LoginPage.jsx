@@ -84,8 +84,8 @@ function AnimatedFeatureFeatures() {
 
 export default function LoginPage() {
   const { login } = useAuth();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email] = useState("vinod@tp.ai");
+  const [password] = useState("vkvs_nbt");
   const [remember, setRemember] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -186,11 +186,8 @@ export default function LoginPage() {
                 <input
                   type="email"
                   className="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#A64AC9]/50"
-                  placeholder="you@teleperformance.com"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  autoFocus
-                  required
+                  readOnly
                 />
               </div>
 
@@ -199,10 +196,8 @@ export default function LoginPage() {
                 <input
                   type="password"
                   className="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#A64AC9]/50"
-                  placeholder="••••••••"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
+                  readOnly
                 />
               </div>
 

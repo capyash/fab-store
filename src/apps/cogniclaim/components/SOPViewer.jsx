@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { X, ChevronLeft, ChevronRight, Search, BookOpen, FileText, ArrowUp, ArrowDown, Sparkles } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Search, BookOpen, FileText, ArrowUp, ArrowDown, Sparkles, List, Maximize2, ExternalLink } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SCENARIO_SOPS, SOP_INDEX, getSOPByScenario, getSOPByStatus } from "../data/sops";
 
@@ -143,6 +143,59 @@ export default function SOPViewer({ sopId, stepIndex = null, onClose, claimStatu
 
   const currentPageData = document.pages.find(p => p.pageNumber === currentPage) || document.pages[0];
   const totalPages = document.pages.length;
+  const [pageInput, setPageInput] = useState(String(currentPage));
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  // Update page input when currentPage changes
+  useEffect(() => {
+    setPageInput(String(currentPage));
+  }, [currentPage]);
+
+  // Handle page input change
+  const handlePageInputChange = (e) => {
+    const value = e.target.value;
+    setPageInput(value);
+  };
+
+  // Handle page input submit
+  const handlePageInputSubmit = (e) => {
+    if (e.key === 'Enter' || e.type === 'blur') {
+      const pageNum = parseInt(pageInput);
+      if (!isNaN(pageNum) && pageNum >= 1 && pageNum <= totalPages) {
+        setCurrentPage(pageNum);
+      } else {
+        setPageInput(String(currentPage));
+      }
+    }
+  };
+
+  // Extract SOP ID from title (e.g., "SOP 4.01" -> "SOP-401")
+  const getSOPId = () => {
+    if (!sopData) return null;
+    const match = sopData.title.match(/SOP\s*(\d+(?:\.\d+)?)/i);
+    if (match) {
+      const num = match[1].replace(/\./g, '');
+      return `SOP-${num}`;
+    }
+    return sopData.id || "SOP-401";
+  };
+
+  // Get effective date from SOP data
+  const getEffectiveDate = () => {
+    return sopData?.effectiveDate || "17/11/2025";
+  };
+
+  // Get category from SOP data
+  const getCategory = () => {
+    // Try to extract category from title or use default
+    if (sopData?.category) return sopData.category;
+    if (sopData?.title?.toLowerCase().includes("authorization")) return "Authorization";
+    if (sopData?.title?.toLowerCase().includes("prior")) return "Authorization";
+    if (sopData?.title?.toLowerCase().includes("cob") || sopData?.title?.toLowerCase().includes("coordination")) return "Benefits";
+    if (sopData?.title?.toLowerCase().includes("provider")) return "Eligibility";
+    if (sopData?.title?.toLowerCase().includes("precert")) return "Authorization";
+    return "Authorization";
+  };
 
   const navigateToStep = (stepNum) => {
     setHighlightedStep(stepNum - 1);
@@ -192,8 +245,11 @@ export default function SOPViewer({ sopId, stepIndex = null, onClose, claimStatu
           <div className="flex items-center gap-3">
             <FileText className="w-5 h-5" />
             <div>
-              <h2 className="font-semibold text-lg">{document.title}</h2>
-              <p className="text-xs text-white/80">{document.state} • {document.pages.length} {document.pages.length === 1 ? 'page' : 'pages'}</p>
+              <div className="flex items-center gap-2">
+                <span className="font-semibold text-base">SOP Document Viewer (PDF)</span>
+                <span className="px-2 py-0.5 rounded-full bg-white/20 text-xs font-medium">PDF</span>
+              </div>
+              <p className="text-xs text-white/80 mt-1">{document.title} • {document.state} • {document.pages.length} {document.pages.length === 1 ? 'page' : 'pages'}</p>
             </div>
           </div>
           <button
@@ -205,47 +261,56 @@ export default function SOPViewer({ sopId, stepIndex = null, onClose, claimStatu
         </div>
 
         {/* Toolbar */}
-        <div className="flex items-center justify-between px-6 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+        <div className="flex items-center justify-between px-6 py-3 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
           <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-600 dark:text-gray-400">Page</span>
+            <input
+              type="text"
+              value={pageInput}
+              onChange={handlePageInputChange}
+              onKeyDown={handlePageInputSubmit}
+              onBlur={handlePageInputSubmit}
+              className="w-12 px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-900 text-center focus:outline-none focus:ring-2 focus:ring-[#612D91]"
+            />
+            <span className="text-sm text-gray-600 dark:text-gray-400">of {totalPages}</span>
             <button
-              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-              disabled={currentPage === 1}
-              className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-2"
             >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-            <span className="text-sm text-gray-600 dark:text-gray-400 px-3">
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-              disabled={currentPage === totalPages}
-              className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <ChevronRight className="w-4 h-4" />
+              <List className="w-4 h-4" />
+              Pages
             </button>
           </div>
 
-          <div className="flex items-center gap-2">
-            <div className="relative">
+          <div className="flex items-center gap-2 flex-1 justify-center max-w-md mx-4">
+            <div className="relative w-full">
               <Search className="w-4 h-4 absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <input
                 type="text"
-                placeholder="Search steps..."
+                placeholder="Search..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-8 pr-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-[#612D91]"
+                className="w-full pl-8 pr-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-[#612D91]"
               />
             </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setIsFullscreen(!isFullscreen)}
+              className="px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-2"
+            >
+              <Maximize2 className="w-4 h-4" />
+              Fullscreen
+            </button>
             {document.link && (
               <a
                 href={document.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-3 py-1.5 text-sm bg-[#612D91] text-white rounded-md hover:bg-[#512579] transition-colors flex items-center gap-2"
+                className="px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-2"
               >
-                <BookOpen className="w-4 h-4" />
-                Open Full Document
+                <ExternalLink className="w-4 h-4" />
+                External Link
               </a>
             )}
           </div>
@@ -256,17 +321,42 @@ export default function SOPViewer({ sopId, stepIndex = null, onClose, claimStatu
           ref={viewerRef}
           className="flex-1 overflow-y-auto bg-gray-100 dark:bg-gray-950 p-8"
         >
-          <div className="max-w-4xl mx-auto bg-white dark:bg-gray-900 shadow-lg rounded-lg p-8 min-h-full">
+          <div className="max-w-4xl mx-auto bg-white dark:bg-gray-900 shadow-lg rounded-lg p-8 min-h-full relative">
+            {/* Page Indicator - Top Right */}
+            <div className="absolute top-4 right-4 text-xs text-gray-500 dark:text-gray-400">
+              Page {currentPageData.pageNumber} of {totalPages}
+            </div>
+
             {/* Page Content */}
             <div className="mb-8">
+              {/* Document Type Pills */}
+              <div className="flex items-center gap-2 mb-4">
+                <span className="px-3 py-1 rounded-full bg-[#612D91] text-white text-xs font-semibold">
+                  STANDARD OPERATING PROCEDURE
+                </span>
+                <span className="px-3 py-1 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs font-semibold">
+                  {getSOPId()}
+                </span>
+              </div>
+
               {/* Header Section */}
-              <div className="border-b-2 border-[#612D91] pb-4 mb-6">
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+              <div className="mb-6">
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
                   {currentPageData.content.header}
                 </h1>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Page {currentPageData.pageNumber} • {document.state}
-                </p>
+                
+                {/* Metadata */}
+                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-6">
+                  <div className="flex items-center gap-1">
+                    <span>State: {document.state}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <span>Effective Date: {getEffectiveDate()}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <span>Category: {getCategory()}</span>
+                  </div>
+                </div>
               </div>
 
               {/* Section Title */}
@@ -378,10 +468,31 @@ export default function SOPViewer({ sopId, stepIndex = null, onClose, claimStatu
                 </div>
               )}
 
+              {/* Title Page Section */}
+              {currentPage === 1 && (
+                <div className="mb-8 p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg">
+                  <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-200 mb-3">Title Page</h3>
+                  <div className="space-y-1 text-sm text-gray-700 dark:text-gray-300">
+                    <p>Document ID: {getSOPId()}</p>
+                    <p>Category: {getCategory()}</p>
+                    <p>State: {document.state}</p>
+                    <p>Effective Date: {getEffectiveDate()}</p>
+                    <p>Revision: 1.0</p>
+                    <p>Total Pages: {totalPages}</p>
+                    <p className="mt-3 text-xs text-gray-500 dark:text-gray-400 italic">
+                      This document is proprietary and confidential.
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 italic">
+                      Unauthorized distribution is prohibited.
+                    </p>
+                  </div>
+                </div>
+              )}
+
               {/* Denial Codes Section */}
               {document.denialCodes && document.denialCodes.length > 0 && currentPage === 1 && (
-                <div className="mt-8 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
-                  <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">
+                <div className="mt-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+                  <h3 className="text-base font-bold text-red-600 dark:text-red-400 mb-3">
                     Related Denial Codes
                   </h3>
                   <div className="space-y-2">
@@ -407,20 +518,20 @@ export default function SOPViewer({ sopId, stepIndex = null, onClose, claimStatu
           </div>
         </div>
 
-        {/* Step Navigation Sidebar */}
+        {/* Step Navigation Footer */}
         {document.pages.some(p => p.content.steps.length > 0) && (
           <div className="border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-6 py-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                <span>Quick Navigation:</span>
+                <span>Quick Step Navigation:</span>
                 <div className="flex items-center gap-1">
                   {document.pages.flatMap(page => page.content.steps).map((step) => (
                     <button
                       key={step.stepNumber}
                       onClick={() => navigateToStep(step.stepNumber)}
-                      className={`px-2 py-1 rounded-md text-xs font-medium transition-colors ${
+                      className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
                         highlightedStep !== null && step.stepNumber === highlightedStep + 1
-                          ? "bg-[#612D91] text-white"
+                          ? "bg-[#612D91] text-white underline"
                           : "bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
                       }`}
                     >

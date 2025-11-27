@@ -59,7 +59,18 @@ function AppContent() {
     }
 
     if (showFabLogin) {
-      return <FabStoreLogin onBack={() => setShowFabLogin(false)} />;
+      return (
+        <FabStoreLogin
+          onBack={() => setShowFabLogin(false)}
+          onLoginSuccess={() => {
+            setShowFabLogin(false);
+            setCurrentPage("store");
+            if (typeof window !== "undefined") {
+              sessionStorage.setItem("cogniclaim.currentPage", "store");
+            }
+          }}
+        />
+      );
     }
 
     return (
@@ -68,23 +79,6 @@ function AppContent() {
       </div>
     );
   }
-
-  // Handle navigation
-  const handleNavigate = (key) => {
-    setCurrentPage(key);
-    setSelectedClaim(null);
-  };
-
-  const handleLaunchApp = (targetKey) => {
-    if (!targetKey) return;
-    setCurrentPage(targetKey);
-  };
-
-  // Determine active sidebar item
-  const getActiveKey = () => {
-    if (selectedClaim) return "worklist";
-    return currentPage;
-  };
 
   // Determine which view to show
   const getView = () => {
@@ -102,6 +96,33 @@ function AppContent() {
 
   // Authenticated flow
   const view = getView();
+
+  // Navigation helpers (used by both FAB Store and main app shell)
+  const handleNavigate = (key) => {
+    setCurrentPage(key);
+    setSelectedClaim(null);
+  };
+
+  const handleLaunchApp = (targetKey) => {
+    if (!targetKey) return;
+    setCurrentPage(targetKey);
+  };
+
+  const getActiveKey = () => {
+    if (selectedClaim) return "worklist";
+    return currentPage;
+  };
+
+  // Special-case FAB Store: keep users on the same fullscreen store surface
+  // instead of dropping them into the Cogniclaim shell.
+  if (view === "store") {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 overflow-y-auto">
+        <FabStore onLaunch={handleLaunchApp} />
+      </div>
+    );
+  }
+
   return (
     <Layout onNavigate={handleNavigate} active={getActiveKey()} currentPage={currentPage}>
       <AnimatePresence mode="wait">

@@ -1,7 +1,9 @@
-import { useMemo, useRef, useState, useEffect } from "react";
-import { Sparkles, Search, ArrowRight, ChevronDown, User } from "lucide-react";
+import { useMemo, useState, useEffect } from "react";
+import { Sparkles, Search, ArrowRight, ChevronDown, User, LogOut } from "lucide-react";
 import { fabApps } from "../data/fabApps";
+import { fabModels } from "../data/fabModels";
 import StoreFooter from "./StoreFooter";
+import { useAuth } from "../auth/AuthContext";
 
 const sortOptions = [
   { value: "name", label: "Alphabetical" },
@@ -16,7 +18,9 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin }) {
   const [industry, setIndustry] = useState("All");
   const [sort, setSort] = useState("status");
   const [showDemoForm, setShowDemoForm] = useState(false);
-  const catalogRef = useRef(null);
+  const [activeNav, setActiveNav] = useState("store");
+  const [modalCategory, setModalCategory] = useState("All");
+  const [modalMaturity, setModalMaturity] = useState("All");
 
   const categories = useMemo(() => {
     const unique = Array.from(new Set(fabApps.map((app) => app.category)));
@@ -28,9 +32,17 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin }) {
     return ["All", ...unique];
   }, []);
 
+  const modalCategories = useMemo(() => {
+    const unique = Array.from(new Set(fabModels.map((model) => model.category)));
+    return ["All", ...unique];
+  }, []);
+
+  const modalMaturities = useMemo(() => {
+    const unique = Array.from(new Set(fabModels.map((model) => model.maturity)));
+    return ["All", ...unique];
+  }, []);
+
   const spotlightApps = fabApps.slice(0, 2);
-  const liveCount = fabApps.filter((app) => app.status === "Live").length;
-  const pipelineCount = fabApps.filter((app) => app.status !== "Live").length;
   const heroSlides = fabApps.slice(0, 4).map((app, idx) => ({
     ...app,
     previewPanels: [
@@ -46,7 +58,6 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin }) {
       },
     ],
   }));
-  const trendingApps = fabApps.filter((app) => app.status === "Live");
   const pipelineApps = fabApps.filter((app) => app.status !== "Live");
 
   const filteredApps = useMemo(() => {
@@ -70,6 +81,19 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin }) {
     });
   }, [category, industry, search, sort]);
 
+  const filteredModals = useMemo(() => {
+    return fabModels.filter((model) => {
+      const matchesCategory = modalCategory === "All" || model.category === modalCategory;
+      const matchesMaturity = modalMaturity === "All" || model.maturity === modalMaturity;
+      return matchesCategory && matchesMaturity;
+    });
+  }, [modalCategory, modalMaturity]);
+
+  const handleSectionNavigate = (target) => {
+    setActiveNav(target);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#F7F8FF]">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_18%,rgba(155,138,255,0.18),transparent_55%),radial-gradient(circle_at_75%_15%,rgba(118,196,255,0.16),transparent_55%),radial-gradient(circle_at_50%_85%,rgba(255,208,233,0.2),transparent_50%)] pointer-events-none" />
@@ -80,47 +104,76 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin }) {
           readOnly={readOnly}
           onRequestLogin={onRequestLogin}
           onRequestDemo={() => setShowDemoForm(true)}
+          onNavSelect={handleSectionNavigate}
+          active={activeNav}
         />
         <div className="space-y-10 pb-16 pt-6 flex-1">
-        <HeroCarousel
-        slides={heroSlides}
-        readOnly={readOnly}
-        onRequestLogin={onRequestLogin}
-        onLaunch={onLaunch}
-      />
+          {activeNav === "store" && (
+            <>
+              <HeroCarousel slides={heroSlides} readOnly={readOnly} onRequestLogin={onRequestLogin} onLaunch={onLaunch} />
+              <section className="px-4 md:px-10">
+                <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_45px_85px_rgba(15,10,45,0.15)] p-6 md:p-10 space-y-6 backdrop-blur">
+                  <div className="flex flex-col gap-3">
+                    <div className="text-xs font-semibold uppercase tracking-[0.35em] text-[#5C36C8]">Full catalog</div>
+                    <div className="flex flex-wrap gap-2">
+                      <FilterPill label="Category" activeValue={category} options={categories} onSelect={setCategory} />
+                      <FilterPill label="Industry" activeValue={industry} options={industries} onSelect={setIndustry} />
+                      <SortSelect value={sort} onChange={setSort} />
+                    </div>
+                  </div>
 
-      <section className="px-4 md:px-10" ref={catalogRef}>
-        <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_45px_85px_rgba(15,10,45,0.15)] p-6 md:p-10 space-y-6 backdrop-blur">
-          <div className="flex flex-col gap-3">
-            <div className="text-xs font-semibold uppercase tracking-[0.35em] text-[#5C36C8]">Full catalog</div>
-            <div className="flex flex-wrap gap-2">
-              <FilterPill label="Category" activeValue={category} options={categories} onSelect={setCategory} />
-              <FilterPill label="Industry" activeValue={industry} options={industries} onSelect={setIndustry} />
-              <SortSelect value={sort} onChange={setSort} />
-            </div>
-          </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+                    {filteredApps.map((app) => (
+                      <AppCard key={app.id} app={app} onLaunch={onLaunch} readOnly={readOnly} onRequestLogin={onRequestLogin} />
+                    ))}
+                    {filteredApps.length === 0 && (
+                      <div className="col-span-full text-center py-12 text-gray-500 dark:text-gray-400">
+                        No apps found. Try a different search term.
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </section>
+              <SectionRow
+                title="Coming soon & roadmap"
+                subtitle="Preview, beta, and roadmap launches"
+                apps={pipelineApps}
+                readOnly={readOnly}
+                onRequestLogin={onRequestLogin}
+                onLaunch={onLaunch}
+              />
+            </>
+          )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-            {filteredApps.map((app) => (
-              <AppCard key={app.id} app={app} onLaunch={onLaunch} readOnly={readOnly} onRequestLogin={onRequestLogin} />
-            ))}
-            {filteredApps.length === 0 && (
-              <div className="col-span-full text-center py-12 text-gray-500 dark:text-gray-400">
-                No apps found. Try a different search term.
+          {activeNav === "modals" && (
+            <ModelGallery
+              models={filteredModals}
+              totalModels={fabModels}
+              readOnly={readOnly}
+              onRequestLogin={onRequestLogin}
+              categoryOptions={modalCategories}
+              maturityOptions={modalMaturities}
+              activeCategory={modalCategory}
+              activeMaturity={modalMaturity}
+              onCategoryChange={setModalCategory}
+              onMaturityChange={setModalMaturity}
+            />
+          )}
+
+          {activeNav === "about" && (
+            <section className="px-4 md:px-10">
+              <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_35px_85px_rgba(15,10,45,0.12)] p-8 space-y-4 backdrop-blur text-gray-700">
+                <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#5C36C8]">About FAB Store</p>
+                <h2 className="text-3xl font-semibold text-gray-900">Operational AI built with guardrails</h2>
+                <p>
+                  Teleperformance FAB bundles human-centered operations knowledge with modern AI orchestration. Pick a solution blueprint, drop in the modals you need, and stay compliant with SOP-native guardrails.
+                </p>
+                <p className="text-sm text-gray-500">
+                  Need more detail? Reach out via Request Demo and we’ll line up a deep dive.
+                </p>
               </div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      <SectionRow
-        title="Coming soon & roadmap"
-        subtitle="Preview, beta, and roadmap launches"
-        apps={pipelineApps}
-        readOnly={readOnly}
-        onRequestLogin={onRequestLogin}
-        onLaunch={onLaunch}
-      />
+            </section>
+          )}
       </div>
       <StoreFooter />
       <DemoRequestModal open={showDemoForm} onClose={() => setShowDemoForm(false)} />
@@ -131,8 +184,15 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin }) {
 
 export default FabStore;
 
-function TopNav({ search, onSearchChange, readOnly, onRequestLogin, onRequestDemo }) {
-  const navItems = ["Home", "Apps", "Solutions", "About"];
+function TopNav({ search, onSearchChange, readOnly, onRequestLogin, onRequestDemo, onNavSelect, active }) {
+  const { isAuthenticated, user, logout } = useAuth();
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+
+  const navItems = [
+    { label: "Store", key: "store" },
+    { label: "Modals", key: "modals" },
+    { label: "About", key: "about" },
+  ];
   return (
     <header className="sticky top-0 z-20 bg-white/95 backdrop-blur-xl border-b border-white/60 shadow-[0_12px_30px_rgba(15,14,63,0.08)] text-gray-900">
       <div className="w-full px-4 lg:px-12 py-4 flex items-center gap-6 flex-wrap">
@@ -146,17 +206,21 @@ function TopNav({ search, onSearchChange, readOnly, onRequestLogin, onRequestDem
           </div>
           <span className="hidden sm:block h-6 w-px bg-gray-200" />
           <nav className="flex items-center gap-5 text-sm font-semibold text-gray-500">
-            {navItems.map((item, idx) => (
+            {navItems.map(({ label, key }) => {
+              const isActive = key === active;
+              return (
               <button
-                key={item}
-                className={`relative pb-2 transition ${
-                  idx === 0 ? "text-gray-900" : "text-gray-500 hover:text-[#5C36C8]"
-                }`}
+                  key={key}
+                  onClick={() => onNavSelect?.(key)}
+                  className={`relative pb-2 transition ${
+                    isActive ? "text-gray-900" : "text-gray-500 hover:text-[#5C36C8]"
+                  }`}
               >
-                {item}
-                {idx === 0 && <span className="absolute left-0 right-0 bottom-0 h-[2px] rounded-full bg-gray-900" />}
+                {label}
+                {isActive && <span className="absolute left-0 right-0 bottom-0 h-[2px] rounded-full bg-gray-900" />}
               </button>
-            ))}
+            );
+          })}
           </nav>
         </div>
         <div className="flex items-center gap-3 flex-1 justify-end min-w-[260px]">
@@ -176,13 +240,58 @@ function TopNav({ search, onSearchChange, readOnly, onRequestLogin, onRequestDem
           >
             Request demo
           </button>
-          <button
-            onClick={readOnly ? onRequestLogin : undefined}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[#8E49FF] via-[#7C3AED] to-[#5C2DB1] text-sm font-semibold text-white shadow-[0_10px_25px_rgba(109,53,207,0.3)]"
-          >
-            <User className="w-4 h-4" />
-            {readOnly ? "Sign in" : "Manage"}
-          </button>
+
+          {(!isAuthenticated || readOnly) ? (
+            <button
+              onClick={onRequestLogin}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[#8E49FF] via-[#7C3AED] to-[#5C2DB1] text-sm font-semibold text-white shadow-[0_10px_25px_rgba(109,53,207,0.3)]"
+            >
+              <User className="w-4 h-4" />
+              Sign in
+            </button>
+          ) : (
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setUserMenuOpen((open) => !open)}
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/90 border border-gray-200 shadow-sm hover:bg-white transition-colors"
+              >
+                <img
+                  src={user?.avatar || "/vkv.jpeg"}
+                  alt={user?.name || "User"}
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+                <span className="hidden sm:inline text-sm font-semibold text-gray-800">{user?.name || "User"}</span>
+                <ChevronDown
+                  className={`w-4 h-4 text-gray-500 transition-transform ${userMenuOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+
+              {userMenuOpen && (
+                <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-gray-200 py-2 z-50">
+                  <div className="px-4 py-3 border-b border-gray-100">
+                    <p className="text-sm font-semibold text-gray-900 truncate">
+                      {user?.name || "User"}
+                    </p>
+                    {user?.email && (
+                      <p className="text-xs text-gray-500 truncate mt-0.5">{user.email}</p>
+                    )}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setUserMenuOpen(false);
+                      logout();
+                    }}
+                    className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    <span>Logout</span>
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </header>
@@ -437,6 +546,102 @@ function SectionRow({ title, subtitle, apps, readOnly, onRequestLogin, onLaunch 
         </div>
       </div>
     </section>
+  );
+}
+
+function ModelGallery({
+  models,
+  totalModels,
+  readOnly,
+  onRequestLogin,
+  categoryOptions,
+  maturityOptions,
+  activeCategory,
+  activeMaturity,
+  onCategoryChange,
+  onMaturityChange,
+}) {
+  const productionTotal = totalModels?.filter((m) => m.maturity === "Production").length ?? 0;
+  return (
+    <section id="fab-modals" className="px-4 md:px-10">
+      <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_35px_85px_rgba(14,10,60,0.15)] p-6 md:p-10 space-y-8 backdrop-blur">
+        <div className="flex flex-wrap gap-2">
+          <FilterPill label="Category" activeValue={activeCategory} options={categoryOptions} onSelect={onCategoryChange} />
+          <FilterPill label="Maturity" activeValue={activeMaturity} options={maturityOptions} onSelect={onMaturityChange} />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
+          {models.length > 0 ? (
+            models.map((model) => (
+              <ModelCard key={model.id} model={model} readOnly={readOnly} onRequestLogin={onRequestLogin} />
+            ))
+          ) : (
+            <div className="col-span-full text-center py-12 text-gray-500">No modals match this filter.</div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ModelCard({ model, readOnly, onRequestLogin }) {
+  return (
+    <article className="rounded-[24px] border border-gray-200/70 bg-white shadow-[0_20px_45px_rgba(15,10,55,0.12)] p-5 flex flex-col gap-4">
+      <div className="flex items-center justify-between text-xs uppercase tracking-[0.35em] text-gray-500">
+        <span>{model.category}</span>
+        <span className="px-2 py-0.5 rounded-full bg-gray-100 text-gray-700">{model.maturity}</span>
+      </div>
+      <div className="space-y-1">
+        <div className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.35em] text-[#6F54E8] font-semibold">
+          <span
+            className={`h-2 w-2 rounded-full ${
+              model.maturity === "Production"
+                ? "bg-emerald-400"
+                : model.maturity === "Beta"
+                ? "bg-amber-400"
+                : "bg-gray-300"
+            }`}
+          />
+          {model.signal}
+        </div>
+        <h3 className="text-xl font-semibold text-gray-900">{model.name}</h3>
+        <p className="text-sm text-gray-600">{model.description}</p>
+      </div>
+      <div className="grid grid-cols-1 gap-2 text-xs text-gray-600">
+        <div className="rounded-2xl border border-gray-200 px-3 py-2 bg-gray-50/60">
+          <p className="uppercase tracking-wide text-gray-400">Inputs</p>
+          <p>{model.inputs.join(" · ")}</p>
+        </div>
+        <div className="rounded-2xl border border-gray-200 px-3 py-2 bg-gray-50/60">
+          <p className="uppercase tracking-wide text-gray-400">Outputs</p>
+          <p>{model.outputs.join(" · ")}</p>
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-3 text-xs text-gray-600">
+        {model.metrics.map((metric) => (
+          <div key={metric.label} className="rounded-2xl border border-gray-200 px-3 py-2 bg-white">
+            <p className="uppercase tracking-wide text-gray-400">{metric.label}</p>
+            <p className="text-lg font-semibold text-gray-900">{metric.value}</p>
+          </div>
+        ))}
+      </div>
+      <div className="text-xs text-gray-500">
+        <p className="uppercase tracking-wide text-gray-400">Stack</p>
+        <p className="text-gray-700">{model.stack.join(" · ")}</p>
+      </div>
+      <button
+        type="button"
+        onClick={() => {
+          if (readOnly) {
+            onRequestLogin?.();
+            return;
+          }
+        }}
+        className="mt-auto inline-flex items-center justify-between rounded-full border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 hover:text-[#612D91] hover:border-[#612D91]/60 transition"
+      >
+        {readOnly ? "Sign in to orchestrate" : model.ctaLabel}
+        <ArrowRight className="w-4 h-4" />
+      </button>
+    </article>
   );
 }
 

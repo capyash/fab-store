@@ -10,12 +10,15 @@
 
 import { ChatOpenAI } from "@langchain/openai";
 import { HumanMessage, AIMessage, SystemMessage } from "@langchain/core/messages";
-import { SOP_INDEX, getSOPByScenario, SCENARIO_SOPS, getApplicableSOPsForClaim, getSOPByCode, getSOPsByState, getSOPByDenialCode } from "../../data/sops";
-import { claimsAPI } from "../api";
+import { SOP_INDEX, getSOPByScenario, SCENARIO_SOPS, getApplicableSOPsForClaim, getSOPByCode, getSOPsByState, getSOPByDenialCode } from "../data/sops.js";
+import { getClaimById } from "../data/claimsLoader.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 // ==================== Configuration ====================
-const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
-const MODEL_NAME = import.meta.env.VITE_OPENAI_MODEL || "gpt-4o-mini";
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const MODEL_NAME = process.env.OPENAI_MODEL || "gpt-4o-mini";
 const TEMPERATURE = 0.3; // Lower temperature for more consistent, analytical responses
 
 // Initialize OpenAI model
@@ -113,7 +116,7 @@ export const historicalClaimsTool = {
     try {
       // This would typically query a database
       // For now, we'll simulate with mock data
-      const { CLAIMS } = await import("../../data/claims");
+      const { CLAIMS } = await import("../data/claims.js");
       
       let filtered = [...CLAIMS];
       
@@ -170,7 +173,7 @@ export const claimAnalyzerTool = {
   },
   func: async ({ claimId }) => {
     try {
-      const claim = await claimsAPI.getById(claimId);
+      const claim = await getClaimById(claimId);
       
       // Extract insights
       const insights = {
@@ -323,36 +326,15 @@ export const createSOPMatchingAgent = () => {
       const sopPage = primarySOP?.page || scenarioSOP?.page || "";
       const sopRefs = primarySOP?.documentReferences || scenarioSOP?.documentReferences || [sopId];
       
-      // Build detailed SOP match text
-      let sopText = `Matching against ${sopTitle}`;
-      if (sopPage) {
-        sopText += ` (${sopPage})`;
-      }
-      if (scenario) {
-        // Format scenario name nicely
-        const scenarioName = scenario.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase());
-        sopText += ` for scenario: ${scenarioName}`;
-      }
-      if (state.claim.cptCode) {
-        sopText += ` - CPT: ${state.claim.cptCode}`;
-      }
-      if (state.claim.icd10Code) {
-        sopText += ` - ICD-10: ${state.claim.icd10Code}`;
-      }
-      if (state.claim.state) {
-        sopText += ` - State: ${state.claim.state}`;
-      }
-      
       const newStep = {
         role: "ai-step",
-        text: sopText,
+        text: `Matching against ${sopTitle}${sopPage ? ` (${sopPage})` : ""}${scenario ? ` for scenario: ${scenario}` : ""}${state.claim.cptCode ? ` - CPT: ${state.claim.cptCode}` : ""}${state.claim.icd10Code ? ` - ICD-10: ${state.claim.icd10Code}` : ""}${state.claim.state ? ` - State: ${state.claim.state}` : ""}`,
         confidence: 0.88,
         details: primarySOP 
           ? `Scenario: ${scenario || "General"}. ${primarySOP.steps?.length || 0} steps identified. ${applicableSOPs.length > 1 ? `${applicableSOPs.length} total applicable SOPs found.` : ""}`
           : "Found 3 matching rule conditions",
         agent: "SOP Matcher",
         sopRefs: sopRefs,
-        scenario: scenario, // Include scenario for tag display
       };
       return {
         ...state,
@@ -401,37 +383,13 @@ Identify matching SOPs and explain why they apply.${scenarioSOP ? ` Reference: $
       const sopMatches = response.content.match(/SOP\s*[\d.]+/gi) || [];
       const sopIds = sopMatches.map(m => m.match(/[\d.]+/)?.[0]).filter(Boolean);
       
-      // Build detailed text with scenario if available
-      const scenario = state.claim.scenario || 
-        (state.claim.buildDays !== null && state.claim.authorizedDays !== null && state.claim.state === "Texas" ? "texas-medicaid-limits" : null) ||
-        (state.claim.buildDays !== null && state.claim.authorizedDays !== null ? "build-days" : null) ||
-        (state.claim.cob && state.claim.cob.primaryPayer === "Medicare" && state.claim.cob.hasSecondary ? "cob-medicare-secondary" : null) ||
-        (state.claim.ssn || state.claim.cob?.hasSecondary || state.claim.cob?.hasTertiary ? "cob-primary-payer" : null) ||
-        (state.claim.precertification && state.claim.precertification.required && !state.claim.precertification.obtained ? "prior-auth-missing" : null) ||
-        (state.claim.admissionType === 1 || state.claim.revenueCodes?.length > 0 || state.claim.surgeryType ? "precertification-required" : null);
-      
-      const scenarioSOP = scenario ? getSOPByScenario(scenario) : null;
-      const sopId = sopIds[0] || scenarioSOP?.id || "3.2.1";
-      const sopTitle = scenarioSOP?.title || "Pre-authorization rules";
-      const sopPage = scenarioSOP?.page || (sopId === "4.01" ? "Page 15" : null);
-      
-      let sopText = `Matching against SOP ${sopId} - ${sopTitle}`;
-      if (sopPage) {
-        sopText += ` (${sopPage})`;
-      }
-      if (scenario) {
-        const scenarioName = scenario.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase());
-        sopText += ` for scenario: ${scenarioName}`;
-      }
-      
       const newStep = {
         role: "ai-step",
-        text: sopText,
+        text: `Matching against SOP ${sopIds[0] || "3.2.1"} (Pre-authorization rules)`,
         confidence: 0.88,
         details: response.content,
         agent: "SOP Matcher",
-        sopRefs: sopIds.length > 0 ? sopIds : (scenarioSOP?.documentReferences || [sopId]),
-        scenario: scenario,
+        sopRefs: sopIds,
       };
       
       return {
