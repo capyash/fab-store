@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { ChevronDown, Check, X, Globe } from "lucide-react";
+import { ChevronDown, Check, X, Globe, Layers } from "lucide-react";
 
-export default function StoreFooter() {
+export default function StoreFooter({ onNavigate }) {
   const [languageOpen, setLanguageOpen] = useState(false);
   const [privacyChoicesOpen, setPrivacyChoicesOpen] = useState(false);
 
@@ -26,6 +26,7 @@ export default function StoreFooter() {
       "Generate your app badge",
       "FAB Builder",
       "API documentation",
+      "Architecture Overview",
     ],
     "TP.ai": [
       "About TP.ai (Teleperformance AI)",
@@ -66,8 +67,14 @@ export default function StoreFooter() {
                   <li key={link}>
                     <button
                       type="button"
-                      className="text-sm text-[#96ABFF] hover:text-white transition-colors"
+                      onClick={() => {
+                        if (link === "Architecture Overview" && onNavigate) {
+                          onNavigate("architecture");
+                        }
+                      }}
+                      className="text-sm text-[#96ABFF] hover:text-white transition-colors flex items-center gap-2"
                     >
+                      {link === "Architecture Overview" && <Layers className="w-3 h-3" />}
                       {link}
                     </button>
                   </li>

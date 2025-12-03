@@ -375,7 +375,7 @@ export const CLAIMS = Array.from({ length: 100 }, (_, index) => {
 // Add predefined scenario claims for testing
 const SCENARIO_CLAIMS = [
   {
-    id: "SCN-001",
+    id: "CLM-201",
     member: "John Smith",
     provider: "Texas Regional Hospital",
     status: "Pending Review",
@@ -408,7 +408,7 @@ const SCENARIO_CLAIMS = [
     placeOfService: "21",
   },
   {
-    id: "SCN-002",
+    id: "CLM-205",
     member: "Sarah Johnson",
     provider: "Metro Healthcare",
     status: "Pending Review",
@@ -443,7 +443,7 @@ const SCENARIO_CLAIMS = [
     placeOfService: "11",
   },
   {
-    id: "SCN-003",
+    id: "CLM-206",
     member: "Robert Williams",
     provider: "Elite Care Surgical Center",
     status: "Pending Review",
@@ -476,6 +476,9 @@ const SCENARIO_CLAIMS = [
     placeOfService: "21",
   },
 ];
+
+// Combined claims for demo scenarios (auto-generated + hand-crafted scenario claims)
+export const ALL_CLAIMS = [...CLAIMS, ...SCENARIO_CLAIMS];
 
 // Prepend scenario claims to the beginning of the array
 CLAIMS.unshift(...SCENARIO_CLAIMS);

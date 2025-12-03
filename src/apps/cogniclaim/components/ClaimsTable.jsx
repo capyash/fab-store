@@ -47,12 +47,14 @@ function AIPriorityBadge({ score }) {
 }
 
 export default function ClaimsTable({ onSelect }) {
-  const [search, setSearch] = useState("");
+  const [searchInput, setSearchInput] = useState("");
+  const [search, setSearch] = useState(""); // Debounced search term
   const [status, setStatus] = useState("All");
   const [sortKey, setSortKey] = useState("date");
   const [sortDir, setSortDir] = useState("desc");
   const [page, setPage] = useState(1);
   const pageSize = 10;
+  const [expandedId, setExpandedId] = useState(null);
 
   // API state
   const [claims, setClaims] = useState([]);
@@ -61,6 +63,19 @@ export default function ClaimsTable({ onSelect }) {
   const [total, setTotal] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
 
+  // Debounce search: only update search term if input has 3+ chars or is empty
+  useEffect(() => {
+    const trimmed = searchInput.trim();
+    // Only search if empty or has at least 3 characters
+    if (trimmed.length === 0 || trimmed.length >= 3) {
+      const timer = setTimeout(() => {
+        setSearch(trimmed);
+        setPage(1); // Reset to first page on new search
+      }, 300); // 300ms debounce delay
+      return () => clearTimeout(timer);
+    }
+  }, [searchInput]);
+
   // Fetch claims from API
   const fetchClaims = useCallback(async () => {
     setLoading(true);
@@ -68,7 +83,7 @@ export default function ClaimsTable({ onSelect }) {
     try {
       const result = await claimsAPI.getAll({
         status: status === "All" ? null : status,
-        search: search.trim() || null,
+        search: search || null,
         page,
         pageSize,
       });
@@ -124,8 +139,7 @@ export default function ClaimsTable({ onSelect }) {
   };
 
   const handleSearchChange = (value) => {
-    setSearch(value);
-    setPage(1);
+    setSearchInput(value);
   };
 
   return (
@@ -172,9 +186,9 @@ export default function ClaimsTable({ onSelect }) {
 
         {/* Search Input */}
         <input
-          value={search}
+          value={searchInput}
           onChange={(e) => handleSearchChange(e.target.value)}
-          placeholder="Search by ID, Member, Provider, Status"
+          placeholder="Search by ID, Member, Provider, Status (min 3 chars)"
           disabled={loading}
           className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg px-4 py-2 text-sm w-80 disabled:opacity-50 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#612D91]/50 dark:focus:ring-[#A64AC9]/50"
         />
@@ -227,23 +241,99 @@ export default function ClaimsTable({ onSelect }) {
               </thead>
               <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
                 {sorted.map((c) => (
-                  <tr
-                    key={c.id}
-                    onClick={() => onSelect?.(c)}
-                    className="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors cursor-pointer"
-                  >
-                    <td className="px-4 py-3 font-medium text-gray-900 dark:text-gray-100">{c.id}</td>
-                    <td className="px-4 py-3 text-gray-900 dark:text-gray-100">{c.member}</td>
-                    <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{c.provider}</td>
-                    <td className="px-4 py-3">
-                      <StatusPill status={c.status} />
-                    </td>
-                    <td className="px-4 py-3 font-medium text-gray-900 dark:text-gray-100">{c.amount?.toLocaleString() || '0'}</td>
-                    <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{c.date}</td>
-                    <td className="px-4 py-3">
-                      <AIPriorityBadge score={c.aiPriority} />
-                    </td>
-                  </tr>
+                  <>
+                    <tr
+                      key={c.id}
+                      className="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors cursor-pointer"
+                      onClick={() =>
+                        setExpandedId((prev) => (prev === c.id ? null : c.id))
+                      }
+                    >
+                      <td className="px-4 py-3 font-medium text-gray-900 dark:text-gray-100">
+                        <div className="flex items-center gap-2">
+                          <span>{c.id}</span>
+                          {Array.isArray(c.lineItems) && c.lineItems.length > 0 && (
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setExpandedId((prev) => (prev === c.id ? null : c.id));
+                              }}
+                              className="text-[11px] px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700"
+                            >
+                              {c.lineItems.length} line item{c.lineItems.length > 1 ? "s" : ""}
+                            </button>
+                          )}
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onSelect?.(c);
+                            }}
+                            className="text-[11px] px-2 py-0.5 rounded-full bg-white dark:bg-gray-900 text-[#612D91] dark:text-[#A64AC9] border border-[#612D91]/40 dark:border-[#A64AC9]/50 hover:bg-[#F5F3FF] dark:hover:bg-[#4B2E83]/40"
+                          >
+                            Open
+                          </button>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 text-gray-900 dark:text-gray-100">{c.member}</td>
+                      <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{c.provider}</td>
+                      <td className="px-4 py-3">
+                        <StatusPill status={c.status} />
+                      </td>
+                      <td className="px-4 py-3 font-medium text-gray-900 dark:text-gray-100">{c.amount?.toLocaleString() || '0'}</td>
+                      <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{c.date}</td>
+                      <td className="px-4 py-3">
+                        <AIPriorityBadge score={c.aiPriority} />
+                      </td>
+                    </tr>
+                    {expandedId === c.id && Array.isArray(c.lineItems) && c.lineItems.length > 0 && (
+                      <tr key={`${c.id}-lines`} className="bg-gray-50/60 dark:bg-gray-900/60">
+                        <td colSpan={HEADERS.length} className="px-6 pb-4 pt-0">
+                          <div className="mt-1 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden max-h-64 overflow-y-auto">
+                            <table className="w-full text-xs">
+                              <thead className="bg-gray-100 dark:bg-gray-800">
+                                <tr>
+                                  <th className="px-2 py-1 text-left font-medium text-gray-600 dark:text-gray-300">Line</th>
+                                  <th className="px-2 py-1 text-left font-medium text-gray-600 dark:text-gray-300">Description</th>
+                                  <th className="px-2 py-1 text-left font-medium text-gray-600 dark:text-gray-300">CPT</th>
+                                  <th className="px-2 py-1 text-left font-medium text-gray-600 dark:text-gray-300">ICD‑10</th>
+                                  <th className="px-2 py-1 text-left font-medium text-gray-600 dark:text-gray-300">Amount</th>
+                                  <th className="px-2 py-1 text-left font-medium text-gray-600 dark:text-gray-300">Status</th>
+                                </tr>
+                              </thead>
+                              <tbody className="divide-y divide-gray-100 dark:divide-gray-700/70">
+                                {c.lineItems.map((li) => (
+                                  <tr
+                                    key={li.lineId}
+                                    className="hover:bg-gray-50 dark:hover:bg-gray-800/70 cursor-pointer"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      // Surface the parent claim in the side panel; line-level next steps are shown in details panel
+                                      onSelect?.(c);
+                                    }}
+                                  >
+                                    <td className="px-2 py-1 font-medium text-gray-800 dark:text-gray-100">{li.lineId}</td>
+                                    <td className="px-2 py-1 text-gray-700 dark:text-gray-300">{li.description}</td>
+                                    <td className="px-2 py-1 text-gray-700 dark:text-gray-300">{li.cptCode}</td>
+                                    <td className="px-2 py-1 text-gray-700 dark:text-gray-300">{li.icd10Code}</td>
+                                    <td className="px-2 py-1 text-gray-800 dark:text-gray-100">
+                                      {li.amount != null ? `$${li.amount.toLocaleString()}` : "—"}
+                                    </td>
+                                    <td className="px-2 py-1">
+                                      <span className="inline-flex px-2 py-0.5 rounded-full text-[10px] font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+                                        {li.status || c.status}
+                                      </span>
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </>
                 ))}
                 {sorted.length === 0 && (
                   <tr>

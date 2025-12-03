@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { useDemoMode } from "../contexts/DemoModeContext";
 
-const NAV_ITEMS = [
+const DEFAULT_NAV_ITEMS = [
   { key: "store", label: "FAB Store", icon: Store },
   { key: "home", label: "Home", icon: Home },
   { key: "worklist", label: "Worklist", icon: ClipboardList },
@@ -25,9 +25,11 @@ const NAV_ITEMS = [
   { key: "pitch", label: "Product Hub", icon: Sparkles },
 ];
 
-export default function Sidebar({ active = "home", onNavigate = () => {} }) {
+export default function Sidebar({ active = "home", onNavigate = () => {}, navItems }) {
   const [collapsed, setCollapsed] = useState(true);
   const { isDemoMode } = useDemoMode();
+
+  const items = navItems && navItems.length ? navItems : DEFAULT_NAV_ITEMS;
 
   return (
     <aside
@@ -37,7 +39,7 @@ export default function Sidebar({ active = "home", onNavigate = () => {} }) {
     >
       {/* Navigation Items */}
       <nav className="flex-1 overflow-y-auto px-2 py-4 space-y-1">
-        {NAV_ITEMS.map(({ key, label, icon: Icon }) => {
+        {items.map(({ key, label, icon: Icon }) => {
           const isActive = key === active;
           return (
             <button

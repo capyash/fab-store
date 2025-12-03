@@ -1,61 +1,71 @@
 import { useEffect, useState } from "react";
-import Tabs from "./Tabs";
+import Tabs from "../../cogniclaim/components/Tabs";
 import { SOP_INDEX } from "../data/sops";
+import DeadlineTracker from "./DeadlineTracker";
 
-export default function ClaimDetailsPanel({ claim, onClose }) {
-  // --- Mock AI generation ---
+const Field = ({ k, v }) => (
+  <div>
+    <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-0.5">{k}</div>
+    <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{v || "N/A"}</div>
+  </div>
+);
+
+export default function CaseDetailsPanel({ caseData, onClose }) {
   const [insights, setInsights] = useState({ loading: true, text: "", confidence: null, ref: "" });
   const [activeLineItem, setActiveLineItem] = useState(null);
 
   useEffect(() => {
-    if (!claim) return;
+    if (!caseData) return;
     setInsights({ loading: true, text: "", confidence: null, ref: "" });
     const timer = setTimeout(() => {
-      // Simple deterministic mock based on status
-      const sop = SOP_INDEX[claim.status];
+      const sop = SOP_INDEX[caseData.status];
       const text =
-        claim.status === "Information Needed"
-          ? `Likely blocker: Missing documentation from provider.\nNext step: Trigger provider info request and set 48h follow-up.\nWhy: SOP "${sop?.title}" step 1–2.`
-          : claim.status === "Pending Review"
-          ? `Likely blocker: Auth/coding verification.\nNext step: Validate pre-auth and code modifiers; if missing, request resubmission.\nWhy: SOP "${sop?.title}" step 1–3.`
-          : claim.status === "Under Process"
-          ? `Likely blocker: Awaiting adjudication checks.\nNext step: Run policy-limit validation and prepare summary for approver.\nWhy: SOP "${sop?.title}" step 1 & 3.`
-          : `Escalation in effect.\nNext step: Ensure complete artifacts and route to L2 clinical reviewer.\nWhy: SOP "${sop?.title}" step 1–2.`;
+        caseData.status === "Filed"
+          ? `Case filed successfully. Next step: Verify all documentation and route to investigation team.\nWhy: SOP "${sop?.title}" step 1–2.`
+          : caseData.status === "Under Investigation"
+          ? `Investigation in progress. Next step: Complete review within 30 days per regulatory requirements.\nWhy: SOP "${sop?.title}" step 2–4.`
+          : caseData.status === "Awaiting Response"
+          ? `Awaiting complainant response. Next step: Follow up if no response within deadline.\nWhy: SOP "${sop?.title}" step 3–4.`
+          : caseData.status === "Resolved"
+          ? `Case resolved. Next step: Document resolution and notify complainant.\nWhy: SOP "${sop?.title}" step 1–2.`
+          : `Case escalated. Next step: Prepare for external review and notify complainant.\nWhy: SOP "${sop?.title}" step 1–3.`;
       setInsights({
         loading: false,
         text,
         confidence: 0.88,
         ref: sop?.link || "#"
       });
-    }, 600); // quick “AI thinking” feel
+    }, 600);
     return () => clearTimeout(timer);
-  }, [claim]);
+  }, [caseData]);
 
-  if (!claim) return null;
+  if (!caseData) return null;
 
-  const sop = SOP_INDEX[claim.status];
+  const sop = SOP_INDEX[caseData.status];
 
   const getLineItemNextSteps = (li) => {
     if (!li) return [];
 
     const steps = [];
 
-    if (li.denialCodes && li.denialCodes.length > 0) {
-      steps.push("Review denial codes and confirm if documentation supports an overturn.");
-      steps.push("Cross‑check this line item against the applicable SOP section for appeal rules.");
+    if (li.status === "Overdue" || (caseData.daysUntilDeadline ?? 0) < 0) {
+      steps.push("Assess regulatory breach risk and document rationale for late action.");
+      steps.push("Escalate this line item to compliance / legal if required by SOP.");
     }
 
-    if (li.cptCode && li.icd10Code) {
-      steps.push(`Validate coding alignment between CPT ${li.cptCode} and ICD‑10 ${li.icd10Code}.`);
+    if (li.issueType === "Coverage Denial") {
+      steps.push("Confirm denial rationale and gather supporting clinical / benefit evidence.");
+      steps.push("Draft appeal language specific to this service line and send for review.");
     }
 
-    if (li.status === "Pending Review" || claim.status === "Information Needed") {
-      steps.push("Request any missing clinical records or itemized bills tied to this line item.");
+    if (li.issueType === "Quality of Care" || li.issueType === "Access to Care") {
+      steps.push("Log this concern in the quality tracking system with this line item as reference.");
+      steps.push("Check if immediate member outreach is required per SOP.");
     }
 
     if (steps.length === 0) {
-      steps.push("Confirm coverage and medical necessity rules for this line item.");
-      steps.push("If clean, bundle for final adjudication with the rest of the claim.");
+      steps.push("Verify that documentation for this line item meets regulatory requirements.");
+      steps.push("If complete, align resolution for this line with the overall case disposition.");
     }
 
     return steps;
@@ -63,20 +73,31 @@ export default function ClaimDetailsPanel({ claim, onClose }) {
 
   const DetailsTab = (
     <div className="space-y-4 text-sm">
+      <DeadlineTracker 
+        deadline={caseData.filingDeadline} 
+        daysUntilDeadline={caseData.daysUntilDeadline} 
+      />
+      
       <div className="grid grid-cols-2 gap-3">
-        <Field k="Claim ID" v={claim.id} />
-        <Field k="Member" v={claim.member} />
-        <Field k="Provider" v={claim.provider} />
-        <Field k="Status" v={claim.status} />
-        <Field k="Amount" v={`$${claim.amount.toLocaleString()}`} />
-        <Field k="Date" v={claim.date} />
+        <Field k="Case Number" v={caseData.caseNumber} />
+        <Field k="Type" v={caseData.type} />
+        <Field k="Complainant" v={caseData.complainant?.name} />
+        <Field k="Member ID" v={caseData.complainant?.memberId} />
+        <Field k="Issue Type" v={caseData.issueType} />
+        <Field k="Status" v={caseData.status} />
+        <Field k="Jurisdiction" v={caseData.jurisdiction} />
+        <Field k="Regulatory Body" v={caseData.regulatoryBody} />
+        <Field k="Filing Date" v={caseData.filingDate} />
+        <Field k="Filing Deadline" v={caseData.filingDeadline} />
+        <Field k="Disputed Amount" v={`$${caseData.amount?.toLocaleString()}`} />
+        <Field k="Priority" v={caseData.priority} />
       </div>
 
-      {Array.isArray(claim.lineItems) && claim.lineItems.length > 0 && (
+      {Array.isArray(caseData.lineItems) && caseData.lineItems.length > 0 && (
         <div className="mt-2">
           <div className="flex items-center justify-between mb-2">
             <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-              Line Items ({claim.lineItems.length})
+              Line Items ({caseData.lineItems.length})
             </div>
           </div>
           <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
@@ -85,14 +106,13 @@ export default function ClaimDetailsPanel({ claim, onClose }) {
                 <tr>
                   <th className="px-2 py-1 text-left font-medium text-gray-600 dark:text-gray-300">Line</th>
                   <th className="px-2 py-1 text-left font-medium text-gray-600 dark:text-gray-300">Description</th>
-                  <th className="px-2 py-1 text-left font-medium text-gray-600 dark:text-gray-300">CPT</th>
-                  <th className="px-2 py-1 text-left font-medium text-gray-600 dark:text-gray-300">ICD‑10</th>
+                  <th className="px-2 py-1 text-left font-medium text-gray-600 dark:text-gray-300">Issue Type</th>
                   <th className="px-2 py-1 text-left font-medium text-gray-600 dark:text-gray-300">Amount</th>
                   <th className="px-2 py-1 text-left font-medium text-gray-600 dark:text-gray-300">Status</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100 dark:divide-gray-700/80">
-                {claim.lineItems.map((li) => (
+                {caseData.lineItems.map((li) => (
                   <tr
                     key={li.lineId}
                     className={`cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/70 ${
@@ -104,14 +124,13 @@ export default function ClaimDetailsPanel({ claim, onClose }) {
                   >
                     <td className="px-2 py-1 font-medium text-gray-800 dark:text-gray-100">{li.lineId}</td>
                     <td className="px-2 py-1 text-gray-700 dark:text-gray-300">{li.description}</td>
-                    <td className="px-2 py-1 text-gray-700 dark:text-gray-300">{li.cptCode}</td>
-                    <td className="px-2 py-1 text-gray-700 dark:text-gray-300">{li.icd10Code}</td>
+                    <td className="px-2 py-1 text-gray-700 dark:text-gray-300">{li.issueType}</td>
                     <td className="px-2 py-1 text-gray-800 dark:text-gray-100">
                       {li.amount != null ? `$${li.amount.toLocaleString()}` : "—"}
                     </td>
                     <td className="px-2 py-1">
                       <span className="inline-flex px-2 py-0.5 rounded-full text-[10px] font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
-                        {li.status || claim.status}
+                        {li.status || caseData.status}
                       </span>
                     </td>
                   </tr>
@@ -137,9 +156,21 @@ export default function ClaimDetailsPanel({ claim, onClose }) {
           )}
         </div>
       )}
+      
+      {caseData.originalDecision && (
+        <div className="mt-4 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+          <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Original Decision</div>
+          <div className="space-y-1 text-sm">
+            <div><span className="font-medium">Date:</span> {caseData.originalDecision.date}</div>
+            <div><span className="font-medium">Type:</span> {caseData.originalDecision.decisionType}</div>
+            <div><span className="font-medium">Reason:</span> {caseData.originalDecision.reason}</div>
+          </div>
+        </div>
+      )}
+      
       <details className="mt-2">
-        <summary className="cursor-pointer underline">Raw JSON</summary>
-        <pre className="mt-2 text-xs overflow-auto">{JSON.stringify(claim, null, 2)}</pre>
+        <summary className="cursor-pointer underline text-xs">Raw JSON</summary>
+        <pre className="mt-2 text-xs overflow-auto">{JSON.stringify(caseData, null, 2)}</pre>
       </details>
     </div>
   );
@@ -164,7 +195,6 @@ export default function ClaimDetailsPanel({ claim, onClose }) {
           <div className="pt-3">
             <button
               onClick={() => {
-                // In the real app, this will POST to your backend to accept the recommendation
                 alert("Action recorded (demo)");
               }}
               className="px-3 py-2 text-sm rounded-md text-white"
@@ -193,39 +223,28 @@ export default function ClaimDetailsPanel({ claim, onClose }) {
   );
 
   return (
-    <div className="h-full">
-      {/* Title bar */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
-        <div>
-          <div className="text-sm opacity-70">Claim</div>
-          <div className="text-lg font-semibold">{claim.id}</div>
-        </div>
+    <div className="bg-white dark:bg-gray-900 border-l border-gray-200 dark:border-gray-800 w-96 flex flex-col h-full">
+      <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-800">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Case Details</h3>
         <button
           onClick={onClose}
-          className="px-3 py-1 rounded-md border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 text-sm"
+          className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
         >
-          Close
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
         </button>
       </div>
-
-      {/* Tabs */}
-      <Tabs
-        initial={0}
-        tabs={[
-          { label: "Details",    content: DetailsTab },
-          { label: "AI Insights",content: AiTab },
-          { label: "SOP",        content: SopTab },
-        ]}
-      />
+      <div className="flex-1 overflow-y-auto p-4">
+        <Tabs
+          tabs={[
+            { id: "details", label: "Details", content: DetailsTab },
+            { id: "ai", label: "AI Insights", content: AiTab },
+            { id: "sop", label: "SOP", content: SopTab },
+          ]}
+        />
+      </div>
     </div>
   );
 }
 
-function Field({ k, v }) {
-  return (
-    <div>
-      <div className="text-xs uppercase opacity-60">{k}</div>
-      <div className="font-medium">{v}</div>
-    </div>
-  );
-}

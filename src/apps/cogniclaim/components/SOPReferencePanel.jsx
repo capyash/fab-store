@@ -2,7 +2,7 @@ import { ChevronDown, Sparkles, FileText, ExternalLink, X } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SCENARIO_SOPS } from "../data/sops";
-import SOPViewer from "./SOPViewer";
+import { SOPViewer } from "./platformComponents";
 
 const DEFAULT_SOPS = [
   { id: "3.1",   title: "Eligibility & Pre-Authorization", text: "Patient eligibility must be confirmed before adjudication. If missing, request payer verification and attach proof." },

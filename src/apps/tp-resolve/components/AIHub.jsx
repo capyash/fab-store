@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import ClaimContextBar from "./ClaimContextBar";
+import CaseContextBar from "./CaseContextBar";
 import UnifiedAIConsole from "./UnifiedAIConsole";
-import SOPReferencePanel from "./SOPReferencePanel";
+import SOPReferencePanel from "../../cogniclaim/components/SOPReferencePanel";
 import { SOPViewer } from "./platformComponents";
 
-export default function AIHub({ claim, onBack }) {
-  const [sopOpen, setSopOpen] = useState(false);     // Start collapsed
-  const [activeRefs, setActiveRefs] = useState([]); // e.g., ["3.2.1"]
+export default function AIHub({ case: caseData, onBack }) {
+  const [sopOpen, setSopOpen] = useState(false);
+  const [activeRefs, setActiveRefs] = useState([]);
   
   // SOP Viewer state
   const [viewerOpen, setViewerOpen] = useState(false);
@@ -15,9 +15,9 @@ export default function AIHub({ claim, onBack }) {
   const [viewerScenario, setViewerScenario] = useState(null);
   const [viewerStepIndex, setViewerStepIndex] = useState(null);
 
-  const handleSOPView = (sopId, scenario, claimStatus, stepIndex) => {
+  const handleSOPView = (sopId, scenario, caseStatus, stepIndex) => {
     setViewerSopId(sopId);
-    setViewerScenario(scenario || claim?.scenario);
+    setViewerScenario(scenario || caseData?.scenario);
     setViewerStepIndex(stepIndex);
     setViewerOpen(true);
   };
@@ -25,8 +25,8 @@ export default function AIHub({ claim, onBack }) {
   return (
     <div className="flex flex-col h-full overflow-hidden bg-gray-50 dark:bg-gray-950">
       {/* Top context bar */}
-      <ClaimContextBar
-        claim={claim}
+      <CaseContextBar
+        caseData={caseData}
         onBack={onBack}
         onToggleSop={() => setSopOpen((v) => !v)}
         sopOpen={sopOpen}
@@ -37,8 +37,8 @@ export default function AIHub({ claim, onBack }) {
         {/* Main console - takes full width when SOP closed */}
         <div className="flex-1 flex flex-col overflow-hidden">
           <UnifiedAIConsole
-            claim={claim}
-            claimId={claim?.id}
+            case={caseData}
+            caseId={caseData?.id}
             onSOPView={handleSOPView}
             onSOPReference={setActiveRefs}
           />
@@ -46,10 +46,11 @@ export default function AIHub({ claim, onBack }) {
 
         {/* SOP Reference Panel - Right side drawer (overlays when open) */}
         <SOPReferencePanel
-          claim={claim}
+          claim={caseData} // Reuse Cogniclaim's SOPReferencePanel (it accepts generic item)
           activeRefs={activeRefs}
           isOpen={sopOpen}
           onClose={() => setSopOpen(false)}
+          onOpenViewer={handleSOPView}
         />
       </div>
 
@@ -60,7 +61,7 @@ export default function AIHub({ claim, onBack }) {
             sopId={viewerSopId}
             stepIndex={viewerStepIndex}
             scenario={viewerScenario}
-            claimStatus={claim?.status}
+            caseStatus={caseData?.status}
             onClose={() => {
               setViewerOpen(false);
               setViewerSopId(null);
@@ -73,3 +74,4 @@ export default function AIHub({ claim, onBack }) {
     </div>
   );
 }
+

@@ -127,6 +127,51 @@ export const SCENARIO_SOPS = {
     documentReferences: ["Page 9"],
     link: "https://example.com/sop/provider-eligibility",
   },
+  "duplicate-claim-same-day": {
+    title: "SOP — Duplicate Claim / Same Day Services",
+    state: "All",
+    page: "Page 30",
+    steps: [
+      "Identify potential duplicate by matching member, provider, date of service, and key procedure codes.",
+      "Confirm whether the earlier claim for the same service has already been processed or paid.",
+      "Check if the later submission is clearly marked as a corrected claim or adjustment.",
+      "If the second submission is a true duplicate (no new information, same billed units), maintain denial with duplicate claim code.",
+      "If the second submission is a valid corrected claim, adjust or void the original claim and reprocess according to policy.",
+      "Document rationale and communicate outcome to the provider following standard notification templates.",
+    ],
+    denialCodes: [
+      { code: "CO-18", description: "Duplicate claim/service" },
+    ],
+    documentReferences: ["Page 30"],
+    link: "https://example.com/sop/duplicate-claim-same-day",
+    category: "Billing Integrity",
+    effectiveDate: "01/01/2025",
+    revision: "1.0",
+    totalSteps: 6,
+  },
+  "split-bill-overlap": {
+    title: "SOP — Split-Bill / Overlapping Inpatient Claims",
+    state: "All",
+    page: "Page 32-33",
+    steps: [
+      "Review the member's admission and discharge dates for all related inpatient claims.",
+      "Identify overlapping date ranges or revenue codes that may indicate split-billing for a single stay.",
+      "Determine whether the split-billing pattern is allowed under plan and regulatory policy (e.g., interim billing vs. duplicate billing).",
+      "If only one claim should be paid, determine which claim is correct (e.g., complete bill vs. partial/duplicate).",
+      "Deny or adjust the inappropriate claim(s) using duplicate/overlap denial codes and recoup any overpayments if necessary.",
+      "Document findings and communicate the decision to the provider, including instructions for corrected or consolidated billing when applicable.",
+    ],
+    denialCodes: [
+      { code: "CO-18", description: "Duplicate claim/service" },
+      { code: "N347", description: "Your claim/service has been processed under a more appropriate claim" },
+    ],
+    documentReferences: ["Page 32", "Page 33"],
+    link: "https://example.com/sop/split-bill-overlap",
+    category: "Billing Integrity",
+    effectiveDate: "01/01/2025",
+    revision: "1.0",
+    totalSteps: 6,
+  },
 };
 
 /**
@@ -194,7 +239,11 @@ export const getApplicableSOPsForClaim = (claim) => {
     }
     // Filter by status if claim has status
     if (claim.status && SOP_INDEX[claim.status]) {
-      return sop.id === claim.status;
+      return sop.id === claim.status || sop.id === claim.scenario;
+    }
+    // Filter by scenario
+    if (claim.scenario && sop.id === claim.scenario) {
+      return true;
     }
     return true;
   });

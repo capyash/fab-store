@@ -368,6 +368,70 @@ export const CLAIMS = Array.from({ length: 100 }, (_, index) => {
     modifier: null, // Can be "-25", "-59", "-50", etc.
     placeOfService: admissionType ? "21" : "11", // 21 = Inpatient, 11 = Office
   };
+
+  // Attach synthetic line items so each claim has multiple nested units to process.
+  // Use more realistic distributions based on claim type / scenario and amount:
+  // - Small/simple (e.g. low amount, office-type) → 1–4 lines
+  // - Typical / moderate complexity → 3–10 lines
+  // - High-value / inpatient / complex scenarios → 8–25+ lines
+  let minLines;
+  let maxLines;
+  if (amount < 1500) {
+    minLines = 1;
+    maxLines = 4;
+  } else if (amount < 8000) {
+    minLines = 3;
+    maxLines = 10;
+  } else {
+    minLines = 8;
+    maxLines = 25;
+  }
+  const lineItemCount = Math.floor(Math.random() * (maxLines - minLines + 1)) + minLines;
+  const baseDescriptions =
+    scenario === "medical-necessity"
+      ? ["Physical therapy session", "Follow‑up evaluation", "Therapeutic exercise"]
+      : scenario === "prior-auth-missing" || scenario === "precertification-required"
+      ? ["Primary procedure", "Associated anesthesia", "Post‑op observation"]
+      : ["Facility charge", "Professional fees", "Diagnostics", "Supplies"];
+
+  const items = [];
+  let remaining = amount;
+  for (let i = 0; i < lineItemCount; i++) {
+    const isLast = i === lineItemCount - 1;
+    const portion = isLast
+      ? remaining
+      : Math.max(50, Math.round((amount / lineItemCount) * (0.7 + Math.random() * 0.6)));
+    remaining -= portion;
+
+    const liCpt =
+      cptCode ||
+      cptCodes.surgery[Math.floor(Math.random() * cptCodes.surgery.length)] ||
+      "00000";
+    const liIcd =
+      icd10Code ||
+      icd10Codes.chronic[Math.floor(Math.random() * icd10Codes.chronic.length)] ||
+      "Z00.00";
+
+    items.push({
+      lineId: `${claimId}-L${i + 1}`,
+      description: baseDescriptions[i] || baseDescriptions[baseDescriptions.length - 1],
+      cptCode: liCpt,
+      icd10Code: liIcd,
+      revenueCode,
+      units: 1 + Math.floor(Math.random() * 3),
+      amount: portion,
+      status:
+        denialCodes.length > 0 && Math.random() > 0.5
+          ? "Pending Review"
+          : status,
+      denialCodes:
+        denialCodes.length > 0 && Math.random() > 0.3 ? [...denialCodes] : [],
+      scenario,
+      documentReferences,
+    });
+  }
+
+  claim.lineItems = items;
   
   return claim;
 });
@@ -375,7 +439,7 @@ export const CLAIMS = Array.from({ length: 100 }, (_, index) => {
 // Add predefined scenario claims for testing
 const SCENARIO_CLAIMS = [
   {
-    id: "SCN-001",
+    id: "CLM-201",
     member: "John Smith",
     provider: "Texas Regional Hospital",
     status: "Pending Review",
@@ -408,7 +472,139 @@ const SCENARIO_CLAIMS = [
     placeOfService: "21",
   },
   {
-    id: "SCN-002",
+    id: "CLM-202",
+    member: "Lisa Turner",
+    provider: "Metro Healthcare",
+    status: "Under Process",
+    amount: 3200,
+    date: generateDate(5),
+    aiPriority: 6.8,
+    state: "All",
+    claimType: "UB04",
+    dos: generateDate(6),
+    cptCode: "99284",
+    icd10Code: "M54.5",
+    revenueCodes: ["0450"],
+    ssn: "555-12-3456",
+    cob: { hasSecondary: false, hasTertiary: false, primaryPayer: "Self", secondaryPayer: null, tertiaryPayer: null },
+    buildDays: null,
+    authorizedDays: null,
+    admissionType: null,
+    surgeryType: null,
+    precertification: { required: false, obtained: false, documentReference: null },
+    providerEligibility: {
+      eligible: true,
+      effectiveDate: generateDate(120),
+      memoDate: generateDate(30),
+    },
+    denialCodes: [],
+    documentReferences: [],
+    scenario: null,
+    hcpcsCode: null,
+    modifier: null,
+    placeOfService: "23",
+  },
+  {
+    id: "CLM-203",
+    member: "Lisa Turner",
+    provider: "Metro Healthcare",
+    status: "Information Needed",
+    amount: 3200,
+    date: generateDate(5),
+    aiPriority: 7.5,
+    state: "All",
+    claimType: "UB04",
+    dos: generateDate(6),
+    cptCode: "99284",
+    icd10Code: "M54.5",
+    revenueCodes: ["0450"],
+    ssn: "555-12-3456",
+    cob: { hasSecondary: false, hasTertiary: false, primaryPayer: "Self", secondaryPayer: null, tertiaryPayer: null },
+    buildDays: null,
+    authorizedDays: null,
+    admissionType: null,
+    surgeryType: null,
+    precertification: { required: false, obtained: false, documentReference: null },
+    providerEligibility: {
+      eligible: true,
+      effectiveDate: generateDate(120),
+      memoDate: generateDate(30),
+    },
+    denialCodes: ["CO-18"],
+    documentReferences: ["Page 30"],
+    scenario: "duplicate-claim-same-day",
+    hcpcsCode: null,
+    modifier: null,
+    placeOfService: "23",
+  },
+  {
+    id: "CLM-204",
+    member: "David Chen",
+    provider: "City General Hospital",
+    status: "Under Process",
+    amount: 18500,
+    date: generateDate(10),
+    aiPriority: 7.9,
+    state: "All",
+    claimType: "UB04",
+    dos: generateDate(12),
+    cptCode: "0101",
+    icd10Code: "E11.9",
+    revenueCodes: ["0100"],
+    ssn: null,
+    cob: { hasSecondary: false, hasTertiary: false, primaryPayer: "Self", secondaryPayer: null, tertiaryPayer: null },
+    buildDays: 5,
+    authorizedDays: 10,
+    admissionType: 1,
+    surgeryType: null,
+    precertification: { required: true, obtained: true, documentReference: "Page 32" },
+    providerEligibility: {
+      eligible: true,
+      effectiveDate: generateDate(365),
+      memoDate: generateDate(30),
+    },
+    denialCodes: [],
+    documentReferences: ["Page 32"],
+    scenario: null,
+    hcpcsCode: null,
+    modifier: null,
+    placeOfService: "21",
+  },
+  {
+    id: "SCN-SPLIT-001-B",
+    member: "David Chen",
+    provider: "City General Hospital",
+    status: "Information Needed",
+    amount: 17250,
+    date: generateDate(10),
+    aiPriority: 8.4,
+    state: "All",
+    claimType: "UB04",
+    dos: generateDate(15),
+    cptCode: "0101",
+    icd10Code: "E11.9",
+    revenueCodes: ["0100"],
+    ssn: null,
+    cob: { hasSecondary: false, hasTertiary: false, primaryPayer: "Self", secondaryPayer: null, tertiaryPayer: null },
+    buildDays: 5,
+    authorizedDays: 10,
+    admissionType: 1,
+    surgeryType: null,
+    precertification: { required: true, obtained: true, documentReference: "Page 33" },
+    providerEligibility: {
+      eligible: true,
+      effectiveDate: generateDate(365),
+      memoDate: generateDate(30),
+    },
+    denialCodes: ["CO-18", "N347"],
+    documentReferences: ["Page 32", "Page 33"],
+    scenario: "split-bill-overlap",
+    hcpcsCode: null,
+    modifier: null,
+    placeOfService: "21",
+  },
+  {
+    id: "CLM-205",
     member: "Sarah Johnson",
     provider: "Metro Healthcare",
     status: "Pending Review",
@@ -443,7 +639,7 @@ const SCENARIO_CLAIMS = [
     placeOfService: "11",
   },
   {
-    id: "SCN-003",
+    id: "CLM-206",
     member: "Robert Williams",
     provider: "Elite Care Surgical Center",
     status: "Pending Review",
@@ -476,6 +672,9 @@ const SCENARIO_CLAIMS = [
     placeOfService: "21",
   },
 ];
+
+// Combined claims for demo scenarios (auto-generated + hand-crafted scenario claims)
+export const ALL_CLAIMS = [...CLAIMS, ...SCENARIO_CLAIMS];
 
 // Prepend scenario claims to the beginning of the array
 CLAIMS.unshift(...SCENARIO_CLAIMS);

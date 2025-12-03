@@ -3,7 +3,7 @@ import { Search, BookOpen, FileText, MapPin, Tag, ChevronRight, X, Grid, List as
 import { motion, AnimatePresence } from "framer-motion";
 import { SCENARIO_SOPS, SOP_INDEX, getAllHealthcareSOPs } from "../data/sops";
 import { aiAPI } from "../services/api";
-import SOPViewer from "./SOPViewer";
+import { SOPViewer } from "./platformComponents";
 
 /**
  * Knowledge Base Component

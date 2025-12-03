@@ -1,8 +1,10 @@
 import { useMemo, useState, useEffect } from "react";
-import { Sparkles, Search, ArrowRight, ChevronDown, User, LogOut } from "lucide-react";
+import { Sparkles, Search, ArrowRight, ChevronDown, User, LogOut, ArrowLeft } from "lucide-react";
 import { fabApps } from "../data/fabApps";
 import { fabModels } from "../data/fabModels";
+import { fabPlatforms } from "../data/fabPlatforms";
 import StoreFooter from "./StoreFooter";
+import PlatformDetail from "./PlatformDetail";
 import { useAuth } from "../auth/AuthContext";
 
 const sortOptions = [
@@ -12,7 +14,7 @@ const sortOptions = [
 
 const statusPriority = { Live: 0, Preview: 1, Beta: 2, "Coming Soon": 3 };
 
-function FabStore({ onLaunch, readOnly = false, onRequestLogin }) {
+function FabStore({ onLaunch, readOnly = false, onRequestLogin, onNavigate }) {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
   const [industry, setIndustry] = useState("All");
@@ -21,6 +23,9 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin }) {
   const [activeNav, setActiveNav] = useState("store");
   const [modalCategory, setModalCategory] = useState("All");
   const [modalMaturity, setModalMaturity] = useState("All");
+  const [selectedPlatform, setSelectedPlatform] = useState(null);
+  const [platformCategory, setPlatformCategory] = useState("All");
+  const [platformIndustry, setPlatformIndustry] = useState("All");
 
   const categories = useMemo(() => {
     const unique = Array.from(new Set(fabApps.map((app) => app.category)));
@@ -41,6 +46,36 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin }) {
     const unique = Array.from(new Set(fabModels.map((model) => model.maturity)));
     return ["All", ...unique];
   }, []);
+
+  const platformCategories = useMemo(() => {
+    const unique = Array.from(new Set(fabPlatforms.map((platform) => platform.category)));
+    return ["All", ...unique];
+  }, []);
+
+  const platformIndustries = useMemo(() => {
+    const unique = Array.from(new Set(fabPlatforms.map((platform) => platform.industry)));
+    return ["All", ...unique];
+  }, []);
+
+  const filteredPlatforms = useMemo(() => {
+    const query = search.toLowerCase();
+    const base = fabPlatforms.filter((platform) => {
+      const matchesCategory = platformCategory === "All" || platform.category === platformCategory;
+      const matchesIndustry = platformIndustry === "All" || platform.industry === platformIndustry;
+      const matchesQuery =
+        !query ||
+        platform.name.toLowerCase().includes(query) ||
+        platform.description.toLowerCase().includes(query) ||
+        platform.tags?.some((tag) => tag.toLowerCase().includes(query));
+      return matchesCategory && matchesIndustry && matchesQuery;
+    });
+    return base.sort((a, b) => {
+      const pa = statusPriority[a.status] ?? 99;
+      const pb = statusPriority[b.status] ?? 99;
+      if (pa !== pb) return pa - pb;
+      return a.name.localeCompare(b.name);
+    });
+  }, [platformCategory, platformIndustry, search]);
 
   const spotlightApps = fabApps.slice(0, 2);
   const heroSlides = fabApps.slice(0, 4).map((app, idx) => ({
@@ -91,7 +126,17 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin }) {
 
   const handleSectionNavigate = (target) => {
     setActiveNav(target);
+    setSelectedPlatform(null);
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handlePlatformSelect = (platform) => {
+    setSelectedPlatform(platform);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handlePlatformBack = () => {
+    setSelectedPlatform(null);
   };
 
   return (
@@ -160,6 +205,35 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin }) {
             />
           )}
 
+          {activeNav === "platforms" && !selectedPlatform && (
+            <section className="px-4 md:px-10">
+              <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_45px_85px_rgba(15,10,45,0.15)] p-6 md:p-10 space-y-6 backdrop-blur">
+                <div className="flex flex-col gap-3">
+                  <div className="text-xs font-semibold uppercase tracking-[0.35em] text-[#5C36C8]">Platform Catalog</div>
+                  <div className="flex flex-wrap gap-2">
+                    <FilterPill label="Category" activeValue={platformCategory} options={platformCategories} onSelect={setPlatformCategory} />
+                    <FilterPill label="Industry" activeValue={platformIndustry} options={platformIndustries} onSelect={setPlatformIndustry} />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+                  {filteredPlatforms.map((platform) => (
+                    <PlatformCard key={platform.id} platform={platform} onSelect={handlePlatformSelect} />
+                  ))}
+                  {filteredPlatforms.length === 0 && (
+                    <div className="col-span-full text-center py-12 text-gray-500 dark:text-gray-400">
+                      No platforms found. Try a different search term.
+                    </div>
+                  )}
+                </div>
+              </div>
+            </section>
+          )}
+
+          {activeNav === "platforms" && selectedPlatform && (
+            <PlatformDetail platform={selectedPlatform} onBack={handlePlatformBack} onLaunch={onLaunch} readOnly={readOnly} onRequestLogin={onRequestLogin} />
+          )}
+
           {activeNav === "about" && (
             <section className="px-4 md:px-10">
               <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_35px_85px_rgba(15,10,45,0.12)] p-8 space-y-4 backdrop-blur text-gray-700">
@@ -175,7 +249,7 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin }) {
             </section>
           )}
       </div>
-      <StoreFooter />
+      <StoreFooter onNavigate={onNavigate} />
       <DemoRequestModal open={showDemoForm} onClose={() => setShowDemoForm(false)} />
     </div>
   </div>
@@ -191,6 +265,7 @@ function TopNav({ search, onSearchChange, readOnly, onRequestLogin, onRequestDem
   const navItems = [
     { label: "Store", key: "store" },
     { label: "Modals", key: "modals" },
+    { label: "Platforms", key: "platforms" },
     { label: "About", key: "about" },
   ];
   return (
@@ -711,6 +786,62 @@ function MiniAppTile({ app, readOnly, onRequestLogin, onLaunch }) {
         {readOnly ? "Sign in" : app.ctaLabel || "Open"}
         <ArrowRight className="w-4 h-4" />
       </button>
+    </div>
+  );
+}
+
+function PlatformCard({ platform, onSelect }) {
+  return (
+    <div 
+      onClick={() => onSelect?.(platform)}
+      className="rounded-[28px] border border-white/40 bg-white/95 shadow-[0_20px_50px_rgba(18,12,64,0.15)] flex flex-col overflow-hidden cursor-pointer hover:shadow-[0_25px_60px_rgba(18,12,64,0.2)] transition-shadow"
+    >
+      <div className={`h-1.5 w-full bg-gradient-to-r ${platform.accent}`} />
+      <div className="p-6 flex flex-col gap-4">
+        <div className="flex items-center flex-wrap gap-2 text-xs uppercase tracking-wide text-gray-500">
+          <span className={platform.categoryColor}>{platform.category}</span>
+          <span className={`px-2 py-0.5 rounded-full ${platform.statusColor || "bg-gray-100 text-gray-700"}`}>{platform.status}</span>
+        </div>
+        <div>
+          <h3 className="text-xl font-semibold text-gray-900">{platform.name}</h3>
+          <p className="text-sm text-gray-600 font-medium">{platform.tagline}</p>
+        </div>
+        <p className="text-sm text-gray-600 flex-1">{platform.description}</p>
+
+        <div className="flex flex-wrap gap-3 text-[11px] text-gray-600">
+          <div className="rounded-2xl border border-gray-200/80 px-3 py-1.5">
+            <p className="uppercase tracking-wide text-gray-500 font-semibold">Industry</p>
+            <p className="font-semibold text-gray-900">{platform.industry}</p>
+          </div>
+          <div className="rounded-2xl border border-gray-200/80 px-3 py-1.5">
+            <p className="uppercase tracking-wide text-gray-500 font-semibold">Solutions</p>
+            <p className="font-semibold text-gray-900">{platform.solutions?.length || 0} built</p>
+          </div>
+          <div className="rounded-2xl border border-gray-200/80 px-3 py-1.5">
+            <p className="uppercase tracking-wide text-gray-500 font-semibold">Stack</p>
+            <p className="font-semibold text-gray-900">{platform.stack?.join(" · ") || "Platform"}</p>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap gap-2 text-[10px] uppercase tracking-wide text-gray-600">
+          {platform.highlights?.slice(0, 3).map((highlight, idx) => (
+            <span key={idx} className="px-2 py-1 rounded-full bg-gray-100 text-gray-700">
+              {highlight}
+            </span>
+          ))}
+        </div>
+
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onSelect?.(platform);
+          }}
+          className="mt-2 w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white font-semibold text-sm hover:shadow-lg transition-all"
+        >
+          View Platform
+          <ArrowRight className="w-4 h-4" />
+        </button>
+      </div>
     </div>
   );
 }

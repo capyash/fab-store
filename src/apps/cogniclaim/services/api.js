@@ -87,8 +87,8 @@ export const claimsAPI = {
       if (isDemoMode) {
         // Demo mode: use mock data
         await delay(400);
-        const { CLAIMS } = await import('../data/claims');
-        let filtered = [...CLAIMS];
+        const { ALL_CLAIMS, CLAIMS } = await import('../data/claims');
+        let filtered = [...(ALL_CLAIMS || CLAIMS)];
         
         if (filters.status && filters.status !== 'All') {
           filtered = filtered.filter(c => c.status === filters.status);
@@ -149,8 +149,9 @@ export const claimsAPI = {
       if (isDemoMode) {
         // Demo mode: use mock data
         await delay(300);
-        const { CLAIMS } = await import('../data/claims');
-        const claim = CLAIMS.find(c => c.id === claimId);
+        const { ALL_CLAIMS, CLAIMS } = await import('../data/claims');
+        const pool = ALL_CLAIMS || CLAIMS;
+        const claim = pool.find(c => c.id === claimId);
         if (!claim) {
           throw new Error(`Claim ${claimId} not found`);
         }
@@ -511,7 +512,7 @@ export const aiAPI = {
         if (!claim) {
           throw new Error('Claim is required for analysis');
         }
-        const { executeReasoning } = await import('./ai/agents.js');
+        const { executeReasoning } = await import('./ai/platformAdapter.js');
         const result = await executeReasoning(claim, onStep);
         return result;
       } else {
@@ -615,7 +616,7 @@ export const aiAPI = {
       
       if (isDemoMode) {
         // Demo mode: use frontend chat agent
-        const { sendChatMessage } = await import('./ai/chatAgent.js');
+        const { sendChatMessage } = await import('./ai/platformAdapter.js');
         const response = await sendChatMessage(message, context, onToken);
         return response;
       } else {

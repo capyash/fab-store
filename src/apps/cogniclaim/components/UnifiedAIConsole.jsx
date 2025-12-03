@@ -5,9 +5,7 @@ import { aiAPI, claimsAPI } from "../services/api";
 import { SCENARIO_SOPS, getSOPByScenario } from "../data/sops";
 import ReasoningSummaryCard from "./ReasoningSummaryCard";
 import ReasoningStepCard from "./ReasoningStepCard";
-import ReasoningCard from "./ReasoningCard";
-import PreScreeningSummary from "./PreScreeningSummary";
-import RecommendationComparison from "./RecommendationComparison";
+import { ReasoningCard } from "./platformComponents";
 import RecommendedNextSteps from "./RecommendedNextSteps";
 
 /* -------------------- VARIANTS -------------------- */
@@ -206,6 +204,15 @@ export default function UnifiedAIConsole({ onBind, onSOPReference, onSOPView, cl
       executeAIAnalysis();
     }
   }, [claimId, claim]);
+
+  // TEMP: Auto-start AI reasoning without showing rule-based pre-screening UI
+  useEffect(() => {
+    // If pre-screening UI is hidden, we still want AI to start automatically.
+    // Trigger the same flow as if pre-screening had completed, but with no result.
+    if (!preScreeningCompleteRef.current && claimId && !reasoningInitialized.current) {
+      handlePreScreeningComplete(null);
+    }
+  }, [claimId, handlePreScreeningComplete]);
 
   /* --- Real AI Reasoning with LangChain/LangGraph Agents --- */
   // Note: AI reasoning is now triggered by handlePreScreeningComplete callback
@@ -535,16 +542,6 @@ export default function UnifiedAIConsole({ onBind, onSOPReference, onSOPView, cl
       {/* Scrollable Content Area */}
       <div className="flex-1 overflow-y-auto px-4 sm:px-6">
         <div className="w-full py-6 space-y-6">
-        {/* Pre-Screening Summary - Rule-Based Checks (Runs First) */}
-        {claim && (
-          <PreScreeningSummary
-            claim={claim}
-            onSOPView={onSOPView}
-            onSOPReference={onSOPReference}
-            onComplete={handlePreScreeningComplete}
-          />
-        )}
-
         {/* AI Reasoning Section - The Heart of the Product */}
         {(engineMessages.length > 0 || thinking) && (
           <motion.div
@@ -553,7 +550,7 @@ export default function UnifiedAIConsole({ onBind, onSOPReference, onSOPView, cl
             transition={{ delay: 0.2 }}
             className="flex flex-col gap-4"
           >
-          {/* Section Header - AI Reasoning */}
+          {/* Section Header - AI Watchtower */}
           <div className="relative flex items-center gap-3 pb-3 mb-2">
             {/* Gradient border effect */}
             <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#612D91] via-[#A64AC9] to-[#612D91] rounded-full"></div>
@@ -563,10 +560,10 @@ export default function UnifiedAIConsole({ onBind, onSOPReference, onSOPView, cl
             </div>
             <div className="flex-1 min-w-0">
               <h2 className="text-xl font-bold bg-gradient-to-r from-[#612D91] to-[#A64AC9] bg-clip-text text-transparent">
-                AI Reasoning
+                AI Watchtower
               </h2>
               <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">
-                Multi-agent intelligent analysis powered by Cogniclaim
+                Multi-agent reasoning console powered by SOP Navigator
               </p>
             </div>
             {avgConfidence && (
@@ -681,15 +678,7 @@ export default function UnifiedAIConsole({ onBind, onSOPReference, onSOPView, cl
         />
       )}
 
-      {/* Recommendation Comparison - shows after AI reasoning completes */}
-      {hasRecommendation && preScreeningCompleteRef.current && preScreeningResultRef.current && (
-        <RecommendationComparison
-          preScreeningResult={preScreeningResultRef.current}
-          aiRecommendation={recommendation}
-        />
-      )}
-
-      {/* Request Information Card - Separate section after comparison */}
+      {/* Request Information Card - Separate section after reasoning */}
       {hasRecommendation && (
         <motion.div
           ref={recommendationRef}

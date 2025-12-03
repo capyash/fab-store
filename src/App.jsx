@@ -14,12 +14,19 @@ import PitchHub from "./apps/cogniclaim/components/PitchHub";
 import LoginPage from "./apps/cogniclaim/components/LoginPage";
 import FabStoreLogin from "./components/FabStoreLogin";
 import FabStore from "./components/FabStore";
+// TP Resolve imports
+import TPResolveHomeDashboard from "./apps/tp-resolve/components/HomeDashboard";
+import TPResolveWorklist from "./apps/tp-resolve/components/Worklist";
+import TPResolveAIHub from "./apps/tp-resolve/components/AIHub";
+import TPResolveLayout from "./apps/tp-resolve/components/Layout";
+import ArchitecturePage from "./components/ArchitecturePage";
 
 const SHOW_LEGACY_LOGIN = false;
 
 function AppContent() {
   const { isAuthenticated } = useAuth();
   const [selectedClaim, setSelectedClaim] = useState(null);
+  const [selectedCase, setSelectedCase] = useState(null);
   // Default to FAB store, and persist it in sessionStorage to survive re-renders
   const [currentPage, setCurrentPage] = useState(() => {
     if (typeof window !== "undefined") {
@@ -82,7 +89,9 @@ function AppContent() {
 
   // Determine which view to show
   const getView = () => {
+    if (selectedCase) return "resolve-aihub";
     if (selectedClaim) return "aihub";
+    if (currentPage === "architecture") return "architecture";
     if (currentPage === "store") return "store";
     if (currentPage === "home") return "home";
     if (currentPage === "worklist") return "worklist";
@@ -91,6 +100,8 @@ function AppContent() {
     if (currentPage === "knowledge") return "knowledge";
     if (currentPage === "settings") return "settings";
     if (currentPage === "pitch") return "pitch";
+    if (currentPage === "resolve") return "resolve-home";
+    if (currentPage === "resolve/worklist") return "resolve-worklist";
     return "home"; // Default to home
   };
 
@@ -101,11 +112,14 @@ function AppContent() {
   const handleNavigate = (key) => {
     setCurrentPage(key);
     setSelectedClaim(null);
+    setSelectedCase(null);
   };
 
   const handleLaunchApp = (targetKey) => {
     if (!targetKey) return;
     setCurrentPage(targetKey);
+    setSelectedClaim(null);
+    setSelectedCase(null);
   };
 
   const getActiveKey = () => {
@@ -118,8 +132,56 @@ function AppContent() {
   if (view === "store") {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-950 overflow-y-auto">
-        <FabStore onLaunch={handleLaunchApp} />
+        <FabStore onLaunch={handleLaunchApp} onNavigate={handleNavigate} />
       </div>
+    );
+  }
+
+  // Architecture page - full screen
+  if (view === "architecture") {
+    return (
+      <ArchitecturePage onBack={() => handleNavigate("store")} />
+    );
+  }
+
+  // TP Resolve shell: separate layout and no Cogniclaim navigation/branding
+  if (view === "resolve-home" || view === "resolve-worklist" || view === "resolve-aihub") {
+    return (
+      <TPResolveLayout onNavigate={handleNavigate} active={currentPage}>
+        <AnimatePresence mode="wait">
+          {view === "resolve-aihub" ? (
+            <motion.div
+              key="resolve-aihub"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.4 }}
+            >
+              <TPResolveAIHub case={selectedCase} onBack={() => setSelectedCase(null)} />
+            </motion.div>
+          ) : view === "resolve-worklist" ? (
+            <motion.div
+              key="resolve-worklist"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.4 }}
+            >
+              <TPResolveWorklist onSelectCase={setSelectedCase} onNavigate={handleNavigate} />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="resolve-home"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.4 }}
+            >
+              <TPResolveHomeDashboard onSelectCase={setSelectedCase} onNavigate={handleNavigate} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </TPResolveLayout>
     );
   }
 
@@ -226,6 +288,39 @@ function AppContent() {
             transition={{ duration: 0.4 }}
           >
             <Worklist onSelectClaim={setSelectedClaim} onNavigate={handleNavigate} />
+          </motion.div>
+        ) : view === "resolve-home" ? (
+          // TP RESOLVE HOME DASHBOARD
+          <motion.div
+            key="resolve-home"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.4 }}
+          >
+            <TPResolveHomeDashboard onSelectCase={setSelectedCase} onNavigate={handleNavigate} />
+          </motion.div>
+        ) : view === "resolve-worklist" ? (
+          // TP RESOLVE WORKLIST
+          <motion.div
+            key="resolve-worklist"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.4 }}
+          >
+            <TPResolveWorklist onSelectCase={setSelectedCase} onNavigate={handleNavigate} />
+          </motion.div>
+        ) : view === "resolve-aihub" ? (
+          // TP RESOLVE AI HUB
+          <motion.div
+            key="resolve-aihub"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.4 }}
+          >
+            <TPResolveAIHub case={selectedCase} onBack={() => setSelectedCase(null)} />
           </motion.div>
         ) : null}
       </AnimatePresence>
