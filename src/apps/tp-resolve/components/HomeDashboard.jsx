@@ -116,20 +116,21 @@ export default function HomeDashboard({ onSelectCase, onNavigate }) {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-            TP Resolve Dashboard
+            AI Watchtower
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
-            Appeals & Grievances Management
+            Real-time insights, metrics & actionable items for appeals & grievances workflow
           </p>
         </div>
         
         {onNavigate && (
           <button
             onClick={() => onNavigate("store")}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-[#612D91] to-[#A64AC9] rounded-lg hover:shadow-lg transition-all"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-[#612D91] dark:hover:text-[#A64AC9] rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            title="Back to FAB Store"
           >
-            <Store className="w-4 h-4" />
-            Back to Store
+            <Store className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Store</span>
           </button>
         )}
       </div>

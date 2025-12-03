@@ -240,10 +240,11 @@ export default function ExecutiveDashboard({ onSelectClaim, onNavigate }) {
           {onNavigate && (
             <button
               onClick={() => onNavigate("store")}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-[#612D91] to-[#A64AC9] rounded-lg hover:shadow-lg transition-all duration-200 hover:scale-105 active:scale-95"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-[#612D91] dark:hover:text-[#A64AC9] rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              title="Back to FAB Store"
             >
-              <Store className="w-4 h-4" />
-              Back to Store
+              <Store className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Store</span>
             </button>
           )}
           <div className="flex items-center gap-2">

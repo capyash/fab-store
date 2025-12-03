@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { casesAPI } from "../services/api";
-import { Loader2, AlertCircle, RefreshCw, Clock } from "lucide-react";
+import { Loader2, AlertCircle, RefreshCw, Clock, Sparkles } from "lucide-react";
 
 const HEADERS = [
   { key: "caseNumber", label: "CASE NUMBER" },
@@ -257,9 +257,11 @@ export default function CasesTable({ onSelect }) {
                             e.stopPropagation();
                             onSelect?.(caseData);
                           }}
-                          className="text-[11px] px-2 py-0.5 rounded-full bg-white dark:bg-gray-900 text-[#612D91] dark:text-[#A64AC9] border border-[#612D91]/40 dark:border-[#A64AC9]/50 hover:bg-[#F5F3FF] dark:hover:bg-[#4B2E83]/40"
+                          className="inline-flex items-center justify-center text-[11px] px-2 py-0.5 rounded-full bg-white dark:bg-gray-900 text-[#612D91] dark:text-[#A64AC9] border border-[#612D91]/40 dark:border-[#A64AC9]/50 hover:bg-[#F5F3FF] dark:hover:bg-[#4B2E83]/40"
+                          title="Open in AI Watchtower"
                         >
-                          Open
+                          <Sparkles className="w-3.5 h-3.5" />
+                          <span className="sr-only">Open in AI Watchtower</span>
                         </button>
                       </div>
                     </td>

@@ -264,16 +264,18 @@ export default function ClaimsTable({ onSelect }) {
                               {c.lineItems.length} line item{c.lineItems.length > 1 ? "s" : ""}
                             </button>
                           )}
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onSelect?.(c);
-                            }}
-                            className="text-[11px] px-2 py-0.5 rounded-full bg-white dark:bg-gray-900 text-[#612D91] dark:text-[#A64AC9] border border-[#612D91]/40 dark:border-[#A64AC9]/50 hover:bg-[#F5F3FF] dark:hover:bg-[#4B2E83]/40"
-                          >
-                            Open
-                          </button>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onSelect?.(c);
+                          }}
+                          className="inline-flex items-center justify-center text-[11px] px-2 py-0.5 rounded-full bg-white dark:bg-gray-900 text-[#612D91] dark:text-[#A64AC9] border border-[#612D91]/40 dark:border-[#A64AC9]/50 hover:bg-[#F5F3FF] dark:hover:bg-[#4B2E83]/40"
+                          title="Open in AI Watchtower"
+                        >
+                          <Sparkles className="w-3.5 h-3.5" />
+                          <span className="sr-only">Open in AI Watchtower</span>
+                        </button>
                         </div>
                       </td>
                       <td className="px-4 py-3 text-gray-900 dark:text-gray-100">{c.member}</td>

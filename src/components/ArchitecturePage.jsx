@@ -14,8 +14,6 @@ import {
   Shield,
   Lock,
   FileText,
-  Network,
-  Cpu,
   TrendingUp,
   DollarSign,
   Clock,
@@ -47,7 +45,7 @@ function Tooltip({ content, children }) {
 
 export default function ArchitecturePage({ onBack }) {
   const [viewMode, setViewMode] = useState("architecture"); // architecture | roi
-  const [activeLayerId, setActiveLayerId] = useState("fab-store");
+  const [activeLayerId, setActiveLayerId] = useState(null);
 
   const sopNavigator = fabPlatforms.find((p) => p.id === "sop-navigator");
   const solutions = fabApps.filter((a) => a.platformId === "sop-navigator");
@@ -73,12 +71,12 @@ export default function ArchitecturePage({ onBack }) {
     },
     {
       id: "presentation",
-      name: "Presentation Layer",
-      subtitle: "Solution User Interfaces",
+      name: "Application Layer",
+      subtitle: "Application User Interfaces",
       status: "Built",
       icon: Users,
       description:
-        "Front-end surfaces for each solution: dashboards, worklists, AI consoles, and SOP viewers.",
+        "Front-end surfaces for each application: dashboards, worklists, AI consoles, and SOP viewers.",
       bullets: [
         "Cogniclaim UI: claims dashboards, worklists, AI Watchtower, SOP Viewer",
         "TP Resolve UI: case dashboards, deadline tracker, AI Watchtower",
@@ -217,6 +215,26 @@ export default function ArchitecturePage({ onBack }) {
     },
   ];
 
+  const platformLayers = ["platform"]
+    .map((id) => layers.find((l) => l.id === id))
+    .filter(Boolean);
+
+  const aiEngineLayers = ["orchestration", "agentic", "ai"]
+    .map((id) => layers.find((l) => l.id === id))
+    .filter(Boolean);
+
+  const backendLayers = ["backend"]
+    .map((id) => layers.find((l) => l.id === id))
+    .filter(Boolean);
+
+  const dataLayers = ["data"]
+    .map((id) => layers.find((l) => l.id === id))
+    .filter(Boolean);
+
+  const experienceLayers = ["fab-store"]
+    .map((id) => layers.find((l) => l.id === id))
+    .filter(Boolean);
+
   const roiMetrics = [
     {
       metric: "70%",
@@ -260,48 +278,38 @@ export default function ArchitecturePage({ onBack }) {
     },
   ];
 
-  const flowSteps = [
-    { id: "user", label: "User Input" },
-    { id: "fab-store", label: "FAB Store" },
-    { id: "presentation", label: "Solution UI" },
-    { id: "orchestration", label: "Orchestration" },
-    { id: "platform", label: "Platform Services" },
-    { id: "agentic", label: "Agentic Management" },
-    { id: "ai", label: "AI Reasoning" },
-    { id: "backend", label: "Backend Services" },
-    { id: "data", label: "Data & Infrastructure" },
-  ];
-
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#F7F8FF]">
       {/* Background to match FAB Store */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_18%,rgba(155,138,255,0.18),transparent_55%),radial-gradient(circle_at_75%_15%,rgba(118,196,255,0.16),transparent_55%),radial-gradient(circle_at_50%_85%,rgba(255,208,233,0.2),transparent_50%)] pointer-events-none" />
 
       <div className="relative flex flex-col min-h-screen">
-        {/* Header */}
-        <div className="sticky top-0 z-30 bg-white/90 backdrop-blur-xl border-b border-gray-200/70 shadow-sm">
-          <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
-            <div className="flex items-center gap-4">
+        {/* Header – mirror FAB Store shell */}
+        <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-xl border-b border-white/60 shadow-[0_12px_30px_rgba(15,14,63,0.08)]">
+          <div className="w-full px-5 md:px-10 py-3 md:py-4 flex items-center justify-between gap-6 flex-wrap">
+            <div className="flex items-center gap-4 flex-1 min-w-[260px]">
               <button
                 onClick={onBack}
                 className="p-2 rounded-lg hover:bg-gray-100 transition-colors border border-gray-200"
               >
                 <ArrowLeft className="w-5 h-5 text-gray-700" />
               </button>
-              <div>
-                <p className="text-[10px] uppercase tracking-[0.32em] text-gray-400">
-                  TP.ai
-                </p>
-                <h1 className="text-[1.4rem] md:text-[1.7rem] font-semibold text-gray-900 flex items-center gap-2 leading-tight">
-                  <Layers className="w-5 h-5 text-[#612D91]" />
-                  FAB Store Enterprise Architecture
-                </h1>
-                <p className="text-xs md:text-sm text-gray-600 font-medium">
-                  Teleperformance AI Platform · Board & CXO-ready overview
-                </p>
+              <div className="flex items-center gap-3">
+                <img src="/tp-logo.svg" alt="TP.ai" className="h-9 w-auto" />
+                <div>
+                  <p className="text-[11px] uppercase tracking-[0.35em] text-gray-400">
+                    TP.ai
+                  </p>
+                  <p className="text-base md:text-lg font-semibold text-gray-900">
+                    FAB Store
+                  </p>
+                  <p className="text-[11px] md:text-xs text-gray-600">
+                    Enterprise Architecture Overview
+                  </p>
+                </div>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <button
                 onClick={() => setViewMode("architecture")}
                 className={`px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-[0.85rem] font-semibold transition-all ${
@@ -322,12 +330,23 @@ export default function ArchitecturePage({ onBack }) {
               >
                 ROI & Value
               </button>
+              {/* Static user pill to match FAB Store header */}
+              <div className="hidden sm:flex items-center gap-2 rounded-full bg-white border border-gray-200 px-2.5 py-1 shadow-sm">
+                <img
+                  src="/vkv.jpeg"
+                  alt="Vinod"
+                  className="w-7 h-7 rounded-full object-cover"
+                />
+                <span className="text-xs md:text-sm font-medium text-gray-800">
+                  Vinod
+                </span>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Main Content */}
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-10 flex-1">
+        <div className="w-full px-5 md:px-10 py-7 md:py-9 flex-1">
           <AnimatePresence mode="wait">
             {viewMode === "architecture" && (
               <motion.div
@@ -335,32 +354,37 @@ export default function ArchitecturePage({ onBack }) {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
-                className="space-y-4 md:space-y-5"
+                className="space-y-3 md:space-y-4"
               >
-                <div className="grid gap-4 md:gap-5 md:grid-cols-12 items-start">
-                  {/* Left: bands */}
-                  <div className="md:col-span-9 space-y-4 md:space-y-5">
-                    {/* Layer stack grouped into bands */}
-                  {/* Band 1: Experience & Solutions */}
-                  <section className="rounded-2xl bg-gradient-to-r from-indigo-50 via-white to-purple-50 border border-indigo-100 p-4 md:p-5 space-y-3">
+                <div className="space-y-3 md:space-y-4">
+                  {/* Layer stack grouped into bands */}
+                  {/* Band 1: FAB Store */}
+                  <section className="rounded-2xl bg-gradient-to-r from-indigo-100 via-indigo-50 to-sky-50 border border-indigo-200 shadow-md p-3 md:p-4 space-y-3">
                     <div className="flex items-center justify-between flex-wrap gap-2">
                       <div>
-                        <p className="text-[11px] uppercase tracking-[0.28em] text-indigo-500">
-                          Experience & Solutions
+                        <p className="text-base md:text-lg font-semibold tracking-[0.18em] text-indigo-500 uppercase">
+                          FAB Store
                         </p>
-                        <h3 className="text-base md:text-lg font-semibold text-gray-900">
-                          How clients and leaders experience TP.ai today
-                        </h3>
+                        <p className="text-xs md:text-sm text-gray-600 mt-1">
+                          Experience layer for TP.ai applications and platforms.
+                        </p>
                       </div>
-                      <div className="text-[11px] md:text-xs text-gray-600">
-                        <span className="font-semibold">Solutions live today:</span>{" "}
-                        Cogniclaim · TP Resolve
+                      <div className="text-[11px] md:text-xs text-gray-600 text-right">
+                        <div>
+                          <span className="font-semibold">Applications today:</span>{" "}
+                          Cogniclaim · TP Resolve
+                        </div>
+                        <div>
+                          <span className="font-semibold">Models:</span>{" "}
+                          GPT‑4 / GPT‑4o‑mini (extensible)
+                        </div>
                       </div>
                     </div>
-                    <div className="space-y-3">
-                      {layers.slice(0, 3).map((layer, idx) => {
+                    <div className="grid gap-3 md:gap-4 md:grid-cols-1">
+                      {experienceLayers.map((layer, idx) => {
                         const isActive = layer.id === activeLayerId;
                         const visibleBullets = isActive ? layer.bullets : layer.bullets.slice(0, 2);
+                        const isFabStore = layer.id === "fab-store";
                         return (
                           <motion.button
                             key={layer.id}
@@ -369,25 +393,19 @@ export default function ArchitecturePage({ onBack }) {
                             initial={{ opacity: 0, y: 8 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: idx * 0.05 }}
-                            className={`relative w-full text-left p-4 md:p-5 rounded-xl border bg-white/95 transition-all ${
+                            className={`relative w-full text-left p-4 md:p-5 rounded-xl border bg-white/95 transition-all duration-150 ${
                               isActive
-                                ? "border-[#612D91]/60 shadow-xl scale-[1.01]"
-                                : "border-gray-200/80 hover:border-[#612D91]/40 hover:shadow-md"
-                            }`}
+                                ? "border-[#612D91]/60 shadow-md scale-[1.01]"
+                                : "border-gray-200/80 hover:border-[#2563EB]/50 hover:bg-white hover:shadow-md hover:scale-[1.01]"
+                            } ${isFabStore ? "md:col-span-2" : ""}`}
                           >
-                            <div className="flex items-start gap-4">
-                              <div
-                                className={`p-3 rounded-xl bg-gradient-to-r ${
-                                  isActive ? "from-[#612D91] to-[#A64AC9]" : "from-gray-500 to-gray-700"
-                                } text-white`}
-                              >
-                                <layer.icon className="w-5 h-5" />
+                            <div className="flex items-start gap-3">
+                              <div className="pt-0.5">
+                                <layer.icon className="w-6 h-6 text-[#2563EB]" />
                               </div>
                               <div className="flex-1 space-y-1">
                                 <div className="flex items-center flex-wrap gap-2">
-                                  <h2 className="text-sm md:text-base font-semibold text-gray-900">
-                                    {layer.name}
-                                  </h2>
+                                  {/* Band header already shows \"Platform Layer\" – keep subtitle + status only here */}
                                   <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-gray-100 text-gray-700">
                                     {layer.subtitle}
                                   </span>
@@ -402,50 +420,238 @@ export default function ArchitecturePage({ onBack }) {
                                   >
                                     {layer.status}
                                   </span>
-                                  <span className="ml-auto flex items-center gap-1 text-[10px] text-gray-500">
-                                    {isActive ? "Collapse details" : "Expand details"}
-                                    <ChevronRight
-                                      className={`w-3 h-3 transition-transform ${
-                                        isActive ? "rotate-90" : ""
-                                      }`}
-                                    />
+                                </div>
+                                <p className="text-[11px] md:text-xs text-gray-600">
+                                  {layer.description}
+                                </p>
+
+                                {layer.id === "fab-store" && (
+                                  <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3 text-xs md:text-sm">
+                                    {/* Applications box */}
+                                    <div className="rounded-xl border border-indigo-200 bg-indigo-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                                      <div className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
+                                        Applications
+                                      </div>
+                                      <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                                        TP.ai solutions launched from FAB Store for different industries.
+                                      </p>
+                                      <div className="flex flex-wrap gap-1.5">
+                                        <span className="px-2.5 py-1 rounded-full bg-white text-indigo-700 text-[11px] md:text-xs font-semibold border border-indigo-200">
+                                          Cogniclaim
+                                        </span>
+                                        <span className="px-2.5 py-1 rounded-full bg-white text-indigo-700 text-[11px] md:text-xs font-semibold border border-indigo-200">
+                                          TP Resolve
+                                        </span>
+                                        <span className="px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-800 text-[11px] md:text-xs font-semibold border border-indigo-200">
+                                          Future industry applications
+                                        </span>
+                                      </div>
+                                    </div>
+
+                                    {/* Platforms box */}
+                                    <div className="rounded-xl border border-indigo-200 bg-indigo-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                                      <div className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
+                                        Platforms
+                                      </div>
+                                      <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                                        Reusable engines (like SOP Navigator) that multiple applications can build on.
+                                      </p>
+                                      <div className="flex flex-wrap gap-1.5">
+                                        <span className="px-2.5 py-1 rounded-full bg-white text-indigo-700 text-[11px] md:text-xs font-semibold border border-indigo-200">
+                                          SOP Navigator
+                                        </span>
+                                        <span className="px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-800 text-[11px] md:text-xs font-semibold border border-indigo-200">
+                                          Platform 2 (Field Service)
+                                        </span>
+                                        <span className="px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-800 text-[11px] md:text-xs font-semibold border border-indigo-200">
+                                          Platform 3 (CX / others)
+                                        </span>
+                                      </div>
+                                    </div>
+
+                                    {/* Models box */}
+                                    <div className="rounded-xl border border-indigo-200 bg-indigo-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                                      <div className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
+                                        Models
+                                      </div>
+                                      <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                                        Foundation models available to platforms and apps via the AI Engine.
+                                      </p>
+                                      <div className="flex flex-wrap gap-1.5">
+                                        <span className="px-2.5 py-1 rounded-full bg-white text-indigo-700 text-[11px] md:text-xs font-semibold border border-indigo-200">
+                                          GPT‑4
+                                        </span>
+                                        <span className="px-2.5 py-1 rounded-full bg-white text-indigo-700 text-[11px] md:text-xs font-semibold border border-indigo-200">
+                                          GPT‑4o‑mini
+                                        </span>
+                                        <span className="px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-800 text-[11px] md:text-xs font-semibold border border-indigo-200">
+                                          Azure / GCP models (future)
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                            {/* For FAB Store we show the big Solutions/Platforms/Models chips.
+                                For Presentation we jump straight to shells + key UI surfaces.
+                                Other experience cards (if any) can still use the simple bullet list. */}
+                            {/* No additional cards in this band beyond the FAB Store hero tile */}
+
+                            {/* Per-layer demo talk-track removed to keep view clean for presentation */}
+                          </motion.button>
+                        );
+                      })}
+                    </div>
+                  </section>
+
+                  {/* Band 2A: Platform Layer */}
+                  <section className="rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50 to-violet-50 border border-emerald-100 p-3 md:p-4 space-y-3">
+                    <div className="flex items-center justify-between flex-wrap gap-2">
+                      <div>
+                        <p className="text-base md:text-lg font-semibold tracking-[0.18em] text-emerald-500 uppercase">
+                          Platform Layer
+                        </p>
+                        <p className="text-xs md:text-sm text-gray-600 mt-1">
+                          Reusable business platforms that every solution can plug into.
+                        </p>
+                      </div>
+                      <div className="text-[11px] md:text-xs text-gray-600 text-right">
+                        <div>
+                          <span className="font-semibold">Current platform:</span>{" "}
+                          SOP Navigator
+                        </div>
+                        <div>
+                          <span className="font-semibold">Models:</span>{" "}
+                          GPT‑4 / GPT‑4o‑mini (swappable)
+                        </div>
+                      </div>
+                    </div>
+                    <div className="grid gap-3 md:gap-4 md:grid-cols-1">
+                      {platformLayers.map((layer, idx) => {
+                        const isActive = layer.id === activeLayerId;
+                        const visibleBullets = isActive ? layer.bullets : layer.bullets.slice(0, 2);
+                        const isPlatformCore = layer.id === "platform";
+                        return (
+                          <motion.button
+                            key={layer.id}
+                            type="button"
+                            onClick={() => setActiveLayerId(layer.id)}
+                            initial={{ opacity: 0, y: 8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: idx * 0.05 }}
+                            className={`relative w-full text-left p-4 md:p-5 rounded-xl border bg-white/95 transition-all duration-150 ${
+                              isActive
+                                ? "border-[#0F766E]/60 shadow-md scale-[1.01]"
+                                : "border-gray-200/80 hover:border-[#0F766E]/50 hover:bg-white hover:shadow-md hover:scale-[1.01]"
+                            }`}
+                          >
+                            <div className="flex items-start gap-3">
+                              <div className="pt-0.5">
+                                <layer.icon className="w-6 h-6 text-emerald-700" />
+                              </div>
+                              <div className="flex-1 space-y-1">
+                                <div className="flex items-center flex-wrap gap-2">
+                                  {/* Band header already shows "Platform Layer" – show subtitle + status only here */}
+                                  <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-gray-100 text-gray-700">
+                                    {layer.subtitle}
+                                  </span>
+                                  <span
+                                    className={`px-2.5 py-1 rounded-full text-[10px] font-semibold ${
+                                      layer.status === "Built"
+                                        ? "bg-green-100 text-green-700"
+                                        : layer.status === "Partially Built"
+                                        ? "bg-amber-100 text-amber-700"
+                                        : "bg-gray-100 text-gray-700"
+                                    }`}
+                                  >
+                                    {layer.status}
                                   </span>
                                 </div>
-                                <p className="text-xs md:text-[0.85rem] text-gray-700">
+                                <p className="text-[11px] md:text-xs text-gray-600">
                                   {layer.description}
                                 </p>
                               </div>
                             </div>
-                            <ul className="mt-3 space-y-1.5 text-xs md:text-sm text-gray-700 ml-12">
-                              {visibleBullets.map((b) => (
-                                <li key={b} className="flex items-start gap-2">
-                                  <ChevronRight className="w-3 h-3 mt-1 text-[#612D91]" />
-                                  <span>{b}</span>
-                                </li>
-                              ))}
-                              {!isActive && layer.details && (
-                                <li className="flex items-start gap-2 text-[11px] text-gray-500">
-                                  <span className="ml-4">
-                                    …click row to see how to narrate this layer
-                                  </span>
-                                </li>
-                              )}
-                            </ul>
+                            {layer.id === "platform" && (
+                              <div className="mt-4 ml-12 grid grid-cols-1 md:grid-cols-3 gap-3 text-xs md:text-sm">
+                                {/* Components */}
+                                <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                                  <div className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
+                                    Components
+                                  </div>
+                                  <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                                    Reusable UI building blocks shared across all applications.
+                                  </p>
+                                  <div className="flex flex-wrap gap-1.5">
+                                    <span className="px-2.5 py-1 rounded-full bg-white text-emerald-700 text-[11px] md:text-xs font-semibold border border-emerald-200">
+                                      ReasoningCard
+                                    </span>
+                                    <span className="px-2.5 py-1 rounded-full bg-white text-emerald-700 text-[11px] md:text-xs font-semibold border border-emerald-200">
+                                      SOPViewer
+                                    </span>
+                                    <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] md:text-xs font-semibold border border-emerald-200">
+                                      Unified AI Console
+                                    </span>
+                                  </div>
+                                </div>
 
-                            {isActive && layer.details && (
-                              <div className="mt-4 ml-12 p-4 rounded-xl bg-gray-50 border border-gray-200">
-                                <p className="text-xs font-semibold text-gray-800 mb-2">
-                                  How to talk about this layer in the demo
-                                </p>
-                                <ul className="space-y-1.5 text-xs md:text-sm text-gray-700">
-                                  {layer.details.map((d) => (
-                                    <li key={d} className="flex items-start gap-2">
-                                      <Info className="w-3.5 h-3.5 mt-0.5 text-[#612D91]" />
-                                      <span>{d}</span>
-                                    </li>
-                                  ))}
-                                </ul>
+                                {/* Platform services */}
+                                <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                                  <div className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
+                                    Platform Services
+                                  </div>
+                                  <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                                    Common SOP and workflow APIs consumed by every application.
+                                  </p>
+                                  <div className="flex flex-wrap gap-1.5">
+                                    <span className="px-2.5 py-1 rounded-full bg-white text-emerald-700 text-[11px] md:text-xs font-semibold border border-emerald-200">
+                                      SOP APIs
+                                    </span>
+                                    <span className="px-2.5 py-1 rounded-full bg-white text-emerald-700 text-[11px] md:text-xs font-semibold border border-emerald-200">
+                                      Chat / Analysis
+                                    </span>
+                                    <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] md:text-xs font-semibold border border-emerald-200">
+                                      Orchestration hooks
+                                    </span>
+                                  </div>
+                                </div>
+
+                                {/* Governance */}
+                                <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                                  <div className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
+                                    Governance
+                                  </div>
+                                  <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                                    Centralised auth, logging and guardrails for all AI‑driven flows.
+                                  </p>
+                                  <div className="flex flex-wrap gap-1.5">
+                                    <span className="px-2.5 py-1 rounded-full bg-white text-emerald-700 text-[11px] md:text-xs font-semibold border border-emerald-200">
+                                      Auth & roles
+                                    </span>
+                                    <span className="px-2.5 py-1 rounded-full bg-white text-emerald-700 text-[11px] md:text-xs font-semibold border border-emerald-200">
+                                      Logging
+                                    </span>
+                                    <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] md:text-xs font-semibold border border-emerald-200">
+                                      Guardrails & policies
+                                    </span>
+                                  </div>
+                                </div>
                               </div>
+                            )}
+
+                            {layer.id !== "platform" && (
+                              <ul className="mt-3 grid grid-cols-1 gap-1.5 text-xs md:text-sm text-gray-700 ml-12">
+                                {visibleBullets.map((b) => (
+                                  <li
+                                    key={b}
+                                    className="flex items-start gap-2 rounded-lg bg-emerald-50 px-3 py-1.5"
+                                  >
+                                    <ChevronRight className="w-3 h-3 mt-1 text-emerald-700" />
+                                    <span>{b}</span>
+                                  </li>
+                                ))}
+                              </ul>
                             )}
                           </motion.button>
                         );
@@ -453,26 +659,110 @@ export default function ArchitecturePage({ onBack }) {
                     </div>
                   </section>
 
-                  {/* Band 2: Platform & AI Engine */}
-                  <section className="rounded-2xl bg-gradient-to-r from-emerald-50 via-white to-violet-50 border border-emerald-100 p-4 md:p-5 space-y-3">
+                  {/* Band 2B: AI Engine & Orchestration */}
+                  <section className="rounded-2xl bg-gradient-to-r from-cyan-50 via-sky-50 to-emerald-50 border border-cyan-100 p-3 md:p-4 space-y-3">
                     <div className="flex items-center justify-between flex-wrap gap-2">
                       <div>
-                        <p className="text-[11px] uppercase tracking-[0.28em] text-emerald-500">
-                          Platform & AI Engine
+                        <p className="text-base md:text-lg font-semibold tracking-[0.18em] text-cyan-600 uppercase">
+                          AI Engine & Agentic Layer
                         </p>
-                        <h3 className="text-base md:text-lg font-semibold text-gray-900">
-                          Reusable capabilities that power every solution
-                        </h3>
+                        <p className="text-xs md:text-sm text-gray-600 mt-1">
+                          How models, agents, and orchestration work together behind the scenes.
+                        </p>
                       </div>
-                      <div className="text-[11px] md:text-xs text-gray-600">
-                        <span className="font-semibold">Current platform:</span>{" "}
-                        SOP Navigator (more coming on roadmap)
+                      <div className="text-[11px] md:text-xs text-gray-600 text-right">
+                        <div>
+                          <span className="font-semibold">Models:</span>{" "}
+                          GPT‑4 · GPT‑4o‑mini (Azure / GCP‑ready)
+                        </div>
                       </div>
                     </div>
-                    <div className="space-y-3">
-                      {layers.slice(3, 7).map((layer, idx) => {
+                    {/* Single hero card with internal sub‑boxes to match FAB Store / Platform style */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="rounded-xl border border-cyan-100 bg-white/95 p-4 md:p-5 shadow-sm transition-all duration-150 hover:border-cyan-300 hover:shadow-md hover:scale-[1.01]"
+                    >
+                      <div className="flex items-start gap-3 mb-3">
+                        <Brain className="w-6 h-6 text-cyan-700" />
+                        <div className="flex-1">
+                          <div className="flex items-center flex-wrap gap-2">
+                            <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-cyan-50 text-cyan-700 border border-cyan-200">
+                              Orchestration · Agents · Models
+                            </span>
+                          </div>
+                          <p className="mt-1 text-[11px] md:text-xs text-gray-600">
+                            Multi‑step reasoning, SOP matching and orchestration shared by all TP.ai platforms and applications.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs md:text-sm mt-4">
+                        {/* Orchestration */}
+                        <div className="rounded-xl border border-cyan-100 bg-cyan-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                          <div className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
+                            Orchestration Layer
+                          </div>
+                          <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                            Routes and sequences calls between UIs, platforms, AI and data services.
+                          </p>
+                          <ul className="space-y-1 text-gray-700 text-[11px] md:text-xs">
+                            <li>API gateway & routing (Express routes, auth hooks)</li>
+                            <li>Planned workflow engine & event bus for complex flows</li>
+                            <li>Central place for enforcing policies & cross‑cutting rules</li>
+                          </ul>
+                        </div>
+                        {/* Agentic management */}
+                        <div className="rounded-xl border border-cyan-100 bg-cyan-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                          <div className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
+                            Agentic Management
+                          </div>
+                          <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                            Coordinates which AI agents run when, and how they hand off to each other.
+                          </p>
+                          <ul className="space-y-1 text-gray-700 text-[11px] md:text-xs">
+                            <li>Implements multi‑agent chains (Analysis → SOP Match → Risk → Recommendation)</li>
+                            <li>Tracks agent responsibilities and hand‑offs</li>
+                            <li>Planned: full agent registry and monitoring</li>
+                          </ul>
+                        </div>
+                        {/* AI services */}
+                        <div className="rounded-xl border border-cyan-100 bg-cyan-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                          <div className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
+                            AI Services Layer
+                          </div>
+                          <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                            Provides GPT‑4/4o‑based reasoning, RAG and streaming responses.
+                          </p>
+                          <ul className="space-y-1 text-gray-700 text-[11px] md:text-xs">
+                            <li>GPT‑4 / GPT‑4o‑mini via LangChain (frontend) and Node (backend)</li>
+                            <li>Multi‑agent reasoning with confidence scoring</li>
+                            <li>RAG against SOP data + Server‑Sent Events for live streaming</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </section>
+
+                  {/* Band 3A: Backend / Execution Engine */}
+                  <section className="rounded-2xl bg-gradient-to-r from-sky-50 via-white to-slate-50 border border-slate-300 shadow-md p-4 md:p-5 space-y-3">
+                    <div className="flex items-center justify-between flex-wrap gap-2">
+                      <div>
+                        <p className="text-base md:text-lg font-semibold tracking-[0.18em] text-slate-600 uppercase">
+                          Backend Execution Engine
+                        </p>
+                        <p className="text-xs md:text-sm text-gray-600 mt-1">
+                          Node/Express services that expose AI and data to the outside world.
+                        </p>
+                      </div>
+                      <div className="text-[11px] md:text-xs text-gray-600 text-right">
+                        <div className="font-semibold">
+                          APIs today: <span className="font-normal">/ai/analyze · /ai/chat · /health</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="grid gap-3 md:gap-4 md:grid-cols-1">
+                      {backendLayers.map((layer, idx) => {
                         const isActive = layer.id === activeLayerId;
-                        const visibleBullets = isActive ? layer.bullets : layer.bullets.slice(0, 2);
                         return (
                           <motion.button
                             key={layer.id}
@@ -481,19 +771,15 @@ export default function ArchitecturePage({ onBack }) {
                             initial={{ opacity: 0, y: 8 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: idx * 0.05 }}
-                            className={`relative w-full text-left p-4 md:p-5 rounded-xl border bg-white/95 transition-all ${
+                            className={`relative w-full text-left p-4 md:p-5 rounded-xl border bg-white/95 transition-all duration-150 ${
                               isActive
-                                ? "border-[#0F766E]/60 shadow-xl scale-[1.01]"
-                                : "border-gray-200/80 hover:border-[#0F766E]/40 hover:shadow-md"
+                                ? "border-slate-500/70 shadow-md scale-[1.01]"
+                                : "border-gray-200/80 hover:border-slate-500/60 hover:bg-white hover:shadow-md hover:scale-[1.01]"
                             }`}
                           >
-                            <div className="flex items-start gap-4">
-                              <div
-                                className={`p-3 rounded-xl bg-gradient-to-r ${
-                                  isActive ? "from-emerald-600 to-teal-500" : "from-gray-500 to-gray-700"
-                                } text-white`}
-                              >
-                                <layer.icon className="w-5 h-5" />
+                            <div className="flex items-start gap-3">
+                              <div className="pt-0.5">
+                                <layer.icon className="w-6 h-6 text-slate-700" />
                               </div>
                               <div className="flex-1 space-y-1">
                                 <div className="flex items-center flex-wrap gap-2">
@@ -503,295 +789,261 @@ export default function ArchitecturePage({ onBack }) {
                                   <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-gray-100 text-gray-700">
                                     {layer.subtitle}
                                   </span>
-                                  <span
-                                    className={`px-2.5 py-1 rounded-full text-[10px] font-semibold ${
-                                      layer.status === "Built"
-                                        ? "bg-green-100 text-green-700"
-                                        : layer.status === "Partially Built"
-                                        ? "bg-amber-100 text-amber-700"
-                                        : "bg-gray-100 text-gray-700"
-                                    }`}
-                                  >
+                                  <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-green-100 text-green-700">
                                     {layer.status}
                                   </span>
-                                  <span className="ml-auto flex items-center gap-1 text-[10px] text-gray-500">
-                                    {isActive ? "Collapse details" : "Expand details"}
-                                    <ChevronRight
-                                      className={`w-3 h-3 transition-transform ${
-                                        isActive ? "rotate-90" : ""
-                                      }`}
-                                    />
-                                  </span>
                                 </div>
-                                <p className="text-xs md:text-[0.85rem] text-gray-700">
+                                <p className="text-[11px] md:text-xs text-gray-600">
                                   {layer.description}
                                 </p>
+                                {/* Highlight key backend capabilities as chips, similar to other bands */}
+                                <div className="mt-3 grid grid-cols-1 md:grid-cols-3 gap-3 text-xs md:text-sm">
+                                  <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                                    <div className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
+                                      APIs
+                                    </div>
+                                    <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                                      Public endpoints that surface AI reasoning and chat into UIs and systems.
+                                    </p>
+                                    <div className="flex flex-wrap gap-1.5">
+                                      <span className="px-2.5 py-1 rounded-full bg-white text-slate-800 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                        /ai/analyze
+                                      </span>
+                                      <span className="px-2.5 py-1 rounded-full bg-white text-slate-800 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                        /ai/chat
+                                      </span>
+                                      <span className="px-2.5 py-1 rounded-full bg-slate-100 text-slate-900 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                        /health
+                                      </span>
+                                    </div>
+                                  </div>
+                                  <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                                    <div className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
+                                      Streaming
+                                    </div>
+                                    <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                                      Keeps leaders and agents updated in real time as AI thinks.
+                                    </p>
+                                    <div className="flex flex-wrap gap-1.5">
+                                      <span className="px-2.5 py-1 rounded-full bg-white text-slate-800 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                        SSE reasoning
+                                      </span>
+                                      <span className="px-2.5 py-1 rounded-full bg-slate-100 text-slate-900 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                        Live chat updates
+                                      </span>
+                                    </div>
+                                  </div>
+                                  <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                                    <div className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
+                                      Integration Ready
+                                    </div>
+                                    <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                                      Designed to plug into TP client systems and event streams.
+                                    </p>
+                                    <div className="flex flex-wrap gap-1.5">
+                                      <span className="px-2.5 py-1 rounded-full bg-white text-slate-800 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                        TP client systems
+                                      </span>
+                                      <span className="px-2.5 py-1 rounded-full bg-slate-100 text-slate-900 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                        Queues / events
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
                             </div>
-                            <ul className="mt-3 space-y-1.5 text-xs md:text-sm text-gray-700 ml-12">
-                              {visibleBullets.map((b) => (
-                                <li key={b} className="flex items-start gap-2">
-                                  <ChevronRight className="w-3 h-3 mt-1 text-emerald-700" />
-                                  <span>{b}</span>
-                                </li>
-                              ))}
-                              {!isActive && layer.details && (
-                                <li className="flex items-start gap-2 text-[11px] text-gray-500">
-                                  <span className="ml-4">…click row to see how to narrate this layer</span>
-                                </li>
-                              )}
-                            </ul>
-
-                            {isActive && layer.details && (
-                              <div className="mt-4 ml-12 p-4 rounded-xl bg-emerald-50/70 border border-emerald-100">
-                                <p className="text-xs font-semibold text-emerald-900 mb-2">
-                                  How to talk about this layer in the demo
-                                </p>
-                                <ul className="space-y-1.5 text-xs md:text-sm text-emerald-900/90">
-                                  {layer.details.map((d) => (
-                                    <li key={d} className="flex items-start gap-2">
-                                      <Info className="w-3.5 h-3.5 mt-0.5 text-emerald-700" />
-                                      <span>{d}</span>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            )}
                           </motion.button>
                         );
                       })}
                     </div>
                   </section>
 
-                  {/* Band 3: Engine, Data & Infrastructure */}
-                  <section className="rounded-2xl bg-gradient-to-r from-slate-50 via-white to-slate-100 border border-slate-200 p-4 md:p-5 space-y-3">
+                  {/* Band 3B: Data & Infrastructure */}
+                  <section className="rounded-2xl bg-gradient-to-r from-teal-50 via-white to-slate-50 border border-slate-300 shadow-md p-4 md:p-5 space-y-3">
                     <div className="flex items-center justify-between flex-wrap gap-2">
                       <div>
-                        <p className="text-[11px] uppercase tracking-[0.28em] text-slate-500">
-                          Engine, Data & Infra
+                        <p className="text-base md:text-lg font-semibold tracking-[0.18em] text-slate-700 uppercase">
+                          Data & Infrastructure
                         </p>
-                        <h3 className="text-base md:text-lg font-semibold text-gray-900">
-                          Where APIs, data, and cloud bring it all together
-                        </h3>
+                        <p className="text-xs md:text-sm text-slate-600 mt-1">
+                          Where SOPs, claims/cases and configuration actually live and scale.
+                        </p>
                       </div>
-                      <div className="text-[11px] md:text-xs text-gray-600">
-                        <span className="font-semibold">Today:</span>{" "}
-                        Node/Express backend + in‑repo SOP & demo data
+                      <div className="text-[11px] md:text-xs text-slate-200 text-right">
+                        <div>
+                          <span className="font-semibold">Cloud targets:</span>{" "}
+                          Azure · GCP · AWS · Client VPC
+                        </div>
                       </div>
                     </div>
-                    <div className="space-y-3">
-                      {layers.slice(7, 9).map((layer, idx) => {
+                    <div className="grid gap-3 md:gap-4 md:grid-cols-1">
+                      {dataLayers.map((layer, idx) => {
                         const isActive = layer.id === activeLayerId;
-                        const visibleBullets = isActive ? layer.bullets : layer.bullets.slice(0, 2);
+                        const visibleBullets = isActive ? layer.bullets : layer.bullets.slice(0, 3);
                         return (
-                          <motion.button
+                          <motion.div
                             key={layer.id}
-                            type="button"
-                            onClick={() => setActiveLayerId(layer.id)}
                             initial={{ opacity: 0, y: 8 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: idx * 0.05 }}
-                            className={`relative w-full text-left p-4 md:p-5 rounded-xl border bg-white/95 transition-all ${
-                              isActive
-                                ? "border-slate-500/70 shadow-xl scale-[1.01]"
-                                : "border-gray-200/80 hover:border-slate-400 hover:shadow-md"
-                            }`}
+                            className="relative w-full text-left p-4 md:p-5 rounded-xl border border-slate-200 bg-white text-gray-900"
                           >
-                            <div className="flex items-start gap-4">
-                              <div
-                                className={`p-3 rounded-xl bg-gradient-to-r ${
-                                  isActive ? "from-slate-700 to-slate-900" : "from-gray-500 to-gray-700"
-                                } text-white`}
-                              >
-                                <layer.icon className="w-5 h-5" />
+                            <div className="flex items-start gap-3">
+                              <div className="pt-0.5">
+                                <layer.icon className="w-6 h-6 text-slate-700" />
                               </div>
                               <div className="flex-1 space-y-1">
                                 <div className="flex items-center flex-wrap gap-2">
-                                  <h2 className="text-sm md:text-base font-semibold text-gray-900">
-                                    {layer.name}
-                                  </h2>
-                                  <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-gray-100 text-gray-700">
+                                  {/* Title already shown in band header above; keep only subtitle + status here */}
+                                  <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-800 border border-slate-200">
                                     {layer.subtitle}
                                   </span>
-                                  <span
-                                    className={`px-2.5 py-1 rounded-full text-[10px] font-semibold ${
-                                      layer.status === "Built"
-                                        ? "bg-green-100 text-green-700"
-                                        : layer.status === "Partially Built"
-                                        ? "bg-amber-100 text-amber-700"
-                                        : "bg-gray-100 text-gray-700"
-                                    }`}
-                                  >
+                                  <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-amber-50 text-amber-700">
                                     {layer.status}
                                   </span>
-                                  <span className="ml-auto flex items-center gap-1 text-[10px] text-gray-500">
-                                    {isActive ? "Collapse details" : "Expand details"}
-                                    <ChevronRight
-                                      className={`w-3 h-3 transition-transform ${
-                                        isActive ? "rotate-90" : ""
-                                      }`}
-                                    />
-                                  </span>
                                 </div>
-                                <p className="text-xs md:text-[0.85rem] text-gray-700">
+                                <p className="text-[11px] md:text-xs text-slate-100/90">
                                   {layer.description}
                                 </p>
+
+                                <div className="mt-4 ml-2 grid grid-cols-1 md:grid-cols-3 gap-3 text-xs md:text-sm">
+                                  {/* APIs */}
+                                  <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                                    <div className="font-semibold text-slate-900 mb-2 text-sm md:text-base">
+                                      APIs
+                                    </div>
+                                    <p className="text-[11px] md:text-xs text-slate-600 mb-1">
+                                      Unified REST endpoints that expose AI reasoning, SOP lookup and core operations.
+                                    </p>
+                                    <div className="flex flex-wrap gap-1.5">
+                                      <span className="px-2.5 py-1 rounded-full bg-white text-slate-800 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                        Claims / Cases
+                                      </span>
+                                      <span className="px-2.5 py-1 rounded-full bg-white text-slate-800 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                        SOP APIs
+                                      </span>
+                                      <span className="px-2.5 py-1 rounded-full bg-slate-100 text-slate-900 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                        Event / webhook endpoints
+                                      </span>
+                                    </div>
+                                  </div>
+
+                                  {/* Data stores */}
+                                  <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                                    <div className="font-semibold text-slate-900 mb-2 text-sm md:text-base">
+                                      Data Stores
+                                    </div>
+                                    <p className="text-[11px] md:text-xs text-slate-600 mb-1">
+                                      Central stores for SOP content, claims/cases, embeddings and configuration.
+                                    </p>
+                                    <div className="flex flex-wrap gap-1.5">
+                                      <span className="px-2.5 py-1 rounded-full bg-white text-slate-800 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                        SOP library
+                                      </span>
+                                      <span className="px-2.5 py-1 rounded-full bg-white text-slate-800 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                        Vector index
+                                      </span>
+                                      <span className="px-2.5 py-1 rounded-full bg-slate-100 text-slate-900 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                        Claim / case stores
+                                      </span>
+                                    </div>
+                                  </div>
+
+                                  {/* Ops & tooling */}
+                                  <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                                    <div className="font-semibold text-slate-900 mb-2 text-sm md:text-base">
+                                      Ops & Tooling
+                                    </div>
+                                    <p className="text-[11px] md:text-xs text-slate-600 mb-1">
+                                      Monitoring, deployment and observability to keep models and services healthy.
+                                    </p>
+                                    <div className="flex flex-wrap gap-1.5">
+                                      <span className="px-2.5 py-1 rounded-full bg-white text-slate-800 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                        Monitoring
+                                      </span>
+                                      <span className="px-2.5 py-1 rounded-full bg-white text-slate-800 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                        Logging
+                                      </span>
+                                      <span className="px-2.5 py-1 rounded-full bg-slate-100 text-slate-900 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                        Azure / GCP / AWS deploys
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
                             </div>
-                            <ul className="mt-3 space-y-1.5 text-xs md:text-sm text-gray-700 ml-12">
-                              {visibleBullets.map((b) => (
-                                <li key={b} className="flex items-start gap-2">
-                                  <ChevronRight className="w-3 h-3 mt-1 text-slate-700" />
-                                  <span>{b}</span>
-                                </li>
-                              ))}
-                              {!isActive && layer.details && (
-                                <li className="flex items-start gap-2 text-[11px] text-gray-500">
-                                  <span className="ml-4">…click row to see how to narrate this layer</span>
-                                </li>
-                              )}
-                            </ul>
-
-                            {isActive && layer.details && (
-                              <div className="mt-4 ml-12 p-4 rounded-xl bg-slate-50 border border-slate-200">
-                                <p className="text-xs font-semibold text-slate-900 mb-2">
-                                  How to talk about this layer in the demo
-                                </p>
-                                <ul className="space-y-1.5 text-xs md:text-sm text-slate-900/90">
-                                  {layer.details.map((d) => (
-                                    <li key={d} className="flex items-start gap-2">
-                                      <Info className="w-3.5 h-3.5 mt-0.5 text-slate-700" />
-                                      <span>{d}</span>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            )}
-                          </motion.button>
+                          </motion.div>
                         );
                       })}
                     </div>
                   </section>
 
                   {/* Cross-cutting concerns */}
-                  <div className="bg-white/95 rounded-2xl shadow-lg p-5 md:p-6 border border-white/60">
-                    <h3 className="text-sm md:text-base font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                      <Shield className="w-5 h-5 text-gray-700" />
-                      Cross-Cutting Concerns
-                    </h3>
+                  <div className="rounded-2xl bg-gradient-to-r from-gray-50 via-white to-gray-50 border border-gray-200 shadow-sm p-4 md:p-5 space-y-3">
+                    <div className="flex items-center justify-between flex-wrap gap-2">
+                      <div className="flex items-center gap-2">
+                        <Shield className="w-5 h-5 text-gray-700" />
+                        <div>
+                          <p className="text-sm md:text-base font-semibold text-gray-900">
+                            Cross‑Cutting Controls
+                          </p>
+                          <p className="text-[11px] md:text-xs text-gray-600">
+                            Security, observability and compliance applied across every layer above.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="text-[11px] md:text-xs text-gray-600 text-right">
+                        <span className="px-2.5 py-1 rounded-full bg-green-50 text-green-700 font-semibold border border-green-100">
+                          Security / Observability – Built · Compliance – Partially Built
+                        </span>
+                      </div>
+                    </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-[11px] md:text-xs">
-                      <div className="p-3 rounded-xl border border-gray-200 bg-white">
+                      <div className="rounded-xl border border-gray-200 bg-white px-4 py-3 transition-colors duration-150 hover:bg-gray-50">
                         <div className="flex items-center gap-2 mb-1">
                           <Lock className="w-4 h-4 text-red-600" />
                           <span className="font-semibold text-gray-900">
                             Security
                           </span>
                         </div>
+                        <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                          Protects access to FAB Store, platforms and APIs.
+                        </p>
                         <ul className="space-y-1 text-gray-700">
-                          <li>AuthContext-based sign-in & session</li>
+                          <li>AuthContext-based sign‑in & session</li>
                           <li>CORS and API security on backend routes</li>
                         </ul>
                       </div>
-                      <div className="p-3 rounded-xl border border-gray-200 bg-white">
+                      <div className="rounded-xl border border-gray-200 bg-white px-4 py-3 transition-colors duration-150 hover:bg-gray-50">
                         <div className="flex items-center gap-2 mb-1">
                           <Activity className="w-4 h-4 text-blue-600" />
                           <span className="font-semibold text-gray-900">
                             Observability
                           </span>
                         </div>
+                        <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                          Makes AI behaviour and flows traceable for operations teams.
+                        </p>
                         <ul className="space-y-1 text-gray-700">
                           <li>AI agent metrics & reasoning traces</li>
                           <li>Error handling and streaming telemetry</li>
                         </ul>
                       </div>
-                      <div className="p-3 rounded-xl border border-gray-200 bg-white">
+                      <div className="rounded-xl border border-gray-200 bg-white px-4 py-3 transition-colors duration-150 hover:bg-gray-50">
                         <div className="flex items-center gap-2 mb-1">
                           <FileText className="w-4 h-4 text-green-600" />
                           <span className="font-semibold text-gray-900">
                             Compliance
                           </span>
                         </div>
+                        <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                          Links AI decisions back to SOPs and steps for auditability.
+                        </p>
                         <ul className="space-y-1 text-gray-700">
                           <li>SOP-linked reasoning and decisions</li>
                           <li>Traceability from recommendation → SOP → step</li>
                         </ul>
                       </div>
-                    </div>
-                  </div>
-                </div>
-
-                  {/* Right: compact flow & legend */}
-                  <div className="md:col-span-3 space-y-3 md:space-y-4">
-                    {/* End-to-end flow summary as a single horizontal strip */}
-                    <div className="bg-gradient-to-b from-blue-50 via-cyan-50 to-blue-50 rounded-2xl border border-blue-200 px-3 py-3 md:px-4 md:py-3">
-                      <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                        <Network className="w-5 h-5 text-blue-600" />
-                        End-to-End Flow
-                      </h3>
-                      <div className="flex items-center gap-1 md:gap-1.5 overflow-x-auto no-scrollbar text-[10px] md:text-xs font-semibold text-gray-800 py-0.5">
-                        {flowSteps.map((step, idx) => {
-                          const isLayerStep = layers.some((l) => l.id === step.id);
-                          const isActive = isLayerStep && activeLayerId === step.id;
-                          const baseClasses =
-                            "px-2.5 py-1 rounded-lg border cursor-pointer transition-all whitespace-nowrap";
-                          const colorClasses = isActive
-                            ? "bg-[#612D91] text-white border-[#612D91]"
-                            : step.id === "user"
-                            ? "bg-white border-blue-200"
-                            : step.id === "fab-store"
-                            ? "bg-indigo-100 border-indigo-300"
-                            : step.id === "orchestration"
-                            ? "bg-amber-100 border-amber-300"
-                            : step.id === "agentic"
-                            ? "bg-cyan-100 border-cyan-300"
-                            : step.id === "ai"
-                            ? "bg-emerald-100 border-emerald-300"
-                            : step.id === "data"
-                            ? "bg-gray-100 border-gray-300"
-                            : "bg-white border-blue-200";
-                          return (
-                            <div key={step.id} className="flex items-center gap-1 flex-shrink-0">
-                              <button
-                                type="button"
-                                className={`${baseClasses} ${colorClasses}`}
-                                onClick={() => {
-                                  if (isLayerStep) {
-                                    setActiveLayerId(step.id);
-                                  }
-                                }}
-                              >
-                                {step.label}
-                              </button>
-                              {idx < flowSteps.length - 1 && (
-                                <ArrowRight className="w-3 h-3 text-blue-500 flex-shrink-0" />
-                              )}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    {/* Small legend for build status */}
-                    <div className="bg-white/95 rounded-2xl shadow-md p-3 md:p-4 border border-gray-200 text-[11px] md:text-xs text-gray-700 space-y-2">
-                      <h4 className="font-semibold text-gray-900 flex items-center gap-2 mb-1">
-                        <Cpu className="w-4 h-4 text-gray-700" />
-                        Build Status Legend
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        <span className="px-2 py-1 rounded-full bg-green-100 text-green-700 font-semibold">
-                          ✓ Built
-                        </span>
-                        <span className="px-2 py-1 rounded-full bg-amber-100 text-amber-700 font-semibold">
-                          ⚠ Partially Built
-                        </span>
-                        <span className="px-2 py-1 rounded-full bg-gray-100 text-gray-700 font-semibold">
-                          📋 Roadmap
-                        </span>
-                      </div>
-                      <p className="text-[11px] text-gray-600">
-                        Use this to set expectations with leaders on what ships today vs. what’s
-                        intentionally designed for expansion.
-                      </p>
                     </div>
                   </div>
                 </div>
