@@ -10,6 +10,8 @@ import TemplateCloner from "./TemplateCloner";
 import MySpace from "./MySpace";
 import AppBuilder from "./AppBuilder";
 import { useAuth } from "../auth/AuthContext";
+import { usePermissions } from "../hooks/usePermissions";
+import RoleSwitcher from "./RoleSwitcher";
 
 const sortOptions = [
   { value: "name", label: "Alphabetical" },
@@ -19,6 +21,7 @@ const sortOptions = [
 const statusPriority = { Live: 0, Preview: 1, Beta: 2, "Coming Soon": 3 };
 
 function FabStore({ onLaunch, readOnly = false, onRequestLogin, onNavigate }) {
+  const permissions = usePermissions();
   const [search, setSearch] = useState("");
   const [industry, setIndustry] = useState("All");
   const [sort, setSort] = useState("status");
@@ -222,8 +225,8 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin, onNavigate }) {
                   <div className="flex flex-col gap-3">
                     <div className="flex items-center justify-between">
                       <div>
-                        <div className="text-xs font-semibold uppercase tracking-[0.35em] text-[#5C36C8]">Platforms</div>
-                        <p className="text-sm text-gray-600 mt-1">Reusable AI platforms that power multiple solutions</p>
+                        <div className="text-xs font-semibold uppercase tracking-[0.35em] text-[#5C36C8]">AI Platforms</div>
+                        <p className="text-sm text-gray-600 mt-1">Enterprise-grade AI platforms that accelerate application development with intelligent reasoning, orchestration, and compliance</p>
                       </div>
                       <button
                         onClick={() => handleSectionNavigate("platforms")}
@@ -247,8 +250,8 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin, onNavigate }) {
               <section className="px-4 md:px-10">
                 <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_45px_85px_rgba(15,10,45,0.15)] p-6 md:p-10 space-y-6 backdrop-blur">
                   <div className="flex flex-col gap-3">
-                    <div className="text-xs font-semibold uppercase tracking-[0.35em] text-[#5C36C8]">Solutions</div>
-                    <p className="text-sm text-gray-600">Applications built on our platforms</p>
+                    <div className="text-xs font-semibold uppercase tracking-[0.35em] text-[#5C36C8]">Applications</div>
+                    <p className="text-sm text-gray-600">AI-native applications built on our enterprise platforms—ready to deploy or customize for your organization</p>
                     <div className="flex flex-wrap gap-2">
                       <FilterPill label="Industry" activeValue={industry} options={industries} onSelect={setIndustry} />
                       <SortSelect value={sort} onChange={setSort} />
@@ -276,8 +279,8 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin, onNavigate }) {
                 </div>
               </section>
               <SectionRow
-                title="Coming soon & roadmap"
-                subtitle="Preview, beta, and roadmap launches"
+                title="Coming Soon"
+                subtitle="Preview releases, beta programs, and roadmap initiatives"
                 apps={pipelineApps}
                 readOnly={readOnly}
                 onRequestLogin={onRequestLogin}
@@ -322,7 +325,7 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin, onNavigate }) {
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-4">Pre-built Templates</h3>
                     <p className="text-sm text-gray-600 mb-4">
-                      Industry-specific templates ready to clone and customize
+                      Production-ready, industry-specific application templates with AI capabilities pre-configured
                     </p>
                     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
                       {filteredTemplates.map((template) => (
@@ -342,9 +345,9 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin, onNavigate }) {
 
                 {/* Original Live Apps as Templates */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Live Solutions (Available as Templates)</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Live Applications (Available as Templates)</h3>
                   <p className="text-sm text-gray-600 mb-4">
-                    Clone existing live solutions to create your own customized versions
+                    Clone battle-tested, production applications to create your own customized versions
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
                     {fabApps.filter((app) => app.status === "Live").map((app) => (
@@ -419,15 +422,19 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin, onNavigate }) {
             <PlatformDetail platform={selectedPlatform} onBack={handlePlatformBack} onLaunch={onLaunch} readOnly={readOnly} onRequestLogin={onRequestLogin} />
           )}
 
-          {activeNav === "myspace" && (
+          {activeNav === "myspace" && permissions.canAccessMySpace && (
             <MySpace
               onLaunchBuilder={() => {
-                setShowBuilder(true);
-                setEditingApp(null);
+                if (permissions.canAccessAppBuilder) {
+                  setShowBuilder(true);
+                  setEditingApp(null);
+                }
               }}
               onEditApp={(app) => {
-                setEditingApp(app);
-                setShowBuilder(true);
+                if (permissions.canEditApps) {
+                  setEditingApp(app);
+                  setShowBuilder(true);
+                }
               }}
               onViewApp={(app) => {
                 if (app.launchKey) {
@@ -437,7 +444,7 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin, onNavigate }) {
             />
           )}
 
-          {showBuilder && (
+          {showBuilder && permissions.canAccessAppBuilder && (
             <AppBuilder
               app={editingApp}
               onClose={() => {
@@ -473,7 +480,7 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin, onNavigate }) {
                 <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#5C36C8]">About FAB Store</p>
                 <h2 className="text-3xl font-semibold text-gray-900">Operational AI built with guardrails</h2>
                 <p>
-                  Teleperformance FAB bundles human-centered operations knowledge with modern AI orchestration. Pick a solution blueprint, drop in the modals you need, and stay compliant with SOP-native guardrails.
+                  Teleperformance FAB is an enterprise AI platform that combines human-centered operations knowledge with intelligent orchestration. Build applications faster with our AI-native platforms, reusable models, and production-ready templates—all with built-in compliance and SOP-native guardrails.
                 </p>
                 <p className="text-sm text-gray-500">
                   Need more detail? Reach out via Request Demo and we’ll line up a deep dive.
@@ -500,14 +507,15 @@ export default FabStore;
 
 function TopNav({ search, onSearchChange, readOnly, onRequestLogin, onRequestDemo, onNavSelect, active }) {
   const { isAuthenticated, user, logout } = useAuth();
+  const permissions = usePermissions();
   const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   const navItems = [
     { label: "Store", key: "store" },
-    { label: "Templates", key: "templates" },
-    { label: "Modals", key: "modals" },
+    { label: "AI Models", key: "modals" },
     { label: "Platforms", key: "platforms" },
-    { label: "My Space", key: "myspace" },
+    ...(permissions.canCloneTemplates ? [{ label: "Templates", key: "templates" }] : []),
+    ...(permissions.canAccessMySpace ? [{ label: "My Space", key: "myspace" }] : []),
     { label: "About", key: "about" },
   ];
   return (
@@ -546,7 +554,7 @@ function TopNav({ search, onSearchChange, readOnly, onRequestLogin, onRequestDem
             <input
               value={search}
               onChange={(e) => onSearchChange(e.target.value)}
-              placeholder="Search apps, solutions, industries"
+              placeholder="Search applications, AI models, platforms, industries..."
               className="w-full pl-12 pr-4 py-2.5 rounded-full border border-white shadow-[0_12px_40px_rgba(22,19,70,0.12)] bg-white text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#D9CCFF]/60"
             />
           </div>
@@ -571,40 +579,62 @@ function TopNav({ search, onSearchChange, readOnly, onRequestLogin, onRequestDem
               <button
                 type="button"
                 onClick={() => setUserMenuOpen((open) => !open)}
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/90 border border-gray-200 shadow-sm hover:bg-white transition-colors"
+                className="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/90 border border-gray-200 shadow-sm hover:bg-white transition-colors"
+                title={user?.name || "User"}
               >
                 <img
                   src={user?.avatar || "/vkv.jpeg"}
                   alt={user?.name || "User"}
-                  className="w-8 h-8 rounded-full object-cover"
+                  className="w-full h-full rounded-full object-cover"
                 />
-                <span className="hidden sm:inline text-sm font-semibold text-gray-800">{user?.name || "User"}</span>
                 <ChevronDown
-                  className={`w-4 h-4 text-gray-500 transition-transform ${userMenuOpen ? "rotate-180" : ""}`}
+                  className={`absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 text-gray-600 bg-white rounded-full border-2 border-white shadow-sm transition-transform ${userMenuOpen ? "rotate-180" : ""}`}
                 />
               </button>
 
               {userMenuOpen && (
-                <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-gray-200 py-2 z-50">
+                <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-200 py-2 z-50">
                   <div className="px-4 py-3 border-b border-gray-100">
-                    <p className="text-sm font-semibold text-gray-900 truncate">
-                      {user?.name || "User"}
-                    </p>
-                    {user?.email && (
-                      <p className="text-xs text-gray-500 truncate mt-0.5">{user.email}</p>
+                    <div className="flex items-center gap-3 mb-3">
+                      <img
+                        src={user?.avatar || "/vkv.jpeg"}
+                        alt={user?.name || "User"}
+                        className="w-12 h-12 rounded-full object-cover border-2 border-gray-200"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-gray-900 truncate">
+                          {user?.name || "Vinod Kumar V"}
+                        </p>
+                        {user?.email && (
+                          <p className="text-xs text-gray-500 truncate mt-0.5">{user.email}</p>
+                        )}
+                      </div>
+                    </div>
+                    {user?.role && (
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Role:</span>
+                        <span className="text-xs text-[#612D91] font-semibold capitalize px-2 py-0.5 rounded-full bg-[#612D91]/10">
+                          {user.role}
+                        </span>
+                      </div>
                     )}
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setUserMenuOpen(false);
-                      logout();
-                    }}
-                    className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    <span>Logout</span>
-                  </button>
+                  <div className="px-4 py-2 border-b border-gray-100">
+                    <RoleSwitcher />
+                  </div>
+                  <div className="px-4 py-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setUserMenuOpen(false);
+                        logout();
+                      }}
+                      className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors rounded-lg"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      <span>Logout</span>
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -667,13 +697,24 @@ function HeroCarousel({ slides, readOnly, onRequestLogin, onLaunch }) {
           <div className="relative grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] p-6 md:p-8 items-start">
             <div className="space-y-6 max-w-3xl">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-[#E2DEFF] text-xs uppercase tracking-[0.4em] text-[#6F54E8]">
-                TP.ai FAB
                 <Sparkles className="w-4 h-4 text-[#F5B52A]" />
+                AI-Native Platform
               </div>
               <div className="space-y-3 max-w-2xl">
                 <p className="text-sm uppercase tracking-[0.35em] text-gray-400">{activeSlide.category}</p>
                 <h1 className="text-4xl md:text-5xl font-bold text-gray-900">{activeSlide.name}</h1>
-                <p className="text-base md:text-lg text-gray-600">{activeSlide.description}</p>
+                <p className="text-base md:text-lg text-gray-600 leading-relaxed">{activeSlide.description}</p>
+                <div className="flex items-center gap-2 pt-2">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-700">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    {activeSlide.status}
+                  </span>
+                  {activeSlide.platformId && (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-xs font-medium text-indigo-700">
+                      Platform-Powered
+                    </span>
+                  )}
+                </div>
               </div>
               <div className="flex flex-wrap gap-2">
                 {activeSlide.tags?.slice(0, 4).map((tag) => (
@@ -882,9 +923,15 @@ function ModelGallery({
   return (
     <section id="fab-modals" className="px-4 md:px-10">
       <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_35px_85px_rgba(14,10,60,0.15)] p-6 md:p-10 space-y-8 backdrop-blur">
-        <div className="flex flex-wrap gap-2">
-          <FilterPill label="Modality" activeValue={activeModality} options={modalityOptions} onSelect={onModalityChange} />
-          <FilterPill label="Category" activeValue={activeCategory} options={categoryOptions} onSelect={onCategoryChange} />
+        <div className="flex flex-col gap-4">
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-[0.35em] text-[#5C36C8]">AI Models</div>
+            <p className="text-sm text-gray-600 mt-1">Reusable AI intelligence modules—reasoning engines, orchestrators, and specialized models ready to integrate into your applications</p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <FilterPill label="Modality" activeValue={activeModality} options={modalityOptions} onSelect={onModalityChange} />
+            <FilterPill label="Category" activeValue={activeCategory} options={categoryOptions} onSelect={onCategoryChange} />
+          </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
           {models.length > 0 ? (
@@ -892,7 +939,7 @@ function ModelGallery({
               <ModelCard key={model.id} model={model} readOnly={readOnly} onRequestLogin={onRequestLogin} />
             ))
           ) : (
-            <div className="col-span-full text-center py-12 text-gray-500">No modals match this filter.</div>
+            <div className="col-span-full text-center py-12 text-gray-500">No AI models match this filter.</div>
           )}
         </div>
       </div>
@@ -1119,6 +1166,7 @@ function PlatformCard({ platform, onSelect }) {
 }
 
 function AppCard({ app, onLaunch, readOnly, onRequestLogin, onPlatformClick, onCloneTemplate }) {
+  const permissions = usePermissions();
   const platform = app.platformId ? fabPlatforms.find((p) => p.id === app.platformId) : null;
   
   return (
@@ -1197,7 +1245,7 @@ function AppCard({ app, onLaunch, readOnly, onRequestLogin, onPlatformClick, onC
             {readOnly ? "Sign in to launch" : app.ctaLabel || "Open"}
             <ArrowRight className="w-4 h-4" />
           </button>
-          {!readOnly && (
+          {!readOnly && permissions.canCloneTemplates && (
             <button
               type="button"
               onClick={(e) => {

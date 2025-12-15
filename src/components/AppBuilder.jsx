@@ -16,9 +16,10 @@ import {
   Phone, MapPin, CreditCard, User, Lock, Unlock, CheckSquare, Radio, ToggleLeft,
   Check, BarChart3, PieChart, LineChart, TrendingUp, Upload, Tag, Badge,
   AlertCircle, CheckCircle, Loader2, Clock, Bell, Sliders, GripVertical,
-  GripHorizontal, Menu, ArrowRight, ChevronLeft, Circle, Square, List, Sidebar, Star
+  GripHorizontal, Menu, ArrowRight, ChevronLeft, Circle, Square, List, Sidebar, Star, Folder
 } from "lucide-react";
 import { DndContext, DragOverlay, useSensor, useSensors, PointerSensor, KeyboardSensor, closestCenter, useDroppable } from "@dnd-kit/core";
+import { usePermissions } from "../hooks/usePermissions";
 
 // Component Templates - Pre-built blocks
 const COMPONENT_TEMPLATES = {
@@ -875,6 +876,26 @@ function DroppableCanvas({ children, onDrop }) {
 }
 
 export default function AppBuilder({ app: existingApp, onClose, onSave }) {
+  const permissions = usePermissions();
+
+  // Check access
+  if (!permissions.canAccessAppBuilder) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div className="bg-white rounded-2xl p-8 max-w-md mx-4 shadow-2xl">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Access Restricted</h2>
+          <p className="text-gray-600 mb-6">You need Developer or Admin access to use AppBuilder.</p>
+          <button
+            onClick={onClose}
+            className="w-full px-4 py-2 bg-[#612D91] text-white rounded-lg font-semibold hover:bg-[#7B3DA1] transition"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   const [mode, setMode] = useState(existingApp ? "builder" : "welcome"); // "welcome", "ai-create", "builder"
   const [step, setStep] = useState(1); // For builder mode: 1: Data Model, 2: Build UI
   const [appData, setAppData] = useState(() => {

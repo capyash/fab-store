@@ -16,6 +16,7 @@ export default function TPLendLayout({ children, onNavigate, active }) {
       footerText="TP Lend • Powered by SOP Executor"
       onNavigate={onNavigate}
       active={active}
+      showSettings={true}
     >
       {children}
     </SolutionLayout>

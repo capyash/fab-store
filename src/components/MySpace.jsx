@@ -2,9 +2,23 @@ import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Plus, Rocket, Code, Sparkles, Edit, Trash2, Eye, Copy } from "lucide-react";
 import { useAuth } from "../auth/AuthContext";
+import { usePermissions } from "../hooks/usePermissions";
 
 export default function MySpace({ onLaunchBuilder, onEditApp, onViewApp }) {
   const { user } = useAuth();
+  const permissions = usePermissions();
+
+  // Redirect if no access
+  if (!permissions.canAccessMySpace) {
+    return (
+      <div className="px-4 md:px-10 py-8">
+        <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_45px_85px_rgba(15,10,45,0.15)] p-6 md:p-10 text-center">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Access Restricted</h2>
+          <p className="text-gray-600">You need Developer or Admin access to view My Space.</p>
+        </div>
+      </div>
+    );
+  }
   const [filter, setFilter] = useState("all"); // "all", "published", "workspace"
 
   // Load user's apps from localStorage (in real app, this would be from backend)
@@ -48,13 +62,15 @@ export default function MySpace({ onLaunchBuilder, onEditApp, onViewApp }) {
               Manage your published solutions and apps under development
             </p>
           </div>
-          <button
-            onClick={onLaunchBuilder}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white font-semibold shadow-lg hover:shadow-xl transition-all"
-          >
-            <Plus className="w-5 h-5" />
-            Create New App
-          </button>
+          {permissions.canAccessAppBuilder && (
+            <button
+              onClick={onLaunchBuilder}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white font-semibold shadow-lg hover:shadow-xl transition-all"
+            >
+              <Plus className="w-5 h-5" />
+              Create New App
+            </button>
+          )}
         </div>
 
         {/* Stats & Filters */}
@@ -123,8 +139,9 @@ export default function MySpace({ onLaunchBuilder, onEditApp, onViewApp }) {
             </p>
             {filter === "all" && (
               <button
-                onClick={onLaunchBuilder}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white font-semibold shadow-lg hover:shadow-xl transition-all"
+                onClick={permissions.canAccessAppBuilder ? onLaunchBuilder : undefined}
+                disabled={!permissions.canAccessAppBuilder}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white font-semibold shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Plus className="w-5 h-5" />
                 Create Your First App
