@@ -32,7 +32,7 @@ const actionableItems = [
     priority: "high",
     link: "worklist",
   },
-  // VKV: revisit or TODO - Hidden for now
+  // TODO(VKV): Revisit - Hidden for now
   // {
   //   title: "High-value claim identified: ₹45K potential recovery",
   //   detail: "Claim #C-2024-0892 requires immediate attention (SOP 5.1.3).",
@@ -63,7 +63,7 @@ const actionableItems = [
     priority: "medium",
     link: "worklist",
   },
-  // VKV: revisit or TODO - Hidden for now
+  // TODO(VKV): Revisit - Hidden for now
   // {
   //   title: "Pattern spotted: missing pre-auth docs (SOP 3.2.1)",
   //   detail: "Recurring with Apex Health — consider template reminder.",
@@ -74,7 +74,7 @@ const actionableItems = [
   //   priority: "low",
   //   link: "worklist",
   // },
-  // VKV: revisit or TODO - Hidden for now
+  // TODO(VKV): Revisit - Hidden for now
   // {
   //   title: "Revenue recovery opportunity: ₹2.3M in pending claims",
   //   detail: "Focus on high-value claims in 'Pending Review' status for maximum impact.",

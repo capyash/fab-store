@@ -79,27 +79,13 @@ export default function LiveDemoController({ onInteractionCapture }) {
 
     let timeouts = [];
 
-    // Voice call simulation
-    const voiceScenario = DEMO_SCENARIOS.voice[scenarioIndex % DEMO_SCENARIOS.voice.length];
-    timeouts.push(setTimeout(() => {
-      startVoiceSimulation(voiceScenario);
-    }, 2000));
-
-    // SMS simulation
+    // For auto mode, drive a single clear story: printer inkjet issue via SMS
     const smsScenario = DEMO_SCENARIOS.sms[scenarioIndex % DEMO_SCENARIOS.sms.length];
     timeouts.push(setTimeout(() => {
       receiveMessage('sms', smsScenario);
-    }, smsScenario.delay));
+    }, 2000));
 
-    // WhatsApp simulation
-    if (scenarioIndex % 2 === 0 && DEMO_SCENARIOS.whatsapp.length > 0) {
-      const whatsappScenario = DEMO_SCENARIOS.whatsapp[0];
-      timeouts.push(setTimeout(() => {
-        receiveMessage('whatsapp', whatsappScenario);
-      }, whatsappScenario.delay));
-    }
-
-    // Loop scenarios
+    // Loop scenarios (spaced out so each run can fully complete)
     timeouts.push(setTimeout(() => {
       setScenarioIndex(prev => prev + 1);
     }, 40000));

@@ -1,3 +1,9 @@
+/**
+ * Agentic Support Demo Component
+ * Orchestrates AI workflow execution and step-by-step reasoning
+ * Author: Vinod Kumar V (VKV)
+ */
+
 import { useEffect, useMemo, useState } from "react";
 import { AlertCircle, CheckCircle2, Clock, Loader2, Play, RefreshCw, Activity, Printer, Droplet } from "lucide-react";
 import { agenticSupportAPI } from "../services/api";

@@ -1,6 +1,7 @@
 /**
  * Tickets Service
  * Manages storage and retrieval of tickets created by AI workflows
+ * Author: Vinod Kumar V (VKV)
  */
 
 const STORAGE_KEY = "agenticSupport.tickets";

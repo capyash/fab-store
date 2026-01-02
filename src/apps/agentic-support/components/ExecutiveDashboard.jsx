@@ -27,6 +27,7 @@ import { getTicketStats } from "../services/ticketsService";
 /**
  * Executive Dashboard for TP FAB Agents
  * C-level focused view with ROI metrics, automation impact, and business intelligence
+ * Author: Vinod Kumar V (VKV)
  */
 
 // Get executive metrics from ticket stats

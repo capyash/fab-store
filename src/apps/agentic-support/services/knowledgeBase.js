@@ -1,5 +1,8 @@
-// Knowledge Base Service
-// Structured for real ML integration, currently uses localStorage
+/**
+ * Knowledge Base Service
+ * Structured for real ML integration, currently uses localStorage
+ * Author: Vinod Kumar V (VKV)
+ */
 
 const STORAGE_KEY = "agenticSupport.knowledgeBase";
 
@@ -13,7 +16,7 @@ export function loadKnowledgeBase() {
 }
 
 // Search knowledge base for relevant chunks (mock semantic search for now)
-// TODO: Replace with real vector similarity search (e.g., using OpenAI embeddings + cosine similarity)
+// TODO(VKV): Replace with real vector similarity search (e.g., using OpenAI embeddings + cosine similarity)
 export function searchKnowledgeBase(query, categoryId = null) {
   const kb = loadKnowledgeBase();
   const queryLower = query.toLowerCase();

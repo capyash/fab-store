@@ -1,6 +1,7 @@
 /**
  * Ticketing System Integration Service
  * Supports multiple ITSM/CRM platforms: ServiceNow, Jira, Zendesk, Salesforce, etc.
+ * Author: Vinod Kumar V (VKV)
  */
 
 // Ticketing system configuration (in production, this would come from settings/API)

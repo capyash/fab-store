@@ -3,6 +3,7 @@
  * 
  * Express server providing AI-powered claims intelligence API
  * Supports SSE streaming for real-time AI reasoning and chat
+ * Author: Vinod Kumar V (VKV)
  */
 
 import express from 'express';

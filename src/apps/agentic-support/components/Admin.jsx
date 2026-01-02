@@ -64,7 +64,7 @@ export default function Admin() {
       {/* Content */}
       <div className="flex-1 p-6 overflow-y-auto">
         {activeTab === "ccas" && (
-          <div className="max-w-4xl">
+          <div className="max-w-6xl mx-auto">
             <div className="mb-6">
               <h2 className="text-xl font-bold text-gray-900 mb-2">Contact Center Configuration</h2>
               <p className="text-sm text-gray-600">
@@ -78,7 +78,7 @@ export default function Admin() {
         )}
 
         {activeTab === "integrations" && (
-          <div className="max-w-5xl">
+          <div className="max-w-6xl mx-auto">
             <div className="mb-6">
               <h2 className="text-xl font-bold text-gray-900 mb-2">System Integrations</h2>
               <p className="text-sm text-gray-600">
@@ -86,7 +86,7 @@ export default function Admin() {
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
               {/* Ticketing Systems */}
               <div className="bg-white border-2 border-gray-200 rounded-xl p-5 hover:border-purple-300 transition-all">
                 <div className="flex items-center justify-between mb-4">
@@ -219,7 +219,7 @@ export default function Admin() {
         )}
 
         {activeTab === "security" && (
-          <div className="max-w-4xl">
+          <div className="max-w-6xl mx-auto">
             <div className="mb-6">
               <h2 className="text-xl font-bold text-gray-900 mb-2">Security & Access Control</h2>
               <p className="text-sm text-gray-600">
@@ -291,7 +291,7 @@ export default function Admin() {
         )}
 
         {activeTab === "notifications" && (
-          <div className="max-w-4xl">
+          <div className="max-w-6xl mx-auto">
             <div className="mb-6">
               <h2 className="text-xl font-bold text-gray-900 mb-2">Notification Settings</h2>
               <p className="text-sm text-gray-600">

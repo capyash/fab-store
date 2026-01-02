@@ -3,6 +3,8 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "author": "Vinod Kumar V <vinod.kumar.v@example.com>",
+  "description": "Cogniclaim - AI-powered claims intelligence and agentic support platform",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

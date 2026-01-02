@@ -1,3 +1,9 @@
+/**
+ * Main Application Component
+ * Routes and orchestrates all application modules
+ * Author: Vinod Kumar V (VKV)
+ */
+
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AuthProvider, useAuth } from "./auth/AuthContext";

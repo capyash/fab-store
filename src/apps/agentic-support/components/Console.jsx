@@ -1,3 +1,9 @@
+/**
+ * TP FAB Agents Console
+ * Main console component for agentic support workflows
+ * Author: Vinod Kumar V (VKV)
+ */
+
 import { useEffect, useMemo, useState } from "react";
 import {
   Mic,
@@ -261,6 +267,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
           const ticketResult = await createTicket(ticketData, selectedTicketingSystem);
           setTicketResult(ticketResult);
           setTicketConfirmed(true);
+          setShowTicketModal(true);
           
           // Save ticket to storage for Watchtower
           const ticketToSave = {
@@ -442,19 +449,19 @@ export default function AgenticSupportConsole({ onNavigate }) {
     // This gives them time to complete their thought
     debounceTimer = setTimeout(() => {
       // After pause, show customer input capture (longer for demo explanation)
-      t1 = setTimeout(() => {
-        setStage("intent-detecting");
+    t1 = setTimeout(() => {
+      setStage("intent-detecting");
       }, 2500); // Customer input visible for 2.5s - time to explain what was captured
 
-      t2 = setTimeout(() => {
-        setStage("intent-ready");
+    t2 = setTimeout(() => {
+      setStage("intent-ready");
       }, 5000); // Intent Brain analyzing - 2.5s to explain AI reasoning
 
-      t3 = setTimeout(() => {
+    t3 = setTimeout(() => {
         setStage("knowledge-ready");
       }, 7000); // Knowledge matched - 2s to explain knowledge base lookup
 
-      t4 = setTimeout(() => {
+    t4 = setTimeout(() => {
         setStage("telemetry");
       }, 9500); // Telemetry gathering - 2.5s to explain device snapshot
 
@@ -722,8 +729,8 @@ export default function AgenticSupportConsole({ onNavigate }) {
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-white/20 backdrop-blur flex items-center justify-center">
-              <HeadsetIcon />
-            </div>
+            <HeadsetIcon />
+          </div>
             <span className="font-bold text-white">AI Console</span>
           </div>
           <div className="h-4 w-px bg-white/30" />
@@ -767,18 +774,18 @@ export default function AgenticSupportConsole({ onNavigate }) {
             <div>
               <h3 className="text-sm font-bold text-gray-900">CCAS Integration Layer</h3>
               <p className="text-[10px] text-gray-600 font-semibold">External Contact Center Infrastructure</p>
-            </div>
+          </div>
           </div>
           <div className="grid gap-4 grid-cols-1 lg:grid-cols-2">
             {/* Live Interaction Monitor */}
             <div className="h-[320px]">
               <LiveDemoController onInteractionCapture={handleDemoInteraction} />
-            </div>
+          </div>
             
             {/* CCAS Connection Status */}
             <div className="h-[320px]">
               <CCASConnectionPanel provider="freeswitch" />
-            </div>
+        </div>
           </div>
         </div>
       )}
@@ -827,7 +834,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                 {channel === "voice" && <><Phone className="w-3.5 h-3.5" /> Voice</>}
                 {channel === "chat" && <><MessageCircle className="w-3.5 h-3.5" /> Chat</>}
                 {channel === "email" && <><Mail className="w-3.5 h-3.5" /> Email</>}
-              </div>
+            </div>
             </div>
 
             {/* Display captured text with metadata */}
@@ -901,8 +908,8 @@ export default function AgenticSupportConsole({ onNavigate }) {
                   </p>
                   <p className="text-[10px] text-gray-400 mt-0.5">
                     Use Live Monitor above
-                  </p>
-                </div>
+              </p>
+            </div>
               </div>
             )}
 
@@ -912,7 +919,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
               {channel === "email" && (
                 <div className="space-y-2">
                   <div className="bg-white rounded-lg border border-gray-200 p-2">
-                    <input
+                <input
                       type="email"
                       placeholder="From: customer@company.com"
                       value={emailFrom}
@@ -921,7 +928,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                     />
                   </div>
                   <div className="bg-white rounded-lg border border-gray-200 p-2">
-                    <input
+                <input
                       type="text"
                       placeholder="Subject: Describe your issue"
                       value={emailSubject}
@@ -937,7 +944,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                       rows={4}
                       className="w-full text-xs px-2 py-1 border border-gray-200 rounded focus:ring-2 focus:ring-purple-200 focus:border-purple-300 outline-none resize-none"
                     />
-                  </div>
+            </div>
                 </div>
               )}
 
@@ -978,13 +985,13 @@ export default function AgenticSupportConsole({ onNavigate }) {
                       onKeyPress={(e) => e.key === 'Enter' && handleSendChatMessage()}
                       className="flex-1 text-xs px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-200 focus:border-emerald-300 outline-none"
                     />
-                    <button
+                <button
                       onClick={handleSendChatMessage}
                       disabled={!chatInput.trim()}
                       className="px-3 py-2 bg-[#612D91] text-white rounded-lg hover:bg-[#7B3FE4] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                    >
+                >
                       <Send className="w-3.5 h-3.5" />
-                    </button>
+                </button>
                   </div>
                 </div>
               )}
@@ -1038,10 +1045,10 @@ export default function AgenticSupportConsole({ onNavigate }) {
                   </div>
                   <p className="text-xs text-gray-700 font-medium mb-1">
                     No matching workflow found
-                  </p>
+                </p>
                   <p className="text-[10px] text-gray-500">
                     Escalating to human agent with full context
-                  </p>
+                </p>
                 </div>
               </div>
             ) : (
@@ -1133,8 +1140,8 @@ export default function AgenticSupportConsole({ onNavigate }) {
                       Alternative Matches
                     </p>
                     {intentScores.slice(1, 3).map(({ intent, score }, idx) => (
-                      <motion.div
-                        key={intent.id}
+                    <motion.div
+                      key={intent.id}
                         initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: (idx + 1) * 0.1 + 0.3 }}
@@ -1145,28 +1152,28 @@ export default function AgenticSupportConsole({ onNavigate }) {
                         </div>
                         <div className="flex flex-col flex-1 min-w-0">
                           <span className="font-medium text-gray-700 text-xs truncate">
-                            {intent.label}
-                          </span>
+                          {intent.label}
+                        </span>
                           <span className="text-[10px] text-gray-500">
                             {intent.workflow}
-                          </span>
-                        </div>
+                        </span>
+                      </div>
                         <div className="flex items-center gap-2 flex-shrink-0">
                           <div className="w-12 bg-gray-200 rounded-full h-1.5 overflow-hidden">
-                            <motion.div
-                              initial={{ width: 0 }}
-                              animate={{
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{
                                 width: ["intent-ready", "telemetry", "running", "completed", "escalated"].includes(stage) && score > 0
                                   ? `${Math.min(100, score * 25)}%`
                                   : 0,
-                              }}
+                            }}
                               transition={{ duration: 0.5, delay: (idx + 1) * 0.08 + 0.4 }}
                               className="h-1.5 rounded-full bg-gray-400"
-                            />
-                          </div>
-                          <span className="text-[10px] text-gray-500 w-8 text-right">{(score * 25).toFixed(0)}%</span>
+                          />
                         </div>
-                      </motion.div>
+                          <span className="text-[10px] text-gray-500 w-8 text-right">{(score * 25).toFixed(0)}%</span>
+                      </div>
+                    </motion.div>
                     ))}
                   </div>
                 )}
@@ -1199,14 +1206,14 @@ export default function AgenticSupportConsole({ onNavigate }) {
             }`}
           >
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <AvatarCircle
-                  active={stage === "telemetry"}
-                  pulse={stage === "telemetry"}
-                  icon={<Cpu className="w-4 h-4" />}
-                />
+            <div className="flex items-center gap-2">
+              <AvatarCircle
+                active={stage === "telemetry"}
+                pulse={stage === "telemetry"}
+                icon={<Cpu className="w-4 h-4" />}
+              />
                 <p className="text-lg font-bold text-gray-900">Input Datapoints</p>
-              </div>
+            </div>
               {stage === "telemetry" && (
                 <motion.div
                   initial={{ scale: 0 }}
@@ -1501,17 +1508,17 @@ export default function AgenticSupportConsole({ onNavigate }) {
                   </div>
                 </>
               )}
-                </div>
+            </div>
                 
                 <p className="mt-2 text-[10px] text-gray-500 italic border-t border-gray-200 pt-2">
                   ✓ Context-aware telemetry based on customer's actual device
                 </p>
               </>
           )}
-        </motion.div>
-      </div>
+          </motion.div>
+        </div>
         {/* End of 3-column grid */}
-        
+
         {/* Workflow Outcome - AI Console Output */}
         <motion.div
           animate={{
@@ -1636,6 +1643,8 @@ export default function AgenticSupportConsole({ onNavigate }) {
                 const ticketResult = await createTicket(ticketData, selectedTicketingSystem);
                 setTicketResult(ticketResult);
                 setTicketConfirmed(true);
+                // Show confirmation modal for both self-healed and escalated flows
+                setShowTicketModal(true);
                 
                 // Save ticket to storage for Watchtower
                 const ticketToSave = {
@@ -1699,8 +1708,8 @@ export default function AgenticSupportConsole({ onNavigate }) {
       
       </div>
 
-      {/* Ticket confirmation modal */}
-      {showTicketModal && lastResult?.escalation && (
+      {/* Ticket confirmation / summary modal */}
+      {showTicketModal && lastResult && (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/40">
           <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 p-6 border border-gray-200">
             <h2 className="text-base font-semibold text-gray-900 mb-1">
@@ -1879,7 +1888,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                     className="absolute inset-0"
                     animate={{ rotate: 360 }}
                     transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                  >
+        >
                     <Sparkles className="w-6 h-6 text-purple-200 opacity-50" />
                   </motion.div>
                 </div>
@@ -1909,17 +1918,17 @@ export default function AgenticSupportConsole({ onNavigate }) {
                 <Wand2 className="w-4 h-4 text-[#612D91]" />
                 <span className="font-semibold text-gray-700">Workflow:</span>
                 <span className="font-mono font-bold bg-white px-2 py-1 rounded border border-purple-200 text-[#612D91]">
-                  {selectedWorkflow === "printer_offline" ? "printer_offline" : "ink_error"}
-                </span>
-              </div>
-              {interactionText && (
+                    {selectedWorkflow === "printer_offline" ? "printer_offline" : "ink_error"}
+                  </span>
+                </div>
+                {interactionText && (
                 <div className="flex items-center gap-2 flex-1 min-w-0">
                   <MessageCircle className="w-4 h-4 text-gray-500 flex-shrink-0" />
                   <span className="text-gray-600 truncate italic">"{interactionText.substring(0, 80)}..."</span>
                 </div>
-              )}
+                )}
             </div>
-          </div>
+              </div>
 
           {/* Agent Steps - Beautiful Timeline */}
           <div className="px-6 py-6">
@@ -1928,7 +1937,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
               <div className="absolute left-[15px] top-2 bottom-2 w-0.5 bg-gradient-to-b from-[#612D91] via-[#A64AC9] to-[#612D91] opacity-30" />
               
               <div className="space-y-4">
-                {timeline.map((step, idx) => (
+                  {timeline.map((step, idx) => (
                   <motion.div
                     key={step.key}
                     initial={{ opacity: 0, x: -20 }}
@@ -1959,7 +1968,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                           {/* Number badge */}
                           <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-gradient-to-br from-[#612D91] to-[#A64AC9] flex items-center justify-center shadow-md">
                             <span className="text-[10px] font-bold text-white">{idx + 1}</span>
-                          </div>
+                        </div>
                         </motion.div>
                       </div>
 
@@ -1977,7 +1986,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                               <div className="flex items-center gap-2 flex-1 min-w-0">
                                 <span className={`font-bold text-sm ${step.color} truncate`}>
                                   {step.label}
-                                </span>
+                              </span>
                                 {idx === timeline.length - 1 && (
                                   <motion.span
                                     initial={{ scale: 0 }}
@@ -1987,8 +1996,8 @@ export default function AgenticSupportConsole({ onNavigate }) {
                                     <CheckCircle2 className="w-3 h-3" />
                                     Final
                                   </motion.span>
-                                )}
-                              </div>
+                            )}
+                          </div>
                               <motion.div
                                 initial={{ rotate: 0 }}
                                 animate={{ rotate: 360 }}
@@ -1996,8 +2005,8 @@ export default function AgenticSupportConsole({ onNavigate }) {
                               >
                                 <Sparkles className={`w-3.5 h-3.5 ${step.color} opacity-50`} />
                               </motion.div>
-                            </div>
-                          </div>
+                        </div>
+                      </div>
 
                           {/* Agent Body */}
                           <div className="px-4 py-3">
@@ -2019,9 +2028,9 @@ export default function AgenticSupportConsole({ onNavigate }) {
                       </motion.div>
                     </div>
                   </motion.div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
           </div>
 
           {/* Footer - Final Status */}
@@ -2032,11 +2041,11 @@ export default function AgenticSupportConsole({ onNavigate }) {
                 <span className="text-sm font-semibold text-gray-900">
                   Workflow Status: <span className="text-green-600">{lastResult?.status || "Completed"}</span>
                 </span>
-              </div>
+          </div>
               <div className="flex items-center gap-2 text-xs text-gray-600">
                 <Clock className="w-4 h-4" />
                 <span>Total execution time: <span className="font-semibold">~{(timeline.length * 0.8).toFixed(1)}s</span></span>
-              </div>
+        </div>
             </div>
           </div>
         </motion.div>

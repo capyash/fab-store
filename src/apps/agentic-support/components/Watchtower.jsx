@@ -1,3 +1,9 @@
+/**
+ * AI Watchtower - Operational Dashboard
+ * Displays tickets worklist and live activity monitoring
+ * Author: Vinod Kumar V (VKV)
+ */
+
 import { useMemo, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 

@@ -1077,8 +1077,9 @@ async function seedKnowledgeBase() {
 }
 
 // PDF text extraction (mock for now, structure ready for real pdf-parse)
+// Author: Vinod Kumar V (VKV)
 async function extractTextFromPDF(file) {
-  // TODO: Replace with real pdf-parse library
+  // TODO(VKV): Replace with real pdf-parse library
   // For now, handle text files directly and mock PDF extraction
   
   // If it's a text file, read it directly (useful for testing with .txt files)
@@ -1124,7 +1125,7 @@ async function extractTextFromPDF(file) {
 
 // Vectorization service (structured for real ML, mock for now)
 async function vectorizeText(text, categoryId) {
-  // TODO: Replace with real embedding model (OpenAI, Cohere, etc.)
+  // TODO(VKV): Replace with real embedding model (OpenAI, Cohere, etc.)
   // For now, simulate vectorization by chunking text intelligently
   
   // First, split by major sections (marked by SECTION, ===, or similar)

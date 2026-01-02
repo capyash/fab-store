@@ -2,6 +2,8 @@
 
 Express server providing AI-powered claims intelligence API with SSE streaming support.
 
+**Author:** Vinod Kumar V (VKV)
+
 ## Features
 
 - **AI Reasoning Engine**: Multi-agent chain of thought analysis for claims

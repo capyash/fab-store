@@ -15,7 +15,7 @@
     "healthcare",
     "langchain"
   ],
-  "author": "",
+  "author": "Vinod Kumar V <vinod.kumar.v@example.com>",
   "license": "ISC",
   "dependencies": {
     "@langchain/community": "^1.0.0",
