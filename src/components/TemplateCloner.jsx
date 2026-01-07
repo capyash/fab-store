@@ -6,7 +6,9 @@ import { fabApps } from "../data/fabApps";
 export default function TemplateCloner({ template, onClose, onClone }) {
   const [step, setStep] = useState(1);
   const [customization, setCustomization] = useState({
-    name: `${template.name} (Copy)`,
+    // Start with a clean, production-ready name (no "(Copy)" suffix).
+    // Users can still rename this variant explicitly.
+    name: `${template.name} Variant`,
     tagline: template.tagline,
     category: template.category,
     industry: template.industry,

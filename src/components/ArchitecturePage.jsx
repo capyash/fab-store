@@ -295,6 +295,7 @@ export default function ArchitecturePage({ onBack }) {
                 <ArrowLeft className="w-5 h-5 text-gray-700" />
               </button>
               <div className="flex items-center gap-3">
+                {/* TODO(VKV): Replace with production logo */}
                 <img src="/tp-logo.svg" alt="TP.ai" className="h-9 w-auto" />
                 <div>
                   <p className="text-[11px] uppercase tracking-[0.35em] text-gray-400">

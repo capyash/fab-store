@@ -55,46 +55,6 @@ const INTENT_CATALOG = [
     workflow: "ink_error",
     keywords: ["cartridge", "ink", "cyan", "not recognized", "genuine", "printer"],
   },
-  {
-    id: "slow_print",
-    label: "Slow Printing – PDFs take forever",
-    text: "The office printer is extremely slow when printing PDF documents from email.",
-    planned: true,
-    workflow: "printer_offline", // reuse network / spooler workflow for demo
-    keywords: ["slow", "performance", "printing", "pdf", "printer"],
-  },
-  {
-    id: "paper_jam",
-    label: "Repeated Paper Jams",
-    text: "The printer keeps getting paper jam errors every time we try to print labels.",
-    planned: true,
-    workflow: "printer_offline",
-    keywords: ["paper jam", "jam", "labels", "stuck", "printer"],
-  },
-  {
-    id: "wifi_issue",
-    label: "Wi‑Fi / Network Issue",
-    text: "My printer is not connecting to the Wi‑Fi network after we changed the router.",
-    planned: true,
-    workflow: "printer_offline",
-    keywords: ["wifi", "wi-fi", "network", "connecting", "router", "printer"],
-  },
-  {
-    id: "low_ink_warning",
-    label: "Low Ink Warning (Planned)",
-    text: "I keep getting low ink warnings even though we just changed all the cartridges.",
-    planned: true,
-    workflow: "ink_error",
-    keywords: ["low ink", "ink low", "warning", "cartridge", "replaced"],
-  },
-  {
-    id: "streaks_on_page",
-    label: "Streaks / Smudges on Page (Planned)",
-    text: "Printed pages have streaks and smudges even after running cleaning cycles.",
-    planned: true,
-    workflow: "ink_error",
-    keywords: ["streak", "smudge", "lines", "dirty", "cleaning", "print quality"],
-  },
 ];
 
 function HeadsetIcon() {
@@ -327,14 +287,12 @@ export default function AgenticSupportConsole({ onNavigate }) {
     if (wordCount < 3) return [];
 
     return INTENT_CATALOG.map((intent) => {
-      const base = intent.planned ? 0.3 : 0;
       const keywordScore =
         intent.keywords?.reduce((score, kw) => {
           if (text.includes(kw.toLowerCase())) return score + 1;
           return score;
         }, 0) || 0;
-      const total = base + keywordScore;
-      return { intent, score: total };
+      return { intent, score: keywordScore };
     })
       .filter(({ score }) => score > 0)
       .sort((a, b) => b.score - a.score);
@@ -353,8 +311,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
       setSelectedWorkflow("unknown");
       return;
     }
-    const preferred =
-      intentScores.find((s) => !s.intent.planned && s.intent.workflow) || top;
+    const preferred = top;
     if (preferred?.intent?.workflow) {
       setSelectedWorkflow(preferred.intent.workflow);
     }
@@ -448,7 +405,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
     // Debounce: Wait for user to pause (stop typing/speaking)
     // This gives them time to complete their thought
     debounceTimer = setTimeout(() => {
-      // After pause, show customer input capture (longer for demo explanation)
+      // After pause, show customer input capture
     t1 = setTimeout(() => {
       setStage("intent-detecting");
       }, 2500); // Customer input visible for 2.5s - time to explain what was captured
@@ -695,7 +652,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
     }
   }, [stage]);
 
-  // Handle demo interactions from LiveDemoController
+  // Handle interactions from Live Interaction Monitor
   const handleDemoInteraction = (interaction) => {
     // Update channel
     if (interaction.channel === 'voice') {
@@ -878,7 +835,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                         - DistilBERT fine-tuned on emotion/sentiment datasets
                         - Azure Text Analytics Sentiment API
                         - Google Cloud Natural Language API
-                        Currently showing placeholder based on issue keywords */}
+                        Sentiment analysis based on issue keywords */}
                     <span className={`font-semibold ${
                       interactionText.toLowerCase().includes('not working') || 
                       interactionText.toLowerCase().includes('error') ||
@@ -1612,7 +1569,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
           </div>
         </motion.div>
 
-      {/* Hidden engine runner to keep workflow status updated without showing the old demo UI.
+      {/* Workflow engine runner - processes workflows and updates status.
           For unknown intents we skip this runner, since we escalate immediately instead of invoking a playbook. */}
       {selectedWorkflow !== "unknown" && (
         <div className="hidden">
@@ -1767,7 +1724,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                       setTimeout(() => setTicketCopied(false), 2000);
                     }
                   } catch {
-                    // ignore copy failures in demo
+                    // ignore copy failures
                   }
                 }}
                 className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[11px] font-medium border ${

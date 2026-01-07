@@ -82,6 +82,13 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin, onNavigate }) {
     const query = search.toLowerCase();
     const templates = getTemplatesByIndustry(templateIndustry);
     return templates.filter((template) => {
+      // Exclude cloned/copy variants from the public template catalogue
+      if (typeof template.name === "string") {
+        const nameLower = template.name.toLowerCase();
+        if (nameLower.includes("(copy)") || nameLower.includes(" copy")) {
+          return false;
+        }
+      }
       const matchesQuery =
         !query ||
         template.name.toLowerCase().includes(query) ||
@@ -155,7 +162,13 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin, onNavigate }) {
         app.name.toLowerCase().includes(query) ||
         app.description.toLowerCase().includes(query) ||
         app.tags?.some((tag) => tag.toLowerCase().includes(query));
-      const isCopy = typeof app.name === "string" && app.name.toLowerCase().includes("(copy)");
+      // Exclude any apps with "(Copy)" or "(copy)" in the name (cloned templates)
+      // Handle multiple copies like "(Copy) (Copy)" or "(copy) (copy)"
+      let isCopy = false;
+      if (typeof app.name === "string") {
+        const nameLower = app.name.toLowerCase();
+        isCopy = nameLower.includes("(copy)") || nameLower.includes(" copy");
+      }
       return matchesIndustry && matchesQuery && !isCopy;
     });
     return base.sort((a, b) => {
@@ -251,8 +264,21 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin, onNavigate }) {
     }
   };
 
-  const spotlightApps = allApps.slice(0, 2);
-  const heroSlides = allApps.slice(0, 4).map((app, idx) => ({
+  // Filter out cloned/copy apps from spotlight and hero
+  const cleanApps = allApps.filter((app) => {
+    if (typeof app.name === "string") {
+      const nameLower = app.name.toLowerCase();
+      // Exclude any apps with "(Copy)" or "(copy)" in the name (cloned templates)
+      // Handle multiple copies like "(Copy) (Copy)" or "(copy) (copy)"
+      if (nameLower.includes("(copy)") || nameLower.includes(" copy")) {
+        return false;
+      }
+    }
+    return true;
+  });
+  
+  const spotlightApps = cleanApps.slice(0, 2);
+  const heroSlides = cleanApps.slice(0, 4).map((app, idx) => ({
     ...app,
     previewPanels: [
       {
@@ -267,7 +293,19 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin, onNavigate }) {
       },
     ],
   }));
-  const pipelineApps = allApps.filter((app) => app.status !== "Live");
+  const pipelineApps = allApps.filter((app) => {
+    // Exclude Live apps
+    if (app.status === "Live") return false;
+    // Exclude any apps with "(Copy)" or "(copy)" in the name (cloned templates)
+    // Handle multiple copies like "(Copy) (Copy)" or "(copy) (copy)"
+    if (typeof app.name === "string") {
+      const nameLower = app.name.toLowerCase();
+      if (nameLower.includes("(copy)") || nameLower.includes(" copy")) {
+        return false;
+      }
+    }
+    return true;
+  });
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#F7F8FF]">
@@ -721,6 +759,7 @@ function TopNav({ search, onSearchChange, readOnly, onRequestLogin, onRequestDem
       <div className="w-full px-4 lg:px-12 py-4 flex items-center gap-6 flex-wrap">
         <div className="flex items-center gap-4 flex-1 min-w-[280px]">
           <div className="flex items-center gap-2">
+            {/* TODO(VKV): Replace with production logo */}
             <img src="/tp-logo.svg" alt="TP.ai" className="h-9 w-auto" />
             <div>
               <p className="text-[11px] uppercase tracking-[0.35em] text-gray-400">TP.ai</p>
@@ -1208,6 +1247,10 @@ function ModelCard({ model, readOnly, onRequestLogin }) {
 }
 
 function MiniAppTile({ app, readOnly, onRequestLogin, onLaunch }) {
+  const displayName =
+    typeof app.name === "string"
+      ? app.name.replace(/\s*\(copy\)/gi, "").trim()
+      : app.name;
   return (
     <div className="snap-start min-w-[280px] max-w-sm rounded-3xl border border-white/30 bg-white/90 backdrop-blur shadow-[0_25px_45px_rgba(12,8,45,0.18)] p-5 flex flex-col gap-4">
       <div className="flex items-center justify-between text-xs uppercase tracking-wide">
@@ -1230,7 +1273,7 @@ function MiniAppTile({ app, readOnly, onRequestLogin, onLaunch }) {
         </div>
       </div>
       <div>
-        <h4 className="text-lg font-semibold text-gray-900">{app.name}</h4>
+        <h4 className="text-lg font-semibold text-gray-900">{displayName}</h4>
         <p className="text-sm text-gray-500">{app.tagline}</p>
       </div>
       <div className="grid grid-cols-2 gap-2 text-[11px] text-gray-500">
@@ -1367,6 +1410,10 @@ function AppCard({ app, onLaunch, readOnly, onRequestLogin, onPlatformClick, onC
   const permissions = usePermissions();
   const platform = app.platformId ? fabPlatforms.find((p) => p.id === app.platformId) : null;
   const isTemplate = app.status === "Template";
+  const displayName =
+    typeof app.name === "string"
+      ? app.name.replace(/\s*\(copy\)/gi, "").trim()
+      : app.name;
 
   return (
     <div className="rounded-[28px] border border-white/40 bg-white/95 shadow-[0_20px_50px_rgba(18,12,64,0.15)] flex flex-col overflow-hidden">
@@ -1392,7 +1439,7 @@ function AppCard({ app, onLaunch, readOnly, onRequestLogin, onPlatformClick, onC
           )}
         </div>
         <div>
-          <h3 className="text-xl font-semibold text-gray-900">{app.name}</h3>
+        <h3 className="text-xl font-semibold text-gray-900">{displayName}</h3>
           <p className="text-sm text-gray-600 font-medium">{app.tagline}</p>
         </div>
         <p className="text-sm text-gray-600 flex-1">{app.description}</p>

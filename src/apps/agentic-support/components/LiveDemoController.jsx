@@ -73,7 +73,7 @@ export default function LiveDemoController({ onInteractionCapture }) {
     setHasSpeechAPI(!!SpeechRecognition);
   }, []);
 
-  // Auto demo mode - simulates realistic scenarios
+  // Auto mode - simulates realistic interaction scenarios
   useEffect(() => {
     if (!isPlaying || demoMode !== 'auto') return;
 
@@ -95,7 +95,7 @@ export default function LiveDemoController({ onInteractionCapture }) {
     };
   }, [isPlaying, demoMode, scenarioIndex]);
 
-  // Timer for demo
+  // Timer for active session
   useEffect(() => {
     if (!isPlaying) return;
 
@@ -160,7 +160,7 @@ export default function LiveDemoController({ onInteractionCapture }) {
   // Live voice mode using Web Speech API
   const startLiveVoice = () => {
     if (!hasSpeechAPI) {
-      alert('Web Speech API not supported in this browser. Use Chrome for live voice demo.');
+      alert('Web Speech API not supported in this browser. Use Chrome for live voice input.');
       return;
     }
 
@@ -176,7 +176,7 @@ export default function LiveDemoController({ onInteractionCapture }) {
       setCurrentChannel({
         type: 'voice',
         from: 'LIVE',
-        customerName: 'Live Demo',
+        customerName: 'Live Voice Input',
         status: 'active'
       });
     };
@@ -202,7 +202,7 @@ export default function LiveDemoController({ onInteractionCapture }) {
           channel: 'voice',
           text: fullTranscript,
           from: 'LIVE',
-          customerName: 'Live Demo',
+          customerName: 'Live Voice Input',
           isLive: true
         });
       }

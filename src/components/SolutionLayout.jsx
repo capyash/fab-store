@@ -4,6 +4,7 @@ import { useAuth } from "../auth/AuthContext";
 import Sidebar from "./Sidebar";
 import RoleSwitcher from "./RoleSwitcher";
 
+// TODO(VKV): Replace with production logo
 const TP_LOGO = "/tp-logo.svg";
 const AVATAR_DEFAULT = "/vkv.jpeg";
 
