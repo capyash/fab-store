@@ -167,7 +167,39 @@ Step 2: Inspect Paper Path
 - Look for small paper fragments, labels, or foreign objects
 - Check rollers for damage or debris
 - Verify paper guides are properly aligned
-- Clean any visible debris with lint-free cloth`,
+- Clean any visible debris with lint-free cloth
+
+SECTION 4: HP PRINTER ISSUES (FIELD SOP)
+
+CONTEXT:
+These are common HP printer issues observed in production environments using HP laptops, printers and enterprise networks. Use these when the agent detects an HP device context or when the customer explicitly mentions HP printers.
+
+TYPICAL ISSUES:
+- Printer not working
+- Change printer cartridge
+- Printer access required (network printer)
+
+STANDARD RESOLUTION STEPS:
+
+PRINTER NOT WORKING:
+- Reconnect the printer:
+  * Check power cable, power button and status LEDs.
+  * Verify USB/network cable connection or Wi‑Fi status.
+- Reinstall or repair the required printer drivers:
+  * Use HP‑recommended driver packages or HP Smart for the specific model.
+  * Remove stale printer objects and re-add the printer.
+
+CHANGE PRINTER CARTRIDGE:
+- Physically replace the cartridge with a genuine HP cartridge.
+- Follow on‑screen guidance from the printer panel or driver UI.
+- After replacement, run any built‑in alignment or test pages.
+
+PRINTER ACCESS REQUIRED (NETWORK PRINTER):
+- If user cannot see or access a network printer:
+  * Verify printer exists in the corporate printer list.
+  * Raise an SR (Service Request) to enable network printer access for the user:
+    - Include printer name, location, user ID, and hostname.
+  * Once the SR is completed, ask user to reconnect and print a test page`,
 
     "cat-network-connectivity": `NETWORK CONNECTIVITY TROUBLESHOOTING GUIDE
 Version 1.8 | Last Updated: January 2025
@@ -236,7 +268,48 @@ Step 2: Verify Port Status
 - Link light should be solid (connection established)
 - Activity light should blink (data transmission)
 - Try different port on switch/router
-- Test with known working device`,
+- Test with known working device
+
+SECTION 3: HP NETWORK ISSUES (FIELD SOP)
+
+CONTEXT:
+These are common HP laptop and HP printer network issues handled on enterprise LAN and Wi‑Fi.
+
+TYPICAL ISSUES:
+- LAN port not working
+- LAN port damaged
+- Wi‑Fi not working
+
+STANDARD RESOLUTION STEPS:
+
+LAN PORT NOT WORKING (LOGICAL ISSUE):
+- Check existing LAN port VLAN configuration for the user’s port.
+- Verify the device is mapped to the correct VLAN and has the right port‑security profile.
+- If mismatch or port security violation is found:
+  * Raise an SR (Service Request) with the Network team for:
+    - VLAN correction, and/or
+    - Port security clearance / MAC limit / 802.1x policy review.
+- After changes are applied, confirm link status and that the user can reach required resources.
+
+LAN PORT DAMAGED (PHYSICAL ISSUE):
+- Physically inspect the IO (RJ‑45) port for bent pins, loose jack or broken faceplate.
+- If the IO is damaged:
+  * Log a task for LAN engineers to replace the IO port.
+  * Document old port ID, new port ID and location details.
+- After replacement:
+  * Confirm link light is stable.
+  * Ensure correct VLAN profile is applied to the new switch port.
+
+WI‑FI NOT WORKING:
+- Verify the device MAC address is whitelisted on the Wireless LAN Controller (WLC) / NAC:
+  * If MAC is missing, raise SR to add it to the allowed list.
+- Confirm the user is connecting to the correct SSID and security profile (WPA2/WPA3, 802.1x).
+- Reinstall or update Wi‑Fi drivers on the HP laptop if needed using OEM‑approved versions.
+- If problems persist after MAC and driver checks:
+  * Escalate to the Network team with:
+    - Device MAC, IP, hostname
+    - AP name or location
+    - Time of issue and any error screenshots`,
 
     "cat-software-installation": `SOFTWARE INSTALLATION & UPDATE TROUBLESHOOTING GUIDE
 Version 2.3 | Last Updated: January 2025
@@ -428,7 +501,44 @@ Step 2: Test Device on Different Computer
 - Verify device works on other computer
 - If works elsewhere, issue is with original device
 - If fails on both, device is likely faulty
-- Note which device has the problem`,
+- Note which device has the problem
+
+SECTION 3: HP LAPTOP ISSUES (FIELD SOP)
+
+CONTEXT:
+These are typical HP laptop issues seen in the field. Use these steps when the device is identified as an HP laptop or when the user describes the same symptoms.
+
+TYPICAL ISSUES:
+- Power adapter not working
+- Laptop not booting up
+- Microphone/Camera not working
+
+STANDARD RESOLUTION STEPS:
+
+POWER ADAPTER NOT WORKING:
+- Verify power LED on the adapter and laptop.
+- Try a known‑good power outlet.
+- If adapter is confirmed faulty:
+  * Replace with a spare HP‑approved laptop power adapter.
+  * Ensure wattage and connector type match the original.
+
+LAPTOP NOT BOOTING UP:
+- Perform OS‑level troubleshooting first:
+  * Check for basic POST/beep codes and error messages.
+  * Attempt safe mode / recovery options if OS is reachable.
+- If clear hardware failure is identified and the device is **out of warranty**:
+  * Replace with a spare laptop from IT inventory.
+- If the device is **in warranty**:
+  * Raise a case with OEM (HP) including serial number, error codes and logs.
+
+MICROPHONE / CAMERA NOT WORKING:
+- Verify and update drivers:
+  * Check Device Manager for audio and camera devices.
+  * Install or update HP‑recommended drivers/firmware.
+- Check OS‑level privacy and app permissions for Mic/Camera.
+- If hardware fault is suspected:
+  * For **warranty devices**: raise a case with OEM (HP) for repair/replacement.
+  * For **non‑warranty devices**: engage a third‑party vendor for diagnosis and repair`,
 
     "cat-email-communication": `EMAIL & COMMUNICATION TROUBLESHOOTING GUIDE
 Version 1.7 | Last Updated: January 2025
@@ -1447,7 +1557,7 @@ export default function KnowledgeBase({ onNavigate }) {
       {/* Header */}
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#612D91] via-[#7B3FE4] to-[#C26BFF] flex items-center justify-center shadow-md">
+          <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center shadow-md">
             <BookOpen className="w-5 h-5 text-white" />
           </div>
           <div>

@@ -240,7 +240,7 @@ export default function ExecutiveDashboard({ onSelectClaim, onNavigate }) {
           {onNavigate && (
             <button
               onClick={() => onNavigate("store")}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-[#612D91] dark:hover:text-[#A64AC9] rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-[#780096] dark:hover:text-[#780096] rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               title="Back to FAB Store"
             >
               <Store className="w-3.5 h-3.5" />
@@ -251,7 +251,7 @@ export default function ExecutiveDashboard({ onSelectClaim, onNavigate }) {
             <select
               value={selectedTimeframe}
               onChange={(e) => setSelectedTimeframe(e.target.value)}
-              className="px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#612D91]"
+              className="px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#780096]"
             >
               <option value="week">This Week</option>
               <option value="month">This Month</option>
@@ -543,7 +543,7 @@ export default function ExecutiveDashboard({ onSelectClaim, onNavigate }) {
         className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-lg p-6 mb-6"
       >
         <div className="flex items-center gap-3 mb-6">
-          <div className="p-2 rounded-lg bg-gradient-to-br from-[#612D91] to-[#A64AC9] shadow-md">
+          <div className="p-2 rounded-lg bg-gradient-to-br from-[#780096] to-[#780096] shadow-md">
             <Brain className="w-5 h-5 text-white" />
           </div>
           <div>
@@ -601,14 +601,14 @@ export default function ExecutiveDashboard({ onSelectClaim, onNavigate }) {
                   )}
                 </div>
                 <div className="text-right">
-                  <div className="px-2 py-1 rounded-lg bg-gradient-to-r from-[#612D91]/10 to-[#A64AC9]/10 dark:from-[#612D91]/20 dark:to-[#A64AC9]/20 border border-[#612D91]/30 dark:border-[#A64AC9]/40">
-                    <span className="text-xs font-bold text-[#612D91] dark:text-[#A64AC9]">
+                  <div className="px-2 py-1 rounded-lg bg-gradient-to-r from-[#780096]/10 to-[#780096]/10 dark:from-[#780096]/20 dark:to-[#780096]/20 border border-[#780096]/30 dark:border-[#780096]/40">
+                    <span className="text-xs font-bold text-[#780096] dark:text-[#780096]">
                       {insight.confidence}%
                     </span>
                   </div>
                 </div>
               </div>
-              <button className="w-full mt-3 px-3 py-2 rounded-lg bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white text-xs font-semibold hover:shadow-lg transition-all">
+              <button className="w-full mt-3 px-3 py-2 rounded-lg bg-gradient-to-r from-[#780096] to-[#780096] text-white text-xs font-semibold hover:shadow-lg transition-all">
                 {insight.action}
               </button>
             </motion.div>
@@ -726,7 +726,7 @@ export default function ExecutiveDashboard({ onSelectClaim, onNavigate }) {
                         e.stopPropagation();
                         onSelectClaim?.(claim.claimId);
                       }}
-                      className="px-3 py-1 rounded-lg bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white text-xs font-semibold hover:shadow-lg transition-all"
+                      className="px-3 py-1 rounded-lg bg-gradient-to-r from-[#780096] to-[#780096] text-white text-xs font-semibold hover:shadow-lg transition-all"
                     >
                       Review
                     </button>

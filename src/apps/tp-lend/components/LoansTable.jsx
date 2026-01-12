@@ -145,7 +145,7 @@ export default function LoansTable({ onSelect }) {
   if (loading && loans.length === 0) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="w-8 h-8 animate-spin text-[#612D91]" />
+        <Loader2 className="w-8 h-8 animate-spin text-[#780096]" />
       </div>
     );
   }
@@ -159,7 +159,7 @@ export default function LoansTable({ onSelect }) {
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
           placeholder="Search loans (min 3 chars)..."
-          className="flex-1 min-w-[200px] px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#612D91] dark:focus:ring-[#A64AC9]"
+          className="flex-1 min-w-[200px] px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#780096] dark:focus:ring-[#780096]"
         />
         <select
           value={status}
@@ -167,7 +167,7 @@ export default function LoansTable({ onSelect }) {
             setStatus(e.target.value);
             setPage(1);
           }}
-          className="px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#612D91] dark:focus:ring-[#A64AC9]"
+          className="px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#780096] dark:focus:ring-[#780096]"
         >
           {STATUS_FILTERS.map((s) => (
             <option key={s} value={s}>
@@ -181,7 +181,7 @@ export default function LoansTable({ onSelect }) {
             setLoanType(e.target.value);
             setPage(1);
           }}
-          className="px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#612D91] dark:focus:ring-[#A64AC9]"
+          className="px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#780096] dark:focus:ring-[#780096]"
         >
           {LOAN_TYPE_FILTERS.map((t) => (
             <option key={t} value={t}>
@@ -195,7 +195,7 @@ export default function LoansTable({ onSelect }) {
             setPropertyState(e.target.value);
             setPage(1);
           }}
-          className="px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#612D91] dark:focus:ring-[#A64AC9]"
+          className="px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#780096] dark:focus:ring-[#780096]"
         >
           {STATE_FILTERS.map((s) => (
             <option key={s} value={s}>
@@ -225,7 +225,7 @@ export default function LoansTable({ onSelect }) {
       {/* Loading State */}
       {loading && !error && (
         <div className="flex flex-col items-center justify-center py-16 px-6">
-          <Loader2 className="w-8 h-8 text-[#612D91] dark:text-[#A64AC9] animate-spin mb-3" />
+          <Loader2 className="w-8 h-8 text-[#780096] dark:text-[#780096] animate-spin mb-3" />
           <p className="text-sm text-gray-500 dark:text-gray-400">Loading loans...</p>
         </div>
       )}
@@ -281,7 +281,7 @@ export default function LoansTable({ onSelect }) {
                               e.stopPropagation();
                               onSelect?.(loan);
                             }}
-                            className="inline-flex items-center justify-center text-[11px] px-2 py-0.5 rounded-full bg-white dark:bg-gray-900 text-[#612D91] dark:text-[#A64AC9] border border-[#612D91]/40 dark:border-[#A64AC9]/50 hover:bg-[#F5F3FF] dark:hover:bg-[#4B2E83]/40"
+                            className="inline-flex items-center justify-center text-[11px] px-2 py-0.5 rounded-full bg-white dark:bg-gray-900 text-[#780096] dark:text-[#780096] border border-[#780096]/40 dark:border-[#780096]/50 hover:bg-[#F5F3FF] dark:hover:bg-[#4B2E83]/40"
                             title="Open in AI Reasoning"
                           >
                             <Sparkles className="w-3.5 h-3.5" />

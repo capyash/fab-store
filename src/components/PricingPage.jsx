@@ -43,7 +43,7 @@ export default function PricingPage({ onBack }) {
       ],
       cta: "Start Building",
       popular: true,
-      color: "from-[#612D91] to-[#A64AC9]",
+      color: "from-[#780096] to-[#780096]",
       bgColor: "bg-purple-50",
       borderColor: "border-purple-200",
     },
@@ -107,13 +107,13 @@ export default function PricingPage({ onBack }) {
         <div className="mb-8 text-center">
           <button
             onClick={onBack}
-            className="flex items-center gap-2 text-[#612D91] hover:text-[#7B3DA1] transition-colors mb-4 mx-auto"
+            className="flex items-center gap-2 text-[#780096] hover:text-[#780096] transition-colors mb-4 mx-auto"
           >
             <ArrowLeft className="w-4 h-4" />
             <span className="font-medium">Back to Store</span>
           </button>
           <div className="flex items-center justify-center gap-3 mb-3">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#612D91] to-[#A64AC9] flex items-center justify-center shadow-lg">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center shadow-lg">
               <Sparkles className="w-6 h-6 text-white" />
             </div>
             <div>
@@ -140,7 +140,7 @@ export default function PricingPage({ onBack }) {
                 } bg-white overflow-hidden`}
               >
                 {plan.popular && (
-                  <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white text-xs font-semibold py-1.5 text-center">
+                  <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-[#780096] to-[#780096] text-white text-xs font-semibold py-1.5 text-center">
                     Most Popular
                   </div>
                 )}
@@ -163,7 +163,7 @@ export default function PricingPage({ onBack }) {
                   <button
                     className={`w-full py-2.5 rounded-lg font-semibold text-sm transition-all mb-4 ${
                       plan.popular
-                        ? "bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white hover:shadow-lg"
+                        ? "bg-gradient-to-r from-[#780096] to-[#780096] text-white hover:shadow-lg"
                         : "bg-gray-100 text-gray-900 hover:bg-gray-200"
                     }`}
                   >
@@ -172,7 +172,7 @@ export default function PricingPage({ onBack }) {
                   <div className="space-y-2">
                     {plan.features.map((feature, featureIdx) => (
                       <div key={featureIdx} className="flex items-start gap-2">
-                        <Check className="w-4 h-4 text-[#612D91] shrink-0 mt-0.5" />
+                        <Check className="w-4 h-4 text-[#780096] shrink-0 mt-0.5" />
                         <span className="text-xs text-gray-700 leading-relaxed">{feature}</span>
                       </div>
                     ))}
@@ -194,7 +194,7 @@ export default function PricingPage({ onBack }) {
               >
                 <h3 className="font-semibold text-gray-900 mb-1.5 text-sm">{addOn.name}</h3>
                 <p className="text-xs text-gray-600 mb-2">{addOn.description}</p>
-                <div className="text-base font-bold text-[#612D91]">{addOn.price}</div>
+                <div className="text-base font-bold text-[#780096]">{addOn.price}</div>
               </div>
             ))}
           </div>
@@ -249,13 +249,13 @@ export default function PricingPage({ onBack }) {
         </section>
 
         {/* Enterprise CTA */}
-        <section className="bg-gradient-to-br from-[#612D91] to-[#A64AC9] rounded-xl p-8 text-center text-white">
+        <section className="bg-gradient-to-br from-[#780096] to-[#780096] rounded-xl p-8 text-center text-white">
           <h2 className="text-2xl font-bold mb-2">Need Enterprise Features?</h2>
           <p className="text-base text-white/90 mb-6 max-w-2xl mx-auto">
             Get custom pricing, dedicated support, and enterprise-grade features tailored to your organization.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <button className="px-6 py-2.5 bg-white text-[#612D91] rounded-lg font-semibold text-sm hover:bg-gray-100 transition-colors">
+            <button className="px-6 py-2.5 bg-white text-[#780096] rounded-lg font-semibold text-sm hover:bg-gray-100 transition-colors">
               Contact Sales
             </button>
             <button className="px-6 py-2.5 bg-white/10 text-white border-2 border-white/30 rounded-lg font-semibold text-sm hover:bg-white/20 transition-colors">

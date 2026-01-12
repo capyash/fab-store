@@ -116,7 +116,7 @@ export default function ReasoningStepCard({ step, index, onSOPView, claim }) {
               <div className="mt-2 space-y-1">
                 {highlights.slice(0, 2).map((highlight, idx) => (
                   <div key={idx} className="flex items-start gap-2 text-xs text-gray-500 dark:text-gray-400">
-                    <span className="text-[#612D91] dark:text-[#A64AC9] mt-0.5">•</span>
+                    <span className="text-[#780096] dark:text-[#780096] mt-0.5">•</span>
                     <span>{highlight.substring(0, 80)}{highlight.length > 80 ? "..." : ""}</span>
                   </div>
                 ))}
@@ -180,7 +180,7 @@ export default function ReasoningStepCard({ step, index, onSOPView, claim }) {
                           onSOPView?.(ref, null, claim?.status, null);
                         }
                       }}
-                      className="px-2 py-1 rounded text-xs font-medium bg-[#612D91]/10 text-[#612D91] dark:text-[#A64AC9] dark:bg-[#A64AC9]/20 hover:bg-[#612D91]/20 dark:hover:bg-[#A64AC9]/30 transition-colors"
+                      className="px-2 py-1 rounded text-xs font-medium bg-[#780096]/10 text-[#780096] dark:text-[#780096] dark:bg-[#780096]/20 hover:bg-[#780096]/20 dark:hover:bg-[#780096]/30 transition-colors"
                     >
                       {ref}
                     </button>

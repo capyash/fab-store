@@ -2,6 +2,7 @@ import { useMemo, useState, useEffect } from "react";
 import { Sparkles, Search, ArrowRight, ChevronDown, User, LogOut, ArrowLeft, Layers, Copy } from "lucide-react";
 import { fabApps } from "../data/fabApps";
 import { fabModels } from "../data/fabModels";
+import { fabAgents } from "../data/fabAgents";
 import { fabPlatforms, getEnrichedPlatforms } from "../data/fabPlatforms";
 import { applicationTemplates, getTemplatesByIndustry } from "../data/templates";
 import StoreFooter from "./StoreFooter";
@@ -15,9 +16,38 @@ import AgenticSupportDemo from "./AgenticSupportDemo";
 import KnowledgeHub from "./KnowledgeHub";
 import PricingPage from "./PricingPage";
 import ArchitecturePage from "./ArchitecturePage";
+import AppLogo from "./AppLogo";
 import { useAuth } from "../auth/AuthContext";
 import { usePermissions } from "../hooks/usePermissions";
 import RoleSwitcher from "./RoleSwitcher";
+
+// Store Logo Component - uses image if available, falls back to AppLogo
+function StoreLogo() {
+  const [imageError, setImageError] = useState(false);
+  
+  // Make logo much larger and more visible, especially on smaller screens like laptops
+  // Remove any background/shadow/box styling for clean appearance
+  if (!imageError) {
+    return (
+      <img 
+        src="/fab-store-logo-store.png" 
+        alt="TP.ai FAB Store" 
+        className="h-16 sm:h-20 md:h-24 lg:h-20 xl:h-24 w-auto object-contain"
+        style={{ 
+          minHeight: '64px',
+          maxHeight: 'none',
+          imageRendering: 'auto',
+          display: 'block',
+          background: 'transparent'
+        }}
+        onError={() => setImageError(true)}
+      />
+    );
+  }
+  
+  // Fallback to AppLogo if image doesn't exist - show icon on landing page
+  return <AppLogo appName="Store" className="h-16 sm:h-20 md:h-24 lg:h-20 xl:h-24" showIcon={true} />;
+}
 
 const sortOptions = [
   { value: "name", label: "Alphabetical" },
@@ -391,6 +421,14 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin, onNavigate }) {
             />
           )}
 
+          {activeNav === "agents" && (
+            <AgentGallery
+              agents={fabAgents}
+              readOnly={readOnly}
+              onRequestLogin={onRequestLogin}
+            />
+          )}
+
           {activeNav === "templates" && (
             <section className="px-4 md:px-10">
               <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_45px_85px_rgba(15,10,45,0.15)] p-6 md:p-10 space-y-6 backdrop-blur">
@@ -591,18 +629,18 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin, onNavigate }) {
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-                  <div className="p-6 rounded-xl bg-gradient-to-br from-[#612D91]/5 to-[#A64AC9]/5 border border-[#612D91]/20">
-                    <div className="text-3xl font-bold text-[#612D91] mb-2">5</div>
+                  <div className="p-6 rounded-xl bg-gradient-to-br from-[#2E2E2E]/5 to-[#2E2E2E]/5 border border-[#2E2E2E]/20">
+                    <div className="text-3xl font-bold text-[#2E2E2E] mb-2">5</div>
                     <div className="text-sm font-medium text-gray-700">Live Applications</div>
                     <div className="text-xs text-gray-500 mt-1">Production-ready solutions</div>
                   </div>
-                  <div className="p-6 rounded-xl bg-gradient-to-br from-[#612D91]/5 to-[#A64AC9]/5 border border-[#612D91]/20">
-                    <div className="text-3xl font-bold text-[#612D91] mb-2">2</div>
+                  <div className="p-6 rounded-xl bg-gradient-to-br from-[#2E2E2E]/5 to-[#2E2E2E]/5 border border-[#2E2E2E]/20">
+                    <div className="text-3xl font-bold text-[#2E2E2E] mb-2">2</div>
                     <div className="text-sm font-medium text-gray-700">AI Platforms</div>
                     <div className="text-xs text-gray-500 mt-1">SOP Executor & Field Service</div>
                   </div>
-                  <div className="p-6 rounded-xl bg-gradient-to-br from-[#612D91]/5 to-[#A64AC9]/5 border border-[#612D91]/20">
-                    <div className="text-3xl font-bold text-[#612D91] mb-2">67</div>
+                  <div className="p-6 rounded-xl bg-gradient-to-br from-[#2E2E2E]/5 to-[#2E2E2E]/5 border border-[#2E2E2E]/20">
+                    <div className="text-3xl font-bold text-[#2E2E2E] mb-2">67</div>
                     <div className="text-sm font-medium text-gray-700">Builder Components</div>
                     <div className="text-xs text-gray-500 mt-1">Low-code/no-code platform</div>
                   </div>
@@ -612,28 +650,28 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin, onNavigate }) {
                   <h3 className="text-xl font-semibold text-gray-900 mb-4">Key Capabilities</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-[#612D91] mt-2 shrink-0" />
+                      <div className="w-2 h-2 rounded-full bg-[#2E2E2E] mt-2 shrink-0" />
                       <div>
                         <div className="font-medium text-gray-900">AI-Native Platforms</div>
                         <div className="text-sm text-gray-600">Reusable infrastructure with built-in AI reasoning, compliance, and orchestration</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-[#612D91] mt-2 shrink-0" />
+                      <div className="w-2 h-2 rounded-full bg-[#2E2E2E] mt-2 shrink-0" />
                       <div>
                         <div className="font-medium text-gray-900">Low-Code/No-Code Builder</div>
                         <div className="text-sm text-gray-600">Visual app builder with 67 components and AI-powered generation</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-[#612D91] mt-2 shrink-0" />
+                      <div className="w-2 h-2 rounded-full bg-[#2E2E2E] mt-2 shrink-0" />
                       <div>
                         <div className="font-medium text-gray-900">Role-Based Access</div>
                         <div className="text-sm text-gray-600">Admin, Developer, and User personas with granular permissions</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-[#612D91] mt-2 shrink-0" />
+                      <div className="w-2 h-2 rounded-full bg-[#2E2E2E] mt-2 shrink-0" />
                       <div>
                         <div className="font-medium text-gray-900">Production-Ready Templates</div>
                         <div className="text-sm text-gray-600">Clone battle-tested applications and customize for your needs</div>
@@ -668,7 +706,7 @@ function FabStore({ onLaunch, readOnly = false, onRequestLogin, onNavigate }) {
                         setShowBuilderDetail(false);
                         onRequestLogin?.();
                       }}
-                      className="px-6 py-3 bg-[#612D91] text-white rounded-lg font-semibold hover:bg-[#7B3DA1] transition"
+                      className="px-6 py-3 bg-[#2E2E2E] text-white rounded-lg font-semibold hover:bg-[#4A4A4A] active:bg-[#666666] transition-all"
                     >
                       Sign In
                     </button>
@@ -747,7 +785,8 @@ function TopNav({ search, onSearchChange, readOnly, onRequestLogin, onRequestDem
 
   const navItems = [
     { label: "Store", key: "store" },
-    { label: "AI Models", key: "modals" },
+    { label: "Models", key: "modals" },
+    { label: "Agents", key: "agents" },
     { label: "Platforms", key: "platforms" },
     ...(permissions.canCloneTemplates ? [{ label: "Templates", key: "templates" }] : []),
     ...(permissions.canAccessMySpace ? [{ label: "My Space", key: "myspace" }] : []),
@@ -758,14 +797,10 @@ function TopNav({ search, onSearchChange, readOnly, onRequestLogin, onRequestDem
     <header className="sticky top-0 z-20 bg-white/95 backdrop-blur-xl border-b border-white/60 shadow-[0_12px_30px_rgba(15,14,63,0.08)] text-gray-900">
       <div className="w-full px-4 lg:px-12 py-4 flex items-center gap-6 flex-wrap">
         <div className="flex items-center gap-4 flex-1 min-w-[280px]">
-          <div className="flex items-center gap-2">
-            {/* TODO(VKV): Replace with production logo */}
-            <img src="/tp-logo.svg" alt="TP.ai" className="h-9 w-auto" />
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.35em] text-gray-400">TP.ai</p>
-              <p className="text-base font-semibold text-gray-900">FAB Store</p>
-            </div>
-          </div>
+        <div className="flex items-center bg-transparent">
+          {/* Use image logo for Store - place your logo image at /public/fab-store-logo-store.png */}
+          <StoreLogo />
+        </div>
           <span className="hidden sm:block h-6 w-px bg-gray-200" />
           <nav className="flex items-center gap-5 text-sm font-semibold text-gray-500">
             {navItems.map(({ label, key }) => {
@@ -798,7 +833,7 @@ function TopNav({ search, onSearchChange, readOnly, onRequestLogin, onRequestDem
           <button
             type="button"
             onClick={onRequestDemo}
-            className="hidden sm:inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-[#4C2DBF] bg-[#EFE9FF] border border-[#E0D3FF] hover:bg-white transition-colors shadow-sm"
+            className="hidden sm:inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-[#2E2E2E] bg-white border border-[#2E2E2E] hover:bg-[#F5F5F5] active:bg-[#E6E6E5] transition-all shadow-sm"
           >
             Request demo
           </button>
@@ -806,7 +841,7 @@ function TopNav({ search, onSearchChange, readOnly, onRequestLogin, onRequestDem
           {(!isAuthenticated || readOnly) ? (
             <button
               onClick={onRequestLogin}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[#8E49FF] via-[#7C3AED] to-[#5C2DB1] text-sm font-semibold text-white shadow-[0_10px_25px_rgba(109,53,207,0.3)]"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#2E2E2E] text-sm font-semibold text-white shadow-lg hover:bg-[#4A4A4A] active:bg-[#666666] transition-all"
             >
               <User className="w-4 h-4" />
               Sign in
@@ -850,7 +885,7 @@ function TopNav({ search, onSearchChange, readOnly, onRequestLogin, onRequestDem
                     {user?.role && (
                       <div className="flex items-center gap-2">
                         <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Role:</span>
-                        <span className="text-xs text-[#612D91] font-semibold capitalize px-2 py-0.5 rounded-full bg-[#612D91]/10">
+                        <span className="text-xs text-[#2E2E2E] font-semibold capitalize px-2 py-0.5 rounded-full bg-[#2E2E2E]/10">
                           {user.role}
                         </span>
                       </div>
@@ -938,9 +973,9 @@ function HeroCarousel({ slides, readOnly, onRequestLogin, onLaunch }) {
                 AI-Native Platform
               </div>
               <div className="space-y-3 max-w-2xl">
-                <p className="text-sm uppercase tracking-[0.35em] text-gray-400">{activeSlide.category}</p>
-                <h1 className="text-4xl md:text-5xl font-bold text-gray-900">{activeSlide.name}</h1>
-                <p className="text-base md:text-lg text-gray-600 leading-relaxed">{activeSlide.description}</p>
+                <p className="text-sm uppercase tracking-[0.35em] text-[#989898]">{activeSlide.category}</p>
+                <h1 className="text-4xl md:text-5xl font-bold text-[#2E2E2E]">{activeSlide.name}</h1>
+                <p className="text-base md:text-lg text-[#2E2E2E] leading-relaxed">{activeSlide.description}</p>
                 <div className="flex items-center gap-2 pt-2">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-700">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -971,18 +1006,18 @@ function HeroCarousel({ slides, readOnly, onRequestLogin, onLaunch }) {
                       onLaunch?.(activeSlide.launchKey);
                     }
                   }}
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#612D91] to-[#A960FF] text-white font-semibold text-sm shadow-[0_12px_30px_rgba(97,45,145,0.35)]"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#2E2E2E] text-white font-semibold text-sm shadow-lg hover:bg-[#4A4A4A] active:bg-[#666666] transition-all"
                 >
                   Launch {activeSlide.name}
                   <ArrowRight className="w-4 h-4" />
                 </button>
-                <button className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#DDD7FF] text-gray-700 font-semibold text-sm bg-white/80 hover:bg-white">
+                <button className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-[#2E2E2E] text-[#2E2E2E] font-semibold text-sm bg-white hover:bg-[#F5F5F5] active:bg-[#E6E6E5] transition-all">
                   Watch product film
                 </button>
                 {readOnly && (
                   <button
                     onClick={onRequestLogin}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white border border-[#E6D8FF] text-[#612D91] font-semibold text-sm"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white border border-[#2E2E2E] text-[#2E2E2E] font-semibold text-sm hover:bg-[#F5F5F5] active:bg-[#E6E6E5] transition-all"
                   >
                     Sign in to launch
                   </button>
@@ -991,8 +1026,8 @@ function HeroCarousel({ slides, readOnly, onRequestLogin, onLaunch }) {
               <div className="flex flex-wrap gap-6 text-sm text-gray-600">
                 {activeSlide.metrics?.slice(0, 3).map((metric) => (
                   <div key={metric.label}>
-                    <div className="text-[11px] uppercase tracking-[0.35em] text-gray-400 font-semibold">{metric.label}</div>
-                    <div className="text-2xl font-semibold text-gray-900">{metric.value}</div>
+                    <div className="text-[11px] uppercase tracking-[0.35em] text-[#989898] font-semibold">{metric.label}</div>
+                    <div className="text-2xl font-semibold text-[#2E2E2E]">{metric.value}</div>
                   </div>
                 ))}
               </div>
@@ -1001,7 +1036,7 @@ function HeroCarousel({ slides, readOnly, onRequestLogin, onLaunch }) {
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div>
                   <p className="text-xs uppercase tracking-[0.4em] text-gray-400">In-market telemetry</p>
-                  <h3 className="text-xl font-semibold text-gray-900">FAB intelligence feed</h3>
+                  <h3 className="text-xl font-semibold text-[#2E2E2E]">FAB intelligence feed</h3>
                 </div>
                 <span className="inline-flex items-center gap-2 rounded-full px-3 py-1 bg-[#F4F1FF] text-[#5C36C8] text-xs font-semibold">
                   <span className="h-2 w-2 rounded-full bg-[#4ADE80] animate-pulse" />
@@ -1018,8 +1053,8 @@ function HeroCarousel({ slides, readOnly, onRequestLogin, onLaunch }) {
                   <div key={stat.label} className="rounded-2xl border border-gray-100 px-4 py-3 bg-gray-50">
                     <p className="text-[11px] uppercase tracking-[0.35em] text-gray-400 font-semibold">{stat.label}</p>
                     <div className="flex items-baseline gap-2">
-                      <p className="text-xl font-semibold text-gray-900">{stat.value}</p>
-                      <span className="text-xs text-gray-500">{stat.delta}</span>
+                      <p className="text-xl font-semibold text-[#2E2E2E]">{stat.value}</p>
+                      <span className="text-xs text-[#989898]">{stat.delta}</span>
                     </div>
                   </div>
                 ))}
@@ -1035,13 +1070,13 @@ function HeroCarousel({ slides, readOnly, onRequestLogin, onLaunch }) {
                 {["Claims", "Banking", "Telco", "Retail", "Healthcare"].map((chip) => (
                   <button
                     key={chip}
-                    className="px-3 py-1.5 rounded-full border border-gray-200 text-sm text-gray-600 hover:border-[#6F54E8] hover:text-[#6F54E8]"
+                    className="px-3 py-1.5 rounded-lg border border-[#2E2E2E] text-sm text-[#2E2E2E] bg-white hover:bg-[#F5F5F5] active:bg-[#E6E6E5] transition-all"
                   >
                     {chip}
                   </button>
                 ))}
               </div>
-              <button className="inline-flex items-center gap-2 rounded-full px-4 py-2 border border-[#6F54E8] text-[#6F54E8] font-semibold hover:bg-[#F4F1FF] transition text-sm">
+              <button className="inline-flex items-center gap-2 rounded-lg px-4 py-2 border border-[#2E2E2E] text-[#2E2E2E] font-semibold bg-white hover:bg-[#F5F5F5] active:bg-[#E6E6E5] transition-all text-sm">
                 View store insights
                 <ArrowRight className="w-4 h-4" />
               </button>
@@ -1144,6 +1179,140 @@ function SectionRow({ title, subtitle, apps, readOnly, onRequestLogin, onLaunch 
   );
 }
 
+function AgentGallery({ agents, readOnly, onRequestLogin }) {
+  const categories = Array.from(new Set(agents.map((agent) => agent.category)));
+  const frameworks = Array.from(new Set(agents.map((agent) => agent.framework)));
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [activeFramework, setActiveFramework] = useState("All");
+
+  const filteredAgents = useMemo(() => {
+    return agents.filter((agent) => {
+      const matchesCategory = activeCategory === "All" || agent.category === activeCategory;
+      const matchesFramework = activeFramework === "All" || agent.framework === activeFramework;
+      return matchesCategory && matchesFramework;
+    });
+  }, [agents, activeCategory, activeFramework]);
+
+  return (
+    <section id="fab-agents" className="px-4 md:px-10">
+      <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_45px_85px_rgba(15,10,45,0.15)] p-6 md:p-10 space-y-6 backdrop-blur">
+        <div className="flex flex-col gap-3">
+          <div className="text-xs font-semibold uppercase tracking-[0.35em] text-[#5C36C8]">Agents</div>
+          <p className="text-sm text-gray-600">
+            Specialized AI agents for reasoning, execution, and decision-making—orchestrated workflows powered by LangGraph and LangChain.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <FilterPill 
+              label="Category" 
+              activeValue={activeCategory} 
+              options={["All", ...categories]} 
+              onSelect={setActiveCategory} 
+            />
+            <FilterPill 
+              label="Framework" 
+              activeValue={activeFramework} 
+              options={["All", ...frameworks]} 
+              onSelect={setActiveFramework} 
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+          {filteredAgents.length > 0 ? (
+            filteredAgents.map((agent) => (
+              <AgentCard key={agent.id} agent={agent} readOnly={readOnly} onRequestLogin={onRequestLogin} />
+            ))
+          ) : (
+            <div className="col-span-full text-center py-12 text-gray-500">No agents match this filter.</div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function AgentCard({ agent, readOnly, onRequestLogin }) {
+  return (
+    <div className="rounded-[28px] border border-white/40 bg-white/95 shadow-[0_20px_50px_rgba(18,12,64,0.15)] flex flex-col overflow-hidden">
+      <div className="h-1.5 w-full bg-gradient-to-r from-[#6F54E8] to-[#780096]" />
+      <div className="p-6 flex flex-col gap-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center flex-wrap gap-2 text-xs uppercase tracking-wide text-gray-500">
+            <span>{agent.category}</span>
+            <span className={`px-2 py-0.5 rounded-full ${
+              agent.maturity === "Production" 
+                ? "bg-emerald-50 text-emerald-700 border border-emerald-200" 
+                : agent.maturity === "Beta"
+                ? "bg-amber-50 text-amber-700 border border-amber-200"
+                : "bg-gray-100 text-gray-700"
+            }`}>{agent.signal}</span>
+          </div>
+          <span className="px-2.5 py-1 rounded-full bg-[#2E2E2E]/10 text-[#2E2E2E] text-[10px] font-semibold">
+            {agent.framework}
+          </span>
+        </div>
+        <div>
+          <h3 className="text-xl font-semibold text-gray-900">{agent.name}</h3>
+          <p className="text-sm text-gray-600 font-medium">{agent.description}</p>
+        </div>
+        <p className="text-sm text-gray-600 flex-1">{agent.definition}</p>
+
+        <div className="flex flex-wrap gap-3 text-[11px] text-gray-600">
+          <div className="rounded-2xl border border-gray-200/80 px-3 py-1.5">
+            <p className="uppercase tracking-wide text-gray-500 font-semibold">Inputs</p>
+            <p className="font-semibold text-gray-900">{agent.inputs.join(" · ")}</p>
+          </div>
+          <div className="rounded-2xl border border-gray-200/80 px-3 py-1.5">
+            <p className="uppercase tracking-wide text-gray-500 font-semibold">Outputs</p>
+            <p className="font-semibold text-gray-900">{agent.outputs.join(" · ")}</p>
+          </div>
+        </div>
+
+        {agent.metrics && agent.metrics.length > 0 && (
+          <div className="grid grid-cols-2 gap-3 text-[11px]">
+            {agent.metrics.map((metric) => (
+              <div key={metric.label} className="rounded-2xl border border-gray-200/80 px-3 py-1.5">
+                <p className="uppercase tracking-wide text-gray-500 font-semibold">{metric.label}</p>
+                <p className="font-semibold text-gray-900">{metric.value}</p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {agent.stack && agent.stack.length > 0 && (
+          <div className="rounded-2xl border border-[#2E2E2E]/20 bg-[#2E2E2E]/5 px-3 py-1.5">
+            <p className="uppercase tracking-wide text-[#2E2E2E] font-semibold text-[11px]">Stack</p>
+            <p className="font-semibold text-[#2E2E2E] text-sm">{agent.stack.join(" · ")}</p>
+          </div>
+        )}
+
+        {agent.applications && agent.applications.length > 0 && (
+          <div className="flex flex-wrap gap-1.5">
+            {agent.applications.map((app) => (
+              <span key={app} className="px-2 py-0.5 rounded-full bg-[#780096]/10 text-[#780096] text-[10px] font-medium">
+                {app}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <button
+          type="button"
+          onClick={() => {
+            if (readOnly) {
+              onRequestLogin?.();
+              return;
+            }
+          }}
+          className="mt-auto inline-flex items-center justify-center gap-2 rounded-lg border border-[#2E2E2E] px-4 py-2.5 text-sm font-semibold text-[#2E2E2E] bg-white hover:bg-[#F5F5F5] active:bg-[#E6E6E5] transition-all"
+        >
+          {readOnly ? "Sign in to view" : agent.ctaLabel || "View Details"}
+          <ArrowRight className="w-4 h-4" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function ModelGallery({
   models,
   totalModels,
@@ -1162,7 +1331,7 @@ function ModelGallery({
       <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_35px_85px_rgba(14,10,60,0.15)] p-6 md:p-10 space-y-8 backdrop-blur">
         <div className="flex flex-col gap-4">
           <div>
-            <div className="text-xs font-semibold uppercase tracking-[0.35em] text-[#5C36C8]">AI Models</div>
+            <div className="text-xs font-semibold uppercase tracking-[0.35em] text-[#5C36C8]">Models</div>
             <p className="text-sm text-gray-600 mt-1">Reusable AI intelligence modules—reasoning engines, orchestrators, and specialized models ready to integrate into your applications</p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -1237,7 +1406,7 @@ function ModelCard({ model, readOnly, onRequestLogin }) {
             return;
           }
         }}
-        className="mt-auto inline-flex items-center justify-between rounded-full border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 hover:text-[#612D91] hover:border-[#612D91]/60 transition"
+        className="mt-auto inline-flex items-center justify-between rounded-lg border border-[#2E2E2E] px-4 py-2 text-sm font-semibold text-[#2E2E2E] bg-white hover:bg-[#F5F5F5] active:bg-[#E6E6E5] transition-all"
       >
         {readOnly ? "Sign in to orchestrate" : model.ctaLabel}
         <ArrowRight className="w-4 h-4" />
@@ -1265,7 +1434,7 @@ function MiniAppTile({ app, readOnly, onRequestLogin, onLaunch }) {
           </span>
           <button
             type="button"
-            className="p-1.5 rounded-full border border-gray-200 text-gray-500 hover:text-[#612D91] hover:border-[#612D91]/40 transition"
+            className="p-1.5 rounded-lg border border-[#2E2E2E] text-[#2E2E2E] hover:bg-[#F5F5F5] active:bg-[#E6E6E5] transition-all"
             aria-label="Favorite"
           >
             ♥
@@ -1311,7 +1480,7 @@ function MiniAppTile({ app, readOnly, onRequestLogin, onLaunch }) {
             onLaunch?.(app.launchKey);
           }
         }}
-        className="mt-auto inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[#612D91] to-[#A960FF] text-white text-sm font-semibold shadow-[0_12px_25px_rgba(97,45,145,0.35)]"
+        className="mt-auto inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#2E2E2E] text-white text-sm font-semibold shadow-lg hover:bg-[#4A4A4A] active:bg-[#666666] transition-all"
       >
         {readOnly ? "Sign in" : app.ctaLabel || "Open"}
         <ArrowRight className="w-4 h-4" />
@@ -1336,7 +1505,7 @@ function PlatformCard({ platform, onSelect }) {
             <span className={`px-2 py-0.5 rounded-full ${platform.statusColor || "bg-gray-100 text-gray-700"}`}>{platform.status}</span>
           </div>
           {metrics.solutionCount > 0 && (
-            <div className="px-2.5 py-1 rounded-full bg-[#612D91]/10 text-[#612D91] text-[10px] font-semibold">
+            <div className="px-2.5 py-1 rounded-full bg-[#2E2E2E]/10 text-[#2E2E2E] text-[10px] font-semibold">
               {metrics.solutionCount} {metrics.solutionCount === 1 ? 'Solution' : 'Solutions'}
             </div>
           )}
@@ -1371,7 +1540,7 @@ function PlatformCard({ platform, onSelect }) {
         {metrics.industries && metrics.industries.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {metrics.industries.slice(0, 3).map((industry, idx) => (
-              <span key={idx} className="px-2 py-1 rounded-full bg-[#612D91]/10 text-[#612D91] text-[10px] font-medium">
+              <span key={idx} className="px-2 py-1 rounded-full bg-[#2E2E2E]/10 text-[#2E2E2E] text-[10px] font-medium">
                 {industry}
               </span>
             ))}
@@ -1396,7 +1565,7 @@ function PlatformCard({ platform, onSelect }) {
             e.stopPropagation();
             onSelect?.(platform);
           }}
-          className="mt-2 w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white font-semibold text-sm hover:shadow-lg transition-all"
+          className="mt-2 w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-[#2E2E2E] text-white font-semibold text-sm hover:bg-[#4A4A4A] active:bg-[#666666] transition-all shadow-lg"
         >
           View Platform
           <ArrowRight className="w-4 h-4" />
@@ -1430,7 +1599,7 @@ function AppCard({ app, onLaunch, readOnly, onRequestLogin, onPlatformClick, onC
                 e.stopPropagation();
                 onPlatformClick?.(platform);
               }}
-              className="px-2.5 py-1 rounded-full bg-[#612D91]/10 text-[#612D91] text-[10px] font-semibold hover:bg-[#612D91]/20 transition-colors flex items-center gap-1"
+              className="px-2.5 py-1 rounded-full bg-[#2E2E2E]/10 text-[#2E2E2E] text-[10px] font-semibold hover:bg-[#2E2E2E]/20 transition-colors flex items-center gap-1"
               title={`Built on ${platform.name}`}
             >
               <Layers className="w-3 h-3" />
@@ -1454,9 +1623,9 @@ function AppCard({ app, onLaunch, readOnly, onRequestLogin, onPlatformClick, onC
             <p className="font-semibold text-gray-900">{app.vertical ?? app.category}</p>
           </div>
           {platform && (
-            <div className="rounded-2xl border border-[#612D91]/20 bg-[#612D91]/5 px-3 py-1.5">
-              <p className="uppercase tracking-wide text-[#612D91] font-semibold">Platform</p>
-              <p className="font-semibold text-[#612D91]">{platform.name}</p>
+            <div className="rounded-2xl border border-[#2E2E2E]/20 bg-[#2E2E2E]/5 px-3 py-1.5">
+              <p className="uppercase tracking-wide text-[#2E2E2E] font-semibold">Platform</p>
+              <p className="font-semibold text-[#2E2E2E]">{platform.name}</p>
             </div>
           )}
         </div>
@@ -1493,7 +1662,7 @@ function AppCard({ app, onLaunch, readOnly, onRequestLogin, onPlatformClick, onC
                 onLaunch?.(app.launchKey);
               }
             }}
-            className="inline-flex items-center justify-between rounded-full border border-gray-300 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:text-[#612D91] hover:border-[#612D91]/60 transition"
+            className="inline-flex items-center justify-between rounded-lg border border-[#2E2E2E] px-4 py-2.5 text-sm font-semibold text-[#2E2E2E] bg-white hover:bg-[#F5F5F5] active:bg-[#E6E6E5] transition-all"
           >
             {readOnly
               ? "Sign in to launch"
@@ -1509,7 +1678,7 @@ function AppCard({ app, onLaunch, readOnly, onRequestLogin, onPlatformClick, onC
                 e.stopPropagation();
                 onCloneTemplate?.(app);
               }}
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-[#612D91]/30 bg-[#612D91]/5 px-4 py-2 text-sm font-semibold text-[#612D91] hover:bg-[#612D91]/10 transition"
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#2E2E2E] bg-white px-4 py-2 text-sm font-semibold text-[#2E2E2E] hover:bg-[#F5F5F5] active:bg-[#E6E6E5] transition-all"
             >
               <Copy className="w-4 h-4" />
               Clone Template
@@ -1531,8 +1700,8 @@ function FilterPill({ label, activeValue, options, onSelect }) {
           onClick={() => onSelect(option)}
           className={`px-2.5 py-1 rounded-xl transition ${
             activeValue === option
-              ? "bg-[#612D91] text-white shadow"
-              : "text-gray-600 hover:text-[#612D91]"
+              ? "bg-[#2E2E2E] text-white shadow"
+              : "text-[#2E2E2E] hover:bg-[#F5F5F5]"
           }`}
         >
           {option}
@@ -1633,7 +1802,7 @@ function DemoRequestModal({ open, onClose }) {
           </div>
           <button
             type="submit"
-            className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#612D91] to-[#A960FF] text-white text-sm font-semibold py-3 shadow-[0_15px_35px_rgba(97,45,145,0.35)]"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-[#2E2E2E] text-white text-sm font-semibold py-3 shadow-lg hover:bg-[#4A4A4A] active:bg-[#666666] transition-all"
           >
             Submit request
           </button>

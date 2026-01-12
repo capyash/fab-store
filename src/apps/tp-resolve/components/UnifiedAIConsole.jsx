@@ -438,13 +438,13 @@ export default function UnifiedAIConsole({ onBind, onSOPReference, onSOPView, ca
           >
           {/* Section Header - AI Reasoning */}
           <div className="relative flex items-center gap-3 pb-3 mb-2">
-            <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#612D91] via-[#A64AC9] to-[#612D91] rounded-full"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#780096] to-[#780096] rounded-full"></div>
             
-            <div className="p-2 rounded-lg bg-gradient-to-br from-[#612D91] to-[#A64AC9] shadow-lg shrink-0">
+            <div className="p-2 rounded-lg bg-gradient-to-br from-[#780096] to-[#780096] shadow-lg shrink-0">
               <Brain className="w-5 h-5 text-white" />
             </div>
             <div className="flex-1 min-w-0">
-              <h2 className="text-xl font-bold bg-gradient-to-r from-[#612D91] to-[#A64AC9] bg-clip-text text-transparent">
+              <h2 className="text-xl font-bold bg-gradient-to-r from-[#780096] to-[#780096] bg-clip-text text-transparent">
                 AI Reasoning
               </h2>
               <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">
@@ -452,8 +452,8 @@ export default function UnifiedAIConsole({ onBind, onSOPReference, onSOPView, ca
               </p>
             </div>
             {avgConfidence && (
-              <div className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-[#612D91]/10 to-[#A64AC9]/10 dark:from-[#612D91]/20 dark:to-[#A64AC9]/20 border border-[#612D91]/30 dark:border-[#A64AC9]/40 shrink-0">
-                <span className="text-xs font-semibold text-[#612D91] dark:text-[#A64AC9]">
+              <div className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-[#780096]/10 to-[#780096]/10 dark:from-[#780096]/20 dark:to-[#780096]/20 border border-[#780096]/30 dark:border-[#780096]/40 shrink-0">
+                <span className="text-xs font-semibold text-[#780096] dark:text-[#780096]">
                   {Math.round(avgConfidence * 100)}% Confidence
                 </span>
               </div>
@@ -465,11 +465,11 @@ export default function UnifiedAIConsole({ onBind, onSOPReference, onSOPView, ca
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-gradient-to-r from-[#612D91]/10 to-[#A64AC9]/10 dark:from-[#612D91]/20 dark:to-[#A64AC9]/20 border border-[#612D91]/30 dark:border-[#A64AC9]/40 rounded-xl p-5 shadow-lg backdrop-blur-sm"
+              className="bg-gradient-to-r from-[#780096]/10 to-[#780096]/10 dark:from-[#780096]/20 dark:to-[#780096]/20 border border-[#780096]/30 dark:border-[#780096]/40 rounded-xl p-5 shadow-lg backdrop-blur-sm"
             >
               <div className="flex items-center gap-4">
                 <motion.div
-                  className="p-3 rounded-xl bg-gradient-to-br from-[#612D91] to-[#A64AC9] shadow-lg"
+                  className="p-3 rounded-xl bg-gradient-to-br from-[#780096] to-[#780096] shadow-lg"
                   animate={{ 
                     rotate: [0, 360],
                     scale: [1, 1.1, 1]
@@ -482,7 +482,7 @@ export default function UnifiedAIConsole({ onBind, onSOPReference, onSOPView, ca
                   <Brain className="w-6 h-6 text-white" />
                 </motion.div>
                 <div className="flex-1">
-                  <h3 className="text-lg font-bold text-[#612D91] dark:text-[#A64AC9] mb-1">AI Analysis in Progress</h3>
+                  <h3 className="text-lg font-bold text-[#780096] dark:text-[#780096] mb-1">AI Analysis in Progress</h3>
                   <p className="text-sm text-gray-600 dark:text-gray-400">TP Resolve Appeals is analyzing the case using multi-agent reasoning...</p>
                   {reasoningProgress > 0 && reasoningProgress < 100 && (
                     <div className="mt-3 flex items-center gap-3">
@@ -491,10 +491,10 @@ export default function UnifiedAIConsole({ onBind, onSOPReference, onSOPView, ca
                           initial={{ width: 0 }}
                           animate={{ width: `${reasoningProgress}%` }}
                           transition={{ duration: 0.5, ease: "easeOut" }}
-                          className="h-full bg-gradient-to-r from-[#612D91] to-[#A64AC9] rounded-full"
+                          className="h-full bg-gradient-to-r from-[#780096] to-[#780096] rounded-full"
                         />
                       </div>
-                      <span className="text-xs font-semibold text-[#612D91] dark:text-[#A64AC9]">{Math.round(reasoningProgress)}%</span>
+                      <span className="text-xs font-semibold text-[#780096] dark:text-[#780096]">{Math.round(reasoningProgress)}%</span>
                     </div>
                   )}
                 </div>
@@ -590,7 +590,7 @@ export default function UnifiedAIConsole({ onBind, onSOPReference, onSOPView, ca
       <div className="flex-shrink-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 px-6 py-4 shadow-lg">
         <div className="max-w-[1600px] mx-auto">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#612D91] to-[#A64AC9] flex items-center justify-center flex-shrink-0">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center flex-shrink-0">
               <Brain className="w-5 h-5 text-white" />
             </div>
             <div className="flex-1 relative">
@@ -598,7 +598,7 @@ export default function UnifiedAIConsole({ onBind, onSOPReference, onSOPView, ca
                 ref={chatInputRef}
                 type="text"
                 placeholder="Ask TP Resolve Appeals about this case..."
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#612D91]/50 dark:focus:ring-[#A64AC9]/50 focus:border-transparent"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#780096]/50 dark:focus:ring-[#780096]/50 focus:border-transparent"
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && e.target.value.trim()) {
                     const message = e.target.value.trim();
@@ -621,7 +621,7 @@ export default function UnifiedAIConsole({ onBind, onSOPReference, onSOPView, ca
                   input.value = "";
                 }
               }}
-              className="p-3 rounded-lg bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white hover:shadow-lg transition-all hover:scale-105 active:scale-95 flex-shrink-0"
+              className="p-3 rounded-lg bg-gradient-to-r from-[#780096] to-[#780096] text-white hover:shadow-lg transition-all hover:scale-105 active:scale-95 flex-shrink-0"
               title="Send message"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -643,7 +643,7 @@ export default function UnifiedAIConsole({ onBind, onSOPReference, onSOPView, ca
         >
           <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-xl px-4 py-3 flex items-start gap-3">
             <div className="mt-1">
-              <Sparkles className="w-4 h-4 text-[#612D91] dark:text-[#A64AC9]" />
+              <Sparkles className="w-4 h-4 text-[#780096] dark:text-[#780096]" />
             </div>
             <div className="flex-1">
               <div className="flex items-center justify-between gap-3 mb-1">

@@ -68,7 +68,7 @@ export default function MySpace({ onLaunchBuilder, onEditApp, onViewApp }) {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <div className="text-xs font-semibold uppercase tracking-[0.35em] text-[#5C36C8]">My Space</div>
+            <div className="text-xs font-semibold uppercase tracking-[0.35em] text-[#780096]">My Space</div>
             <h1 className="text-3xl font-bold text-gray-900 mt-2">Your Applications</h1>
             <p className="text-sm text-gray-600 mt-1">
               Manage your published solutions and apps under development
@@ -77,7 +77,7 @@ export default function MySpace({ onLaunchBuilder, onEditApp, onViewApp }) {
           {permissions.canAccessAppBuilder && (
             <button
               onClick={onLaunchBuilder}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white font-semibold shadow-lg hover:shadow-xl transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#780096] to-[#780096] text-white font-semibold shadow-lg hover:shadow-xl transition-all"
             >
               <Plus className="w-5 h-5" />
               Create New App
@@ -104,7 +104,7 @@ export default function MySpace({ onLaunchBuilder, onEditApp, onViewApp }) {
               onClick={() => setFilter("all")}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 filter === "all"
-                  ? "bg-[#612D91] text-white"
+                  ? "bg-[#780096] text-white"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
             >
@@ -114,7 +114,7 @@ export default function MySpace({ onLaunchBuilder, onEditApp, onViewApp }) {
               onClick={() => setFilter("published")}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 filter === "published"
-                  ? "bg-[#612D91] text-white"
+                  ? "bg-[#780096] text-white"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
             >
@@ -124,7 +124,7 @@ export default function MySpace({ onLaunchBuilder, onEditApp, onViewApp }) {
               onClick={() => setFilter("workspace")}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 filter === "workspace"
-                  ? "bg-[#612D91] text-white"
+                  ? "bg-[#780096] text-white"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
             >
@@ -136,7 +136,7 @@ export default function MySpace({ onLaunchBuilder, onEditApp, onViewApp }) {
         {/* Apps Grid */}
         {filteredApps.length === 0 ? (
           <div className="text-center py-16">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-[#612D91] to-[#A64AC9] mb-4">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-[#780096] to-[#780096] mb-4">
               <Sparkles className="w-8 h-8 text-white" />
             </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
@@ -153,7 +153,7 @@ export default function MySpace({ onLaunchBuilder, onEditApp, onViewApp }) {
               <button
                 onClick={permissions.canAccessAppBuilder ? onLaunchBuilder : undefined}
                 disabled={!permissions.canAccessAppBuilder}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white font-semibold shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#780096] to-[#780096] text-white font-semibold shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Plus className="w-5 h-5" />
                 Create Your First App
@@ -219,7 +219,7 @@ export default function MySpace({ onLaunchBuilder, onEditApp, onViewApp }) {
                     <>
                       <button
                         onClick={() => onEditApp?.(app)}
-                        className="flex-1 px-3 py-2 rounded-lg bg-[#612D91] text-white text-sm font-medium hover:bg-[#5B2E90] transition-colors"
+                        className="flex-1 px-3 py-2 rounded-lg bg-[#780096] text-white text-sm font-medium hover:bg-[#780096] transition-colors"
                       >
                         <Edit className="w-4 h-4 inline mr-1" />
                         Continue Building
@@ -236,7 +236,7 @@ export default function MySpace({ onLaunchBuilder, onEditApp, onViewApp }) {
                     <>
                       <button
                         onClick={() => onViewApp?.(app)}
-                        className="flex-1 px-3 py-2 rounded-lg bg-[#612D91] text-white text-sm font-medium hover:bg-[#5B2E90] transition-colors"
+                        className="flex-1 px-3 py-2 rounded-lg bg-[#780096] text-white text-sm font-medium hover:bg-[#780096] transition-colors"
                       >
                         <Eye className="w-4 h-4 inline mr-1" />
                         Launch App

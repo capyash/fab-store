@@ -19,16 +19,16 @@ export default function ArchitecturePresentation({ onClose }) {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-            <div className="p-6 rounded-xl border-2 border-[#612D91] bg-gradient-to-br from-[#612D91]/10 to-[#A64AC9]/10">
-              <Layers className="w-8 h-8 text-[#612D91] mb-3" />
+            <div className="p-6 rounded-xl border-2 border-[#780096] bg-gradient-to-br from-[#780096]/10 to-[#780096]/10">
+              <Layers className="w-8 h-8 text-[#780096] mb-3" />
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Platform Layer</h3>
               <p className="text-gray-700">
                 Reusable, industry-agnostic platforms providing core AI capabilities, reasoning engines, and compliance frameworks.
               </p>
             </div>
             
-            <div className="p-6 rounded-xl border-2 border-[#5B2E90] bg-gradient-to-br from-[#5B2E90]/10 to-[#A64AC9]/10">
-              <Code className="w-8 h-8 text-[#5B2E90] mb-3" />
+            <div className="p-6 rounded-xl border-2 border-[#780096] bg-gradient-to-br from-[#780096]/10 to-[#780096]/10">
+              <Code className="w-8 h-8 text-[#780096] mb-3" />
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Solution Layer</h3>
               <p className="text-gray-700">
                 Industry-specific applications built on platforms, delivering tailored experiences for healthcare, finance, and other regulated domains.
@@ -61,7 +61,7 @@ export default function ArchitecturePresentation({ onClose }) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="p-6 rounded-xl border border-gray-200 bg-white">
               <h3 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                <Database className="w-5 h-5 text-[#612D91]" />
+                <Database className="w-5 h-5 text-[#780096]" />
                 Core Components
               </h3>
               <ul className="space-y-2 text-gray-700">
@@ -75,7 +75,7 @@ export default function ArchitecturePresentation({ onClose }) {
             
             <div className="p-6 rounded-xl border border-gray-200 bg-white">
               <h3 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                <Brain className="w-5 h-5 text-[#612D91]" />
+                <Brain className="w-5 h-5 text-[#780096]" />
                 AI Capabilities
               </h3>
               <ul className="space-y-2 text-gray-700">
@@ -88,7 +88,7 @@ export default function ArchitecturePresentation({ onClose }) {
             </div>
           </div>
           
-          <div className="mt-6 p-6 rounded-xl bg-gradient-to-r from-[#612D91]/10 to-[#A64AC9]/10 border border-[#612D91]/20">
+          <div className="mt-6 p-6 rounded-xl bg-gradient-to-r from-[#780096]/10 to-[#780096]/10 border border-[#780096]/20">
             <h3 className="text-lg font-semibold text-gray-900 mb-3">Platform Benefits</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
@@ -121,7 +121,7 @@ export default function ArchitecturePresentation({ onClose }) {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="p-6 rounded-xl border-2 border-[#612D91] bg-gradient-to-br from-[#612D91]/5 to-[#A64AC9]/5">
+            <div className="p-6 rounded-xl border-2 border-[#780096] bg-gradient-to-br from-[#780096]/5 to-[#780096]/5">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Cogniclaim</h3>
               <p className="text-gray-700 mb-4">
                 Healthcare claims intelligence solution for medical claims processing, denial management, and compliance.
@@ -181,9 +181,9 @@ export default function ArchitecturePresentation({ onClose }) {
           </div>
           
           <div className="space-y-4">
-            <div className="p-6 rounded-xl border-l-4 border-[#612D91] bg-white">
+            <div className="p-6 rounded-xl border-l-4 border-[#780096] bg-white">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-[#612D91] text-white flex items-center justify-center font-bold shrink-0">1</div>
+                <div className="w-10 h-10 rounded-full bg-[#780096] text-white flex items-center justify-center font-bold shrink-0">1</div>
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">Input Processing</h3>
                   <p className="text-gray-700">
@@ -193,9 +193,9 @@ export default function ArchitecturePresentation({ onClose }) {
               </div>
             </div>
             
-            <div className="p-6 rounded-xl border-l-4 border-[#5B2E90] bg-white">
+            <div className="p-6 rounded-xl border-l-4 border-[#780096] bg-white">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-[#5B2E90] text-white flex items-center justify-center font-bold shrink-0">2</div>
+                <div className="w-10 h-10 rounded-full bg-[#780096] text-white flex items-center justify-center font-bold shrink-0">2</div>
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">Multi-Agent Analysis</h3>
                   <p className="text-gray-700">
@@ -205,9 +205,9 @@ export default function ArchitecturePresentation({ onClose }) {
               </div>
             </div>
             
-            <div className="p-6 rounded-xl border-l-4 border-[#A64AC9] bg-white">
+            <div className="p-6 rounded-xl border-l-4 border-[#780096] bg-white">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-[#A64AC9] text-white flex items-center justify-center font-bold shrink-0">3</div>
+                <div className="w-10 h-10 rounded-full bg-[#780096] text-white flex items-center justify-center font-bold shrink-0">3</div>
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">SOP Matching</h3>
                   <p className="text-gray-700">
@@ -317,7 +317,7 @@ export default function ArchitecturePresentation({ onClose }) {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="p-6 rounded-xl bg-gradient-to-br from-[#612D91]/10 to-[#A64AC9]/10 border border-[#612D91]/20">
+            <div className="p-6 rounded-xl bg-gradient-to-br from-[#780096]/10 to-[#780096]/10 border border-[#780096]/20">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Speed to Market</h3>
               <p className="text-gray-700 mb-4">
                 Build new solutions in <strong>weeks instead of months</strong> by leveraging platform capabilities.
@@ -374,15 +374,15 @@ export default function ArchitecturePresentation({ onClose }) {
             <h3 className="text-xl font-semibold mb-3">ROI Metrics</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <p className="text-3xl font-bold text-[#A64AC9] mb-1">70%</p>
+                <p className="text-3xl font-bold text-[#780096] mb-1">70%</p>
                 <p className="text-sm text-gray-300">Faster time to market</p>
               </div>
               <div>
-                <p className="text-3xl font-bold text-[#A64AC9] mb-1">60%</p>
+                <p className="text-3xl font-bold text-[#780096] mb-1">60%</p>
                 <p className="text-sm text-gray-300">Reduced development costs</p>
               </div>
               <div>
-                <p className="text-3xl font-bold text-[#A64AC9] mb-1">2+</p>
+                <p className="text-3xl font-bold text-[#780096] mb-1">2+</p>
                 <p className="text-sm text-gray-300">Solutions per platform</p>
               </div>
             </div>
@@ -409,7 +409,7 @@ export default function ArchitecturePresentation({ onClose }) {
         className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl w-full max-w-6xl h-[90vh] flex flex-col"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-[#780096] to-[#780096] text-white">
           <div className="flex items-center gap-3">
             <Layers className="w-5 h-5" />
             <div>
@@ -434,12 +434,12 @@ export default function ArchitecturePresentation({ onClose }) {
                         <title>TP.ai FAB Store Architecture - One Pager</title>
                         <style>
                           body { font-family: Arial, sans-serif; padding: 40px; max-width: 800px; margin: 0 auto; }
-                          h1 { color: #612D91; border-bottom: 3px solid #612D91; padding-bottom: 10px; }
-                          h2 { color: #5B2E90; margin-top: 30px; }
+                          h1 { color: #780096; border-bottom: 3px solid #780096; padding-bottom: 10px; }
+                          h2 { color: #780096; margin-top: 30px; }
                           .section { margin: 20px 0; }
-                          .highlight { background: #f0f0f0; padding: 15px; border-left: 4px solid #612D91; margin: 15px 0; }
+                          .highlight { background: #f0f0f0; padding: 15px; border-left: 4px solid #780096; margin: 15px 0; }
                           .metric { display: inline-block; margin: 10px 20px 10px 0; }
-                          .metric-value { font-size: 24px; font-weight: bold; color: #612D91; }
+                          .metric-value { font-size: 24px; font-weight: bold; color: #780096; }
                           ul { line-height: 1.8; }
                         </style>
                       </head>
@@ -575,7 +575,7 @@ export default function ArchitecturePresentation({ onClose }) {
                 onClick={() => setCurrentSlide(idx)}
                 className={`w-2 h-2 rounded-full transition-all ${
                   idx === currentSlide
-                    ? "bg-[#612D91] w-8"
+                    ? "bg-[#780096] w-8"
                     : "bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
                 }`}
                 aria-label={`Go to slide ${idx + 1}`}
@@ -586,7 +586,7 @@ export default function ArchitecturePresentation({ onClose }) {
           <button
             onClick={nextSlide}
             disabled={currentSlide === slides.length - 1}
-            className="px-4 py-2 rounded-lg bg-[#612D91] text-white hover:bg-[#512579] disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
+            className="px-4 py-2 rounded-lg bg-[#780096] text-white hover:bg-[#780096] disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
           >
             Next
             <ChevronRight className="w-4 h-4" />

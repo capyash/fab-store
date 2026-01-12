@@ -109,7 +109,7 @@ export default function WorkOrderCard({ workOrder, onSelect, onAssign }) {
               e.stopPropagation();
               onAssign?.(workOrder);
             }}
-            className="w-full mt-2 px-3 py-2 text-sm font-medium text-[#612D91] bg-[#612D91]/10 rounded-lg hover:bg-[#612D91]/20 transition-colors"
+            className="w-full mt-2 px-3 py-2 text-sm font-medium text-[#780096] bg-[#780096]/10 rounded-lg hover:bg-[#780096]/20 transition-colors"
           >
             Assign Technician
           </button>

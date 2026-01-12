@@ -108,7 +108,7 @@ export default function PreScreeningWorkflow({ claim, onComplete, onSOPReference
   return (
     <div className="space-y-4">
       {/* Header */}
-      <div className="bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white rounded-lg p-4">
+      <div className="bg-[#780096] text-white rounded-lg p-4">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="font-semibold text-lg">{getScenarioTitle(scenario)}</h3>
@@ -251,7 +251,7 @@ export default function PreScreeningWorkflow({ claim, onComplete, onSOPReference
       {/* Processing Indicator */}
       {processing && !result && (
         <div className="text-center py-8">
-          <Clock className="w-8 h-8 text-[#612D91] animate-spin mx-auto mb-2" />
+          <Clock className="w-8 h-8 text-[#780096] animate-spin mx-auto mb-2" />
           <p className="text-sm text-gray-500 dark:text-gray-400">
             Processing pre-screening...
           </p>

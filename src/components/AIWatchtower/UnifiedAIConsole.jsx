@@ -150,7 +150,7 @@ export default function UnifiedAIConsole({
       {/* Header */}
       <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-gradient-to-br from-[#612D91] to-[#A64AC9]">
+          <div className="p-2 rounded-lg bg-gradient-to-br from-[#780096] to-[#780096]">
             <Sparkles className="w-5 h-5 text-white" />
           </div>
           <div>

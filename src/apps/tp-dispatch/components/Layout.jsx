@@ -1,9 +1,8 @@
 import SolutionLayout from "../../../components/SolutionLayout";
-import { Home, ClipboardList } from "lucide-react";
 
 const TP_DISPATCH_NAV_ITEMS = [
-  { key: "dispatch", label: "Home", icon: Home },
-  { key: "dispatch/worklist", label: "Work Orders", icon: ClipboardList },
+  { key: "dispatch", label: "Home", iconName: "Home" },
+  { key: "dispatch/worklist", label: "Work Orders", iconName: "ClipboardList" },
 ];
 
 export default function TPDispatchLayout({ children, onNavigate, active }) {

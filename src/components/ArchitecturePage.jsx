@@ -294,28 +294,23 @@ export default function ArchitecturePage({ onBack }) {
               >
                 <ArrowLeft className="w-5 h-5 text-gray-700" />
               </button>
-              <div className="flex items-center gap-3">
-                {/* TODO(VKV): Replace with production logo */}
-                <img src="/tp-logo.svg" alt="TP.ai" className="h-9 w-auto" />
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.35em] text-gray-400">
-                    TP.ai
-                  </p>
-                  <p className="text-base md:text-lg font-semibold text-gray-900">
-                    FAB Store
-                  </p>
-                  <p className="text-[11px] md:text-xs text-gray-600">
-                    Enterprise Architecture Overview
-                  </p>
-                </div>
+            <div className="flex items-center gap-3">
+              <div className="h-9 w-9 rounded-xl bg-white flex items-center justify-center shadow-md border border-gray-200">
+                <img src="/tp-logo-new.png" alt="Store" className="h-7 w-auto object-contain" />
               </div>
+              <div>
+                <p className="text-base md:text-lg font-semibold text-gray-900">
+                  Enterprise Architecture Overview
+                </p>
+              </div>
+            </div>
             </div>
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setViewMode("architecture")}
                 className={`px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-[0.85rem] font-semibold transition-all ${
                   viewMode === "architecture"
-                    ? "bg-[#612D91] text-white shadow-lg"
+                    ? "bg-[#780096] text-white shadow-lg"
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300"
                 }`}
               >
@@ -325,7 +320,7 @@ export default function ArchitecturePage({ onBack }) {
                 onClick={() => setViewMode("roi")}
                 className={`px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-[0.85rem] font-semibold transition-all ${
                   viewMode === "roi"
-                    ? "bg-[#612D91] text-white shadow-lg"
+                    ? "bg-[#780096] text-white shadow-lg"
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300"
                 }`}
               >
@@ -396,7 +391,7 @@ export default function ArchitecturePage({ onBack }) {
                             transition={{ delay: idx * 0.05 }}
                             className={`relative w-full text-left p-4 md:p-5 rounded-xl border bg-white/95 transition-all duration-150 ${
                               isActive
-                                ? "border-[#612D91]/60 shadow-md scale-[1.01]"
+                                ? "border-[#780096]/60 shadow-md scale-[1.01]"
                                 : "border-gray-200/80 hover:border-[#2563EB]/50 hover:bg-white hover:shadow-md hover:scale-[1.01]"
                             } ${isFabStore ? "md:col-span-2" : ""}`}
                           >
@@ -1072,7 +1067,7 @@ export default function ArchitecturePage({ onBack }) {
                   {roiMetrics.map((m) => (
                     <div
                       key={m.label}
-                      className="bg-gradient-to-br from-[#612D91] to-[#A64AC9] rounded-2xl text-white p-5 shadow-xl"
+                      className="bg-gradient-to-br from-[#780096] to-[#780096] rounded-2xl text-white p-5 shadow-xl"
                     >
                       <div className="flex items-center justify-between mb-4">
                         <m.icon className="w-7 h-7 opacity-90" />

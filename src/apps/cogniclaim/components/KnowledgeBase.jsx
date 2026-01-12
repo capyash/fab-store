@@ -143,7 +143,7 @@ export default function KnowledgeBase({ onNavigate }) {
           {onNavigate && (
             <button
               onClick={() => onNavigate("store")}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-[#612D91] dark:hover:text-[#A64AC9] rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-[#780096] dark:hover:text-[#780096] rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               title="Back to FAB Store"
             >
               <Store className="w-3.5 h-3.5" />
@@ -162,7 +162,7 @@ export default function KnowledgeBase({ onNavigate }) {
               placeholder="Search SOPs..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#612D91] dark:focus:ring-[#A64AC9] focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#780096] dark:focus:ring-[#780096] focus:border-transparent"
             />
             {searchTerm && (
               <button
@@ -179,7 +179,7 @@ export default function KnowledgeBase({ onNavigate }) {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full px-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-[#612D91] dark:focus:ring-[#A64AC9]"
+              className="w-full px-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-[#780096] dark:focus:ring-[#780096]"
             >
               {categories.map(cat => (
                 <option key={cat} value={cat}>{cat}</option>
@@ -192,7 +192,7 @@ export default function KnowledgeBase({ onNavigate }) {
             <select
               value={selectedState}
               onChange={(e) => setSelectedState(e.target.value)}
-              className="w-full px-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-[#612D91] dark:focus:ring-[#A64AC9]"
+              className="w-full px-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-[#780096] dark:focus:ring-[#780096]"
             >
               {states.map(state => (
                 <option key={state} value={state}>{state}</option>
@@ -243,7 +243,7 @@ export default function KnowledgeBase({ onNavigate }) {
             {hasActiveFilters && (
               <button
                 onClick={clearFilters}
-                className="px-4 py-2 bg-[#612D91] dark:bg-[#A64AC9] text-white rounded-lg hover:bg-[#4B2E83] dark:hover:bg-[#8B3DA9] transition-colors"
+                className="px-4 py-2 bg-[#780096] dark:bg-[#780096] text-white rounded-lg hover:bg-[#4B2E83] dark:hover:bg-[#8B3DA9] transition-colors"
               >
                 Clear all filters
               </button>
@@ -288,7 +288,7 @@ function SOPCard({ sop, onClick }) {
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -4, transition: { duration: 0.2 } }}
       onClick={onClick}
-      className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-5 cursor-pointer hover:shadow-lg transition-all duration-200 hover:border-[#612D91] dark:hover:border-[#A64AC9]"
+      className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-5 cursor-pointer hover:shadow-lg transition-all duration-200 hover:border-[#780096] dark:hover:border-[#780096]"
     >
       <div className="flex items-start justify-between mb-3">
         <div className="flex-1">
@@ -301,7 +301,7 @@ function SOPCard({ sop, onClick }) {
             </p>
           )}
         </div>
-        <FileText className="w-5 h-5 text-[#612D91] dark:text-[#A64AC9] flex-shrink-0 ml-2" />
+        <FileText className="w-5 h-5 text-[#780096] dark:text-[#780096] flex-shrink-0 ml-2" />
       </div>
 
       {sop.category && (
@@ -367,7 +367,7 @@ function SOPListItem({ sop, onClick }) {
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       onClick={onClick}
-      className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 cursor-pointer hover:shadow-md transition-all duration-200 hover:border-[#612D91] dark:hover:border-[#A64AC9]"
+      className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 cursor-pointer hover:shadow-md transition-all duration-200 hover:border-[#780096] dark:hover:border-[#780096]"
     >
       <div className="flex items-start justify-between">
         <div className="flex-1">

@@ -67,7 +67,7 @@ export default function TransparencyLog({ logEntries = [], className = "" }) {
         className="w-full flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
       >
         <div className="flex items-center gap-2">
-          <Activity className="w-4 h-4 text-[#612D91]" />
+          <Activity className="w-4 h-4 text-[#780096]" />
           <span className="font-semibold text-sm text-gray-900 dark:text-gray-100">
             Transparency Log
           </span>

@@ -39,6 +39,9 @@ import CCASConnectionPanel from "./CCASConnectionPanel";
 import WebhookEventLog from "./WebhookEventLog";
 import CCASConfigPanel from "./CCASConfigPanel";
 import LiveDemoController from "./LiveDemoController";
+import GenesysConversationsPanel from "./GenesysConversationsPanel";
+import GenesysFlowDemo from "./GenesysFlowDemo";
+import { getCurrentProvider } from "../services/ccasService";
 
 const INTENT_CATALOG = [
   {
@@ -69,7 +72,7 @@ function AvatarCircle({ icon, active, pulse = false }) {
   return (
     <motion.div
       className={`relative w-8 h-8 rounded-full flex items-center justify-center ${
-        active ? "bg-gradient-to-br from-[#612D91] to-[#A64AC9] text-white" : "bg-gray-100 text-gray-500"
+        active ? "bg-[#2E2E2E] text-white" : "bg-gray-100 text-[#2E2E2E] dark:text-gray-300"
       } transition-all duration-300`}
       animate={{ scale: active ? 1.1 : 1 }}
       transition={{ type: "spring", stiffness: 500, damping: 30 }}
@@ -77,7 +80,7 @@ function AvatarCircle({ icon, active, pulse = false }) {
       {icon}
       {active && pulse && (
         <motion.span
-          className="absolute inset-0 rounded-full bg-[#612D91] opacity-75"
+          className="absolute inset-0 rounded-full bg-primary opacity-75"
           animate={{ scale: [1, 1.5], opacity: [0.75, 0] }}
           transition={{ repeat: Infinity, duration: 1.5 }}
         />
@@ -114,6 +117,8 @@ export default function AgenticSupportConsole({ onNavigate }) {
   // CCAS Infrastructure state
   const [showCCASInfra, setShowCCASInfra] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [selectedGenesysConversation, setSelectedGenesysConversation] = useState(null);
+  const [showGenesysFlow, setShowGenesysFlow] = useState(false);
   
   // Track if demo/interaction is active
   useEffect(() => {
@@ -527,8 +532,8 @@ export default function AgenticSupportConsole({ onNavigate }) {
         email: {
           label: "Email Parsing Agent",
           icon: <Mail className="w-3.5 h-3.5" />,
-          color: "text-purple-600",
-          bg: "bg-purple-50",
+          color: "text-primary",
+          bg: "bg-gray-50 dark:bg-gray-800",
         },
       };
       
@@ -565,8 +570,8 @@ export default function AgenticSupportConsole({ onNavigate }) {
           key: "kb-search",
           label: "Knowledge Base Agent",
           icon: <BookOpen className="w-3.5 h-3.5" />,
-          color: "text-purple-600",
-          bg: "bg-purple-50",
+          color: "text-primary",
+          bg: "bg-gray-50 dark:bg-gray-800",
           body: `Retrieved ${kbResults.length} relevant knowledge chunks from vectorized database. Context: ${kbResults[0]?.text?.substring(0, 100)}...`,
         });
       }
@@ -680,88 +685,150 @@ export default function AgenticSupportConsole({ onNavigate }) {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-to-br from-gray-50 via-purple-50/30 to-blue-50/30">
-      {/* Minimal Top Bar with Gradient */}
-      <div className="flex items-center justify-between px-4 py-2 bg-gradient-to-r from-[#612D91] via-[#7B3FE4] to-[#A64AC9] shadow-md">
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-white/20 backdrop-blur flex items-center justify-center">
-            <HeadsetIcon />
+    <div className="flex flex-col h-screen bg-gray-50 dark:bg-gray-950">
+      {/* Enhanced Top Bar - Prominent Header */}
+      <div className="relative flex items-center justify-between px-6 lg:px-8 py-4 bg-gradient-to-r from-white via-gray-50/50 to-white dark:from-gray-900 dark:via-gray-800/50 dark:to-gray-900 border-b-2 border-gray-300 dark:border-gray-700 shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
+        {/* Subtle background pattern overlay */}
+        <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05] bg-[linear-gradient(45deg,transparent_25%,rgba(46,46,46,0.1)_25%,rgba(46,46,46,0.1)_50%,transparent_50%,transparent_75%,rgba(46,46,46,0.1)_75%,rgba(46,46,46,0.1))] bg-[length:20px_20px]" />
+        
+        <div className="relative flex items-center gap-5 flex-1 min-w-0">
+          {/* Icon with enhanced styling */}
+          <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-gradient-to-br from-[#2E2E2E] to-[#4A4A4A] flex items-center justify-center shadow-lg border-2 border-gray-200 dark:border-gray-700">
+            <Headphones className="w-6 h-6 text-white" />
           </div>
-            <span className="font-bold text-white">AI Console</span>
+          
+          {/* Title Section - More Prominent */}
+          <div className="flex-shrink-0 min-w-0">
+            <h2 className="text-lg font-bold text-[#2E2E2E] dark:text-white tracking-tight mb-0.5">AI Console</h2>
+            <p className="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Multi-Channel Intelligence Stream</p>
           </div>
-          <div className="h-4 w-px bg-white/30" />
-          <button
-            onClick={() => setShowCCASInfra(!showCCASInfra)}
-            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-semibold transition-all ${
-              showCCASInfra
-                ? 'bg-white text-[#612D91] shadow-md'
-                : 'bg-white/20 text-white hover:bg-white/30'
-            }`}
-          >
-            {showCCASInfra ? '🔷 CCAS' : 'CCAS'}
-          </button>
-          {onNavigate && (
+          
+          {/* Divider */}
+          <span className="hidden sm:block h-8 w-px bg-gradient-to-b from-transparent via-gray-300 dark:via-gray-600 to-transparent" />
+          
+          {/* Navigation Buttons - Enhanced */}
+          <div className="flex items-center gap-2 flex-shrink-0">
             <button
-              onClick={() => onNavigate("store")}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium text-white/90 hover:text-white hover:bg-white/20 rounded-md transition-colors"
+              onClick={() => setShowCCASInfra(!showCCASInfra)}
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all shadow-sm ${
+                showCCASInfra
+                  ? 'bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] text-white shadow-md hover:from-[#4A4A4A] hover:to-[#666666] border-2 border-[#2E2E2E]'
+                  : 'bg-white dark:bg-gray-800 text-[#2E2E2E] dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 border-2 border-gray-300 dark:border-gray-600'
+              }`}
             >
-              <Store className="w-3.5 h-3.5" />
-              Store
+              <Zap className="w-4 h-4" />
+              CCAS
             </button>
-          )}
+            {onNavigate && (
+              <button
+                onClick={() => onNavigate("store")}
+                className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-[#2E2E2E] dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-all bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 shadow-sm hover:shadow-md hover:border-gray-400 dark:hover:border-gray-500"
+              >
+                <Store className="w-4 h-4" />
+                Store
+              </button>
+            )}
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full bg-emerald-400 text-white text-[10px] font-bold shadow-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+        
+        {/* Live Status Badge - Enhanced */}
+        <div className="relative flex items-center gap-3 flex-shrink-0">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-emerald-50 to-emerald-100/50 dark:from-emerald-900/40 dark:to-emerald-800/30 border-2 border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-300 text-xs font-bold shadow-sm">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
+            </span>
             LIVE
           </span>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 space-y-4 p-4 overflow-y-auto min-h-0">
+      <div className="flex-1 space-y-6 p-6 overflow-y-auto min-h-0">
       {/* CCAS Infrastructure Section - Integrations */}
       {showCCASInfra && (
-        <div className="bg-gradient-to-br from-gray-50 via-slate-50 to-gray-50 rounded-xl p-3.5 border-2 border-gray-300 shadow-md">
-          <div className="flex items-center gap-2 mb-2.5 pb-2 border-b border-gray-300">
-            <div className="w-7 h-7 bg-gradient-to-br from-gray-700 to-gray-800 rounded-lg flex items-center justify-center shadow-sm">
-              <Zap className="w-4 h-4 text-white" />
+        <div className="bg-white dark:bg-gray-900 rounded-xl p-6 border-2 border-gray-300 dark:border-gray-700 shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
+          <div className="flex items-center gap-3 mb-4 pb-3 border-b-2 border-gray-300 dark:border-gray-700">
+            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center shadow-sm">
+              <Zap className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-gray-900">CCAS Integration Layer</h3>
-              <p className="text-[10px] text-gray-600 font-semibold">External Contact Center Infrastructure</p>
+              <h3 className="text-base font-bold text-[#2E2E2E] dark:text-white">CCAS Integration Layer</h3>
+              <p className="text-xs text-[#2E2E2E] dark:text-gray-300 font-medium">External Contact Center Infrastructure</p>
           </div>
           </div>
-          <div className="grid gap-4 grid-cols-1 lg:grid-cols-2">
+          <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
             {/* Live Interaction Monitor */}
-            <div className="h-[320px]">
+            <div className="h-[360px]">
               <LiveDemoController onInteractionCapture={handleDemoInteraction} />
           </div>
             
             {/* CCAS Connection Status */}
-            <div className="h-[320px]">
-              <CCASConnectionPanel provider="freeswitch" />
+            <div className="h-[360px]">
+              <CCASConnectionPanel provider={getCurrentProvider()} />
         </div>
           </div>
+
+          {/* Genesys Conversations Panel - Show if Genesys is selected */}
+          {getCurrentProvider() === 'genesys' && (
+            <div className="mt-6">
+              <div className="mb-4">
+                <h3 className="text-base font-bold text-[#2E2E2E] dark:text-white mb-1">Genesys Conversations</h3>
+                <p className="text-xs text-gray-600 dark:text-gray-400">Select a conversation to process with FAB Agents</p>
+              </div>
+              <div className="h-[400px]">
+                <GenesysConversationsPanel 
+                  onSelectConversation={(conversation) => {
+                    setSelectedGenesysConversation(conversation);
+                    setShowGenesysFlow(true);
+                    // Process conversation through FAB Agents
+                    if (conversation.participants?.[0]) {
+                      const participant = conversation.participants[0];
+                      handleDemoInteraction({
+                        channel: conversation.mediaType === 'call' ? 'voice' : 'chat',
+                        text: `Customer inquiry from Genesys conversation ${conversation.id}`,
+                        from: participant.address || participant.name,
+                        customerName: participant.name || 'Genesys Customer',
+                        workflow: 'printer_offline', // Default, will be detected by intent agent
+                        genesysConversationId: conversation.id,
+                      });
+                    }
+                  }}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Genesys Flow Demo - Show when conversation is selected */}
+          {showGenesysFlow && selectedGenesysConversation && (
+            <div className="mt-6">
+              <GenesysFlowDemo 
+                conversationId={selectedGenesysConversation.id}
+                onComplete={() => {
+                  setShowGenesysFlow(false);
+                  setSelectedGenesysConversation(null);
+                }}
+              />
+            </div>
+          )}
         </div>
       )}
 
 
       {/* TP Console Core - Our Product/IP */}
-      <div className="relative bg-gradient-to-br from-purple-50/50 via-indigo-50/30 to-purple-50/50 rounded-xl p-4 border-2 border-purple-400 shadow-lg">
-        {/* Elegant Minimal Header */}
-        <div className="flex items-center justify-between mb-3 pb-2 border-b border-purple-200">
-          <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 bg-gradient-to-br from-[#612D91] to-[#8B5CF6] rounded-md flex items-center justify-center shadow-sm">
-              <Sparkles className="w-4 h-4 text-white" />
+      <div className="relative bg-white dark:bg-gray-900 rounded-xl p-6 border-2 border-gray-300 dark:border-gray-700 shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
+        {/* Clean Header */}
+        <div className="flex items-center justify-between mb-6 pb-4 border-b-2 border-gray-300 dark:border-gray-700">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center shadow-sm">
+              <Sparkles className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-gray-900">TP Console Core</h3>
-              <p className="text-[10px] text-gray-600 font-semibold">Real-time AI Support Intelligence</p>
+              <h3 className="text-lg font-bold text-[#2E2E2E] dark:text-white">TP Console Core</h3>
+              <p className="text-xs text-[#2E2E2E] dark:text-gray-300 font-medium">Real-time AI Support Intelligence</p>
             </div>
           </div>
-          <div className="px-2 py-0.5 bg-purple-600/90 text-white text-[9px] font-bold rounded shadow-sm">
+          <div className="px-3 py-1.5 bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] text-white text-xs font-bold rounded-lg shadow-sm">
             PROPRIETARY
           </div>
         </div>
@@ -776,18 +843,18 @@ export default function AgenticSupportConsole({ onNavigate }) {
                   : "0 2px 8px rgba(15,23,42,0.08)",
             }}
             transition={{ duration: 0.3 }}
-            className={`relative rounded-lg border-2 px-4 py-4 flex flex-col gap-3 transition-all duration-300 h-[300px] ${
+            className={`relative rounded-xl border-2 px-5 py-5 flex flex-col gap-4 transition-all duration-300 h-[320px] ${
               stage === "capture"
-                ? "border-indigo-400 bg-indigo-50 shadow-lg"
-                : "border-gray-200 bg-white"
+                ? "border-[#2E2E2E] bg-white dark:bg-gray-900 shadow-lg"
+                : "border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-sm"
             }`}
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <AvatarCircle active={stage !== "idle"} pulse={stage === "capture"} icon={<User className="w-4 h-4" />} />
-                <p className="text-base font-bold text-gray-900">Customer Input</p>
+                <p className="text-base font-bold text-[#2E2E2E] dark:text-white">Customer Input</p>
               </div>
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-bold text-white bg-gradient-to-r from-[#612D91] to-[#7B3FE4] rounded-full">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-buttonPrimary rounded-lg shadow-sm">
                 {channel === "voice" && <><Phone className="w-3.5 h-3.5" /> Voice</>}
                 {channel === "chat" && <><MessageCircle className="w-3.5 h-3.5" /> Chat</>}
                 {channel === "email" && <><Mail className="w-3.5 h-3.5" /> Email</>}
@@ -798,7 +865,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
             {interactionText ? (
               <div className="space-y-2">
                 {/* Metadata bar */}
-                <div className="flex items-center justify-between text-xs text-gray-500">
+                <div className="flex items-center justify-between text-xs text-[#989898] dark:text-gray-400">
                   <div className="flex items-center gap-3">
                     <span className="flex items-center gap-1">
                       <Clock className="w-3 h-3" />
@@ -821,15 +888,15 @@ export default function AgenticSupportConsole({ onNavigate }) {
 
                 {/* Analysis metadata */}
                 <div className="grid grid-cols-3 gap-2 text-xs">
-                  <div className="flex items-center gap-1.5 text-gray-600">
+                  <div className="flex items-center gap-1.5 text-[#2E2E2E] dark:text-gray-300">
                     <span className="font-semibold">Words:</span>
                     <span>{interactionText.trim().split(/\s+/).length}</span>
                   </div>
-                  <div className="flex items-center gap-1.5 text-gray-600">
+                  <div className="flex items-center gap-1.5 text-[#2E2E2E] dark:text-gray-300">
                     <span className="font-semibold">Lang:</span>
                     <span>EN</span>
                   </div>
-                  <div className="flex items-center gap-1.5 text-gray-600">
+                  <div className="flex items-center gap-1.5 text-[#2E2E2E] dark:text-gray-300">
                     <span className="font-semibold">Sentiment:</span>
                     {/* Production: Use OpenAI GPT-4 with sentiment classification or specialized models like:
                         - DistilBERT fine-tuned on emotion/sentiment datasets
@@ -857,13 +924,13 @@ export default function AgenticSupportConsole({ onNavigate }) {
             ) : (
               <div className="flex-1 flex items-center justify-center">
                 <div className="text-center py-6">
-                  <div className="w-12 h-12 mx-auto mb-2 rounded-full bg-purple-100 flex items-center justify-center">
-                    <User className="w-6 h-6 text-purple-400" />
+                  <div className="w-12 h-12 mx-auto mb-2 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                    <User className="w-6 h-6 text-gray-400 dark:text-gray-500" />
                   </div>
-                  <p className="text-xs text-gray-500 font-medium">
+                  <p className="text-xs text-[#2E2E2E] dark:text-gray-300 font-medium">
                     Waiting for input...
                   </p>
-                  <p className="text-[10px] text-gray-400 mt-0.5">
+                  <p className="text-[10px] text-[#989898] dark:text-gray-400 mt-0.5">
                     Use Live Monitor above
               </p>
             </div>
@@ -881,7 +948,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                       placeholder="From: customer@company.com"
                       value={emailFrom}
                       onChange={(e) => setEmailFrom(e.target.value)}
-                      className="w-full text-xs px-2 py-1 border border-gray-200 rounded focus:ring-2 focus:ring-purple-200 focus:border-purple-300 outline-none"
+                      className="w-full text-xs px-2 py-1 border-2 border-gray-300 rounded focus:ring-2 focus:ring-[#2E2E2E]/20 focus:border-[#2E2E2E] outline-none"
                     />
                   </div>
                   <div className="bg-white rounded-lg border border-gray-200 p-2">
@@ -890,7 +957,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                       placeholder="Subject: Describe your issue"
                       value={emailSubject}
                       onChange={(e) => setEmailSubject(e.target.value)}
-                      className="w-full text-xs px-2 py-1 border border-gray-200 rounded focus:ring-2 focus:ring-purple-200 focus:border-purple-300 outline-none"
+                      className="w-full text-xs px-2 py-1 border-2 border-gray-300 rounded focus:ring-2 focus:ring-[#2E2E2E]/20 focus:border-[#2E2E2E] outline-none"
                     />
                   </div>
                   <div className="bg-white rounded-lg border border-gray-200 p-2">
@@ -899,7 +966,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                       value={emailBody}
                       onChange={(e) => setEmailBody(e.target.value)}
                       rows={4}
-                      className="w-full text-xs px-2 py-1 border border-gray-200 rounded focus:ring-2 focus:ring-purple-200 focus:border-purple-300 outline-none resize-none"
+                      className="w-full text-xs px-2 py-1 border-2 border-gray-300 rounded focus:ring-2 focus:ring-[#2E2E2E]/20 focus:border-[#2E2E2E] outline-none resize-none"
                     />
             </div>
                 </div>
@@ -910,7 +977,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                 <div className="space-y-2">
                   <div className="bg-white rounded-lg border border-gray-200 p-2 max-h-40 overflow-y-auto">
                     {chatMessages.length === 0 ? (
-                      <p className="text-xs text-gray-400 italic py-2 text-center">Start a conversation...</p>
+                      <p className="text-xs text-[#989898] dark:text-gray-400 italic py-2 text-center">Start a conversation...</p>
                     ) : (
                       <div className="space-y-2">
                         {chatMessages.map((msg) => (
@@ -921,7 +988,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                             <div
                               className={`max-w-[80%] rounded-lg px-3 py-1.5 ${
                                 msg.sender === "user"
-                                  ? "bg-[#612D91] text-white"
+                                  ? "bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] text-white"
                                   : "bg-gray-100 text-gray-900"
                               }`}
                             >
@@ -945,7 +1012,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                 <button
                       onClick={handleSendChatMessage}
                       disabled={!chatInput.trim()}
-                      className="px-3 py-2 bg-[#612D91] text-white rounded-lg hover:bg-[#7B3FE4] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                      className="px-3 py-2 bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] text-white rounded-lg hover:from-[#4A4A4A] hover:to-[#666666] disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
                 >
                       <Send className="w-3.5 h-3.5" />
                 </button>
@@ -963,10 +1030,10 @@ export default function AgenticSupportConsole({ onNavigate }) {
                 : "0 2px 8px rgba(15,23,42,0.08)",
             }}
             transition={{ duration: 0.3 }}
-            className={`relative rounded-lg px-4 py-4 flex flex-col gap-3 transition-all duration-300 border-2 h-[300px] overflow-y-auto ${
+            className={`relative rounded-xl px-5 py-5 flex flex-col gap-4 transition-all duration-300 border-2 h-[320px] overflow-y-auto ${
               ["intent-detecting", "intent-ready"].includes(stage)
-                ? "border-teal-400 bg-teal-50 shadow-lg"
-                : "border-gray-200 bg-white"
+                ? "border-[#2E2E2E] bg-white dark:bg-gray-900 shadow-lg"
+                : "border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-sm"
             }`}
           >
             <div className="flex items-center justify-between">
@@ -976,9 +1043,9 @@ export default function AgenticSupportConsole({ onNavigate }) {
                   pulse={["intent-detecting"].includes(stage)}
                   icon={<Brain className="w-4 h-4" />}
                 />
-                <p className="text-lg font-bold text-gray-900">Intent Brain</p>
+                <p className="text-lg font-bold text-[#2E2E2E] dark:text-white">Intent Brain</p>
               </div>
-              <p className="text-[11px] text-gray-500">{intentStatus}</p>
+              <p className="text-[11px] text-[#989898] dark:text-gray-400">{intentStatus}</p>
             </div>
             {(!interactionText || interactionText.trim().split(/\s+/).length < 3) ? (
               <div className="flex-1 flex items-center justify-center">
@@ -986,10 +1053,10 @@ export default function AgenticSupportConsole({ onNavigate }) {
                   <div className="w-12 h-12 mx-auto mb-2 rounded-full bg-gradient-to-br from-teal-100 to-cyan-100 flex items-center justify-center border-2 border-teal-200">
                     <Brain className="w-6 h-6 text-teal-600" />
                   </div>
-                  <p className="text-xs text-gray-500 font-medium">
+                  <p className="text-xs text-[#2E2E2E] dark:text-gray-300 font-medium">
                     Waiting for customer issue
                   </p>
-                  <p className="text-[10px] text-gray-400 mt-0.5">
+                  <p className="text-[10px] text-[#989898] dark:text-gray-400 mt-0.5">
                     Intent Brain will analyze and route to workflow
                   </p>
                 </div>
@@ -1016,28 +1083,28 @@ export default function AgenticSupportConsole({ onNavigate }) {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.2 }}
-                    className="bg-gradient-to-r from-[#612D91]/10 to-[#A64AC9]/10 border-2 border-[#612D91]/30 rounded-xl p-3 shadow-sm"
+                    className="bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 rounded-lg p-4 shadow-sm"
                   >
                     <div className="flex items-start gap-2 mb-2">
-                      <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-br from-[#612D91] to-[#A64AC9] flex items-center justify-center shadow-sm border border-[#612D91]/30">
+                      <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-br from-[#2E2E2E] to-[#4A4A4A] flex items-center justify-center shadow-sm border border-gray-400">
                         <CheckCircle2 className="w-4 h-4 text-white" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap mb-1">
-                          <span className="font-bold text-gray-900 text-sm">Matched Category</span>
-                          <span className="px-2 py-0.5 rounded-full bg-[#612D91] text-white text-[10px] font-bold uppercase tracking-wide">
+                          <span className="font-bold text-gray-900 dark:text-white text-sm">Matched Category</span>
+                          <span className="px-2 py-0.5 rounded-full bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] text-white text-[10px] font-bold uppercase tracking-wide">
                             Primary
                           </span>
                         </div>
-                        <p className="font-semibold text-[#612D91] text-base mb-1">
+                        <p className="font-semibold text-[#2E2E2E] dark:text-white text-base mb-1">
                           {intentScores[0].intent.label}
                         </p>
                         <div className="flex items-center gap-2 text-[11px]">
-                          <span className="text-gray-600">Workflow:</span>
-                          <span className="font-mono font-semibold text-gray-900 bg-white px-2 py-0.5 rounded border border-gray-200">
+                          <span className="text-gray-600 dark:text-gray-400">Workflow:</span>
+                          <span className="font-mono font-semibold text-gray-900 dark:text-white bg-white dark:bg-gray-800 px-2 py-0.5 rounded border-2 border-gray-300 dark:border-gray-600">
                             {intentScores[0].intent.workflow}
                           </span>
-                          <span className="ml-auto font-bold text-[#612D91]">
+                          <span className="ml-auto font-bold text-[#2E2E2E] dark:text-gray-300">
                             {(intentScores[0].score * 25).toFixed(0)}% confidence
                           </span>
                         </div>
@@ -1054,19 +1121,19 @@ export default function AgenticSupportConsole({ onNavigate }) {
                     initial={{ opacity: 0, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.2 }}
-                    className="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-lg border border-purple-200 px-2.5 py-2 shadow-sm"
+                    className="bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-2.5 shadow-sm"
                   >
                     <div className="flex items-start gap-2 justify-between">
                       <div className="flex items-start gap-2 min-w-0 flex-1">
-                        <div className="w-5 h-5 rounded-md bg-gradient-to-br from-purple-100 to-indigo-100 flex items-center justify-center border border-purple-200 flex-shrink-0 mt-0.5">
-                          <BookOpen className="w-3 h-3 text-[#612D91]" />
+                        <div className="w-5 h-5 rounded-md bg-gray-100 dark:bg-gray-700 flex items-center justify-center border-2 border-gray-300 dark:border-gray-600 flex-shrink-0 mt-0.5">
+                          <BookOpen className="w-3 h-3 text-[#2E2E2E] dark:text-gray-300" />
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center gap-1.5 mb-0.5">
-                            <span className="text-[10px] font-bold text-gray-900">Knowledge Source</span>
-                            <span className="px-1 py-0.5 rounded bg-purple-200 text-purple-800 text-[8px] font-bold uppercase">Verified</span>
+                            <span className="text-[10px] font-bold text-gray-900 dark:text-white">Knowledge Source</span>
+                            <span className="px-1 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-[8px] font-bold uppercase">Verified</span>
                           </div>
-                          <p className="text-[10px] text-gray-700 leading-snug line-clamp-2">
+                          <p className="text-[10px] text-gray-700 dark:text-gray-300 leading-snug line-clamp-2">
                             {selectedWorkflow === 'printer_offline' 
                               ? 'Matched "printer", "floor 3", "offline" → Network connectivity procedure (Sec 3.2) • Printer_Guide.pdf p.12-15 • 94%'
                               : 'Matched "ink cartridge", "not recognized" → INK_AUTH_001 troubleshooting (Sec 2.1) • Ink_Error_Resolution.pdf p.8-10 • 94%'
@@ -1081,7 +1148,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                           setDocViewerPage(startPage);
                           setShowDocViewer(true);
                         }}
-                        className="flex-shrink-0 flex items-center gap-1 px-2 py-1 bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white rounded hover:from-[#7B3FE4] hover:to-[#C26BFF] transition-all text-[10px] font-semibold whitespace-nowrap"
+                        className="flex-shrink-0 flex items-center gap-1 px-2 py-1 bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] text-white rounded hover:from-[#4A4A4A] hover:to-[#666666] transition-all text-[10px] font-semibold whitespace-nowrap shadow-sm"
                       >
                         <ExternalLink className="w-2.5 h-2.5" />
                         View
@@ -1158,8 +1225,8 @@ export default function AgenticSupportConsole({ onNavigate }) {
                   : "0 2px 8px rgba(15,23,42,0.08)",
             }}
             transition={{ duration: 0.3 }}
-            className={`relative rounded-lg px-4 py-4 flex flex-col gap-3 transition-all duration-300 border-2 h-[300px] overflow-y-auto ${
-              stage === "telemetry" ? "border-amber-400 bg-amber-50 shadow-lg" : "border-gray-200 bg-white"
+            className={`relative rounded-xl px-5 py-5 flex flex-col gap-4 transition-all duration-300 border-2 h-[320px] overflow-y-auto ${
+              stage === "telemetry" ? "border-[#2E2E2E] bg-white dark:bg-gray-900 shadow-lg" : "border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-sm"
             }`}
           >
             <div className="flex items-center justify-between">
@@ -1169,7 +1236,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                 pulse={stage === "telemetry"}
                 icon={<Cpu className="w-4 h-4" />}
               />
-                <p className="text-lg font-bold text-gray-900">Input Datapoints</p>
+                <p className="text-lg font-bold text-[#2E2E2E] dark:text-white">Input Datapoints</p>
             </div>
               {stage === "telemetry" && (
                 <motion.div
@@ -1194,25 +1261,25 @@ export default function AgenticSupportConsole({ onNavigate }) {
               </div>
             ) : (
               <>
-                <p className="text-[11px] text-gray-500">{telemetryStatus}</p>
+                <p className="text-[11px] text-[#989898] dark:text-gray-400">{telemetryStatus}</p>
                 
                 <div className="mt-1 space-y-2">
                   {/* Show detected device type badge */}
                   <div className={`rounded-lg p-3 border ${
-                    detectedDevice === 'laptop' ? 'bg-blue-50 border-blue-200' :
-                    detectedDevice === 'printer' ? 'bg-purple-50 border-purple-200' :
-                    'bg-indigo-50 border-indigo-200'
+                    detectedDevice === 'laptop' ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800' :
+                    detectedDevice === 'printer' ? 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700' :
+                    'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700'
                   }`}>
                     <div className="flex items-center gap-2">
                       <Cpu className={`w-4 h-4 ${
-                        detectedDevice === 'laptop' ? 'text-blue-600' :
-                        detectedDevice === 'printer' ? 'text-purple-600' :
-                        'text-indigo-600'
+                        detectedDevice === 'laptop' ? 'text-blue-600 dark:text-blue-400' :
+                        detectedDevice === 'printer' ? 'text-[#2E2E2E] dark:text-gray-300' :
+                        'text-gray-600 dark:text-gray-400'
                       }`} />
                       <span className={`text-xs font-semibold ${
-                        detectedDevice === 'laptop' ? 'text-blue-900' :
-                        detectedDevice === 'printer' ? 'text-purple-900' :
-                        'text-indigo-900'
+                        detectedDevice === 'laptop' ? 'text-blue-900 dark:text-blue-300' :
+                        detectedDevice === 'printer' ? 'text-gray-900 dark:text-white' :
+                        'text-gray-900 dark:text-white'
                       }`}>
                         Detected Device: {detectedDevice === 'laptop' ? 'Laptop' : detectedDevice === 'printer' ? 'Printer' : 'Computer'}
                       </span>
@@ -1480,18 +1547,18 @@ export default function AgenticSupportConsole({ onNavigate }) {
         <motion.div
           animate={{
             boxShadow: ["completed"].includes(stage)
-              ? "0 12px 30px rgba(249,70,128,0.2)"
+              ? "0 8px 24px rgba(16,185,129,0.15)"
               : stage === "escalated"
-              ? "0 12px 30px rgba(239,68,68,0.2)"
+              ? "0 8px 24px rgba(245,158,11,0.15)"
               : "0 2px 8px rgba(15,23,42,0.06)",
           }}
           transition={{ duration: 0.3 }}
-          className={`relative rounded-xl overflow-hidden px-4 py-4 flex flex-col gap-2.5 transition-all duration-300 border-2 mt-5 ${
+          className={`relative rounded-xl overflow-hidden px-5 py-5 flex flex-col gap-3 transition-all duration-300 border mt-6 ${
             stage === "completed"
-              ? "border-pink-400 bg-pink-50"
+              ? "border-emerald-300 dark:border-emerald-700 bg-emerald-50 dark:bg-emerald-900/20"
             : stage === "escalated"
-              ? "border-rose-400 bg-rose-50"
-              : "border-gray-200 bg-white"
+              ? "border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-900/20"
+              : "border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900"
           }`}
         >
           <div className="flex items-center justify-between">
@@ -1833,10 +1900,10 @@ export default function AgenticSupportConsole({ onNavigate }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="rounded-2xl bg-gradient-to-br from-gray-50 to-white border border-gray-200 shadow-lg overflow-hidden"
+          className="rounded-2xl bg-white dark:bg-gray-900 border-2 border-gray-300 dark:border-gray-700 shadow-[0_4px_12px_rgba(0,0,0,0.1)] overflow-hidden"
         >
           {/* Header */}
-          <div className="bg-gradient-to-r from-[#612D91] to-[#A64AC9] px-6 py-4">
+          <div className="bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] px-6 py-4 border-b-2 border-gray-300">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="relative">
@@ -1846,12 +1913,12 @@ export default function AgenticSupportConsole({ onNavigate }) {
                     animate={{ rotate: 360 }}
                     transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
         >
-                    <Sparkles className="w-6 h-6 text-purple-200 opacity-50" />
+                    <Sparkles className="w-6 h-6 text-white/30 opacity-50" />
                   </motion.div>
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-white">AI Agent Orchestration</h3>
-                  <p className="text-xs text-purple-100">Real-time multi-agent reasoning trace</p>
+                  <h3 className="text-lg font-bold text-white drop-shadow-sm">AI Agent Orchestration</h3>
+                  <p className="text-xs text-white drop-shadow-sm">Real-time multi-agent reasoning trace</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -1869,19 +1936,19 @@ export default function AgenticSupportConsole({ onNavigate }) {
           </div>
 
           {/* Workflow Info Banner */}
-          <div className="bg-gradient-to-r from-purple-50 to-blue-50 px-6 py-3 border-b border-gray-200">
+          <div className="bg-white dark:bg-gray-800 px-6 py-3 border-b-2 border-gray-300 dark:border-gray-700">
             <div className="flex flex-wrap items-center gap-4 text-xs">
               <div className="flex items-center gap-2">
-                <Wand2 className="w-4 h-4 text-[#612D91]" />
-                <span className="font-semibold text-gray-700">Workflow:</span>
-                <span className="font-mono font-bold bg-white px-2 py-1 rounded border border-purple-200 text-[#612D91]">
+                <Wand2 className="w-4 h-4 text-[#2E2E2E] dark:text-gray-300" />
+                <span className="font-semibold text-[#2E2E2E] dark:text-gray-300">Workflow:</span>
+                <span className="font-mono font-bold bg-[#2E2E2E] text-white px-2.5 py-1 rounded border-2 border-[#2E2E2E]">
                     {selectedWorkflow === "printer_offline" ? "printer_offline" : "ink_error"}
                   </span>
                 </div>
                 {interactionText && (
                 <div className="flex items-center gap-2 flex-1 min-w-0">
-                  <MessageCircle className="w-4 h-4 text-gray-500 flex-shrink-0" />
-                  <span className="text-gray-600 truncate italic">"{interactionText.substring(0, 80)}..."</span>
+                  <MessageCircle className="w-4 h-4 text-gray-600 dark:text-gray-400 flex-shrink-0" />
+                  <span className="text-[#2E2E2E] dark:text-gray-300 truncate italic">"{interactionText.substring(0, 80)}..."</span>
                 </div>
                 )}
             </div>
@@ -1891,7 +1958,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
           <div className="px-6 py-6">
             <div className="relative">
               {/* Animated connecting line */}
-              <div className="absolute left-[15px] top-2 bottom-2 w-0.5 bg-gradient-to-b from-[#612D91] via-[#A64AC9] to-[#612D91] opacity-30" />
+              <div className="absolute left-[15px] top-2 bottom-2 w-0.5 bg-gradient-to-b from-gray-300 via-gray-400 to-gray-300" />
               
               <div className="space-y-4">
                   {timeline.map((step, idx) => (
@@ -1923,7 +1990,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                             )}
                           </div>
                           {/* Number badge */}
-                          <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-gradient-to-br from-[#612D91] to-[#A64AC9] flex items-center justify-center shadow-md">
+                          <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-gradient-to-br from-[#2E2E2E] to-[#4A4A4A] flex items-center justify-center shadow-md border-2 border-white">
                             <span className="text-[10px] font-bold text-white">{idx + 1}</span>
                         </div>
                         </motion.div>
@@ -1936,9 +2003,9 @@ export default function AgenticSupportConsole({ onNavigate }) {
                         transition={{ delay: idx * 0.15 + 0.3, duration: 0.4 }}
                         className="flex-1 group"
                       >
-                        <div className={`rounded-xl ${step.bg} border-2 border-gray-200 hover:border-purple-300 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-md`}>
+                        <div className="rounded-xl bg-white dark:bg-gray-900 border-2 border-gray-300 dark:border-gray-700 hover:border-[#2E2E2E] dark:hover:border-gray-500 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-md">
                           {/* Agent Header */}
-                          <div className="px-4 py-2.5 bg-white/50 backdrop-blur-sm border-b border-gray-200/50">
+                          <div className="px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border-b-2 border-gray-300 dark:border-gray-700">
                             <div className="flex items-center justify-between gap-2">
                               <div className="flex items-center gap-2 flex-1 min-w-0">
                                 <span className={`font-bold text-sm ${step.color} truncate`}>
@@ -1966,8 +2033,8 @@ export default function AgenticSupportConsole({ onNavigate }) {
                       </div>
 
                           {/* Agent Body */}
-                          <div className="px-4 py-3">
-                            <p className="text-xs text-gray-700 leading-relaxed whitespace-pre-wrap">
+                          <div className="px-4 py-3 bg-white dark:bg-gray-900">
+                            <p className="text-xs text-[#2E2E2E] dark:text-gray-300 leading-relaxed whitespace-pre-wrap">
                               {step.body}
                             </p>
                           </div>
@@ -1978,7 +2045,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                               initial={{ scaleX: 0 }}
                               animate={{ scaleX: 1 }}
                               transition={{ delay: idx * 0.15 + 0.6, duration: 0.8 }}
-                              className="h-1 bg-gradient-to-r from-[#612D91] via-[#A64AC9] to-green-500 origin-left"
+                              className="h-1 bg-gradient-to-r from-[#2E2E2E] via-[#4A4A4A] to-emerald-500 origin-left"
                             />
                           )}
                         </div>
@@ -1991,7 +2058,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
           </div>
 
           {/* Footer - Final Status */}
-          <div className="bg-gradient-to-r from-purple-50 to-blue-50 px-6 py-4 border-t border-gray-200">
+          <div className="bg-gray-50 dark:bg-gray-800/50 px-6 py-4 border-t border-gray-200 dark:border-gray-800">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-5 h-5 text-green-600" />

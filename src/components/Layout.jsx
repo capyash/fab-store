@@ -1,22 +1,13 @@
 import SolutionLayout from "./SolutionLayout";
-import {
-  Home,
-  ClipboardList,
-  TrendingUp,
-  BarChart3,
-  BookOpen,
-  Sparkles,
-  Store,
-} from "lucide-react";
 
 const COGNICLAIM_NAV_ITEMS = [
-  { key: "store", label: "FAB Store", icon: Store },
-  { key: "home", label: "Home", icon: Home },
-  { key: "worklist", label: "Worklist", icon: ClipboardList },
-  { key: "executive", label: "Executive", icon: TrendingUp },
-  { key: "reports", label: "Reports", icon: BarChart3 },
-  { key: "knowledge", label: "Knowledge Base", icon: BookOpen },
-  { key: "pitch", label: "Product Hub", icon: Sparkles },
+  { key: "store", label: "FAB Store", iconName: "Store" },
+  { key: "home", label: "Home", iconName: "Home" },
+  { key: "worklist", label: "Worklist", iconName: "ClipboardList" },
+  { key: "executive", label: "Executive", iconName: "TrendingUp" },
+  { key: "reports", label: "Reports", iconName: "BarChart3" },
+  { key: "knowledge", label: "Knowledge Base", iconName: "BookOpen" },
+  { key: "pitch", label: "Product Hub", iconName: "Sparkles" },
 ];
 
 export default function Layout({ children, onNavigate, active }) {

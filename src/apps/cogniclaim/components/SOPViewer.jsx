@@ -132,7 +132,7 @@ export default function SOPViewer({ sopId, stepIndex = null, onClose, claimStatu
           <p className="text-gray-600 dark:text-gray-400">SOP not found</p>
           <button
             onClick={onClose}
-            className="mt-4 px-4 py-2 bg-[#612D91] text-white rounded-md"
+            className="mt-4 px-4 py-2 bg-[#780096] text-white rounded-md"
           >
             Close
           </button>
@@ -241,7 +241,7 @@ export default function SOPViewer({ sopId, stepIndex = null, onClose, claimStatu
         className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl w-full max-w-5xl h-[90vh] flex flex-col"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-[#780096] to-[#780096] text-white">
           <div className="flex items-center gap-3">
             <FileText className="w-5 h-5" />
             <div>
@@ -270,7 +270,7 @@ export default function SOPViewer({ sopId, stepIndex = null, onClose, claimStatu
               onChange={handlePageInputChange}
               onKeyDown={handlePageInputSubmit}
               onBlur={handlePageInputSubmit}
-              className="w-12 px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-900 text-center focus:outline-none focus:ring-2 focus:ring-[#612D91]"
+              className="w-12 px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-900 text-center focus:outline-none focus:ring-2 focus:ring-[#780096]"
             />
             <span className="text-sm text-gray-600 dark:text-gray-400">of {totalPages}</span>
             <button
@@ -289,7 +289,7 @@ export default function SOPViewer({ sopId, stepIndex = null, onClose, claimStatu
                 placeholder="Search..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-8 pr-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-[#612D91]"
+                className="w-full pl-8 pr-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-[#780096]"
               />
             </div>
           </div>
@@ -331,7 +331,7 @@ export default function SOPViewer({ sopId, stepIndex = null, onClose, claimStatu
             <div className="mb-8">
               {/* Document Type Pills */}
               <div className="flex items-center gap-2 mb-4">
-                <span className="px-3 py-1 rounded-full bg-[#612D91] text-white text-xs font-semibold">
+                <span className="px-3 py-1 rounded-full bg-[#780096] text-white text-xs font-semibold">
                   STANDARD OPERATING PROCEDURE
                 </span>
                 <span className="px-3 py-1 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs font-semibold">
@@ -411,7 +411,7 @@ export default function SOPViewer({ sopId, stepIndex = null, onClose, claimStatu
               {currentPageData.content.steps.length > 0 && (
                 <div className="mt-6 space-y-4">
                   <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
-                    <Sparkles className="w-5 h-5 text-[#612D91]" />
+                    <Sparkles className="w-5 h-5 text-[#780096]" />
                     Procedure Steps
                   </h3>
                   {currentPageData.content.steps
@@ -429,7 +429,7 @@ export default function SOPViewer({ sopId, stepIndex = null, onClose, claimStatu
                           }}
                           className={`p-4 rounded-lg border-2 transition-all cursor-pointer ${
                             isHighlighted
-                              ? "border-[#612D91] bg-[#F5F3FF] dark:bg-[#4B2E83]/30 shadow-lg ring-4 ring-[#612D91]/20"
+                              ? "border-[#780096] bg-[#F5F3FF] dark:bg-[#4B2E83]/30 shadow-lg ring-4 ring-[#780096]/20"
                               : "border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600"
                           }`}
                           onClick={() => navigateToStep(step.stepNumber)}
@@ -439,7 +439,7 @@ export default function SOPViewer({ sopId, stepIndex = null, onClose, claimStatu
                             <div
                               className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${
                                 isHighlighted
-                                  ? "bg-[#612D91] text-white"
+                                  ? "bg-[#780096] text-white"
                                   : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
                               }`}
                             >
@@ -456,7 +456,7 @@ export default function SOPViewer({ sopId, stepIndex = null, onClose, claimStatu
                               <motion.div
                                 initial={{ scale: 0 }}
                                 animate={{ scale: 1 }}
-                                className="text-[#612D91]"
+                                className="text-[#780096]"
                               >
                                 <Sparkles className="w-5 h-5" />
                               </motion.div>
@@ -531,7 +531,7 @@ export default function SOPViewer({ sopId, stepIndex = null, onClose, claimStatu
                       onClick={() => navigateToStep(step.stepNumber)}
                       className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
                         highlightedStep !== null && step.stepNumber === highlightedStep + 1
-                          ? "bg-[#612D91] text-white underline"
+                          ? "bg-[#780096] text-white underline"
                           : "bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
                       }`}
                     >
@@ -550,7 +550,7 @@ export default function SOPViewer({ sopId, stepIndex = null, onClose, claimStatu
                     navigateToStep(1);
                   }
                 }}
-                className="px-3 py-1.5 text-sm bg-[#612D91] text-white rounded-md hover:bg-[#512579] transition-colors flex items-center gap-2"
+                className="px-3 py-1.5 text-sm bg-[#780096] text-white rounded-md hover:bg-[#780096] transition-colors flex items-center gap-2"
               >
                 <ArrowDown className="w-4 h-4" />
                 Next Step

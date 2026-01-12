@@ -41,7 +41,7 @@ export default function Settings() {
           <button
             type="button"
             onClick={() => (isAuthenticated ? logout() : login())}
-            className="px-4 py-2 rounded-full text-sm font-semibold bg-[#612D91] text-white"
+            className="px-4 py-2 rounded-full text-sm font-semibold bg-[#780096] text-white"
           >
             {isAuthenticated ? "Sign out" : "Sign in"}
           </button>

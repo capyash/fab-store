@@ -28,15 +28,26 @@ export default function FabStoreLogin({ onBack, onLoginSuccess }) {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden flex items-center justify-center px-4 py-10 bg-gradient-to-br from-[#F9F8FF] via-[#F1F0FF] to-[#F6FAFF]">
-      {/* Animated background elements */}
+    <div
+      className="min-h-screen relative overflow-hidden flex items-center justify-center px-4 py-10"
+      style={{
+        backgroundImage: "url('/fab-login-bg.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      {/* Dark overlay for readability on top of photo */}
+      <div className="absolute inset-0 bg-black/35" />
+
+      {/* Animated background elements on top of image */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-[-80px] left-1/4 w-[520px] h-[520px] bg-[rgba(109,53,207,0.18)] blur-[220px]" />
-        <div className="absolute bottom-[-60px] right-1/5 w-[540px] h-[540px] bg-[rgba(87,198,255,0.14)] blur-[240px]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[780px] h-[780px] bg-[rgba(255,208,233,0.16)] blur-[260px]" />
+        <div className="absolute top-[-80px] left-1/4 w-[520px] h-[520px] bg-[rgba(109,53,207,0.3)] blur-[220px]" />
+        <div className="absolute bottom-[-60px] right-1/5 w-[540px] h-[540px] bg-[rgba(87,198,255,0.25)] blur-[240px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[780px] h-[780px] bg-[rgba(255,208,233,0.22)] blur-[260px]" />
       </div>
 
-      {/* Grid pattern overlay */}
+      {/* Subtle grid overlay */}
       <div
         className="absolute inset-0 opacity-20"
         style={{

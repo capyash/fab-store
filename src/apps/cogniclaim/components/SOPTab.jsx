@@ -7,14 +7,14 @@ export default function SOPTab({ claim }) {
   
     return (
       <div className="text-sm space-y-3">
-        <div className="font-semibold text-[#612D91]">Relevant SOP Steps</div>
+        <div className="font-semibold text-[#780096]">Relevant SOP Steps</div>
         <ul className="space-y-2">
           {sop.map((s) => (
             <li
               key={s.id}
               className={`p-3 rounded-md border ${
                 s.matched
-                  ? "border-[#612D91] bg-[#612D91]/10"
+                  ? "border-[#780096] bg-[#780096]/10"
                   : "border-gray-200 dark:border-gray-700"
               }`}
             >

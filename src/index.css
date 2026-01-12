@@ -16,11 +16,90 @@ body {
 }
 
 :root {
-  --tp-purple: #612d91;
+  /* Flamingo 2.0 Design System Colors */
+  /* Backgrounds */
+  --bg-01: #FFFFFF;
+  --bg-02: #F7F7F7;
+  --bg-02-alt: #EEECEA;
+  
+  /* Text */
+  --text-01: #2E2E2E;
+  --text-02: #4B4C6A;
+  --text-03: #989898;
+  
+  /* Strokes */
+  --stroke-01: #DEDAE4;
+  
+  /* Slate Theme - Primary */
+  --primary: #4B4C6A;
+  --tertiary: #DBDBE4;
+  
+  /* Slate Theme - Selectors */
+  --hover: #F5F5F5;
+  --select: #E6E6E5;
+  
+  /* Special Colors */
+  --pink-tp: #FF0082;
+  --text-link: #A5125D;
+  
+  /* Button Colors */
+  --button-primary: #2E2E2E;
+  --button-primary-hover: #4A4A4A;
+  --button-primary-active: #666666;
+  --button-primary-disabled: #E0E0E0;
+  --button-text: #2E2E2E;
+  
+  /* Shadows - Flamingo 2.0 Design System */
+  /* Drop shadow: X: 0, Y: 4, Blur: 15, Spread: 0, Color: #959DA5 35% Opacity */
+  --shadow-drop: 0px 4px 15px 0px rgba(149, 157, 165, 0.35);
+  --button-text-disabled: #A0A0A0;
+  
+  /* Legacy colors (keeping for backward compatibility) */
+  --color-primary: #780096;
+  --color-text-main: #2E2E2E;
+  --color-text-secondary: #656A71;
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #FAFAFA;
+  --color-bg-tertiary: #DDE4F8;
+  --tp-purple: #780096;
   --tp-pink: #e91e63;
   --tp-dark: #1a1a1a;
   --tp-gray: #f5f5f5;
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  
+  /* Status Colors */
+  --color-success: #10b981;
+  --color-error: #ef4444;
+  --color-warning: #f59e0b;
+  --color-info: #3b82f6;
+  
+  /* Flamingo 2.0 Typography Tokens - TP Sans Type System */
+  --font-family: "TP Sans", "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-scale: 1.125; /* Major Second scale */
+  --line-height-base: 1.2;
+  --letter-spacing: 0.3px;
+  
+  /* Text Colors */
+  --text-01: #2E2E2E;
+  --text-02: #4B4C6A;
+  --text-03: #989898;
+  --text-heading: #2E2E2E;
+  
+  /* Legacy Typography (keeping for backward compatibility) */
+  --text-text-01: #2E2E2E;
+  --text-title-size: 18px;
+  --text-title-weight: 700;
+  --text-title-line-height: normal;
+  --text-body-size: 14px;
+  --text-body-weight: 500;
+  --text-body-line-height: 20px;
+  --text-select-size: 12px;
+  --text-select-weight: 500;
+  --text-select-line-height: normal;
+  --text-heading-size: 20px;
+  --text-heading-weight: 700;
+  --text-heading-line-height: normal;
+  
+  font-family: var(--font-family);
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
@@ -46,16 +125,45 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  color: #213547;
+  color: var(--text-text-01);
+  font-family: var(--font-family);
+  font-size: var(--text-body-size);
+  font-weight: var(--text-body-weight);
+  line-height: var(--text-body-line-height);
 }
 
 html.dark body {
   color: rgba(255, 255, 255, 0.87);
 }
 
+/* Typography Base Styles */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-heading);
+  font-family: var(--font-family);
+  font-weight: var(--text-heading-weight);
+  line-height: var(--text-heading-line-height);
+}
+
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: var(--text-heading-size);
+}
+
+/* Body text utility class */
+.text-body {
+  color: var(--text-text-01);
+  font-family: var(--font-family);
+  font-size: var(--text-body-size);
+  font-weight: var(--text-body-weight);
+  line-height: var(--text-body-line-height);
+}
+
+/* Heading utility class */
+.text-heading {
+  color: var(--text-heading);
+  font-family: var(--font-family);
+  font-size: var(--text-heading-size);
+  font-weight: var(--text-heading-weight);
+  line-height: var(--text-heading-line-height);
 }
 
 @keyframes fadeIn {

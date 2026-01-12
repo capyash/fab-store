@@ -107,7 +107,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gradient-to-br from-[#3B0E63] via-[#4E1D84] to-[#150428] flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-6xl rounded-[32px] border border-white/10 bg-white/5 backdrop-blur-2xl shadow-[0_40px_120px_rgba(15,4,40,0.55)] overflow-hidden flex flex-col lg:flex-row min-h-[640px]">
         {/* Left brand panel with animated AI features */}
-        <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#612D91] via-[#7E34B0] to-[#A64AC9] text-white items-center justify-center p-14 relative overflow-hidden">
+        <div className="hidden lg:flex lg:w-1/2 bg-[#780096] text-white items-center justify-center p-14 relative overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-20 w-64 h-64 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }} />
@@ -166,8 +166,13 @@ export default function LoginPage() {
           <div className="absolute inset-y-10 left-0 w-px bg-gradient-to-b from-transparent via-[#E5D4F5] to-transparent opacity-70 hidden lg:block" />
           <div className="w-full max-w-md relative z-10">
           <div className="flex items-center justify-center gap-3 mb-6">
-            <img src="/tp-logo.svg" alt="Teleperformance" className="h-8" onError={(e)=>{e.currentTarget.style.display='none'}}/>
-            <div className="text-2xl font-semibold text-gray-900">Teleperformance</div>
+            <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center shadow-md border border-gray-200">
+              <img
+                src="/tp-logo-new.png"
+                alt="Store"
+                className="h-8 w-auto object-contain"
+              />
+            </div>
           </div>
 
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
@@ -185,7 +190,7 @@ export default function LoginPage() {
                 <label className="text-sm text-gray-700">Email</label>
                 <input
                   type="email"
-                  className="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#A64AC9]/50"
+                  className="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#780096]/50"
                   value={email}
                   readOnly
                 />
@@ -195,7 +200,7 @@ export default function LoginPage() {
                 <label className="text-sm text-gray-700">Password</label>
                 <input
                   type="password"
-                  className="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#A64AC9]/50"
+                  className="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#780096]/50"
                   value={password}
                   readOnly
                 />
@@ -213,7 +218,7 @@ export default function LoginPage() {
                 </label>
                 <button
                   type="button"
-                  className="text-sm text-[#612D91] hover:underline"
+                  className="text-sm text-[#780096] hover:underline"
                   onClick={() => alert("Contact IT helpdesk to reset your password.")}
                 >
                   Forgot password?
@@ -223,7 +228,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white rounded-xl py-2.5 text-sm font-medium hover:shadow-lg disabled:opacity-70"
+                className="w-full bg-[#780096] text-white rounded-xl py-2.5 text-sm font-medium hover:bg-[#780096]/90 hover:shadow-lg disabled:opacity-70"
               >
                 {loading ? "Signing in…" : "Sign in"}
               </button>

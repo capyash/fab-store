@@ -185,7 +185,7 @@ export default function ExecutiveDashboard({ onNavigate }) {
           {onNavigate && (
             <button
               onClick={() => onNavigate("store")}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-[#612D91] dark:hover:text-[#A64AC9] rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-[#780096] dark:hover:text-[#780096] rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               title="Back to FAB Store"
             >
               <Store className="w-3.5 h-3.5" />
@@ -196,7 +196,7 @@ export default function ExecutiveDashboard({ onNavigate }) {
             <select
               value={selectedTimeframe}
               onChange={(e) => setSelectedTimeframe(e.target.value)}
-              className="px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#612D91]"
+              className="px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#780096]"
             >
               <option value="week">This Week</option>
               <option value="month">This Month</option>
@@ -440,7 +440,7 @@ export default function ExecutiveDashboard({ onNavigate }) {
         className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-6 shadow-sm"
       >
         <div className="flex items-center gap-2 mb-4">
-          <Brain className="w-5 h-5 text-[#612D91] dark:text-[#A64AC9]" />
+          <Brain className="w-5 h-5 text-[#780096] dark:text-[#780096]" />
           <h2 className="text-lg font-bold text-gray-900 dark:text-white">Predictive Insights</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

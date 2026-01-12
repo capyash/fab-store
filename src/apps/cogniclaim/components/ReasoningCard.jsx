@@ -307,7 +307,7 @@ export default function ReasoningCard({ step, index, onSOPView, claim, isStreami
                   {isStreaming ? (
                     <>
                       {primaryText}
-                      <span className="inline-block w-1 h-3 bg-[#612D91] ml-1 animate-pulse" />
+                      <span className="inline-block w-1 h-3 bg-[#780096] ml-1 animate-pulse" />
                     </>
                   ) : (
                     primaryText
@@ -356,7 +356,7 @@ export default function ReasoningCard({ step, index, onSOPView, claim, isStreami
                         <motion.button
                           key={idx}
                           onClick={() => handleSOPClick(sopNum)}
-                          className="px-2.5 py-1 rounded text-[10px] font-semibold bg-white/80 dark:bg-gray-800/80 text-[#612D91] dark:text-[#A64AC9] hover:bg-white dark:hover:bg-gray-700 transition-all shadow-sm hover:shadow-md border border-[#612D91]/20 dark:border-[#A64AC9]/30 flex items-center gap-1"
+                          className="px-2.5 py-1 rounded text-[10px] font-semibold bg-white/80 dark:bg-gray-800/80 text-[#780096] dark:text-[#780096] hover:bg-white dark:hover:bg-gray-700 transition-all shadow-sm hover:shadow-md border border-[#780096]/20 dark:border-[#780096]/30 flex items-center gap-1"
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                         >

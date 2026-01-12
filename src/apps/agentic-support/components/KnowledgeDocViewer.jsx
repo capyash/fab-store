@@ -380,7 +380,7 @@ If customer has Ink Subscription:
           <p className="text-gray-600">Document not found</p>
           <button
             onClick={onClose}
-            className="mt-4 px-4 py-2 bg-[#612D91] text-white rounded-md"
+            className="mt-4 px-4 py-2 bg-[#780096] text-white rounded-md"
           >
             Close
           </button>
@@ -401,7 +401,7 @@ If customer has Ink Subscription:
         className="bg-white rounded-xl shadow-2xl w-full max-w-5xl h-[90vh] flex flex-col"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-[#780096] to-[#780096] text-white">
           <div className="flex items-center gap-3">
             <BookOpen className="w-5 h-5" />
             <div>
@@ -455,7 +455,7 @@ If customer has Ink Subscription:
                 onChange={handlePageInputChange}
                 onKeyDown={handlePageInputSubmit}
                 onBlur={handlePageInputSubmit}
-                className="w-12 px-2 py-1 text-center border border-gray-300 rounded focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                className="w-12 px-2 py-1 text-center border border-gray-300 rounded focus:ring-2 focus:ring-[#780096] focus:border-transparent"
               />
               <span className="text-gray-600">of {document.totalPages}</span>
               <span className="text-xs text-gray-500 ml-2">

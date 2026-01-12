@@ -26,7 +26,7 @@ export default function Admin() {
   return (
     <div className="flex flex-col h-full bg-gradient-to-br from-gray-50 via-purple-50/20 to-blue-50/20">
       {/* Header */}
-      <div className="bg-gradient-to-r from-[#612D91] via-[#7B3FE4] to-[#8B5CF6] text-white px-6 py-6 shadow-lg">
+      <div className="bg-gradient-to-r from-[#780096] to-[#780096] text-white px-6 py-6 shadow-lg">
         <div className="flex items-center gap-3 mb-2">
           <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
             <Settings className="w-6 h-6" />

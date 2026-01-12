@@ -145,7 +145,7 @@ export default function AgenticSupportWatchtower({ onNavigate }) {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#612D91] via-[#7B3FE4] to-[#C26BFF] p-8 shadow-2xl"
+        className="relative overflow-hidden rounded-3xl bg-[#780096] p-8 shadow-2xl"
       >
         {/* Animated Background Pattern */}
         <div className="absolute inset-0 opacity-10">
@@ -232,28 +232,30 @@ export default function AgenticSupportWatchtower({ onNavigate }) {
         </div>
       </motion.div>
 
-      {/* Tickets Worklist full-width, Live Activity below */}
-      <div className="space-y-6 mt-6">
-        {/* Tickets - full width table */}
-        <div className="rounded-3xl bg-white border border-gray-200 shadow-lg p-6 flex flex-col">
+      {/* Tickets Worklist (left) and Live Activity (right) side by side */}
+      <div className="mt-6 grid grid-cols-1 xl:grid-cols-3 gap-6 items-start">
+        {/* Tickets - takes ~2/3 width on large screens */}
+        <div className="xl:col-span-2 rounded-3xl bg-white border border-gray-200 shadow-lg p-6 flex flex-col min-h-[420px]">
           <div className="flex items-center gap-2 mb-4">
-            <BarChart3 className="w-5 h-5 text-[#612D91]" />
+            <BarChart3 className="w-5 h-5 text-[#780096]" />
             <h2 className="text-lg font-bold text-gray-900">Generated Tickets</h2>
           </div>
-          
+
           <div className="flex-1 min-h-0">
-            <TicketsTable onSelect={(ticket) => {
-              // Handle ticket selection if needed
-              console.log("Selected ticket:", ticket);
-            }} />
+            <TicketsTable
+              onSelect={(ticket) => {
+                // Hook for future: sync selection with Live Activity if needed
+                console.log("Selected ticket:", ticket);
+              }}
+            />
           </div>
         </div>
 
-        {/* Live Activity - full width */}
-        <div className="rounded-3xl bg-white border border-gray-200 shadow-lg p-6 flex flex-col">
+        {/* Live Activity - takes ~1/3 width on large screens */}
+        <div className="rounded-3xl bg-white border border-gray-200 shadow-lg p-6 flex flex-col min-h-[420px]">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <Activity className="w-5 h-5 text-[#612D91]" />
+              <Activity className="w-5 h-5 text-[#780096]" />
               <h2 className="text-lg font-bold text-gray-900">Live Activity</h2>
             </div>
             <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-emerald-50 border border-emerald-200">
@@ -261,7 +263,7 @@ export default function AgenticSupportWatchtower({ onNavigate }) {
               <span className="text-xs text-emerald-700 font-medium">Live</span>
             </div>
           </div>
-          
+
           <div className="space-y-3 flex-1 min-h-0 overflow-y-auto">
             {MOCK_RECENT.map((run, idx) => (
               <motion.div
@@ -273,21 +275,23 @@ export default function AgenticSupportWatchtower({ onNavigate }) {
               >
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex items-center gap-2">
-                    <Bot className="w-4 h-4 text-[#612D91]" />
+                    <Bot className="w-4 h-4 text-[#780096]" />
                     <span className="text-xs font-medium text-gray-600">{run.agent}</span>
                   </div>
                   <span className="text-xs text-gray-400">{run.time}</span>
                 </div>
-                
+
                 <div className="font-semibold text-sm text-gray-900 mb-1">{run.workflow}</div>
                 <div className="text-xs text-gray-500 mb-2">{run.account}</div>
-                
+
                 <div className="flex items-center justify-between pt-2 border-t border-gray-100">
-                  <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                    run.outcome === "Self-healed"
-                      ? "bg-emerald-100 text-emerald-700"
-                      : "bg-amber-100 text-amber-700"
-                  }`}>
+                  <span
+                    className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                      run.outcome === "Self-healed"
+                        ? "bg-emerald-100 text-emerald-700"
+                        : "bg-amber-100 text-amber-700"
+                    }`}
+                  >
                     {run.outcome}
                   </span>
                   <div className="flex items-center gap-2 text-xs text-gray-500">
@@ -300,7 +304,6 @@ export default function AgenticSupportWatchtower({ onNavigate }) {
             ))}
           </div>
         </div>
-
       </div>
     </div>
   );
@@ -409,7 +412,7 @@ function EnhancedWorkflowCard({ name, total, selfHealed, escalated, failed, icon
       <div className="relative z-10">
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-gradient-to-br from-[#612D91] to-[#A64AC9] shadow-md">
+            <div className="p-2 rounded-xl bg-[#780096] shadow-md">
               {icon}
               <span className="text-white"></span>
             </div>

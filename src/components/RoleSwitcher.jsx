@@ -63,7 +63,7 @@ export default function RoleSwitcher() {
                   onClick={() => handleRoleChange(roleOption.value)}
                   className={`w-full flex items-start gap-3 px-4 py-3 text-left transition-colors ${
                     isActive
-                      ? "bg-[#F5F3FF] text-[#612D91]"
+                      ? "bg-[#F5F3FF] text-[#780096]"
                       : "text-gray-700 hover:bg-gray-50"
                   }`}
                 >
@@ -72,7 +72,7 @@ export default function RoleSwitcher() {
                     <div className="flex items-center gap-2">
                       <span className="font-semibold text-sm">{roleOption.label}</span>
                       {isActive && (
-                        <span className="text-xs px-1.5 py-0.5 rounded bg-[#612D91] text-white">
+                        <span className="text-xs px-1.5 py-0.5 rounded bg-[#780096] text-white">
                           Active
                         </span>
                       )}

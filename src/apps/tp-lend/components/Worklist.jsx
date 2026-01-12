@@ -25,7 +25,7 @@ export default function Worklist({ onSelectLoan, onNavigate }) {
           {onNavigate && (
             <button
               onClick={() => onNavigate("store")}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-[#612D91] dark:hover:text-[#A64AC9] rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-[#780096] dark:hover:text-[#780096] rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               title="Back to FAB Store"
             >
               <Store className="w-3.5 h-3.5" />

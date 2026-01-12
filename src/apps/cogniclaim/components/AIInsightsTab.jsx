@@ -30,15 +30,15 @@ export default function AIInsightsTab({ claim }) {
       ) : (
         <div className="space-y-4">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-[#612D91]" />
-            <h2 className="font-semibold text-[#612D91]">AI Recommendation</h2>
+            <Sparkles className="w-5 h-5 text-[#780096]" />
+            <h2 className="font-semibold text-[#780096]">AI Recommendation</h2>
           </div>
 
           <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-line">
             {output.summary}
           </p>
 
-          <div className="text-sm bg-[#612D91]/10 p-3 rounded-md">
+          <div className="text-sm bg-[#780096]/10 p-3 rounded-md">
             <strong>Next Step:</strong> {output.nextStep}
           </div>
 
@@ -46,7 +46,7 @@ export default function AIInsightsTab({ claim }) {
             <span>Confidence: {(output.confidence * 100).toFixed(0)}%</span>
             <button
               onClick={() => alert("Accepted (mock)")}
-              className="flex items-center gap-1 px-2 py-1 bg-[#612D91] text-white text-xs rounded-md"
+              className="flex items-center gap-1 px-2 py-1 bg-[#780096] text-white text-xs rounded-md"
             >
               <CheckCircle className="w-3 h-3" /> Accept Recommendation
             </button>

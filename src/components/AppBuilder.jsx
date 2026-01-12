@@ -1195,7 +1195,7 @@ function DroppableCanvas({ children, onDrop }) {
       <div
         ref={setNodeRef}
         className={`max-w-6xl mx-auto bg-white rounded-2xl shadow-md border p-6 transition-colors ${
-          isOver ? "border-[#612D91] ring-2 ring-[#612D91]/30" : "border-slate-200"
+          isOver ? "border-[#780096] ring-2 ring-[#780096]/30" : "border-slate-200"
         }`}
       >
         {children}
@@ -1228,7 +1228,7 @@ function DraggableComponent({ id, name, icon: Icon, disabled = false }) {
         disabled
           ? "bg-gray-50 text-gray-300 cursor-not-allowed"
           : isDragging
-          ? "bg-indigo-50 text-[#612D91]"
+          ? "bg-indigo-50 text-[#780096]"
           : "bg-white text-gray-800 hover:bg-indigo-50"
       }`}
     >
@@ -1250,7 +1250,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
           <p className="text-gray-600 mb-6">Please sign in to access the AppBuilder.</p>
           <button
             onClick={onClose}
-            className="w-full px-4 py-2 bg-[#612D91] text-white rounded-lg font-semibold hover:bg-[#7B3DA1] transition"
+            className="w-full px-4 py-2 bg-[#780096] text-white rounded-lg font-semibold hover:bg-[#780096] transition"
           >
             Close
           </button>
@@ -1268,7 +1268,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
           <p className="text-gray-600 mb-6">You need Developer or Admin access to use AppBuilder.</p>
           <button
             onClick={onClose}
-            className="w-full px-4 py-2 bg-[#612D91] text-white rounded-lg font-semibold hover:bg-[#7B3DA1] transition"
+            className="w-full px-4 py-2 bg-[#780096] text-white rounded-lg font-semibold hover:bg-[#780096] transition"
           >
             Close
           </button>
@@ -1668,7 +1668,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
         >
           <div className="p-8 space-y-6">
             <div className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-[#612D91] to-[#A64AC9] mb-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-[#780096] to-[#780096] mb-4">
                 <Wand2 className="w-8 h-8 text-white" />
               </div>
               <h2 className="text-2xl font-bold text-gray-900 mb-2">Create New Application</h2>
@@ -1678,9 +1678,9 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <button
                 onClick={() => setMode("ai-create")}
-                className="p-6 rounded-xl border-2 border-[#612D91] bg-gradient-to-br from-indigo-50 to-purple-50 hover:shadow-lg transition-all text-left"
+                className="p-6 rounded-xl border-2 border-[#780096] bg-gradient-to-br from-indigo-50 to-purple-50 hover:shadow-lg transition-all text-left"
               >
-                <Sparkles className="w-6 h-6 text-[#612D91] mb-3" />
+                <Sparkles className="w-6 h-6 text-[#780096] mb-3" />
                 <h3 className="font-semibold text-gray-900 mb-2">AI-Powered Creation</h3>
                 <p className="text-sm text-gray-600">
                   Describe your app and let AI generate it automatically
@@ -1692,7 +1692,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                   // First capture basic info
                   setMode("basic-info");
                 }}
-                className="p-6 rounded-xl border-2 border-gray-200 hover:border-[#612D91] hover:shadow-lg transition-all text-left"
+                className="p-6 rounded-xl border-2 border-gray-200 hover:border-[#780096] hover:shadow-lg transition-all text-left"
               >
                 <Layers className="w-6 h-6 text-gray-600 mb-3" />
                 <h3 className="font-semibold text-gray-900 mb-2">Manual Builder</h3>
@@ -1738,7 +1738,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                   type="text"
                   value={basicInfo.name}
                   onChange={(e) => setBasicInfo({ ...basicInfo, name: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
                   placeholder="My Custom App"
                 />
               </div>
@@ -1748,7 +1748,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                   type="text"
                   value={basicInfo.tagline}
                   onChange={(e) => setBasicInfo({ ...basicInfo, tagline: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
                   placeholder="AI-powered solution"
                 />
               </div>
@@ -1757,7 +1757,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                 <textarea
                   value={basicInfo.description}
                   onChange={(e) => setBasicInfo({ ...basicInfo, description: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
                   rows={3}
                   placeholder="Describe what your app does..."
                 />
@@ -1778,7 +1778,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                         platformName: platformMap[e.target.value] || "SOP Executor",
                       });
                     }}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
                   >
                     <option value="sop-navigator">SOP Executor</option>
                     <option value="field-service">Field Service Platform</option>
@@ -1789,7 +1789,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                   <select
                     value={basicInfo.industry}
                     onChange={(e) => setBasicInfo({ ...basicInfo, industry: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
                   >
                     <option value="Cross-Industry">Cross-Industry</option>
                     <option value="Healthcare">Healthcare</option>
@@ -1814,7 +1814,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                   setMode("builder");
                 }}
                 disabled={!basicInfo.name}
-                className="px-6 py-2 rounded-lg bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white font-medium hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-6 py-2 rounded-lg bg-gradient-to-r from-[#780096] to-[#780096] text-white font-medium hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Continue to Builder
               </button>
@@ -1850,7 +1850,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                         type="text"
                         value={basicInfo.name}
                         onChange={(e) => setBasicInfo({ ...basicInfo, name: e.target.value })}
-                        className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                        className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
                         placeholder="App Name"
                       />
                       <select
@@ -1866,7 +1866,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                             platformName: platformMap[e.target.value] || "SOP Executor",
                           });
                         }}
-                        className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                        className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
                       >
                         <option value="sop-navigator">SOP Executor</option>
                         <option value="field-service">Field Service Platform</option>
@@ -1880,7 +1880,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                     <textarea
                       value={aiDescription}
                       onChange={(e) => setAiDescription(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#612D91] focus:border-transparent min-h-[200px]"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent min-h-[200px]"
                       placeholder="Example: I need an app to manage healthcare claims. It should have a table to view all claims, show claim details, and use AI to analyze each claim against SOP guidelines..."
                     />
                     <p className="text-xs text-gray-500 mt-1">
@@ -1899,7 +1899,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                   <button
                     onClick={handleAICreate}
                     disabled={!aiDescription.trim() || !basicInfo.name}
-                    className="px-6 py-2 rounded-lg bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white font-medium hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                    className="px-6 py-2 rounded-lg bg-gradient-to-r from-[#780096] to-[#780096] text-white font-medium hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                   >
                     <Sparkles className="w-4 h-4" />
                     Generate App
@@ -1909,7 +1909,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
             ) : (
               <div className="space-y-4">
                 <div className="text-center py-8">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-[#612D91] to-[#A64AC9] mb-4 animate-pulse">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-[#780096] to-[#780096] mb-4 animate-pulse">
                     <Sparkles className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -1917,7 +1917,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                   </h3>
                   <div className="w-full bg-gray-200 rounded-full h-3 max-w-md mx-auto">
                     <motion.div
-                      className="bg-gradient-to-r from-[#612D91] to-[#A64AC9] h-3 rounded-full"
+                      className="bg-gradient-to-r from-[#780096] to-[#780096] h-3 rounded-full"
                       initial={{ width: 0 }}
                       animate={{ width: `${generationProgress.progress}%` }}
                       transition={{ duration: 0.3 }}
@@ -1939,7 +1939,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
       {/* Header */}
       <div className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="p-2 rounded-lg bg-gradient-to-br from-[#612D91] to-[#A64AC9]">
+          <div className="p-2 rounded-lg bg-[#780096]">
             <Wand2 className="w-5 h-5 text-white" />
           </div>
           <div>
@@ -1955,7 +1955,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
             <button
               onClick={() => setResponsiveMode("desktop")}
               className={`p-1.5 rounded transition-colors ${
-                responsiveMode === "desktop" ? "bg-[#612D91] text-white" : "text-gray-600 hover:bg-gray-100"
+                responsiveMode === "desktop" ? "bg-[#780096] text-white" : "text-gray-600 hover:bg-gray-100"
               }`}
               title="Desktop"
             >
@@ -1964,7 +1964,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
             <button
               onClick={() => setResponsiveMode("tablet")}
               className={`p-1.5 rounded transition-colors ${
-                responsiveMode === "tablet" ? "bg-[#612D91] text-white" : "text-gray-600 hover:bg-gray-100"
+                responsiveMode === "tablet" ? "bg-[#780096] text-white" : "text-gray-600 hover:bg-gray-100"
               }`}
               title="Tablet"
             >
@@ -1973,7 +1973,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
             <button
               onClick={() => setResponsiveMode("mobile")}
               className={`p-1.5 rounded transition-colors ${
-                responsiveMode === "mobile" ? "bg-[#612D91] text-white" : "text-gray-600 hover:bg-gray-100"
+                responsiveMode === "mobile" ? "bg-[#780096] text-white" : "text-gray-600 hover:bg-gray-100"
               }`}
               title="Mobile"
             >
@@ -1987,7 +1987,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
               <button
                 onClick={() => setViewMode("canvas")}
                 className={`p-1.5 rounded transition-colors ${
-                  viewMode === "canvas" ? "bg-[#612D91] text-white" : "text-gray-600 hover:bg-gray-100"
+                  viewMode === "canvas" ? "bg-[#780096] text-white" : "text-gray-600 hover:bg-gray-100"
                 }`}
                 title="Canvas Only"
               >
@@ -1996,7 +1996,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
               <button
                 onClick={() => setViewMode("split")}
                 className={`p-1.5 rounded transition-colors ${
-                  viewMode === "split" ? "bg-[#612D91] text-white" : "text-gray-600 hover:bg-gray-100"
+                  viewMode === "split" ? "bg-[#780096] text-white" : "text-gray-600 hover:bg-gray-100"
                 }`}
                 title="Split View"
               >
@@ -2005,7 +2005,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
               <button
                 onClick={() => setViewMode("preview")}
                 className={`p-1.5 rounded transition-colors ${
-                  viewMode === "preview" ? "bg-[#612D91] text-white" : "text-gray-600 hover:bg-gray-100"
+                  viewMode === "preview" ? "bg-[#780096] text-white" : "text-gray-600 hover:bg-gray-100"
                 }`}
                 title="Preview Only"
               >
@@ -2032,7 +2032,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
           </button>
           <button
             onClick={() => setShowCodeGenerator(true)}
-            className="px-4 py-2 rounded-lg bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white hover:shadow-lg transition-all flex items-center gap-2"
+            className="px-4 py-2 rounded-lg bg-[#780096] text-white hover:bg-[#780096]/90 hover:shadow-lg transition-all flex items-center gap-2"
           >
             <Code className="w-4 h-4" />
             Generate & Deploy
@@ -2084,7 +2084,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                       type="button"
                       className={`w-full flex items-center gap-2 px-2.5 py-1.5 rounded-md text-xs text-left transition-colors ${
                         isActive
-                          ? "bg-[#612D91]/10 text-[#612D91] border border-[#612D91]/40"
+                          ? "bg-[#780096]/10 text-[#780096] border border-[#780096]/40"
                           : "bg-transparent text-gray-700 hover:bg-gray-50 border border-transparent"
                       }`}
                     >
@@ -2100,7 +2100,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
             <div>
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-sm font-semibold text-gray-900 flex items-center gap-2">
-                  <Database className="w-4 h-4 text-[#612D91]" />
+                  <Database className="w-4 h-4 text-[#780096]" />
                   Data Model
                 </h3>
                 <button
@@ -2120,7 +2120,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                       },
                     });
                   }}
-                  className="p-1.5 rounded-lg bg-[#612D91] text-white hover:bg-[#5B2E90] transition-colors"
+                  className="p-1.5 rounded-lg bg-[#780096] text-white hover:bg-[#780096] transition-colors"
                 >
                   <Plus className="w-3 h-3" />
                 </button>
@@ -2129,7 +2129,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                 {appData.dataModel.entities?.map((entity, idx) => (
                   <div
                     key={entity.id || idx}
-                    className="p-2 rounded-lg border border-gray-200 text-xs hover:border-[#612D91] hover:bg-indigo-50 cursor-pointer transition-all"
+                    className="p-2 rounded-lg border border-gray-200 text-xs hover:border-[#780096] hover:bg-indigo-50 cursor-pointer transition-all"
                     onClick={() => setEditingEntity(entity)}
                   >
                     <div className="flex items-center justify-between">
@@ -2190,7 +2190,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                     value={componentSearch}
                     onChange={(e) => setComponentSearch(e.target.value)}
                     placeholder="Search components..."
-                    className="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                    className="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
                   />
                 </div>
               </div>
@@ -2232,7 +2232,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                               updatedPages[activePage].components.push(...newComponents);
                               setAppData({ ...appData, pages: updatedPages });
                             }}
-                            className="p-2 rounded-lg border border-gray-200 hover:border-[#612D91] hover:bg-indigo-50 cursor-pointer transition-all"
+                            className="p-2 rounded-lg border border-gray-200 hover:border-[#780096] hover:bg-indigo-50 cursor-pointer transition-all"
                           >
                             <div className="flex items-center gap-2">
                               <Icon className="w-4 h-4 text-gray-600" />
@@ -2603,7 +2603,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
               </div>
               <DragOverlay>
                 {draggedComponent && (
-                  <div className="p-4 bg-white rounded-lg shadow-xl border-2 border-[#612D91]">
+                  <div className="p-4 bg-white rounded-lg shadow-xl border-2 border-[#780096]">
                     {Object.values(COMPONENT_LIBRARY)
                       .flatMap((cat) => Object.entries(cat))
                       .find(([key]) => key === draggedComponent)?.[1]?.name || draggedComponent}
@@ -2781,9 +2781,9 @@ function ComponentPreview({ component, isSelected, onClick, hasChildren = false 
 
   const wrapperBase =
     "rounded-lg border cursor-pointer transition-all bg-white";
-  const wrapperSelected = isSelected ? "border-[#612D91] shadow-sm" : "border-gray-200 hover:border-gray-300";
+  const wrapperSelected = isSelected ? "border-[#780096] shadow-sm" : "border-gray-200 hover:border-gray-300";
   const wrapperOver =
-    isOver && isContainerType ? "border-dashed border-[#612D91]" : "";
+    isOver && isContainerType ? "border-dashed border-[#780096]" : "";
 
   // Side nav should look like a vertical left rail, not a full-width rectangle
   const sideNavWrapper = isSideNav
@@ -2898,18 +2898,18 @@ function ComponentPreview({ component, isSelected, onClick, hasChildren = false 
           <input
             type={props.type || "text"}
             placeholder={props.placeholder || "Text input"}
-            className="w-full px-3 py-1.5 rounded-md border border-gray-300 text-xs focus:outline-none focus:ring-1 focus:ring-[#612D91]"
+            className="w-full px-3 py-1.5 rounded-md border border-gray-300 text-xs focus:outline-none focus:ring-1 focus:ring-[#780096]"
           />
         )}
         {component.type === "textarea" && (
           <textarea
             rows={props.rows || 3}
             placeholder={props.placeholder || "Textarea"}
-            className="w-full px-3 py-1.5 rounded-md border border-gray-300 text-xs focus:outline-none focus:ring-1 focus:ring-[#612D91]"
+            className="w-full px-3 py-1.5 rounded-md border border-gray-300 text-xs focus:outline-none focus:ring-1 focus:ring-[#780096]"
           />
         )}
         {component.type === "dropdown" && (
-          <select className="w-full px-3 py-1.5 rounded-md border border-gray-300 text-xs focus:outline-none focus:ring-1 focus:ring-[#612D91]">
+          <select className="w-full px-3 py-1.5 rounded-md border border-gray-300 text-xs focus:outline-none focus:ring-1 focus:ring-[#780096]">
             {(props.options || "Option 1, Option 2, Option 3")
               .split(",")
               .map((o) => o.trim())
@@ -2924,7 +2924,7 @@ function ComponentPreview({ component, isSelected, onClick, hasChildren = false 
             <input
               type="checkbox"
               defaultChecked={props.checked}
-              className="h-3.5 w-3.5 rounded border-gray-300 text-[#612D91] focus:ring-[#612D91]"
+              className="h-3.5 w-3.5 rounded border-gray-300 text-[#780096] focus:ring-[#780096]"
             />
             <span>{props.label || "Checkbox"}</span>
           </label>
@@ -2940,7 +2940,7 @@ function ComponentPreview({ component, isSelected, onClick, hasChildren = false 
                   <input
                     type="radio"
                     name={component.id}
-                    className="h-3.5 w-3.5 border-gray-300 text-[#612D91] focus:ring-[#612D91]"
+                    className="h-3.5 w-3.5 border-gray-300 text-[#780096] focus:ring-[#780096]"
                   />
                   <span>{opt}</span>
                 </label>
@@ -2952,7 +2952,7 @@ function ComponentPreview({ component, isSelected, onClick, hasChildren = false 
             type="button"
             className={`relative inline-flex h-4 w-7 items-center rounded-full border ${
               props.checked
-                ? "bg-[#612D91] border-[#612D91]"
+                ? "bg-[#780096] border-[#780096]"
                 : "bg-gray-200 border-gray-300"
             }`}
           >
@@ -2966,7 +2966,7 @@ function ComponentPreview({ component, isSelected, onClick, hasChildren = false 
         {component.type === "date-picker" && (
           <input
             type="date"
-            className="w-full px-3 py-1.5 rounded-md border border-gray-300 text-xs focus:outline-none focus:ring-1 focus:ring-[#612D91]"
+            className="w-full px-3 py-1.5 rounded-md border border-gray-300 text-xs focus:outline-none focus:ring-1 focus:ring-[#780096]"
           />
         )}
         {component.type === "button" && (
@@ -2981,7 +2981,7 @@ function ComponentPreview({ component, isSelected, onClick, hasChildren = false 
           >
             <button
               type="button"
-              className="inline-flex items-center justify-center px-3 py-1.5 rounded-md bg-[#612D91] text-white text-xs font-medium hover:bg-[#7B3DA1]"
+              className="inline-flex items-center justify-center px-3 py-1.5 rounded-md bg-[#780096] text-white text-xs font-medium hover:bg-[#780096]"
             >
               {props.label || component.name || "Button"}
             </button>
@@ -3105,7 +3105,7 @@ function EnhancedPropertyPanel({ component, appData, activePage, dataModel, onUp
             type="text"
             value={component.name}
             onChange={(e) => onUpdate({ ...component, name: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
           />
         </div>
 
@@ -3114,7 +3114,7 @@ function EnhancedPropertyPanel({ component, appData, activePage, dataModel, onUp
           <select
             value={component.dataBinding || ""}
             onChange={(e) => onUpdate({ ...component, dataBinding: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
           >
             <option value="">None</option>
             {dataModel.entities?.map((entity) => (
@@ -3146,7 +3146,7 @@ function EnhancedPropertyPanel({ component, appData, activePage, dataModel, onUp
                     }
                     min={prop.min}
                     max={prop.max}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
                   />
                 )}
                 {prop.type === "color" && (
@@ -3171,7 +3171,7 @@ function EnhancedPropertyPanel({ component, appData, activePage, dataModel, onUp
                           props: { ...component.props, [key]: e.target.value },
                         })
                       }
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
                     />
                   </div>
                 )}
@@ -3185,7 +3185,7 @@ function EnhancedPropertyPanel({ component, appData, activePage, dataModel, onUp
                         props: { ...component.props, [key]: e.target.value },
                       })
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
                   />
                 )}
                 {prop.type === "boolean" && (
@@ -3199,7 +3199,7 @@ function EnhancedPropertyPanel({ component, appData, activePage, dataModel, onUp
                           props: { ...component.props, [key]: e.target.checked },
                         })
                       }
-                      className="w-4 h-4 text-[#612D91] rounded focus:ring-[#612D91]"
+                      className="w-4 h-4 text-[#780096] rounded focus:ring-[#780096]"
                     />
                     <span className="text-xs text-gray-600">{prop.label}</span>
                   </label>
@@ -3213,7 +3213,7 @@ function EnhancedPropertyPanel({ component, appData, activePage, dataModel, onUp
                         props: { ...component.props, [key]: e.target.value },
                       })
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
                   >
                     {prop.options?.map((opt) => (
                       <option key={opt} value={opt}>
@@ -3251,7 +3251,7 @@ function EnhancedPropertyPanel({ component, appData, activePage, dataModel, onUp
                       }
                       className={`flex-1 px-2 py-1 rounded border text-xs ${
                         styleProps.textAlign === align
-                          ? "bg-[#612D91] text-white border-[#612D91]"
+                          ? "bg-[#780096] text-white border-[#780096]"
                           : "bg-white text-gray-700 border-gray-300"
                       }`}
                     >
@@ -3284,7 +3284,7 @@ function EnhancedPropertyPanel({ component, appData, activePage, dataModel, onUp
                       }
                       className={`flex-1 px-2 py-1 rounded border text-xs ${
                         styleProps.justify === key
-                          ? "bg-[#612D91] text-white border-[#612D91]"
+                          ? "bg-[#780096] text-white border-[#780096]"
                           : "bg-white text-gray-700 border-gray-300"
                       }`}
                     >
@@ -3417,7 +3417,7 @@ function EntityEditor({ entity, entities, onSave, onClose }) {
               type="text"
               value={editedEntity.name}
               onChange={(e) => setEditedEntity({ ...editedEntity, name: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
             />
           </div>
 
@@ -3426,7 +3426,7 @@ function EntityEditor({ entity, entities, onSave, onClose }) {
               <h4 className="text-sm font-semibold text-gray-900">Fields</h4>
               <button
                 onClick={addField}
-                className="px-3 py-1.5 rounded-lg bg-[#612D91] text-white text-sm font-medium hover:bg-[#5B2E90] transition-colors flex items-center gap-2"
+                className="px-3 py-1.5 rounded-lg bg-[#780096] text-white text-sm font-medium hover:bg-[#780096] transition-colors flex items-center gap-2"
               >
                 <Plus className="w-4 h-4" />
                 Add Field
@@ -3444,7 +3444,7 @@ function EntityEditor({ entity, entities, onSave, onClose }) {
                           type="text"
                           value={field.name}
                           onChange={(e) => updateField(field.id, { name: e.target.value })}
-                          className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                          className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
                         />
                       </div>
                       <div className="col-span-3">
@@ -3452,7 +3452,7 @@ function EntityEditor({ entity, entities, onSave, onClose }) {
                         <select
                           value={field.type}
                           onChange={(e) => updateField(field.id, { type: e.target.value })}
-                          className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                          className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
                         >
                           {fieldTypes.map((ft) => (
                             <option key={ft.value} value={ft.value}>
@@ -3468,7 +3468,7 @@ function EntityEditor({ entity, entities, onSave, onClose }) {
                             type="checkbox"
                             checked={field.required || false}
                             onChange={(e) => updateField(field.id, { required: e.target.checked })}
-                            className="w-4 h-4 text-[#612D91] rounded focus:ring-[#612D91]"
+                            className="w-4 h-4 text-[#780096] rounded focus:ring-[#780096]"
                           />
                         </label>
                       </div>
@@ -3479,7 +3479,7 @@ function EntityEditor({ entity, entities, onSave, onClose }) {
                           value={field.defaultValue || ""}
                           onChange={(e) => updateField(field.id, { defaultValue: e.target.value })}
                           placeholder="Optional"
-                          className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                          className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
                         />
                       </div>
                       <div className="col-span-1 flex items-end">
@@ -3504,7 +3504,7 @@ function EntityEditor({ entity, entities, onSave, onClose }) {
                             })
                           }
                           placeholder="Option1, Option2, Option3"
-                          className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                          className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
                         />
                       </div>
                     )}
@@ -3515,7 +3515,7 @@ function EntityEditor({ entity, entities, onSave, onClose }) {
                         <select
                           value={field.referenceEntity || ""}
                           onChange={(e) => updateField(field.id, { referenceEntity: e.target.value })}
-                          className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                          className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
                         >
                           <option value="">Select entity...</option>
                           {entities
@@ -3575,7 +3575,7 @@ function EntityEditor({ entity, entities, onSave, onClose }) {
               <h4 className="text-sm font-semibold text-gray-900">Relationships</h4>
               <button
                 onClick={addRelationship}
-                className="px-3 py-1.5 rounded-lg bg-[#612D91] text-white text-sm font-medium hover:bg-[#5B2E90] transition-colors flex items-center gap-2"
+                className="px-3 py-1.5 rounded-lg bg-[#780096] text-white text-sm font-medium hover:bg-[#780096] transition-colors flex items-center gap-2"
               >
                 <Plus className="w-4 h-4" />
                 Add Relationship
@@ -3590,7 +3590,7 @@ function EntityEditor({ entity, entities, onSave, onClose }) {
                       <select
                         value={rel.type}
                         onChange={(e) => updateRelationship(rel.id, { type: e.target.value })}
-                        className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                        className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
                       >
                         <option value="one-to-many">One-to-Many</option>
                         <option value="many-to-many">Many-to-Many</option>
@@ -3602,7 +3602,7 @@ function EntityEditor({ entity, entities, onSave, onClose }) {
                       <select
                         value={rel.targetEntity}
                         onChange={(e) => updateRelationship(rel.id, { targetEntity: e.target.value })}
-                        className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                        className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
                       >
                         <option value="">Select entity...</option>
                         {entities
@@ -3621,7 +3621,7 @@ function EntityEditor({ entity, entities, onSave, onClose }) {
                         value={rel.field}
                         onChange={(e) => updateRelationship(rel.id, { field: e.target.value })}
                         placeholder="fieldName"
-                        className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                        className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
                       />
                     </div>
                     <div className="col-span-1 flex items-end">
@@ -3654,7 +3654,7 @@ function EntityEditor({ entity, entities, onSave, onClose }) {
               onSave(editedEntity);
               onClose();
             }}
-            className="px-6 py-2 rounded-lg bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white font-medium hover:shadow-lg transition-all"
+            className="px-6 py-2 rounded-lg bg-gradient-to-r from-[#780096] to-[#780096] text-white font-medium hover:shadow-lg transition-all"
           >
             Save Entity
           </button>
@@ -3750,7 +3750,7 @@ function CodeGenerator({ appData, basicInfo, onClose, onDeploy }) {
               </div>
               <button
                 onClick={generateCode}
-                className="w-full px-6 py-3 rounded-lg bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white font-medium hover:shadow-lg transition-all flex items-center justify-center gap-2"
+                className="w-full px-6 py-3 rounded-lg bg-gradient-to-r from-[#780096] to-[#780096] text-white font-medium hover:shadow-lg transition-all flex items-center justify-center gap-2"
               >
                 <Code className="w-5 h-5" />
                 Generate Code
@@ -3761,13 +3761,13 @@ function CodeGenerator({ appData, basicInfo, onClose, onDeploy }) {
           {generating && (
             <div className="space-y-4">
               <div className="text-center py-8">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-[#612D91] to-[#A64AC9] mb-4 animate-pulse">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-[#780096] to-[#780096] mb-4 animate-pulse">
                   <Code className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">{progress.step}</h3>
                 <div className="w-full bg-gray-200 rounded-full h-3 max-w-md mx-auto">
                   <motion.div
-                    className="bg-gradient-to-r from-[#612D91] to-[#A64AC9] h-3 rounded-full"
+                    className="bg-gradient-to-r from-[#780096] to-[#780096] h-3 rounded-full"
                     initial={{ width: 0 }}
                     animate={{ width: `${progress.progress}%` }}
                     transition={{ duration: 0.3 }}
@@ -3815,7 +3815,7 @@ function CodeGenerator({ appData, basicInfo, onClose, onDeploy }) {
                 </button>
                 <button
                   onClick={() => onDeploy(generatedCode.appConfig)}
-                  className="flex-1 px-6 py-2 rounded-lg bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white font-medium hover:shadow-lg transition-all flex items-center justify-center gap-2"
+                  className="flex-1 px-6 py-2 rounded-lg bg-gradient-to-r from-[#780096] to-[#780096] text-white font-medium hover:shadow-lg transition-all flex items-center justify-center gap-2"
                 >
                   <Sparkles className="w-4 h-4" />
                   Deploy to FAB Store

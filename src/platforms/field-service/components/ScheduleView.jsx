@@ -19,7 +19,7 @@ export default function ScheduleView({ schedule, technicians, onWorkOrderSelect 
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2 mb-4">
-        <Calendar className="w-5 h-5 text-[#612D91]" />
+        <Calendar className="w-5 h-5 text-[#780096]" />
         <h3 className="text-lg font-semibold text-gray-900">Today's Schedule</h3>
       </div>
 

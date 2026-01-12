@@ -1,28 +1,15 @@
 import { useState } from "react";
-import {
-  BarChart3,
-  BookOpen,
-  ClipboardList,
-  Home,
-  Settings,
-  Sparkles,
-  Store,
-  TrendingUp,
-  ChevronLeft,
-  ChevronRight,
-  MessageSquare,
-  Monitor,
-} from "lucide-react";
+import { Icon } from "./Icon";
 import { useDemoMode } from "../contexts/DemoModeContext";
 
 const DEFAULT_NAV_ITEMS = [
-  { key: "store", label: "FAB Store", icon: Store },
-  { key: "home", label: "Home", icon: Home },
-  { key: "worklist", label: "Worklist", icon: ClipboardList },
-  { key: "executive", label: "Executive", icon: TrendingUp },
-  { key: "reports", label: "Reports", icon: BarChart3 },
-  { key: "knowledge", label: "Knowledge Base", icon: BookOpen },
-  { key: "pitch", label: "Product Hub", icon: Sparkles },
+  { key: "store", label: "FAB Store", iconName: "Store" },
+  { key: "home", label: "Home", iconName: "Home" },
+  { key: "worklist", label: "Worklist", iconName: "ClipboardList" },
+  { key: "executive", label: "Executive", iconName: "TrendingUp" },
+  { key: "reports", label: "Reports", iconName: "BarChart3" },
+  { key: "knowledge", label: "Knowledge Base", iconName: "BookOpen" },
+  { key: "pitch", label: "Product Hub", iconName: "Sparkles" },
 ];
 
 export default function Sidebar({
@@ -44,7 +31,7 @@ export default function Sidebar({
     >
       {/* Navigation Items */}
       <nav className="flex-1 overflow-y-auto px-2 py-4 space-y-1">
-        {items.map(({ key, label, icon: Icon }) => {
+        {items.map(({ key, label, iconName }) => {
           const isActive = key === active;
           return (
             <button
@@ -53,14 +40,22 @@ export default function Sidebar({
               onClick={() => onNavigate(key)}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all group relative ${
                 isActive
-                  ? "bg-[#F5F3FF] dark:bg-[#4B2E83]/30 text-[#612D91] dark:text-[#A64AC9]"
-                  : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  ? "bg-primary/10 dark:bg-primary/30"
+                  : "hover:bg-gray-100 dark:hover:bg-gray-800"
               }`}
               title={collapsed ? label : ""}
             >
-              <Icon className="w-5 h-5 shrink-0" />
+              <Icon 
+                name={iconName} 
+                size="24" 
+                state={isActive ? "selected" : "default"} 
+              />
               {!collapsed && (
-                <span className="text-sm font-medium">{label}</span>
+                <span className={`text-sm font-medium ${
+                  isActive 
+                    ? "text-primary dark:text-primary" 
+                    : "text-gray-600 dark:text-gray-400"
+                }`}>{label}</span>
               )}
               
               {/* Tooltip for collapsed state */}
@@ -82,15 +77,23 @@ export default function Sidebar({
           type="button"
           className={`w-full flex items-center gap-3 px-3 py-2.5 transition-all group relative ${
             isDemoMode
-              ? "bg-[#F5F3FF] dark:bg-[#4B2E83]/30 text-[#612D91] dark:text-[#A64AC9]"
+              ? "bg-primary/10 dark:bg-primary/30 text-primary dark:text-primary"
               : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
           }`}
           title={collapsed ? (isDemoMode ? "Demo Mode: Frontend" : "Demo Mode: Backend") : ""}
         >
           <div className="w-full flex items-center gap-3 px-2">
-            <Monitor className="w-5 h-5 shrink-0" />
+            <Icon 
+              name="Monitor" 
+              size="24" 
+              state={isDemoMode ? "selected" : "default"} 
+            />
             {!collapsed && (
-              <span className="text-sm font-medium">
+              <span className={`text-sm font-medium ${
+                isDemoMode 
+                  ? "text-primary dark:text-primary" 
+                  : "text-gray-600 dark:text-gray-400"
+              }`}>
                 {isDemoMode ? "Frontend Mode" : "Backend Mode"}
               </span>
             )}
@@ -112,14 +115,24 @@ export default function Sidebar({
             onClick={() => onNavigate("settings")}
             className={`w-full flex items-center gap-3 px-3 py-2.5 transition-all group relative ${
               active === "settings"
-                ? "bg-[#F5F3FF] dark:bg-[#4B2E83]/30 text-[#612D91] dark:text-[#A64AC9]"
+                ? "bg-primary/10 dark:bg-primary/30 text-primary dark:text-primary"
                 : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
             }`}
             title={collapsed ? "Settings" : ""}
           >
             <div className="w-full flex items-center gap-3 px-2">
-              <Settings className="w-5 h-5 shrink-0" />
-              {!collapsed && <span className="text-sm font-medium">Settings</span>}
+              <Icon 
+                name="Settings" 
+                size="24" 
+                state={active === "settings" ? "selected" : "default"} 
+              />
+              {!collapsed && (
+                <span className={`text-sm font-medium ${
+                  active === "settings"
+                    ? "text-primary dark:text-primary"
+                    : "text-gray-600 dark:text-gray-400"
+                }`}>Settings</span>
+              )}
             </div>
             
             {/* Tooltip for collapsed state */}
@@ -139,8 +152,12 @@ export default function Sidebar({
           title={collapsed ? "Help & Support" : ""}
         >
           <div className="w-full flex items-center gap-3 px-2">
-            <MessageSquare className="w-5 h-5 shrink-0" />
-            {!collapsed && <span className="text-sm font-medium">Help & Support</span>}
+            <Icon name="MessageSquare" size="24" state="default" />
+            {!collapsed && (
+              <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                Help & Support
+              </span>
+            )}
           </div>
           
           {/* Tooltip for collapsed state */}
@@ -161,11 +178,13 @@ export default function Sidebar({
         >
           <div className="w-full flex items-center gap-3 px-2">
             {collapsed ? (
-              <ChevronRight className="w-5 h-5 shrink-0" />
+              <Icon name="ChevronRight" size="24" state="default" />
             ) : (
               <>
-                <ChevronLeft className="w-5 h-5 shrink-0" />
-                <span className="text-sm font-medium">Collapse</span>
+                <Icon name="ChevronLeft" size="24" state="default" />
+                <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                  Collapse
+                </span>
               </>
             )}
           </div>

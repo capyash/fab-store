@@ -103,7 +103,7 @@ export default function HomeDashboard({ onSelectLoan, onNavigate }) {
       title: "Total Loans",
       value: stats.totalLoans,
       icon: FileText,
-      gradient: "from-[#612D91] to-[#A64AC9]",
+      gradient: "from-[#780096] to-[#780096]",
     },
     {
       title: "Under Review",
@@ -146,7 +146,7 @@ export default function HomeDashboard({ onSelectLoan, onNavigate }) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#612D91]"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#780096]"></div>
       </div>
     );
   }
@@ -175,7 +175,7 @@ export default function HomeDashboard({ onSelectLoan, onNavigate }) {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
           <div className="flex items-center gap-3">
-            <div className="p-3 rounded-xl bg-gradient-to-br from-[#612D91] via-[#A64AC9] to-[#0EA5E9] shadow-lg">
+            <div className="p-3 rounded-xl bg-gradient-to-br from-[#780096] via-[#780096] to-[#0EA5E9] shadow-lg">
               <Zap className="w-6 h-6 text-white" />
             </div>
             <div>
@@ -195,7 +195,7 @@ export default function HomeDashboard({ onSelectLoan, onNavigate }) {
             {onNavigate && (
               <button
                 onClick={() => onNavigate("store")}
-                className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-[#612D91] dark:hover:text-[#A64AC9] rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-[#780096] dark:hover:text-[#780096] rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                 title="Back to FAB Store"
               >
                 <Store className="w-3.5 h-3.5" />
@@ -385,11 +385,11 @@ export default function HomeDashboard({ onSelectLoan, onNavigate }) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <button
               onClick={() => onSelectLoan && onSelectLoan({ id: "new-loan", loanType: "Conventional" })}
-              className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-[#612D91] hover:bg-[#612D91]/5 transition-all text-left"
+              className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-[#780096] hover:bg-[#780096]/5 transition-all text-left"
             >
               <div className="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                 New Application
-                <ArrowRight className="w-3 h-3 text-[#612D91]" />
+                <ArrowRight className="w-3 h-3 text-[#780096]" />
               </div>
               <div className="text-sm text-gray-600 dark:text-gray-400">
                 Start a conventional loan and walk through SOP-aware checks.
@@ -397,11 +397,11 @@ export default function HomeDashboard({ onSelectLoan, onNavigate }) {
             </button>
             <button
               onClick={() => onSelectLoan && onSelectLoan({ id: "new-fha", loanType: "FHA" })}
-              className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-[#612D91] hover:bg-[#612D91]/5 transition-all text-left"
+              className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-[#780096] hover:bg-[#780096]/5 transition-all text-left"
             >
               <div className="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                 FHA Application
-                <ArrowRight className="w-3 h-3 text-[#612D91]" />
+                <ArrowRight className="w-3 h-3 text-[#780096]" />
               </div>
               <div className="text-sm text-gray-600 dark:text-gray-400">
                 Showcase policy-heavy FHA scenarios with bankruptcy / DTI logic.
@@ -409,11 +409,11 @@ export default function HomeDashboard({ onSelectLoan, onNavigate }) {
             </button>
             <button
               onClick={() => onNavigate && onNavigate("lend/worklist")}
-              className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-[#612D91] hover:bg-[#612D91]/5 transition-all text-left"
+              className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-[#780096] hover:bg-[#780096]/5 transition-all text-left"
             >
               <div className="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                 Open Worklist
-                <ArrowRight className="w-3 h-3 text-[#612D91]" />
+                <ArrowRight className="w-3 h-3 text-[#780096]" />
               </div>
               <div className="text-sm text-gray-600 dark:text-gray-400">
                 Jump into prioritized loans sorted by AI priority and SLA risk.

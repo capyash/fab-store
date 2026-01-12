@@ -72,9 +72,9 @@ export default function PitchHub({ onNavigate }) {
   const OverviewTab = (
     <div className="space-y-6">
       {/* Hero Pitch */}
-      <div className="bg-gradient-to-br from-[#612D91]/10 to-[#A64AC9]/10 dark:from-[#612D91]/20 dark:to-[#A64AC9]/20 rounded-xl p-6 border border-[#612D91]/20 dark:border-[#A64AC9]/20">
+      <div className="bg-gradient-to-br from-[#780096]/10 to-[#780096]/10 dark:from-[#780096]/20 dark:to-[#780096]/20 rounded-xl p-6 border border-[#780096]/20 dark:border-[#780096]/20">
         <div className="flex items-start gap-4">
-          <div className="p-3 rounded-lg bg-gradient-to-br from-[#612D91] to-[#A64AC9] shadow-lg">
+          <div className="p-3 rounded-lg bg-gradient-to-br from-[#780096] to-[#780096] shadow-lg">
             <Sparkles className="w-6 h-6 text-white" />
           </div>
           <div className="flex-1">
@@ -88,7 +88,7 @@ export default function PitchHub({ onNavigate }) {
               giving you audit-ready reasoning, orchestrated human + AI handoffs, and measurable acceleration—from hours 
               to seconds—without sacrificing compliance fidelity.
             </p>
-            <div className="flex items-center gap-2 text-sm text-[#612D91] dark:text-[#A64AC9] font-medium">
+            <div className="flex items-center gap-2 text-sm text-[#780096] dark:text-[#780096] font-medium">
               <Zap className="w-4 h-4" />
               <span>SOP-native • Contextual AI • Audit-ready • Hours to seconds</span>
             </div>
@@ -99,7 +99,7 @@ export default function PitchHub({ onNavigate }) {
       {/* Problem Statement */}
       <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-          <Shield className="w-5 h-5 text-[#612D91] dark:text-[#A64AC9]" />
+          <Shield className="w-5 h-5 text-[#780096] dark:text-[#780096]" />
           The Problem
         </h3>
         <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
@@ -112,32 +112,32 @@ export default function PitchHub({ onNavigate }) {
       {/* How It Fits */}
       <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-          <Network className="w-5 h-5 text-[#612D91] dark:text-[#A64AC9]" />
+          <Network className="w-5 h-5 text-[#780096] dark:text-[#780096]" />
           How It Fits Today
         </h3>
         <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
           <li className="flex items-start gap-2">
-            <span className="text-[#612D91] dark:text-[#A64AC9] font-bold mt-0.5">•</span>
+            <span className="text-[#780096] dark:text-[#780096] font-bold mt-0.5">•</span>
             <span>Works with your existing claim system via APIs or secure RPA bridges; no rip-and-replace</span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-[#612D91] dark:text-[#A64AC9] font-bold mt-0.5">•</span>
+            <span className="text-[#780096] dark:text-[#780096] font-bold mt-0.5">•</span>
             <span>Mirrors your compliance controls: every action inherits the SOP's approval matrix and creates a tamper-proof log for regulators</span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-[#612D91] dark:text-[#A64AC9] font-bold mt-0.5">•</span>
+            <span className="text-[#780096] dark:text-[#780096] font-bold mt-0.5">•</span>
             <span>Adds "continuous context" to teams—CSR, legal, and medical reviewers see the same live reasoning tree, so handoffs stop breaking the process</span>
           </li>
         </ul>
       </div>
 
       {/* CTA */}
-      <div className="bg-gradient-to-r from-[#612D91] to-[#A64AC9] rounded-xl p-6 text-white">
+      <div className="bg-gradient-to-r from-[#780096] to-[#780096] rounded-xl p-6 text-white">
         <h3 className="text-lg font-semibold mb-2">Ready to See Your SOPs Enforced & Accelerated?</h3>
         <p className="text-sm opacity-90 mb-4">
           Let's run a 30-day pilot on your highest-friction claim lane and prove the hours-to-seconds impact.
         </p>
-        <button className="px-4 py-2 bg-white text-[#612D91] rounded-lg font-medium hover:bg-gray-100 transition-colors">
+        <button className="px-4 py-2 bg-white text-[#780096] rounded-lg font-medium hover:bg-gray-100 transition-colors">
           Schedule Demo
         </button>
       </div>
@@ -148,7 +148,7 @@ export default function PitchHub({ onNavigate }) {
     <div className="space-y-6">
       <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-          <TrendingUp className="w-5 h-5 text-[#612D91] dark:text-[#A64AC9]" />
+          <TrendingUp className="w-5 h-5 text-[#780096] dark:text-[#780096]" />
           Quantified Impact
         </h3>
         <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
@@ -192,7 +192,7 @@ export default function PitchHub({ onNavigate }) {
       {/* Visual Architecture Diagram */}
       <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-          <Layers className="w-5 h-5 text-[#612D91] dark:text-[#A64AC9]" />
+          <Layers className="w-5 h-5 text-[#780096] dark:text-[#780096]" />
           System Architecture
         </h3>
         <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
@@ -230,30 +230,30 @@ export default function PitchHub({ onNavigate }) {
       </div>
 
       {/* Architecture Flow Diagram (Text-based) */}
-      <div className="bg-gradient-to-br from-[#612D91]/10 to-[#A64AC9]/10 dark:from-[#612D91]/20 dark:to-[#A64AC9]/20 rounded-xl p-6 border border-[#612D91]/20 dark:border-[#A64AC9]/20">
+      <div className="bg-gradient-to-br from-[#780096]/10 to-[#780096]/10 dark:from-[#780096]/20 dark:to-[#780096]/20 rounded-xl p-6 border border-[#780096]/20 dark:border-[#780096]/20">
         <h4 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
           <Zap className="w-4 h-4" />
           Data Flow
         </h4>
         <div className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
           <div className="flex items-center gap-2">
-            <span className="font-mono text-[#612D91] dark:text-[#A64AC9]">1.</span>
+            <span className="font-mono text-[#780096] dark:text-[#780096]">1.</span>
             <span>SOP documents ingested → AI parses into decision trees with NLP & structure extraction</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="font-mono text-[#612D91] dark:text-[#A64AC9]">2.</span>
+            <span className="font-mono text-[#780096] dark:text-[#780096]">2.</span>
             <span>Claim arrives → RAG engine retrieves context via Chroma embeddings, crosswalks policies, prior cases, exhibits</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="font-mono text-[#612D91] dark:text-[#A64AC9]">3.</span>
+            <span className="font-mono text-[#780096] dark:text-[#780096]">3.</span>
             <span>Contextual AI (GPT-4) reasons with SOP context → orchestration engine routes by SOP branch & risk classification</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="font-mono text-[#612D91] dark:text-[#A64AC9]">4.</span>
+            <span className="font-mono text-[#780096] dark:text-[#780096]">4.</span>
             <span>Human + AI handoff → decision logged with SOP reference, evidence bundle, AI reasoning trace, approver</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="font-mono text-[#612D91] dark:text-[#A64AC9]">5.</span>
+            <span className="font-mono text-[#780096] dark:text-[#780096]">5.</span>
             <span>Audit spine creates tamper-proof trail with full AI reasoning chain for compliance & reporting</span>
           </div>
         </div>
@@ -265,13 +265,13 @@ export default function PitchHub({ onNavigate }) {
     <div className="space-y-6">
       <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-          <Zap className="w-5 h-5 text-[#612D91] dark:text-[#A64AC9]" />
+          <Zap className="w-5 h-5 text-[#780096] dark:text-[#780096]" />
           How Cogniclaim Works
         </h3>
         <div className="space-y-6">
           <div>
             <h4 className="font-semibold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-[#612D91] dark:bg-[#A64AC9] text-white text-xs flex items-center justify-center">1</span>
+              <span className="w-6 h-6 rounded-full bg-[#780096] dark:bg-[#780096] text-white text-xs flex items-center justify-center">1</span>
               SOP Ingestion & Parsing
             </h4>
             <p className="text-sm text-gray-600 dark:text-gray-400 ml-8">
@@ -283,7 +283,7 @@ export default function PitchHub({ onNavigate }) {
 
           <div>
             <h4 className="font-semibold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-[#612D91] dark:bg-[#A64AC9] text-white text-xs flex items-center justify-center">2</span>
+              <span className="w-6 h-6 rounded-full bg-[#780096] dark:bg-[#780096] text-white text-xs flex items-center justify-center">2</span>
               Contextual AI Analysis
             </h4>
             <p className="text-sm text-gray-600 dark:text-gray-400 ml-8">
@@ -295,7 +295,7 @@ export default function PitchHub({ onNavigate }) {
 
           <div>
             <h4 className="font-semibold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-[#612D91] dark:bg-[#A64AC9] text-white text-xs flex items-center justify-center">3</span>
+              <span className="w-6 h-6 rounded-full bg-[#780096] dark:bg-[#780096] text-white text-xs flex items-center justify-center">3</span>
               SOP-Enforced Orchestration
             </h4>
             <p className="text-sm text-gray-600 dark:text-gray-400 ml-8">
@@ -307,7 +307,7 @@ export default function PitchHub({ onNavigate }) {
 
           <div>
             <h4 className="font-semibold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-[#612D91] dark:bg-[#A64AC9] text-white text-xs flex items-center justify-center">4</span>
+              <span className="w-6 h-6 rounded-full bg-[#780096] dark:bg-[#780096] text-white text-xs flex items-center justify-center">4</span>
               Human + AI Collaboration
             </h4>
             <p className="text-sm text-gray-600 dark:text-gray-400 ml-8">
@@ -319,7 +319,7 @@ export default function PitchHub({ onNavigate }) {
 
           <div>
             <h4 className="font-semibold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-[#612D91] dark:bg-[#A64AC9] text-white text-xs flex items-center justify-center">5</span>
+              <span className="w-6 h-6 rounded-full bg-[#780096] dark:bg-[#780096] text-white text-xs flex items-center justify-center">5</span>
               Continuous Monitoring & Reporting
             </h4>
             <p className="text-sm text-gray-600 dark:text-gray-400 ml-8">
@@ -336,7 +336,7 @@ export default function PitchHub({ onNavigate }) {
   return (
     <div className="h-full flex flex-col overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-[#612D91] to-[#A64AC9]">
+      <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-[#780096] to-[#780096]">
         <div className="flex items-center gap-3">
           <div className="p-2 rounded-lg bg-white/20 backdrop-blur-sm">
             <Sparkles className="w-5 h-5 text-white" />
@@ -349,7 +349,7 @@ export default function PitchHub({ onNavigate }) {
         {onNavigate && (
           <button
             onClick={() => onNavigate("store")}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-[#612D91] bg-white rounded-lg hover:shadow-lg transition-all duration-200 hover:scale-105 active:scale-95"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-[#780096] bg-white rounded-lg hover:shadow-lg transition-all duration-200 hover:scale-105 active:scale-95"
           >
             <Store className="w-4 h-4" />
             Back to Store
@@ -373,7 +373,7 @@ export default function PitchHub({ onNavigate }) {
         <div className="text-xs text-gray-500 dark:text-gray-400">
           Need more details? Contact us for a personalized demo.
         </div>
-        <button className="px-4 py-2 bg-[#612D91] hover:bg-[#7B3DA1] text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+        <button className="px-4 py-2 bg-[#780096] hover:bg-[#780096] text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
           <Download className="w-4 h-4" />
           Download One-Pager
         </button>

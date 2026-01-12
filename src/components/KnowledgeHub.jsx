@@ -99,13 +99,13 @@ export default function KnowledgeHub({ onBack, onNavigate }) {
         <div className="mb-8">
           <button
             onClick={onBack}
-            className="flex items-center gap-2 text-[#612D91] hover:text-[#7B3DA1] transition-colors mb-4"
+            className="flex items-center gap-2 text-[#780096] hover:text-[#780096]/90 transition-colors mb-4"
           >
             <ArrowLeft className="w-4 h-4" />
             <span className="font-medium">Back to Store</span>
           </button>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#612D91] to-[#A64AC9] flex items-center justify-center shadow-lg">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center shadow-lg">
               <BookOpen className="w-8 h-8 text-white" />
             </div>
             <div>
@@ -132,8 +132,8 @@ export default function KnowledgeHub({ onBack, onNavigate }) {
                   className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-all text-left group"
                 >
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#612D91]/10 to-[#A64AC9]/10 flex items-center justify-center group-hover:from-[#612D91]/20 group-hover:to-[#A64AC9]/20 transition-colors">
-                      <Icon className="w-5 h-5 text-[#612D91]" />
+                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#780096]/10 to-[#780096]/10 flex items-center justify-center group-hover:from-[#780096]/20 group-hover:to-[#780096]/20 transition-colors">
+                      <Icon className="w-5 h-5 text-[#780096]" />
                     </div>
                     <span className="font-semibold text-gray-900">{link.label}</span>
                   </div>
@@ -156,8 +156,8 @@ export default function KnowledgeHub({ onBack, onNavigate }) {
                   className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
                 >
                   <div className="flex items-start gap-4 mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#612D91]/10 to-[#A64AC9]/10 flex items-center justify-center shrink-0">
-                      <Icon className="w-6 h-6 text-[#612D91]" />
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#780096]/10 to-[#780096]/10 flex items-center justify-center shrink-0">
+                      <Icon className="w-6 h-6 text-[#780096]" />
                     </div>
                     <div className="flex-1">
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">{section.title}</h3>
@@ -167,7 +167,7 @@ export default function KnowledgeHub({ onBack, onNavigate }) {
                   <ul className="space-y-2 mb-4">
                     {section.items.map((item, itemIdx) => (
                       <li key={itemIdx} className="text-sm text-gray-600 flex items-start gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#612D91]/30 mt-1.5 shrink-0" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#780096]/30 mt-1.5 shrink-0" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -175,7 +175,7 @@ export default function KnowledgeHub({ onBack, onNavigate }) {
                   {section.action && (
                     <button
                       onClick={() => onNavigate && onNavigate(section.action.key)}
-                      className="text-sm font-medium text-[#612D91] hover:text-[#7B3DA1] transition-colors"
+                      className="text-sm font-medium text-[#780096] hover:text-[#780096]/90 transition-colors"
                     >
                       {section.action.label} →
                     </button>
@@ -192,19 +192,19 @@ export default function KnowledgeHub({ onBack, onNavigate }) {
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Platform Statistics</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               <div className="text-center">
-                <div className="text-3xl font-bold text-[#612D91] mb-1">5</div>
+                <div className="text-3xl font-bold text-[#780096] mb-1">5</div>
                 <div className="text-sm text-gray-600">Live Applications</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-[#612D91] mb-1">2</div>
+                <div className="text-3xl font-bold text-[#780096] mb-1">2</div>
                 <div className="text-sm text-gray-600">AI Platforms</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-[#612D91] mb-1">67</div>
+                <div className="text-3xl font-bold text-[#780096] mb-1">67</div>
                 <div className="text-sm text-gray-600">Builder Components</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-[#612D91] mb-1">3</div>
+                <div className="text-3xl font-bold text-[#780096] mb-1">3</div>
                 <div className="text-sm text-gray-600">User Roles</div>
               </div>
             </div>

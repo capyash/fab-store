@@ -106,7 +106,7 @@ export default function Reports({ onNavigate }) {
         {onNavigate && (
           <button
             onClick={() => onNavigate("store")}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-[#612D91] to-[#A64AC9] rounded-lg hover:shadow-lg transition-all duration-200 hover:scale-105 active:scale-95"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-[#780096] to-[#780096] rounded-lg hover:shadow-lg transition-all duration-200 hover:scale-105 active:scale-95"
           >
             <Store className="w-4 h-4" />
             Back to Store
@@ -142,9 +142,9 @@ export default function Reports({ onNavigate }) {
                   <Line
                     type="monotone"
                     dataKey="val"
-                    stroke="#8B5CF6"
+                    stroke="#780096"
                     strokeWidth={2.5}
-                    dot={{ fill: "#8B5CF6", r: 4 }}
+                    dot={{ fill: "#780096", r: 4 }}
                     activeDot={{ r: 6 }}
                   />
                 </LineChart>
@@ -178,7 +178,7 @@ export default function Reports({ onNavigate }) {
                   <Bar
                     dataKey="val"
                     radius={[8, 8, 0, 0]}
-                    fill="#A78BFA"
+                    fill="#780096"
                   />
                 </BarChart>
               </ResponsiveContainer>
@@ -286,7 +286,7 @@ export default function Reports({ onNavigate }) {
                   Count and value distribution
                 </div>
               </div>
-              <ArrowUpRight className="w-5 h-5 text-[#8B5CF6]" />
+              <ArrowUpRight className="w-5 h-5 text-[#780096]" />
             </div>
             <div className="h-48">
               <ResponsiveContainer width="100%" height="100%">
@@ -304,7 +304,7 @@ export default function Reports({ onNavigate }) {
                   <Bar
                     yAxisId="left"
                     dataKey="count"
-                    fill="#A78BFA"
+                    fill="#780096"
                     radius={[8, 8, 0, 0]}
                   />
                   <Bar

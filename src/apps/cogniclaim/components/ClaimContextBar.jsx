@@ -8,7 +8,7 @@ export default function ClaimContextBar({ claim, onBack, onToggleSop, sopOpen = 
       <div className="flex items-center gap-3">
         <button 
           onClick={onBack} 
-          className="flex items-center gap-1.5 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-[#612D91] dark:hover:text-[#A64AC9] transition-colors"
+          className="flex items-center gap-1.5 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-[#780096] dark:hover:text-[#780096] transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           Back
@@ -64,7 +64,7 @@ export default function ClaimContextBar({ claim, onBack, onToggleSop, sopOpen = 
           onClick={onToggleSop}
           className={`p-2.5 rounded-lg transition-all flex items-center gap-2 ${
             sopOpen 
-              ? 'bg-[#612D91] text-white hover:bg-[#512579] shadow-md' 
+              ? 'bg-[#780096] text-white hover:bg-[#780096] shadow-md' 
               : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
           }`}
           title={sopOpen ? "Close SOP Reference Panel" : "Open SOP Reference Panel"}

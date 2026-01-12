@@ -96,7 +96,7 @@ const informationalInsights = [
     type: "metric",
     metric: "48",
     delta: "+6",
-    gradient: "from-[#5B2E90] to-[#A64AC9]",
+    gradient: "from-[#780096] to-[#780096]",
   },
   {
     title: "Pending Pre-Auth",
@@ -114,7 +114,7 @@ const informationalInsights = [
     type: "metric",
     metric: "3.2d",
     delta: "-14%",
-    gradient: "from-[#8B5CF6] to-[#EC4899]",
+    gradient: "from-[#780096] to-[#780096]",
   },
   {
     title: "Agent Efficiency",
@@ -235,7 +235,7 @@ export default function HomeDashboard({ onNavigate, onSelectClaim }) {
       <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm p-6">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-            <div className="p-3 rounded-lg bg-gradient-to-br from-[#612D91] to-[#A64AC9] shadow-lg">
+            <div className="p-3 rounded-lg bg-gradient-to-br from-[#780096] to-[#780096] shadow-lg">
               <Zap className="w-6 h-6 text-white" />
             </div>
             <div>
@@ -244,14 +244,14 @@ export default function HomeDashboard({ onNavigate, onSelectClaim }) {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur text-xs font-medium text-[#612D91] dark:text-[#A64AC9] border border-[#612D91]/20 dark:border-[#A64AC9]/20">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur text-xs font-medium text-primary dark:text-primary border border-[#780096]/20 dark:border-[#780096]/20">
               <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
               Live
             </div>
             {onNavigate && (
               <button
                 onClick={() => onNavigate("store")}
-                className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-[#612D91] dark:hover:text-[#A64AC9] rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-[#780096] dark:hover:text-[#780096] rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                 title="Back to FAB Store"
               >
                 <Store className="w-3.5 h-3.5" />
@@ -353,15 +353,15 @@ export default function HomeDashboard({ onNavigate, onSelectClaim }) {
             </div>
 
             {/* Cogniclaim Value Proposition */}
-            <div className="mt-4 p-4 bg-gradient-to-r from-[#612D91]/10 to-[#A64AC9]/10 dark:from-[#612D91]/20 dark:to-[#A64AC9]/20 rounded-lg border border-[#612D91]/30">
+            <div className="mt-4 p-4 bg-gradient-to-r from-[#780096]/10 to-[#780096]/10 dark:from-[#780096]/20 dark:to-[#780096]/20 rounded-lg border border-[#780096]/30">
               <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-[#612D91] dark:text-[#A64AC9] flex-shrink-0 mt-0.5" />
+                <Zap className="w-5 h-5 text-primary dark:text-primary flex-shrink-0 mt-0.5" />
                 <div className="flex-1">
                   <div className="text-sm font-semibold text-gray-900 dark:text-white mb-1">
                     Cogniclaim Impact
                   </div>
                   <div className="text-xs text-gray-700 dark:text-gray-300">
-                    AI-powered prioritization can prevent <span className="font-semibold text-[#612D91] dark:text-[#A64AC9]">~65% of SLA breaches</span> by 
+                    AI-powered prioritization can prevent <span className="font-semibold text-primary dark:text-primary">~65% of SLA breaches</span> by 
                     identifying high-risk claims early and routing them to appropriate workflows. Estimated savings: <span className="font-semibold">$2.7M annually</span> in avoided penalties.
                   </div>
                 </div>
@@ -500,7 +500,7 @@ export default function HomeDashboard({ onNavigate, onSelectClaim }) {
                     {anomaly.description}
                   </div>
                   <div className="pt-2 border-t border-gray-200 dark:border-gray-700">
-                    <div className="text-xs font-medium text-[#612D91] dark:text-[#A64AC9]">
+                    <div className="text-xs font-medium text-primary dark:text-primary">
                       → {anomaly.recommendation}
                     </div>
                   </div>
@@ -570,7 +570,7 @@ export default function HomeDashboard({ onNavigate, onSelectClaim }) {
                           e.stopPropagation();
                           handleActionClick(item);
                         }}
-                        className="text-xs font-medium text-[#612D91] dark:text-[#A64AC9] hover:underline flex items-center gap-1"
+                        className="text-xs font-medium text-primary dark:text-primary hover:underline flex items-center gap-1"
                       >
                         → {item.action}
                         <ArrowRight className="w-3 h-3" />
@@ -640,11 +640,11 @@ export default function HomeDashboard({ onNavigate, onSelectClaim }) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <button
             onClick={() => onNavigate?.("worklist")}
-            className="p-4 rounded-lg border-2 border-gray-200 dark:border-gray-700 hover:border-[#612D91] dark:hover:border-[#A64AC9] hover:bg-[#612D91]/5 dark:hover:bg-[#A64AC9]/5 transition-all text-left group"
+            className="p-4 rounded-lg border-2 border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary hover:bg-primary/5 dark:hover:bg-primary/5 transition-all text-left group"
           >
             <div className="flex items-center gap-3 mb-2">
-              <div className="p-2 rounded-lg bg-[#612D91]/10 dark:bg-[#A64AC9]/20 group-hover:bg-[#612D91]/20 dark:group-hover:bg-[#A64AC9]/30 transition-colors">
-                <FileCheck className="w-5 h-5 text-[#612D91] dark:text-[#A64AC9]" />
+                <div className="p-2 rounded-lg bg-primary/10 dark:bg-primary/20 group-hover:bg-primary/20 dark:group-hover:bg-primary/30 transition-colors">
+                  <FileCheck className="w-5 h-5 text-primary dark:text-primary" />
               </div>
               <div className="font-semibold text-gray-900 dark:text-white">View Worklist</div>
             </div>
@@ -653,11 +653,11 @@ export default function HomeDashboard({ onNavigate, onSelectClaim }) {
 
           <button
             onClick={() => onNavigate?.("reports")}
-            className="p-4 rounded-lg border-2 border-gray-200 dark:border-gray-700 hover:border-[#612D91] dark:hover:border-[#A64AC9] hover:bg-[#612D91]/5 dark:hover:bg-[#A64AC9]/5 transition-all text-left group"
+            className="p-4 rounded-lg border-2 border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary hover:bg-primary/5 dark:hover:bg-primary/5 transition-all text-left group"
           >
             <div className="flex items-center gap-3 mb-2">
-              <div className="p-2 rounded-lg bg-[#612D91]/10 dark:bg-[#A64AC9]/20 group-hover:bg-[#612D91]/20 dark:group-hover:bg-[#A64AC9]/30 transition-colors">
-                <TrendingUpIcon className="w-5 h-5 text-[#612D91] dark:text-[#A64AC9]" />
+              <div className="p-2 rounded-lg bg-primary/10 dark:bg-primary/20 group-hover:bg-primary/20 dark:group-hover:bg-primary/30 transition-colors">
+                <TrendingUpIcon className="w-5 h-5 text-primary dark:text-primary" />
               </div>
               <div className="font-semibold text-gray-900 dark:text-white">View Reports</div>
             </div>
@@ -666,11 +666,11 @@ export default function HomeDashboard({ onNavigate, onSelectClaim }) {
 
           <button
             onClick={() => onNavigate?.("knowledge")}
-            className="p-4 rounded-lg border-2 border-gray-200 dark:border-gray-700 hover:border-[#612D91] dark:hover:border-[#A64AC9] hover:bg-[#612D91]/5 dark:hover:bg-[#A64AC9]/5 transition-all text-left group"
+            className="p-4 rounded-lg border-2 border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary hover:bg-primary/5 dark:hover:bg-primary/5 transition-all text-left group"
           >
             <div className="flex items-center gap-3 mb-2">
-              <div className="p-2 rounded-lg bg-[#612D91]/10 dark:bg-[#A64AC9]/20 group-hover:bg-[#612D91]/20 dark:group-hover:bg-[#A64AC9]/30 transition-colors">
-                <Brain className="w-5 h-5 text-[#612D91] dark:text-[#A64AC9]" />
+              <div className="p-2 rounded-lg bg-primary/10 dark:bg-primary/20 group-hover:bg-primary/20 dark:group-hover:bg-primary/30 transition-colors">
+                <Brain className="w-5 h-5 text-primary dark:text-primary" />
               </div>
               <div className="font-semibold text-gray-900 dark:text-white">Knowledge Base</div>
             </div>

@@ -279,11 +279,11 @@ export default function AgenticSupportDemo({
               <div className="flex items-center gap-3">
                 <button
                   onClick={onBack}
-                  className="mr-2 inline-flex items-center text-sm text-[#612D91] hover:text-[#7B3DA1]"
+                  className="mr-2 inline-flex items-center text-sm text-[#780096] hover:text-[#780096]"
                 >
                   ← Back
                 </button>
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#612D91] to-[#A64AC9] flex items-center justify-center shadow-lg">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center shadow-lg">
                   <Activity className="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -296,7 +296,7 @@ export default function AgenticSupportDemo({
                   </p>
                 </div>
               </div>
-              <span className="px-3 py-1 rounded-full bg-purple-50 text-xs font-semibold text-[#612D91]">
+              <span className="px-3 py-1 rounded-full bg-purple-50 text-xs font-semibold text-[#780096]">
                 Mode: Simulated agentic run · Workflows: 2
               </span>
             </div>
@@ -322,7 +322,7 @@ export default function AgenticSupportDemo({
                   type="button"
                   className={`flex-1 flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium border ${
                     selectedWorkflow === "printer_offline"
-                      ? "bg-[#612D91] text-white border-[#612D91]"
+                      ? "bg-[#780096] text-white border-[#780096]"
                       : "bg-gray-50 text-gray-700 border-gray-200"
                   }`}
                   onClick={() => setSelectedWorkflow("printer_offline")}
@@ -334,7 +334,7 @@ export default function AgenticSupportDemo({
                   type="button"
                   className={`flex-1 flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium border ${
                     selectedWorkflow === "ink_error"
-                      ? "bg-[#612D91] text-white border-[#612D91]"
+                      ? "bg-[#780096] text-white border-[#780096]"
                       : "bg-gray-50 text-gray-700 border-gray-200"
                   }`}
                   onClick={() => setSelectedWorkflow("ink_error")}
@@ -349,7 +349,7 @@ export default function AgenticSupportDemo({
             <div className="space-y-2">
               <h3 className="text-sm font-semibold text-gray-900">2. Customer interaction</h3>
               <textarea
-                className="w-full min-h-[80px] text-sm border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#612D91]"
+                className="w-full min-h-[80px] text-sm border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#780096]"
                 value={form.interaction.text}
                 onChange={(e) =>
                   setForm((f) => ({
@@ -401,7 +401,7 @@ export default function AgenticSupportDemo({
                   type="button"
                   onClick={handleTrigger}
                   disabled={isTriggering}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#612D91] text-white text-sm font-semibold hover:bg-[#7B3DA1] disabled:opacity-60"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#780096] text-white text-sm font-semibold hover:bg-[#780096] disabled:opacity-60"
                 >
                   {isTriggering ? <Loader2 className="w-4 h-4 animate-spin" /> : <Play className="w-4 h-4" />}
                   {isTriggering ? "Starting..." : "Run Workflow"}
@@ -446,7 +446,7 @@ export default function AgenticSupportDemo({
                     Attempts: {status.attempts}
                   </span>
                   {status.workflow_type && (
-                    <span className="inline-flex items-center px-2 py-1 rounded-full bg-purple-50 text-xs text-[#612D91]">
+                    <span className="inline-flex items-center px-2 py-1 rounded-full bg-purple-50 text-xs text-[#780096]">
                       {status.workflow_type === "printer_offline" ? "Printer Offline" : "Ink Error"}
                     </span>
                   )}
@@ -455,7 +455,7 @@ export default function AgenticSupportDemo({
                 {status.diagnosis && (
                   <div className="border border-gray-200 rounded-lg p-3">
                     <div className="text-xs font-semibold text-gray-700 mb-1 flex items-center gap-1">
-                      <Activity className="w-3.5 h-3.5 text-[#612D91]" />
+                      <Activity className="w-3.5 h-3.5 text-[#780096]" />
                       Diagnosis
                     </div>
                     <pre className="bg-gray-50 text-[11px] p-2 rounded-md max-h-40 overflow-auto">
@@ -467,7 +467,7 @@ export default function AgenticSupportDemo({
                 {status.actions && status.actions.length > 0 && (
                   <div className="border border-gray-200 rounded-lg p-3">
                     <div className="text-xs font-semibold text-gray-700 mb-1 flex items-center gap-1">
-                      <RefreshCw className="w-3.5 h-3.5 text-[#612D91]" />
+                      <RefreshCw className="w-3.5 h-3.5 text-[#780096]" />
                       Actions Executed
                     </div>
                     <ul className="space-y-1 text-xs text-gray-700">
@@ -547,7 +547,7 @@ export default function AgenticSupportDemo({
                 )}
 
                 {status.resolution_reason && (
-                  <div className="border border-gray-200 rounded-lg p-3 bg-gradient-to-br from-[#612D91]/5 to-[#A64AC9]/5">
+                  <div className="border border-gray-200 rounded-lg p-3 bg-gradient-to-br from-[#780096]/5 to-[#780096]/5">
                     <div className="text-xs font-semibold text-gray-700 mb-1">AI Case Summary</div>
                     <div className="text-sm text-gray-800 whitespace-pre-line">{status.resolution_reason}</div>
                   </div>

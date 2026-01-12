@@ -35,6 +35,10 @@ export default defineConfig({
       buffer: 'buffer',
       process: 'process/browser',
     },
+    dedupe: ['@emotion/react', '@emotion/styled'],
+  },
+  optimizeDeps: {
+    include: ['@emotion/react', '@emotion/styled', '@mui/material', '@mui/icons-material'],
   },
 });
 

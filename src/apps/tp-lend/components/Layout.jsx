@@ -1,9 +1,8 @@
 import SolutionLayout from "../../../components/SolutionLayout";
-import { Home, ClipboardList } from "lucide-react";
 
 const TP_LEND_NAV_ITEMS = [
-  { key: "lend", label: "Home", icon: Home },
-  { key: "lend/worklist", label: "Worklist", icon: ClipboardList },
+  { key: "lend", label: "Home", iconName: "Home" },
+  { key: "lend/worklist", label: "Worklist", iconName: "ClipboardList" },
 ];
 
 export default function TPLendLayout({ children, onNavigate, active }) {

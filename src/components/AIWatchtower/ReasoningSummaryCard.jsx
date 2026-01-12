@@ -52,7 +52,7 @@ export default function ReasoningSummaryCard({
       className="rounded-xl border-2 border-indigo-200 bg-gradient-to-br from-indigo-50 to-purple-50 shadow-lg p-6"
     >
       <div className="flex items-start gap-3 mb-4">
-        <div className="p-2 rounded-lg bg-gradient-to-br from-[#612D91] to-[#A64AC9]">
+        <div className="p-2 rounded-lg bg-gradient-to-br from-[#780096] to-[#780096]">
           <Sparkles className="w-5 h-5 text-white" />
         </div>
         <div className="flex-1">

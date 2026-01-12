@@ -34,7 +34,7 @@ export default function RecommendedNextSteps({ nextSteps = [], onAction, recomme
       className="rounded-lg border border-gray-200 dark:border-gray-700 shadow-lg overflow-hidden bg-white dark:bg-gray-800"
     >
       {/* Header with purple gradient background */}
-      <div className="flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-[#612D91] to-[#A64AC9]">
+      <div className="flex items-center gap-2 px-4 py-3 bg-[#780096]">
         <div className="p-1.5 rounded-lg bg-white/20 backdrop-blur-sm">
           <Sparkles className="w-4 h-4 text-white" />
         </div>
@@ -59,7 +59,7 @@ export default function RecommendedNextSteps({ nextSteps = [], onAction, recomme
                 }}
                 className="flex items-start gap-2.5"
               >
-                <div className="mt-0.5 shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-[#612D91] to-[#A64AC9] flex items-center justify-center shadow-sm">
+                <div className="mt-0.5 shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center shadow-sm">
                   <span className="text-white text-[10px] font-bold">{idx + 1}</span>
                 </div>
                 <p className="text-sm text-gray-800 dark:text-gray-200 leading-relaxed flex-1">

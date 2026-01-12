@@ -331,7 +331,7 @@ export default function ReasoningSummaryCard({ recommendation, steps = [], loan,
               className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-lg p-3 border border-gray-200 dark:border-gray-700 shadow-sm flex items-start gap-3"
             >
               <div className="mt-0.5">
-                <Sparkles className="w-4 h-4 text-[#612D91]" />
+                <Sparkles className="w-4 h-4 text-[#780096]" />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-1">
@@ -478,7 +478,7 @@ export default function ReasoningSummaryCard({ recommendation, steps = [], loan,
                         <motion.button
                           key={idx}
                           onClick={() => onSOPView?.(ref, null, loan?.status, null)}
-                          className="px-4 py-2 rounded-lg text-xs font-semibold bg-gradient-to-r from-[#612D91]/10 to-[#A64AC9]/10 text-[#612D91] dark:text-[#A64AC9] dark:from-[#A64AC9]/20 dark:to-[#612D91]/20 hover:from-[#612D91]/20 hover:to-[#A64AC9]/20 dark:hover:from-[#A64AC9]/30 dark:hover:to-[#612D91]/30 transition-all shadow-md hover:shadow-lg flex items-center gap-2 border border-[#612D91]/20 dark:border-[#A64AC9]/30"
+                          className="px-4 py-2 rounded-lg text-xs font-semibold bg-gradient-to-r from-[#780096]/10 to-[#780096]/10 text-[#780096] dark:text-[#780096] dark:from-[#780096]/20 dark:to-[#780096]/20 hover:from-[#780096]/20 hover:to-[#780096]/20 dark:hover:from-[#780096]/30 dark:hover:to-[#780096]/30 transition-all shadow-md hover:shadow-lg flex items-center gap-2 border border-[#780096]/20 dark:border-[#780096]/30"
                           initial={{ opacity: 0, scale: 0.8 }}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ delay: 0.4 + idx * 0.1 }}

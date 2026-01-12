@@ -85,7 +85,7 @@ function AppContent() {
   if (!isAuthenticated) {
     if (SHOW_LEGACY_LOGIN) {
       return (
-        <div className="relative min-h-screen bg-gradient-to-br from-[#612D91] to-[#A64AC9] flex items-center justify-center">
+        <div className="relative min-h-screen bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center">
           <LoginPage />
         </div>
       );

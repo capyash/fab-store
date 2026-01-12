@@ -121,8 +121,8 @@ export default function ClaimDetailsPanel({ claim, onClose }) {
           </div>
 
           {activeLineItem && (
-            <div className="mt-3 p-3 rounded-lg bg-[#F5F3FF] dark:bg-[#4B2E83]/30 border border-[#612D91]/20">
-              <div className="text-xs font-semibold text-[#612D91] dark:text-[#D1C4F3] uppercase tracking-wide mb-1">
+            <div className="mt-3 p-3 rounded-lg bg-[#F5F3FF] dark:bg-[#4B2E83]/30 border border-[#780096]/20">
+              <div className="text-xs font-semibold text-[#780096] dark:text-[#D1C4F3] uppercase tracking-wide mb-1">
                 Next steps for {activeLineItem.lineId}
               </div>
               <div className="text-[11px] text-gray-700 dark:text-gray-200 mb-1">
@@ -158,7 +158,7 @@ export default function ClaimDetailsPanel({ claim, onClose }) {
           <div className="text-xs text-gray-600 dark:text-gray-400">
             Confidence: {(insights.confidence * 100).toFixed(0)}%
           </div>
-          <a href={insights.ref} target="_blank" rel="noreferrer" className="text-xs underline text-[#612D91]">
+          <a href={insights.ref} target="_blank" rel="noreferrer" className="text-xs underline text-[#780096]">
             View SOP reference
           </a>
           <div className="pt-3 flex items-center gap-2">
@@ -168,7 +168,7 @@ export default function ClaimDetailsPanel({ claim, onClose }) {
                 console.log("AI insight accepted (demo)");
               }}
               className="px-3 py-2 text-sm rounded-md text-white"
-              style={{ backgroundColor: "#612D91" }}
+              style={{ backgroundColor: "#780096" }}
             >
               Accept Recommendation
             </button>
@@ -188,7 +188,7 @@ export default function ClaimDetailsPanel({ claim, onClose }) {
         {(sop?.steps || []).map((s, i) => <li key={i}>{s}</li>)}
       </ol>
       {sop?.link && (
-        <a href={sop.link} target="_blank" rel="noreferrer" className="underline text-[#612D91] text-xs">
+        <a href={sop.link} target="_blank" rel="noreferrer" className="underline text-[#780096] text-xs">
           Open full SOP
         </a>
       )}

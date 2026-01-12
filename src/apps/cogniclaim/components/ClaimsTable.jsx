@@ -147,11 +147,11 @@ export default function ClaimsTable({ onSelect }) {
       {/* AI Smart Filters */}
       <div className="px-6 pt-5 pb-4">
         <div className="flex items-center gap-2 mb-3">
-          <Sparkles className="w-4 h-4 text-[#612D91] dark:text-[#A64AC9]" />
+          <Sparkles className="w-4 h-4 text-[#780096] dark:text-[#780096]" />
           <span className="text-sm font-semibold text-gray-700 dark:text-gray-200">AI Smart Filters</span>
         </div>
         <div className="flex gap-3">
-          <button className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#F5F3FF] dark:bg-[#4B2E83]/30 text-[#612D91] dark:text-[#A64AC9] border border-[#612D91]/30 dark:border-[#A64AC9]/30 text-xs font-medium hover:bg-[#EDE9FE] dark:hover:bg-[#4B2E83]/40 transition-colors">
+          <button className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#F5F3FF] dark:bg-[#4B2E83]/30 text-[#780096] dark:text-[#780096] border border-[#780096]/30 dark:border-[#780096]/30 text-xs font-medium hover:bg-[#EDE9FE] dark:hover:bg-[#4B2E83]/40 transition-colors">
             <Sparkles className="w-3.5 h-3.5" />
             <span>High Priority ({aiInsights.highPriority})</span>
             <span className="ml-0.5 opacity-75">({aiInsights.highPriorityPercent}%)</span>
@@ -190,7 +190,7 @@ export default function ClaimsTable({ onSelect }) {
           onChange={(e) => handleSearchChange(e.target.value)}
           placeholder="Search by ID, Member, Provider, Status (min 3 chars)"
           disabled={loading}
-          className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg px-4 py-2 text-sm w-80 disabled:opacity-50 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#612D91]/50 dark:focus:ring-[#A64AC9]/50"
+          className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg px-4 py-2 text-sm w-80 disabled:opacity-50 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#780096]/50 dark:focus:ring-[#780096]/50"
         />
       </div>
 
@@ -214,7 +214,7 @@ export default function ClaimsTable({ onSelect }) {
       {/* Loading State */}
       {loading && !error && (
         <div className="flex flex-col items-center justify-center py-16 px-6">
-          <Loader2 className="w-8 h-8 text-[#612D91] dark:text-[#A64AC9] animate-spin mb-3" />
+          <Loader2 className="w-8 h-8 text-[#780096] dark:text-[#780096] animate-spin mb-3" />
           <p className="text-sm text-gray-500 dark:text-gray-400">Loading claims...</p>
         </div>
       )}
@@ -270,7 +270,7 @@ export default function ClaimsTable({ onSelect }) {
                             e.stopPropagation();
                             onSelect?.(c);
                           }}
-                          className="inline-flex items-center justify-center text-[11px] px-2 py-0.5 rounded-full bg-white dark:bg-gray-900 text-[#612D91] dark:text-[#A64AC9] border border-[#612D91]/40 dark:border-[#A64AC9]/50 hover:bg-[#F5F3FF] dark:hover:bg-[#4B2E83]/40"
+                          className="inline-flex items-center justify-center text-[11px] px-2 py-0.5 rounded-full bg-white dark:bg-gray-900 text-[#780096] dark:text-[#780096] border border-[#780096]/40 dark:border-[#780096]/50 hover:bg-[#F5F3FF] dark:hover:bg-[#4B2E83]/40"
                           title="Open in AI Reasoning"
                         >
                           <Sparkles className="w-3.5 h-3.5" />

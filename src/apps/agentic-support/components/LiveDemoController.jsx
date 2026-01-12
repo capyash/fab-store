@@ -246,9 +246,9 @@ export default function LiveDemoController({ onInteractionCapture }) {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-lg shadow-lg flex-1 flex flex-col overflow-hidden border-2 border-purple-300"
+        className="bg-white rounded-lg shadow-lg flex-1 flex flex-col overflow-hidden border-2 border-gray-300"
       >
-        <div className="flex items-center justify-between px-4 py-2.5 bg-gradient-to-r from-[#612D91] via-[#7B3FE4] to-[#8B5CF6] border-b border-purple-400">
+        <div className="flex items-center justify-between px-4 py-2.5 bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] border-b-2 border-gray-300">
           <div className="flex items-center gap-2.5">
             <motion.div
               animate={{ rotate: 360 }}
@@ -259,7 +259,7 @@ export default function LiveDemoController({ onInteractionCapture }) {
             </motion.div>
             <div>
               <div className="text-white font-bold text-sm">AI Interaction Hub</div>
-              <div className="text-purple-200 text-xs font-medium">Multi-Channel Intelligence Stream</div>
+              <div className="text-white/80 text-xs font-medium">Multi-Channel Intelligence Stream</div>
             </div>
           </div>
           <div className="flex items-center gap-2.5">
@@ -281,14 +281,14 @@ export default function LiveDemoController({ onInteractionCapture }) {
         </div>
 
         {/* Mode Selection */}
-        <div className="px-3 py-2.5 bg-gradient-to-br from-purple-50 via-indigo-50 to-purple-50 border-b border-purple-200">
+        <div className="px-3 py-2.5 bg-gray-50 border-b-2 border-gray-300">
           <div className="grid grid-cols-3 gap-2">
             <button
               onClick={() => setDemoMode('auto')}
               className={`px-2.5 py-2 rounded-lg text-xs font-bold transition-all ${
                 demoMode === 'auto'
-                  ? 'bg-gradient-to-r from-[#612D91] to-[#7B3FE4] text-white shadow-md scale-105'
-                  : 'bg-white text-gray-700 hover:bg-purple-50 border border-purple-200 hover:border-purple-300'
+                  ? 'bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] text-white shadow-md scale-105'
+                  : 'bg-white text-gray-700 hover:bg-gray-100 border-2 border-gray-300 hover:border-gray-400'
               }`}
             >
               <Sparkles className="w-3.5 h-3.5 mx-auto mb-0.5" />
@@ -298,8 +298,8 @@ export default function LiveDemoController({ onInteractionCapture }) {
               onClick={() => setDemoMode('manual')}
               className={`px-2.5 py-2 rounded-lg text-xs font-bold transition-all ${
                 demoMode === 'manual'
-                  ? 'bg-gradient-to-r from-[#612D91] to-[#7B3FE4] text-white shadow-md scale-105'
-                  : 'bg-white text-gray-700 hover:bg-purple-50 border border-purple-200 hover:border-purple-300'
+                  ? 'bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] text-white shadow-md scale-105'
+                  : 'bg-white text-gray-700 hover:bg-gray-100 border-2 border-gray-300 hover:border-gray-400'
               }`}
             >
               <Zap className="w-3.5 h-3.5 mx-auto mb-0.5" />
@@ -309,8 +309,8 @@ export default function LiveDemoController({ onInteractionCapture }) {
               onClick={() => setDemoMode('live-voice')}
               className={`px-2.5 py-2 rounded-lg text-xs font-bold transition-all ${
                 demoMode === 'live-voice'
-                  ? 'bg-gradient-to-r from-[#612D91] to-[#7B3FE4] text-white shadow-md scale-105'
-                  : 'bg-white text-gray-700 hover:bg-purple-50 border border-purple-200 hover:border-purple-300'
+                  ? 'bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] text-white shadow-md scale-105'
+                  : 'bg-white text-gray-700 hover:bg-gray-100 border-2 border-gray-300 hover:border-gray-400'
               }`}
             >
               <Mic className="w-3.5 h-3.5 mx-auto mb-0.5" />
@@ -326,14 +326,14 @@ export default function LiveDemoController({ onInteractionCapture }) {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setIsPlaying(!isPlaying)}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-[#612D91] via-[#7B3FE4] to-[#8B5CF6] text-white rounded-lg font-bold hover:shadow-lg transition-all shadow-md text-xs"
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] text-white rounded-lg font-bold hover:shadow-lg transition-all shadow-md text-xs"
                 >
                   {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
                   {isPlaying ? 'Pause Flow' : 'Start AI Flow'}
                 </button>
                 <button
                   onClick={resetDemo}
-                  className="px-3 py-2 bg-white hover:bg-purple-50 text-purple-700 rounded-lg transition-all border-2 border-purple-200 hover:border-purple-300"
+                  className="px-3 py-2 bg-white hover:bg-gray-100 text-[#2E2E2E] rounded-lg transition-all border-2 border-gray-300 hover:border-gray-400"
                   title="Reset"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
@@ -379,7 +379,7 @@ export default function LiveDemoController({ onInteractionCapture }) {
                 className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-bold transition-all shadow-md text-xs ${
                   isListening
                     ? 'bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white'
-                    : 'bg-gradient-to-r from-[#612D91] via-[#7B3FE4] to-[#8B5CF6] text-white hover:shadow-lg'
+                    : 'bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] text-white hover:shadow-lg'
                 }`}
               >
                 <Mic className="w-3.5 h-3.5" />
@@ -397,30 +397,30 @@ export default function LiveDemoController({ onInteractionCapture }) {
             <div className="grid grid-cols-2 gap-1.5">
               <button
                 onClick={() => startVoiceSimulation(DEMO_SCENARIOS.voice[0])}
-                className="flex flex-col items-center gap-1 px-2 py-2 bg-white hover:bg-purple-50 text-gray-700 rounded-lg text-[9px] font-bold transition-all border-2 border-purple-200 hover:border-purple-300 shadow-sm"
+                className="flex flex-col items-center gap-1 px-2 py-2 bg-white hover:bg-gray-100 text-gray-700 rounded-lg text-[9px] font-bold transition-all border-2 border-gray-300 hover:border-gray-400 shadow-sm"
               >
-                <Phone className="w-3.5 h-3.5 text-[#612D91]" />
+                <Phone className="w-3.5 h-3.5 text-[#780096]" />
                 Voice
               </button>
               <button
                 onClick={() => receiveMessage('sms', DEMO_SCENARIOS.sms[0])}
-                className="flex flex-col items-center gap-1 px-2 py-2 bg-white hover:bg-purple-50 text-gray-700 rounded-lg text-[9px] font-bold transition-all border-2 border-purple-200 hover:border-purple-300 shadow-sm"
+                className="flex flex-col items-center gap-1 px-2 py-2 bg-white hover:bg-gray-100 text-gray-700 rounded-lg text-[9px] font-bold transition-all border-2 border-gray-300 hover:border-gray-400 shadow-sm"
               >
-                <MessageSquare className="w-3.5 h-3.5 text-[#612D91]" />
+                <MessageSquare className="w-3.5 h-3.5 text-[#780096]" />
                 SMS
               </button>
               <button
                 onClick={() => receiveMessage('whatsapp', DEMO_SCENARIOS.whatsapp[0])}
                 className="flex flex-col items-center gap-1 px-2 py-2 bg-white hover:bg-purple-50 text-gray-700 rounded-lg text-[10px] font-bold transition-all border-2 border-purple-200 hover:border-purple-300 shadow-sm"
               >
-                <MessageSquare className="w-3.5 h-3.5 text-[#612D91]" />
+                <MessageSquare className="w-3.5 h-3.5 text-[#780096]" />
                 WhatsApp
               </button>
               <button
                 onClick={() => receiveMessage('chat', DEMO_SCENARIOS.chat[0])}
-                className="flex flex-col items-center gap-1 px-2 py-2 bg-white hover:bg-purple-50 text-gray-700 rounded-lg text-[9px] font-bold transition-all border-2 border-purple-200 hover:border-purple-300 shadow-sm"
+                className="flex flex-col items-center gap-1 px-2 py-2 bg-white hover:bg-gray-100 text-gray-700 rounded-lg text-[9px] font-bold transition-all border-2 border-gray-300 hover:border-gray-400 shadow-sm"
               >
-                <Mail className="w-3.5 h-3.5 text-[#612D91]" />
+                <Mail className="w-3.5 h-3.5 text-[#780096]" />
                 Chat
               </button>
             </div>

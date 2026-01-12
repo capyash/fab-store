@@ -60,7 +60,7 @@ function SOPRow({ sop, active, onOpenViewer, claimStatus, scenario, searchQuery 
     <motion.div
       initial={false}
       animate={{
-        borderColor: active ? "#612D91" : undefined,
+        borderColor: active ? "#780096" : undefined,
         boxShadow: active 
           ? "0 0 0 2px rgba(97, 45, 145, 0.15), 0 2px 8px -2px rgba(97, 45, 145, 0.2)" 
           : undefined,
@@ -68,7 +68,7 @@ function SOPRow({ sop, active, onOpenViewer, claimStatus, scenario, searchQuery 
       transition={{ duration: 0.2 }}
       className={`rounded-xl border-2 ${
         active 
-          ? "border-[#612D91] bg-gradient-to-br from-[#F5F3FF] to-[#EDE9FE] dark:from-[#612D91]/10 dark:to-[#A64AC9]/10" 
+          ? "border-[#780096] bg-gradient-to-br from-[#F5F3FF] to-[#EDE9FE] dark:from-[#780096]/10 dark:to-[#780096]/10" 
           : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:border-gray-300 dark:hover:border-gray-600"
       } shadow-sm overflow-hidden transition-all`}
     >
@@ -92,14 +92,14 @@ function SOPRow({ sop, active, onOpenViewer, claimStatus, scenario, searchQuery 
             }}
             className={`text-xs font-mono px-2.5 py-1 rounded-md font-semibold shrink-0 ${
               active
-                ? "bg-[#612D91] text-white shadow-md"
+                ? "bg-[#780096] text-white shadow-md"
                 : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
             }`}
           >
             {sop.id}
           </motion.span>
           <div className="flex-1 min-w-0">
-            <div className={`text-sm font-medium truncate ${active ? "text-[#612D91] dark:text-[#A64AC9]" : "text-gray-900 dark:text-gray-100"}`}>
+            <div className={`text-sm font-medium truncate ${active ? "text-[#780096] dark:text-[#780096]" : "text-gray-900 dark:text-gray-100"}`}>
               {highlightText(sop.title, searchQuery)}
             </div>
             {sop.page && (
@@ -114,14 +114,14 @@ function SOPRow({ sop, active, onOpenViewer, claimStatus, scenario, searchQuery 
               transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 2 }}
               className="shrink-0"
             >
-              <Sparkles className="w-4 h-4 text-[#612D91]" />
+              <Sparkles className="w-4 h-4 text-[#780096]" />
             </motion.div>
           )}
         </div>
         <ChevronDown 
           className={`w-4 h-4 transition-transform duration-200 shrink-0 ml-2 ${
             open ? "rotate-180" : ""
-          } ${active ? "text-[#612D91]" : "text-gray-400"}`} 
+          } ${active ? "text-[#780096]" : "text-gray-400"}`} 
         />
       </button>
       
@@ -139,7 +139,7 @@ function SOPRow({ sop, active, onOpenViewer, claimStatus, scenario, searchQuery 
           >
             <div className={`px-4 pb-4 pt-2 space-y-3 ${
               active 
-                ? "text-[#4B2E83] dark:text-[#A64AC9] bg-white/50 dark:bg-gray-900/50" 
+                ? "text-[#4B2E83] dark:text-[#780096] bg-white/50 dark:bg-gray-900/50" 
                 : "text-gray-600 dark:text-gray-300"
             }`}>
               <div className="text-xs leading-relaxed">
@@ -152,7 +152,7 @@ function SOPRow({ sop, active, onOpenViewer, claimStatus, scenario, searchQuery 
                   e.stopPropagation();
                   onOpenViewer?.(sop.id, sop.scenario || null, claimStatus, null);
                 }}
-                className="w-full flex items-center justify-center gap-2 px-3 py-2.5 text-xs font-semibold bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white rounded-lg hover:from-[#512579] hover:to-[#8B3AA8] transition-all shadow-md hover:shadow-lg"
+                className="w-full flex items-center justify-center gap-2 px-3 py-2.5 text-xs font-semibold bg-gradient-to-r from-[#780096] to-[#780096] text-white rounded-lg hover:from-[#780096] hover:to-[#780096] transition-all shadow-md hover:shadow-lg"
               >
                 <FileText className="w-3.5 h-3.5" />
                 Open Full SOP Document
@@ -292,7 +292,7 @@ export default function SOPReferencePanel({ activeRefs = [], claim, isOpen = fal
         style={{ width: `${width}px`, minWidth: `${width}px` }}
       >
         {/* Header */}
-        <div className="bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white px-4 py-3.5 flex items-center justify-between shrink-0">
+        <div className="bg-gradient-to-r from-[#780096] to-[#780096] text-white px-4 py-3.5 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2.5">
             <BookOpen className="w-5 h-5" />
             <div>
@@ -326,7 +326,7 @@ export default function SOPReferencePanel({ activeRefs = [], claim, isOpen = fal
               placeholder="Search SOPs..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#612D91]/50 dark:focus:ring-[#A64AC9]/50"
+              className="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#780096]/50 dark:focus:ring-[#780096]/50"
             />
           </div>
         </div>
@@ -369,10 +369,10 @@ export default function SOPReferencePanel({ activeRefs = [], claim, isOpen = fal
         {/* Resize Handle */}
         <div
           onMouseDown={() => setIsResizing(true)}
-          className="absolute left-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-[#612D91]/30 transition-colors group"
+          className="absolute left-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-[#780096]/30 transition-colors group"
           title="Drag to resize"
         >
-          <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-12 bg-[#612D91] rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-12 bg-[#780096] rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
         </div>
       </motion.aside>
 

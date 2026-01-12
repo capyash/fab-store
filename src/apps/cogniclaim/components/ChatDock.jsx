@@ -18,7 +18,7 @@ export default function ChatDock({ open, onClose, claim }) {
   return (
     <div className="fixed bottom-0 left-0 w-full bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 shadow-lg h-[35vh] flex flex-col">
       <div className="flex justify-between items-center p-3 border-b border-gray-200 dark:border-gray-800">
-        <div className="font-semibold text-[#612D91]">Ask Cogniclaim (AI Assistant)</div>
+        <div className="font-semibold text-[#780096]">Ask Cogniclaim (AI Assistant)</div>
         <button onClick={onClose}>
           <X className="w-4 h-4 text-gray-600 dark:text-gray-300" />
         </button>
@@ -30,7 +30,7 @@ export default function ChatDock({ open, onClose, claim }) {
             key={i}
             className={`max-w-[70%] p-2 rounded-md ${
               m.from === "ai"
-                ? "bg-[#612D91]/10 text-[#612D91]"
+                ? "bg-[#780096]/10 text-[#780096]"
                 : "bg-gray-200 dark:bg-gray-800 self-end"
             }`}
           >
@@ -48,7 +48,7 @@ export default function ChatDock({ open, onClose, claim }) {
         />
         <button
           onClick={send}
-          className="px-3 py-2 bg-[#612D91] text-white rounded-md text-sm hover:bg-[#612D91]/90"
+          className="px-3 py-2 bg-[#780096] text-white rounded-md text-sm hover:bg-[#780096]/90"
         >
           Send
         </button>

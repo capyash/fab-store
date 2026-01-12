@@ -190,7 +190,7 @@ export default function TicketsTable({ onSelect }) {
               setPage(1);
             }}
             disabled={loading}
-            className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg px-2 py-1.5 text-xs disabled:opacity-50 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-[#612D91]/40 dark:focus:ring-[#A64AC9]/40"
+            className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg px-2 py-1.5 text-xs disabled:opacity-50 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-[#780096]/40 dark:focus:ring-[#780096]/40"
           />
           <span className="text-xs text-gray-500 dark:text-gray-400">to</span>
           <input
@@ -201,14 +201,14 @@ export default function TicketsTable({ onSelect }) {
               setPage(1);
             }}
             disabled={loading}
-            className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg px-2 py-1.5 text-xs disabled:opacity-50 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-[#612D91]/40 dark:focus:ring-[#A64AC9]/40"
+            className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg px-2 py-1.5 text-xs disabled:opacity-50 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-[#780096]/40 dark:focus:ring-[#780096]/40"
           />
           <input
             value={searchInput}
             onChange={(e) => handleSearchChange(e.target.value)}
             placeholder="Search by ID, Workflow, Category, System (min 3 chars)"
             disabled={loading}
-            className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg px-4 py-2 text-sm w-64 disabled:opacity-50 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#612D91]/50 dark:focus:ring-[#A64AC9]/50"
+            className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg px-4 py-2 text-sm w-64 disabled:opacity-50 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#780096]/50 dark:focus:ring-[#780096]/50"
           />
         </div>
       </div>
@@ -227,7 +227,7 @@ export default function TicketsTable({ onSelect }) {
       {/* Loading State */}
       {loading && tickets.length === 0 && (
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="w-6 h-6 animate-spin text-[#612D91] dark:text-[#A64AC9]" />
+          <Loader2 className="w-6 h-6 animate-spin text-[#780096] dark:text-[#780096]" />
           <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">Loading tickets...</span>
         </div>
       )}
@@ -260,7 +260,7 @@ export default function TicketsTable({ onSelect }) {
                     <div className="flex items-center gap-1.5">
                       {header.label}
                       {sortKey === header.key && (
-                        <span className="text-[#612D91] dark:text-[#A64AC9]">
+                        <span className="text-[#780096] dark:text-[#780096]">
                           {sortDir === "asc" ? "↑" : "↓"}
                         </span>
                       )}
@@ -295,7 +295,7 @@ export default function TicketsTable({ onSelect }) {
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={(e) => e.stopPropagation()}
-                            className="text-[#612D91] dark:text-[#A64AC9] hover:underline"
+                            className="text-[#780096] dark:text-[#780096] hover:underline"
                           >
                             <ExternalLink className="w-3.5 h-3.5" />
                           </a>
@@ -337,7 +337,7 @@ export default function TicketsTable({ onSelect }) {
                           e.stopPropagation();
                           setExpandedId(expandedId === ticket.id ? null : ticket.id);
                         }}
-                        className="text-xs text-[#612D91] dark:text-[#A64AC9] hover:underline font-medium"
+                        className="text-xs text-[#780096] dark:text-[#780096] hover:underline font-medium"
                       >
                         {expandedId === ticket.id ? "Hide" : "View"} Details
                       </button>

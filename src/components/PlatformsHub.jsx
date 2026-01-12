@@ -17,13 +17,13 @@ export default function PlatformsHub({ onBack, onNavigate }) {
         <div className="mb-8">
           <button
             onClick={onBack}
-            className="flex items-center gap-2 text-[#612D91] hover:text-[#7B3DA1] transition-colors mb-4"
+            className="flex items-center gap-2 text-[#780096] hover:text-[#780096]/90 transition-colors mb-4"
           >
             <ArrowLeft className="w-4 h-4" />
             <span className="font-medium">Back to Store</span>
           </button>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#612D91] to-[#A64AC9] flex items-center justify-center shadow-lg">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center shadow-lg">
               <Layers className="w-8 h-8 text-white" />
             </div>
             <div>
@@ -42,16 +42,16 @@ export default function PlatformsHub({ onBack, onNavigate }) {
           <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Platform Overview</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="text-center p-6 rounded-xl bg-gradient-to-br from-[#612D91]/5 to-[#A64AC9]/5">
-                <div className="text-4xl font-bold text-[#612D91] mb-2">{platforms.length}</div>
+              <div className="text-center p-6 rounded-xl bg-gradient-to-br from-[#780096]/5 to-[#780096]/5">
+                <div className="text-4xl font-bold text-[#780096] mb-2">{platforms.length}</div>
                 <div className="text-sm font-medium text-gray-600">Live Platforms</div>
               </div>
-              <div className="text-center p-6 rounded-xl bg-gradient-to-br from-[#612D91]/5 to-[#A64AC9]/5">
-                <div className="text-4xl font-bold text-[#612D91] mb-2">{fabApps.filter((a) => a.platformId).length}</div>
+              <div className="text-center p-6 rounded-xl bg-gradient-to-br from-[#780096]/5 to-[#780096]/5">
+                <div className="text-4xl font-bold text-[#780096] mb-2">{fabApps.filter((a) => a.platformId).length}</div>
                 <div className="text-sm font-medium text-gray-600">Solutions Built</div>
               </div>
-              <div className="text-center p-6 rounded-xl bg-gradient-to-br from-[#612D91]/5 to-[#A64AC9]/5">
-                <div className="text-4xl font-bold text-[#612D91] mb-2">2</div>
+              <div className="text-center p-6 rounded-xl bg-gradient-to-br from-[#780096]/5 to-[#780096]/5">
+                <div className="text-4xl font-bold text-[#780096] mb-2">2</div>
                 <div className="text-sm font-medium text-gray-600">Industries Covered</div>
               </div>
             </div>
@@ -64,7 +64,7 @@ export default function PlatformsHub({ onBack, onNavigate }) {
             <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm">
               <div className="flex items-start justify-between mb-6">
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#612D91] to-[#A64AC9] flex items-center justify-center shadow-lg">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center shadow-lg">
                     <Shield className="w-8 h-8 text-white" />
                   </div>
                   <div>
@@ -85,7 +85,7 @@ export default function PlatformsHub({ onBack, onNavigate }) {
                   <ul className="space-y-2">
                     {sopPlatform.highlights.map((highlight, idx) => (
                       <li key={idx} className="flex items-center gap-2 text-gray-600">
-                        <CheckCircle className="w-4 h-4 text-[#612D91]" />
+                        <CheckCircle className="w-4 h-4 text-[#780096]" />
                         <span>{highlight}</span>
                       </li>
                     ))}
@@ -251,7 +251,7 @@ export default function PlatformsHub({ onBack, onNavigate }) {
                 <h3 className="font-semibold text-gray-900 mb-3">How it works</h3>
                 <ul className="space-y-2 text-gray-600 text-sm">
                   <li className="flex items-start gap-2">
-                    <Code className="w-4 h-4 text-[#612D91] mt-0.5" />
+                    <Code className="w-4 h-4 text-[#780096] mt-0.5" />
                     <span>
                       Modular agents for <strong>intent detection</strong>, <strong>diagnostics</strong>,{" "}
                       <strong>action execution</strong>, <strong>verification</strong>, and{" "}
@@ -259,14 +259,14 @@ export default function PlatformsHub({ onBack, onNavigate }) {
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <BarChart3 className="w-4 h-4 text-[#612D91] mt-0.5" />
+                    <BarChart3 className="w-4 h-4 text-[#780096] mt-0.5" />
                     <span>
                       Every step is logged in structured form, enabling rich observability and easy integration with
                       AI Watchtower dashboards or external analytics.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <Database className="w-4 h-4 text-[#612D91] mt-0.5" />
+                    <Database className="w-4 h-4 text-[#780096] mt-0.5" />
                     <span>
                       Exposes clean APIs (
                       <code className="px-1 py-0.5 bg-gray-100 rounded text-[11px]">/trigger-workflow</code>,{" "}
@@ -285,7 +285,7 @@ export default function PlatformsHub({ onBack, onNavigate }) {
               <button
                 type="button"
                 onClick={() => onNavigate && onNavigate("agentic-support-demo")}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#612D91] text-white text-sm font-semibold hover:bg-[#7B3DA1]"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#780096] text-white text-sm font-semibold hover:bg-[#780096]"
               >
                 <Play className="w-4 h-4" />
                 Launch Agentic Demo
@@ -300,7 +300,7 @@ export default function PlatformsHub({ onBack, onNavigate }) {
           <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm">
             <div className="space-y-6">
               <div className="flex gap-6">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#612D91] to-[#A64AC9] flex items-center justify-center text-white font-bold shrink-0">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center text-white font-bold shrink-0">
                   1
                 </div>
                 <div>
@@ -312,7 +312,7 @@ export default function PlatformsHub({ onBack, onNavigate }) {
                 </div>
               </div>
               <div className="flex gap-6">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#612D91] to-[#A64AC9] flex items-center justify-center text-white font-bold shrink-0">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center text-white font-bold shrink-0">
                   2
                 </div>
                 <div>
@@ -324,7 +324,7 @@ export default function PlatformsHub({ onBack, onNavigate }) {
                 </div>
               </div>
               <div className="flex gap-6">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#612D91] to-[#A64AC9] flex items-center justify-center text-white font-bold shrink-0">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center text-white font-bold shrink-0">
                   3
                 </div>
                 <div>
@@ -336,7 +336,7 @@ export default function PlatformsHub({ onBack, onNavigate }) {
                 </div>
               </div>
               <div className="flex gap-6">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#612D91] to-[#A64AC9] flex items-center justify-center text-white font-bold shrink-0">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center text-white font-bold shrink-0">
                   4
                 </div>
                 <div>
@@ -348,7 +348,7 @@ export default function PlatformsHub({ onBack, onNavigate }) {
                 </div>
               </div>
               <div className="flex gap-6">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#612D91] to-[#A64AC9] flex items-center justify-center text-white font-bold shrink-0">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center text-white font-bold shrink-0">
                   5
                 </div>
                 <div>
@@ -368,7 +368,7 @@ export default function PlatformsHub({ onBack, onNavigate }) {
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Platform Benefits</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
-              <Code className="w-8 h-8 text-[#612D91] mb-4" />
+              <Code className="w-8 h-8 text-[#780096] mb-4" />
               <h3 className="font-semibold text-gray-900 mb-2">Faster Development</h3>
               <p className="text-sm text-gray-600">
                 Build production-ready applications in days, not months. Reuse platform infrastructure, AI capabilities, 
@@ -376,7 +376,7 @@ export default function PlatformsHub({ onBack, onNavigate }) {
               </p>
             </div>
             <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
-              <Shield className="w-8 h-8 text-[#612D91] mb-4" />
+              <Shield className="w-8 h-8 text-[#780096] mb-4" />
               <h3 className="font-semibold text-gray-900 mb-2">Built-in Compliance</h3>
               <p className="text-sm text-gray-600">
                 Platforms provide compliance guardrails, audit trails, and SOP-native reasoning out of the box. 
@@ -384,7 +384,7 @@ export default function PlatformsHub({ onBack, onNavigate }) {
               </p>
             </div>
             <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
-              <BarChart3 className="w-8 h-8 text-[#612D91] mb-4" />
+              <BarChart3 className="w-8 h-8 text-[#780096] mb-4" />
               <h3 className="font-semibold text-gray-900 mb-2">Enterprise-Grade AI</h3>
               <p className="text-sm text-gray-600">
                 Multi-agent reasoning engines, confidence scoring, streaming responses, and RAG capabilities built into 

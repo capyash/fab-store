@@ -13,9 +13,9 @@ export default function TemplateCloner({ template, onClose, onClone }) {
     category: template.category,
     industry: template.industry,
     primaryColor: template.accent?.includes("#") 
-      ? template.accent.match(/#[0-9A-Fa-f]{6}/)?.[0] || "#612D91"
-      : "#612D91",
-    secondaryColor: "#A64AC9",
+      ? template.accent.match(/#[0-9A-Fa-f]{6}/)?.[0] || "#780096"
+      : "#780096",
+    secondaryColor: "#780096",
     description: template.description,
   });
 
@@ -49,7 +49,7 @@ export default function TemplateCloner({ template, onClose, onClone }) {
         className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden flex flex-col"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-[#780096] text-white">
           <div className="flex items-center gap-3">
             <Copy className="w-5 h-5" />
             <div>
@@ -74,7 +74,7 @@ export default function TemplateCloner({ template, onClose, onClone }) {
                   <div
                     className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm transition-colors ${
                       step >= s
-                        ? "bg-[#612D91] text-white"
+                        ? "bg-[#780096] text-white"
                         : "bg-gray-200 text-gray-500"
                     }`}
                   >
@@ -91,7 +91,7 @@ export default function TemplateCloner({ template, onClose, onClone }) {
                 {s < 3 && (
                   <div
                     className={`flex-1 h-0.5 mx-4 ${
-                      step > s ? "bg-[#612D91]" : "bg-gray-200"
+                      step > s ? "bg-[#780096]" : "bg-gray-200"
                     }`}
                   />
                 )}
@@ -113,7 +113,7 @@ export default function TemplateCloner({ template, onClose, onClone }) {
               >
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                    <FileText className="w-5 h-5 text-[#612D91]" />
+                    <FileText className="w-5 h-5 text-[#780096]" />
                     Basic Information
                   </h3>
                   <div className="space-y-4">
@@ -127,7 +127,7 @@ export default function TemplateCloner({ template, onClose, onClone }) {
                         onChange={(e) =>
                           setCustomization({ ...customization, name: e.target.value })
                         }
-                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
                         placeholder="Enter template name"
                       />
                     </div>
@@ -141,7 +141,7 @@ export default function TemplateCloner({ template, onClose, onClone }) {
                         onChange={(e) =>
                           setCustomization({ ...customization, tagline: e.target.value })
                         }
-                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
                         placeholder="Enter tagline"
                       />
                     </div>
@@ -156,7 +156,7 @@ export default function TemplateCloner({ template, onClose, onClone }) {
                           onChange={(e) =>
                             setCustomization({ ...customization, category: e.target.value })
                           }
-                          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
                         />
                       </div>
                       <div>
@@ -169,7 +169,7 @@ export default function TemplateCloner({ template, onClose, onClone }) {
                           onChange={(e) =>
                             setCustomization({ ...customization, industry: e.target.value })
                           }
-                          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
                         />
                       </div>
                     </div>
@@ -183,7 +183,7 @@ export default function TemplateCloner({ template, onClose, onClone }) {
                           setCustomization({ ...customization, description: e.target.value })
                         }
                         rows={4}
-                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
+                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
                         placeholder="Enter description"
                       />
                     </div>
@@ -202,7 +202,7 @@ export default function TemplateCloner({ template, onClose, onClone }) {
               >
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                    <Palette className="w-5 h-5 text-[#612D91]" />
+                    <Palette className="w-5 h-5 text-[#780096]" />
                     Customize Appearance
                   </h3>
                   <div className="space-y-4">
@@ -232,8 +232,8 @@ export default function TemplateCloner({ template, onClose, onClone }) {
                                 primaryColor: e.target.value,
                               })
                             }
-                            className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
-                            placeholder="#612D91"
+                            className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                            placeholder="#780096"
                           />
                         </div>
                       </div>
@@ -262,8 +262,8 @@ export default function TemplateCloner({ template, onClose, onClone }) {
                                 secondaryColor: e.target.value,
                               })
                             }
-                            className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#612D91] focus:border-transparent"
-                            placeholder="#A64AC9"
+                            className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                            placeholder="#780096"
                           />
                         </div>
                       </div>
@@ -294,7 +294,7 @@ export default function TemplateCloner({ template, onClose, onClone }) {
               >
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                    <Sparkles className="w-5 h-5 text-[#612D91]" />
+                    <Sparkles className="w-5 h-5 text-[#780096]" />
                     Review & Create
                   </h3>
                   <div className="space-y-4">
@@ -355,7 +355,7 @@ export default function TemplateCloner({ template, onClose, onClone }) {
           </button>
           <button
             onClick={step < 3 ? () => setStep(step + 1) : handleClone}
-            className="px-6 py-2.5 rounded-lg bg-gradient-to-r from-[#612D91] to-[#A64AC9] text-white font-semibold text-sm hover:shadow-lg transition-all flex items-center gap-2"
+            className="px-6 py-2.5 rounded-lg bg-gradient-to-r from-[#780096] to-[#780096] text-white font-semibold text-sm hover:shadow-lg transition-all flex items-center gap-2"
           >
             {step < 3 ? (
               <>

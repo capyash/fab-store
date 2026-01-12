@@ -4,8 +4,99 @@ export default {
   theme: {
     extend: {
       colors: {
-        tpPurple: "#612D91",
+        // Flamingo 2.0 Design System Colors
+        // Backgrounds
+        bg01: "#FFFFFF",
+        bg02: "#F7F7F7",
+        bg02Alt: "#EEECEA",
+        // Text
+        text01: "#2E2E2E",
+        text02: "#4B4C6A",
+        text03: "#989898",
+        // Strokes
+        stroke01: "#DEDAE4",
+        // Slate Theme - Primary
+        primary: "#4B4C6A",
+        tertiary: "#DBDBE4",
+        // Slate Theme - Selectors
+        hover: "#F5F5F5",
+        select: "#E6E6E5",
+        // Special Colors
+        pinkTP: "#FF0082",
+        textLink: "#A5125D",
+        // Button Colors - Flamingo 2.0
+        buttonPrimary: "#2E2E2E",
+        "buttonPrimary-hover": "#4A4A4A",
+        "buttonPrimary-active": "#666666",
+        "buttonPrimary-disabled": "#E0E0E0",
+        buttonText: "#2E2E2E",
+        "buttonText-disabled": "#A0A0A0",
+        // Legacy colors (keeping for backward compatibility)
+        tpPurple: "#780096",
         tpPink: "#E91E63",
+        textMain: "#2E2E2E",
+        textSecondary: "#656A71",
+        textHeading: "#2D2D2D",
+        bgPrimary: "#FFFFFF",
+        bgSecondary: "#FAFAFA",
+        bgTertiary: "#DDE4F8",
+        // Status Colors
+        success: "#10b981",
+        error: "#ef4444",
+        warning: "#f59e0b",
+        info: "#3b82f6",
+      },
+      fontFamily: {
+        sans: ['"Noto Sans"', '"TP Sans"', "-apple-system", "BlinkMacSystemFont", '"Segoe UI"', "Roboto", '"Helvetica Neue"', "Arial", "sans-serif"],
+      },
+      fontSize: {
+        // Flamingo 2.0 Typography - Base sizes (mobile-first, use responsive classes)
+        // Display sizes (base = mobile)
+        "display-xl": ["28px", { lineHeight: "1.2", fontWeight: "700", letterSpacing: "0.3px" }],
+        "display-l": ["24px", { lineHeight: "1.2", fontWeight: "700", letterSpacing: "0.3px" }],
+        "display-s": ["22px", { lineHeight: "1.2", fontWeight: "700", letterSpacing: "0.3px" }],
+        // Headings (base = mobile)
+        h1: ["20px", { lineHeight: "1.2", fontWeight: "700", letterSpacing: "0.3px" }],
+        h2: ["18px", { lineHeight: "1.2", fontWeight: "700", letterSpacing: "0.3px" }],
+        h3: ["16px", { lineHeight: "1.2", fontWeight: "700", letterSpacing: "0.3px" }],
+        h4: ["15px", { lineHeight: "1.2", fontWeight: "700", letterSpacing: "0.3px" }],
+        // Body (base = mobile)
+        body: ["14px", { lineHeight: "1.2", fontWeight: "400", letterSpacing: "0.3px" }],
+        "body-bold": ["14px", { lineHeight: "1.2", fontWeight: "700", letterSpacing: "0.3px" }],
+        // Caption (base = mobile)
+        caption: ["13px", { lineHeight: "1.2", fontWeight: "400", letterSpacing: "0.3px" }],
+        "caption-bold": ["13px", { lineHeight: "1.2", fontWeight: "700", letterSpacing: "0.3px" }],
+        // Label (base = mobile)
+        label: ["12px", { lineHeight: "1.2", fontWeight: "400", letterSpacing: "0.3px" }],
+        "label-bold": ["12px", { lineHeight: "1.2", fontWeight: "700", letterSpacing: "0.3px" }],
+        // Legacy (keeping for backward compatibility)
+        title: ["18px", { lineHeight: "normal", fontWeight: "700" }],
+        heading: ["20px", { lineHeight: "normal", fontWeight: "700" }],
+        select: ["12px", { lineHeight: "normal", fontWeight: "500" }],
+      },
+      screens: {
+        // Flamingo 2.0 Breakpoints (extends Tailwind defaults)
+        'tablet': '700px', // 700px+ (md equivalent)
+        'desktop': '1024px', // 1024px+ (lg equivalent)
+        'large': '1200px', // 1200px+ (xl equivalent)
+        'xlarge': '1536px', // 1536px+ (2xl equivalent)
+      },
+      borderRadius: {
+        DEFAULT: "4px",
+        sm: "4px",
+        md: "6px",
+        lg: "8px",
+        // Icon corner radius (from design system)
+        icon16: "1px",
+        icon24: "2px",
+        icon32: "3px",
+      },
+      boxShadow: {
+        // Flamingo 2.0 Design System Shadow
+        // Drop shadow: X: 0, Y: 4, Blur: 15, Spread: 0, Color: #959DA5 35% Opacity
+        drop: "0px 4px 15px 0px rgba(149, 157, 165, 0.35)",
+        // Default shadow (using drop shadow)
+        DEFAULT: "0px 4px 15px 0px rgba(149, 157, 165, 0.35)",
       },
     },
   },

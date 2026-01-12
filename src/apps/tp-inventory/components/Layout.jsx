@@ -1,9 +1,8 @@
 import SolutionLayout from "../../../components/SolutionLayout";
-import { Home, Package } from "lucide-react";
 
 const TP_INVENTORY_NAV_ITEMS = [
-  { key: "inventory", label: "Home", icon: Home },
-  { key: "inventory/list", label: "Inventory", icon: Package },
+  { key: "inventory", label: "Home", iconName: "Home" },
+  { key: "inventory/list", label: "Inventory", iconName: "Package" },
 ];
 
 export default function TPInventoryLayout({ children, onNavigate, active }) {

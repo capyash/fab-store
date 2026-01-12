@@ -145,7 +145,7 @@ export default function CasesTable({ onSelect }) {
   if (loading && cases.length === 0) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="w-8 h-8 animate-spin text-[#612D91]" />
+        <Loader2 className="w-8 h-8 animate-spin text-[#780096]" />
       </div>
     );
   }
@@ -157,7 +157,7 @@ export default function CasesTable({ onSelect }) {
         <p className="text-red-600 dark:text-red-400">{error}</p>
         <button
           onClick={fetchCases}
-          className="px-4 py-2 bg-[#612D91] text-white rounded-md hover:bg-[#512579] transition-colors flex items-center gap-2"
+          className="px-4 py-2 bg-[#780096] text-white rounded-md hover:bg-[#780096] transition-colors flex items-center gap-2"
         >
           <RefreshCw className="w-4 h-4" />
           Retry
@@ -215,7 +215,7 @@ export default function CasesTable({ onSelect }) {
                     <div className="flex items-center gap-1">
                       {header.label}
                       {sortKey === header.key && (
-                        <span className="text-[#612D91]">{sortDir === "asc" ? "↑" : "↓"}</span>
+                        <span className="text-[#780096]">{sortDir === "asc" ? "↑" : "↓"}</span>
                       )}
                     </div>
                   </th>
@@ -257,7 +257,7 @@ export default function CasesTable({ onSelect }) {
                             e.stopPropagation();
                             onSelect?.(caseData);
                           }}
-                          className="inline-flex items-center justify-center text-[11px] px-2 py-0.5 rounded-full bg-white dark:bg-gray-900 text-[#612D91] dark:text-[#A64AC9] border border-[#612D91]/40 dark:border-[#A64AC9]/50 hover:bg-[#F5F3FF] dark:hover:bg-[#4B2E83]/40"
+                          className="inline-flex items-center justify-center text-[11px] px-2 py-0.5 rounded-full bg-white dark:bg-gray-900 text-[#780096] dark:text-[#780096] border border-[#780096]/40 dark:border-[#780096]/50 hover:bg-[#F5F3FF] dark:hover:bg-[#4B2E83]/40"
                           title="Open in AI Reasoning"
                         >
                           <Sparkles className="w-3.5 h-3.5" />

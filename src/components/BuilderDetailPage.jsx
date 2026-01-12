@@ -94,13 +94,13 @@ export default function BuilderDetailPage({ onBack }) {
         <div className="mb-8">
           <button
             onClick={onBack}
-            className="flex items-center gap-2 text-[#612D91] hover:text-[#7B3DA1] transition-colors mb-4"
+            className="flex items-center gap-2 text-[#780096] hover:text-[#780096] transition-colors mb-4"
           >
             <ArrowLeft className="w-4 h-4" />
             <span className="font-medium">Back to Store</span>
           </button>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#612D91] to-[#A64AC9] flex items-center justify-center shadow-lg">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center shadow-lg">
               <Code className="w-8 h-8 text-white" />
             </div>
             <div>
@@ -127,8 +127,8 @@ export default function BuilderDetailPage({ onBack }) {
                   className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
                 >
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#612D91]/10 to-[#A64AC9]/10 flex items-center justify-center shrink-0">
-                      <Icon className="w-6 h-6 text-[#612D91]" />
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#780096]/10 to-[#780096]/10 flex items-center justify-center shrink-0">
+                      <Icon className="w-6 h-6 text-[#780096]" />
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature.title}</h3>
@@ -152,14 +152,14 @@ export default function BuilderDetailPage({ onBack }) {
               >
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="font-semibold text-gray-900">{category.name}</h3>
-                  <span className="text-xs font-medium text-[#612D91] bg-[#612D91]/10 px-2 py-1 rounded-full">
+                  <span className="text-xs font-medium text-[#780096] bg-[#780096]/10 px-2 py-1 rounded-full">
                     {category.count}
                   </span>
                 </div>
                 <ul className="space-y-1.5">
                   {category.items.map((item, itemIdx) => (
                     <li key={itemIdx} className="text-sm text-gray-600 flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#612D91]/30" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#780096]/30" />
                       {item}
                     </li>
                   ))}
@@ -175,7 +175,7 @@ export default function BuilderDetailPage({ onBack }) {
           <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm">
             <div className="space-y-6">
               <div className="flex gap-6">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#612D91] to-[#A64AC9] flex items-center justify-center text-white font-bold shrink-0">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center text-white font-bold shrink-0">
                   1
                 </div>
                 <div>
@@ -187,7 +187,7 @@ export default function BuilderDetailPage({ onBack }) {
                 </div>
               </div>
               <div className="flex gap-6">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#612D91] to-[#A64AC9] flex items-center justify-center text-white font-bold shrink-0">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center text-white font-bold shrink-0">
                   2
                 </div>
                 <div>
@@ -199,7 +199,7 @@ export default function BuilderDetailPage({ onBack }) {
                 </div>
               </div>
               <div className="flex gap-6">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#612D91] to-[#A64AC9] flex items-center justify-center text-white font-bold shrink-0">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center text-white font-bold shrink-0">
                   3
                 </div>
                 <div>
@@ -211,7 +211,7 @@ export default function BuilderDetailPage({ onBack }) {
                 </div>
               </div>
               <div className="flex gap-6">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#612D91] to-[#A64AC9] flex items-center justify-center text-white font-bold shrink-0">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center text-white font-bold shrink-0">
                   4
                 </div>
                 <div>
@@ -233,7 +233,7 @@ export default function BuilderDetailPage({ onBack }) {
             <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center">
-                  <Layers className="w-5 h-5 text-[#612D91]" />
+                  <Layers className="w-5 h-5 text-[#780096]" />
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900">SOP Executor</h3>
               </div>
@@ -243,15 +243,15 @@ export default function BuilderDetailPage({ onBack }) {
               </p>
               <ul className="space-y-2 text-sm text-gray-600">
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-[#612D91]" />
+                  <CheckCircle className="w-4 h-4 text-[#780096]" />
                   <span>SOP Reasoning Card component</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-[#612D91]" />
+                  <CheckCircle className="w-4 h-4 text-[#780096]" />
                   <span>SOP Viewer component</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-[#612D91]" />
+                  <CheckCircle className="w-4 h-4 text-[#780096]" />
                   <span>Auto AI Watchtower integration</span>
                 </li>
               </ul>
@@ -290,8 +290,8 @@ export default function BuilderDetailPage({ onBack }) {
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Pre-built Templates</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
-              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#612D91]/10 to-[#A64AC9]/10 flex items-center justify-center mb-4">
-                <BarChart3 className="w-6 h-6 text-[#612D91]" />
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#780096]/10 to-[#780096]/10 flex items-center justify-center mb-4">
+                <BarChart3 className="w-6 h-6 text-[#780096]" />
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">Dashboard Layout</h3>
               <p className="text-sm text-gray-600">
@@ -299,8 +299,8 @@ export default function BuilderDetailPage({ onBack }) {
               </p>
             </div>
             <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
-              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#612D91]/10 to-[#A64AC9]/10 flex items-center justify-center mb-4">
-                <Layers className="w-6 h-6 text-[#612D91]" />
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#780096]/10 to-[#780096]/10 flex items-center justify-center mb-4">
+                <Layers className="w-6 h-6 text-[#780096]" />
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">Form Layout</h3>
               <p className="text-sm text-gray-600">
@@ -308,8 +308,8 @@ export default function BuilderDetailPage({ onBack }) {
               </p>
             </div>
             <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
-              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#612D91]/10 to-[#A64AC9]/10 flex items-center justify-center mb-4">
-                <Database className="w-6 h-6 text-[#612D91]" />
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#780096]/10 to-[#780096]/10 flex items-center justify-center mb-4">
+                <Database className="w-6 h-6 text-[#780096]" />
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">Detail View</h3>
               <p className="text-sm text-gray-600">

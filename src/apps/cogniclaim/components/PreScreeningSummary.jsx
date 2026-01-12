@@ -142,7 +142,7 @@ export default function PreScreeningSummary({ claim, onSOPView, onSOPReference, 
           </div>
           {sop && result && (
             <div className="flex items-center gap-2 text-xs bg-white/60 dark:bg-gray-800/60 px-2 py-1 rounded shrink-0">
-              <BookOpen className="w-3 h-3 text-[#612D91] dark:text-[#A64AC9]" />
+              <BookOpen className="w-3 h-3 text-[#780096] dark:text-[#780096]" />
               <span className="text-[10px] font-medium text-gray-700 dark:text-gray-300">{sop.page}</span>
             </div>
           )}
@@ -161,7 +161,7 @@ export default function PreScreeningSummary({ claim, onSOPView, onSOPReference, 
       {/* Processing State */}
       {processing && !result && (
         <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 py-2">
-          <Clock className="w-4 h-4 animate-spin text-[#612D91]" />
+          <Clock className="w-4 h-4 animate-spin text-[#780096]" />
           <span>Running rule-based compliance checks...</span>
         </div>
       )}
@@ -209,7 +209,7 @@ export default function PreScreeningSummary({ claim, onSOPView, onSOPReference, 
               {result.steps.length > 4 && !expanded && (
                 <button
                   onClick={() => setExpanded(true)}
-                  className="text-[10px] text-[#612D91] dark:text-[#A64AC9] hover:underline font-medium"
+                  className="text-[10px] text-[#780096] dark:text-[#780096] hover:underline font-medium"
                 >
                   +{result.steps.length - 4} more steps
                 </button>
@@ -266,7 +266,7 @@ export default function PreScreeningSummary({ claim, onSOPView, onSOPReference, 
                           onSOPView?.(claim.scenario, claim.scenario, claim?.status, null);
                         }
                       }}
-                      className="mt-2 flex items-center gap-1 px-2 py-1 text-[10px] font-medium bg-[#612D91] text-white rounded-md hover:bg-[#512579] transition-colors"
+                      className="mt-2 flex items-center gap-1 px-2 py-1 text-[10px] font-medium bg-[#780096] text-white rounded-md hover:bg-[#780096] transition-colors"
                     >
                       <FileText className="w-3 h-3" />
                       View SOP

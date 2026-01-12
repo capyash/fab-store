@@ -59,8 +59,8 @@ export default function ArchitectureDiagram() {
               <NodeCard node={node} />
               {index !== FLOW_NODES.length - 1 && (
                 <div className="flex-1 flex items-center">
-                  <div className="w-full h-0.5 bg-gradient-to-r from-transparent via-[#612D91]/40 to-transparent relative">
-                    <ArrowRight className="w-4 h-4 text-[#612D91] absolute -right-2 -top-2" />
+                  <div className="w-full h-0.5 bg-gradient-to-r from-transparent via-[#780096]/40 to-transparent relative">
+                    <ArrowRight className="w-4 h-4 text-[#780096] absolute -right-2 -top-2" />
                   </div>
                 </div>
               )}
@@ -83,7 +83,7 @@ export default function ArchitectureDiagram() {
           <div key={node.id} className="space-y-2">
             <NodeCard node={node} stacked />
             {index !== FLOW_NODES.length - 1 && (
-              <div className="flex items-center gap-2 pl-6 text-xs uppercase tracking-wide text-[#612D91]">
+              <div className="flex items-center gap-2 pl-6 text-xs uppercase tracking-wide text-[#780096]">
                 <ArrowRight className="w-4 h-4" />
                 Feeds next layer
               </div>
