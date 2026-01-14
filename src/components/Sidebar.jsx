@@ -45,22 +45,26 @@ export default function Sidebar({
               }`}
               title={collapsed ? label : ""}
             >
-              <Icon 
-                name={iconName} 
-                size="24" 
-                state={isActive ? "selected" : "default"} 
+              <Icon
+                name={iconName}
+                size="24"
+                state={isActive ? "selected" : "default"}
               />
               {!collapsed && (
-                <span className={`text-sm font-medium ${
-                  isActive 
-                    ? "text-primary dark:text-primary" 
-                    : "text-gray-600 dark:text-gray-400"
-                }`}>{label}</span>
+                <span
+                  className={`text-sm font-medium ${
+                    isActive
+                      ? "text-primary dark:text-primary"
+                      : "text-gray-600 dark:text-gray-400"
+                  }`}
+                >
+                  {label}
+                </span>
               )}
-              
+
               {/* Tooltip for collapsed state */}
               {collapsed && (
-                <div className="absolute left-full ml-2 px-3 py-1.5 bg-gray-900 dark:bg-gray-800 text-white text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 pointer-events-none">
+                <div className="absolute left-full ml-2 px-3 py-1.5 bg-gray-900 dark:bg-gray-800 text-white text-xs rounded-lg opacity-0 hidden group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 pointer-events-none">
                   {label}
                   <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-gray-900 dark:bg-gray-800 rotate-45" />
                 </div>
@@ -80,25 +84,33 @@ export default function Sidebar({
               ? "bg-primary/10 dark:bg-primary/30 text-primary dark:text-primary"
               : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
           }`}
-          title={collapsed ? (isDemoMode ? "Demo Mode: Frontend" : "Demo Mode: Backend") : ""}
+          title={
+            collapsed
+              ? isDemoMode
+                ? "Demo Mode: Frontend"
+                : "Demo Mode: Backend"
+              : ""
+          }
         >
           <div className="w-full flex items-center gap-3 px-2">
-            <Icon 
-              name="Monitor" 
-              size="24" 
-              state={isDemoMode ? "selected" : "default"} 
+            <Icon
+              name="Monitor"
+              size="24"
+              state={isDemoMode ? "selected" : "default"}
             />
             {!collapsed && (
-              <span className={`text-sm font-medium ${
-                isDemoMode 
-                  ? "text-primary dark:text-primary" 
-                  : "text-gray-600 dark:text-gray-400"
-              }`}>
+              <span
+                className={`text-sm font-medium ${
+                  isDemoMode
+                    ? "text-primary dark:text-primary"
+                    : "text-gray-600 dark:text-gray-400"
+                }`}
+              >
                 {isDemoMode ? "Frontend Mode" : "Backend Mode"}
               </span>
             )}
           </div>
-          
+
           {/* Tooltip for collapsed state */}
           {collapsed && (
             <div className="absolute left-full ml-2 px-3 py-1.5 bg-gray-900 dark:bg-gray-800 text-white text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 pointer-events-none">
@@ -121,20 +133,24 @@ export default function Sidebar({
             title={collapsed ? "Settings" : ""}
           >
             <div className="w-full flex items-center gap-3 px-2">
-              <Icon 
-                name="Settings" 
-                size="24" 
-                state={active === "settings" ? "selected" : "default"} 
+              <Icon
+                name="Settings"
+                size="24"
+                state={active === "settings" ? "selected" : "default"}
               />
               {!collapsed && (
-                <span className={`text-sm font-medium ${
-                  active === "settings"
-                    ? "text-primary dark:text-primary"
-                    : "text-gray-600 dark:text-gray-400"
-                }`}>Settings</span>
+                <span
+                  className={`text-sm font-medium ${
+                    active === "settings"
+                      ? "text-primary dark:text-primary"
+                      : "text-gray-600 dark:text-gray-400"
+                  }`}
+                >
+                  Settings
+                </span>
               )}
             </div>
-            
+
             {/* Tooltip for collapsed state */}
             {collapsed && (
               <div className="absolute left-full ml-2 px-3 py-1.5 bg-gray-900 dark:bg-gray-800 text-white text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 pointer-events-none">
@@ -159,7 +175,7 @@ export default function Sidebar({
               </span>
             )}
           </div>
-          
+
           {/* Tooltip for collapsed state */}
           {collapsed && (
             <div className="absolute left-full ml-2 px-3 py-1.5 bg-gray-900 dark:bg-gray-800 text-white text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 pointer-events-none">
@@ -188,7 +204,7 @@ export default function Sidebar({
               </>
             )}
           </div>
-          
+
           {/* Tooltip for collapsed state */}
           {collapsed && (
             <div className="absolute left-full ml-2 px-3 py-1.5 bg-gray-900 dark:bg-gray-800 text-white text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 pointer-events-none">
