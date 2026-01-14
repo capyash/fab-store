@@ -10,6 +10,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import aiRoutes from './routes/aiRoutes.js';
+import genesysRoutes from './routes/genesysRoutes.js';
 
 // Load environment variables
 dotenv.config();
@@ -32,6 +33,7 @@ app.get('/health', (req, res) => {
 
 // API routes
 app.use('/api/v1/ai', aiRoutes);
+app.use('/api/v1/genesys', genesysRoutes);
 
 // 404 handler
 app.use((req, res) => {

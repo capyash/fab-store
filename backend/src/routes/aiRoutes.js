@@ -175,23 +175,22 @@ router.post('/chat', async (req, res) => {
         claimId,
         conversationHistory,
       }, (token) => {
-          try {
-            res.write(`data: ${JSON.stringify({
-              type: 'token',
-              token: token,
-              timestamp: new Date().toISOString(),
-            })}\n\n`);
-          } catch (writeError) {
-            console.error('Error writing chat token:', writeError);
-          }
-        },
+        try {
+          res.write(`data: ${JSON.stringify({
+            type: 'token',
+            token: token,
+            timestamp: new Date().toISOString(),
+          })}\n\n`);
+        } catch (writeError) {
+          console.error('Error writing chat token:', writeError);
+        }
       });
       
       res.write(`data: ${JSON.stringify({
         type: 'complete',
         result: {
           response: result.text,
-          sopReferences: result.sopRefs?.map(ref => ({ page: ref, title: `SOP ${ref}` })) || [],
+          sopReferences: (result.sopRefs && result.sopRefs.map(ref => ({ page: ref, title: `SOP ${ref}` }))) || [],
           claimContext: claim ? { id: claim.id, member: claim.member } : null,
         },
         timestamp: new Date().toISOString(),

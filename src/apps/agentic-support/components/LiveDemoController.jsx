@@ -1,61 +1,221 @@
 import { useState, useEffect, useRef } from 'react';
 import { Phone, MessageSquare, Mail, Radio, Mic, Play, Pause, RotateCcw, Sparkles, Zap, Activity } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { createTestConversation } from '../services/genesysService';
+import { getCurrentProvider } from '../services/ccasService';
 
 const DEMO_SCENARIOS = {
   voice: [
     {
       from: '+1 (555) 234-5678',
       customerName: 'Sarah Mitchell',
-      transcript: 'Hi my office printer on floor 3 is offline and nothing is printing',
+      transcript: 'Hi, my HP LaserJet printer on floor 3 is offline and nothing is printing. The status light is blinking red.',
       duration: 8000,
-      workflow: 'printer_offline'
+      workflow: 'printer_offline',
+      device: 'printer'
     },
     {
       from: '+1 (555) 891-2345',
       customerName: 'David Chen',
-      transcript: 'The printer keeps getting paper jam errors every time we try to print labels',
+      transcript: 'My HP OfficeJet printer keeps getting paper jam errors every time we try to print labels. I cleared it twice but it keeps happening.',
       duration: 9000,
-      workflow: 'paper_jam'
+      workflow: 'paper_jam',
+      device: 'printer'
+    },
+    {
+      from: '+1 (555) 345-6789',
+      customerName: 'Emily Johnson',
+      transcript: 'My HP EliteBook laptop screen is flickering constantly. It started this morning and now I can barely see anything on the display.',
+      duration: 10000,
+      workflow: 'display_issue',
+      device: 'laptop'
+    },
+    {
+      from: '+1 (555) 567-8901',
+      customerName: 'Michael Rodriguez',
+      transcript: 'The HP printer says the cyan ink cartridge is not recognized even though I just installed a genuine HP cartridge this morning.',
+      duration: 8500,
+      workflow: 'ink_error',
+      device: 'printer'
+    },
+    {
+      from: '+1 (555) 789-0123',
+      customerName: 'James Wilson',
+      transcript: 'My HP Spectre laptop is running extremely slow. It takes forever to open applications and the fan is running constantly.',
+      duration: 9500,
+      workflow: 'slow_performance',
+      device: 'laptop'
+    },
+    {
+      from: '+1 (555) 333-4444',
+      customerName: 'Patricia Miller',
+      transcript: 'My HP ProBook laptop battery is draining very fast. It used to last 8 hours but now only lasts about 2 hours even when fully charged.',
+      duration: 10500,
+      workflow: 'battery_drain',
+      device: 'laptop'
+    },
+    {
+      from: '+1 (555) 555-1111',
+      customerName: 'William Davis',
+      transcript: 'My HP ZBook laptop is overheating constantly. It gets very hot after just 10 minutes of use and shuts down automatically.',
+      duration: 11000,
+      workflow: 'overheating',
+      device: 'laptop'
+    },
+    {
+      from: '+1 (555) 222-3333',
+      customerName: 'Robert Taylor',
+      transcript: 'My HP Envy laptop keyboard is not working properly. Several keys are stuck or not responding, especially the spacebar and enter key.',
+      duration: 10000,
+      workflow: 'keyboard_issue',
+      device: 'laptop'
+    },
+    {
+      from: '+1 (555) 777-8888',
+      customerName: 'Jennifer Martinez',
+      transcript: 'Our HP LaserJet printer on the 5th floor cannot connect to the network. The network status shows disconnected and we cannot print wirelessly.',
+      duration: 9000,
+      workflow: 'network_issue',
+      device: 'printer'
+    },
+    {
+      from: '+1 (555) 999-0000',
+      customerName: 'Lisa Anderson',
+      transcript: 'My HP EliteBook laptop cannot connect to the Wi-Fi network. It shows connected but there is no internet access and I cannot access any websites.',
+      duration: 9500,
+      workflow: 'network_issue',
+      device: 'laptop'
     }
   ],
   sms: [
     {
       from: '+1 (555) 876-5432',
-      customerName: 'John Smith',
-      message: 'My printer says the cyan cartridge is not recognized even though its genuine',
+      customerName: 'Christopher Lee',
+      message: 'My HP printer says the cyan cartridge is not recognized even though its a genuine HP cartridge. Just installed it yesterday.',
       delay: 12000,
-      workflow: 'ink_error'
+      workflow: 'ink_error',
+      device: 'printer'
     },
     {
       from: '+1 (555) 432-8765',
-      customerName: 'Lisa Anderson',
-      message: 'Low ink warning but I just replaced the cartridge yesterday',
+      customerName: 'Amanda White',
+      message: 'The HP printer is printing everything with streaks and smudges. We just replaced the toner but the print quality is still terrible.',
+      delay: 18000,
+      workflow: 'print_quality',
+      device: 'printer'
+    },
+    {
+      from: '+1 (555) 210-9876',
+      customerName: 'Robert Taylor',
+      message: 'My HP ProBook laptop battery is draining very fast. It used to last 8 hours but now only lasts about 2 hours even when fully charged.',
+      delay: 30000,
+      workflow: 'battery_drain',
+      device: 'laptop'
+    },
+    {
+      from: '+1 (555) 654-3210',
+      customerName: 'Michael Brown',
+      message: 'My HP EliteBook laptop screen is flickering constantly. It started this morning and now I can barely see anything on the display.',
+      delay: 20000,
+      workflow: 'display_issue',
+      device: 'laptop'
+    },
+    {
+      from: '+1 (555) 111-2222',
+      customerName: 'Emily Davis',
+      message: 'My HP ZBook laptop is overheating. It gets very hot after just 10 minutes of use and shuts down automatically. This is urgent!',
       delay: 25000,
-      workflow: 'ink_error'
+      workflow: 'overheating',
+      device: 'laptop'
+    },
+    {
+      from: '+1 (555) 333-4444',
+      customerName: 'David Wilson',
+      message: 'HP LaserJet printer on 5th floor cannot connect to the network. The network status shows disconnected and we cannot print wirelessly.',
+      delay: 22000,
+      workflow: 'network_issue',
+      device: 'printer'
     }
   ],
   whatsapp: [
     {
       from: '+1 (555) 123-9876',
       customerName: 'Michael Brown',
-      message: 'The office printer is extremely slow when printing PDF documents from email',
+      message: 'The HP LaserJet printer is extremely slow when printing PDF documents from email. Takes almost 5 minutes per page.',
       delay: 18000,
-      workflow: 'slow_print'
+      workflow: 'slow_print',
+      device: 'printer'
+    },
+    {
+      from: '+1 (555) 987-6543',
+      customerName: 'Jennifer Martinez',
+      message: 'My HP Envy laptop keyboard is not working properly. Several keys are stuck or not responding, especially the spacebar.',
+      delay: 22000,
+      workflow: 'keyboard_issue',
+      device: 'laptop'
+    },
+    {
+      from: '+1 (555) 555-6666',
+      customerName: 'Sarah Johnson',
+      message: 'My HP Spectre laptop is running extremely slow. It takes forever to open applications and the fan is running constantly.',
+      delay: 20000,
+      workflow: 'slow_performance',
+      device: 'laptop'
+    },
+    {
+      from: '+1 (555) 777-8888',
+      customerName: 'James Anderson',
+      message: 'My HP EliteBook laptop cannot connect to the Wi-Fi network. It shows connected but there is no internet access.',
+      delay: 25000,
+      workflow: 'network_issue',
+      device: 'laptop'
     }
   ],
   chat: [
     {
       sessionId: 'WEB-001',
       customerName: 'Emily Davis',
-      message: 'Help My home printer has streaks and smudges on every page I print',
+      message: 'Help! My HP printer has streaks and smudges on every page I print. The print quality is really bad and I have an important document to print.',
       delay: 30000,
-      workflow: 'print_quality'
+      workflow: 'print_quality',
+      device: 'printer'
+    },
+    {
+      sessionId: 'WEB-002',
+      customerName: 'David Chen',
+      message: 'My HP ZBook laptop is overheating. It gets very hot after just 10 minutes of use and shuts down automatically. This is urgent!',
+      delay: 35000,
+      workflow: 'overheating',
+      device: 'laptop'
+    },
+    {
+      sessionId: 'WEB-003',
+      customerName: 'Patricia Miller',
+      message: 'My HP EliteBook laptop screen is flickering constantly. It started this morning and now I can barely see anything on the display.',
+      delay: 32000,
+      workflow: 'display_issue',
+      device: 'laptop'
+    },
+    {
+      sessionId: 'WEB-004',
+      customerName: 'William Taylor',
+      message: 'My HP ProBook laptop battery is draining very fast. It used to last 8 hours but now only lasts about 2 hours even when fully charged.',
+      delay: 28000,
+      workflow: 'battery_drain',
+      device: 'laptop'
+    },
+    {
+      sessionId: 'WEB-005',
+      customerName: 'Lisa Anderson',
+      message: 'Our HP LaserJet printer on the 5th floor cannot connect to the network. The network status shows disconnected and we cannot print wirelessly.',
+      delay: 30000,
+      workflow: 'network_issue',
+      device: 'printer'
     }
   ]
 };
 
-export default function LiveDemoController({ onInteractionCapture }) {
+export default function LiveDemoController({ onInteractionCapture, onCreateGenesysConversation }) {
   const [demoMode, setDemoMode] = useState('auto');
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentChannel, setCurrentChannel] = useState(null);
@@ -67,6 +227,7 @@ export default function LiveDemoController({ onInteractionCapture }) {
   const recognitionRef = useRef(null);
   const [isListening, setIsListening] = useState(false);
   const [hasSpeechAPI, setHasSpeechAPI] = useState(false);
+  const finalTranscriptRef = useRef(''); // Store final transcript for Genesys creation
 
   useEffect(() => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -131,6 +292,7 @@ export default function LiveDemoController({ onInteractionCapture }) {
               from: scenario.from,
               customerName: scenario.customerName,
               workflow: scenario.workflow,
+              device: scenario.device || 'printer',
               isLive: true
             });
           }
@@ -153,7 +315,8 @@ export default function LiveDemoController({ onInteractionCapture }) {
       text: scenario.message,
       from: scenario.from,
       customerName: scenario.customerName,
-      workflow: scenario.workflow
+      workflow: scenario.workflow,
+      device: scenario.device || 'printer'
     });
   };
 
@@ -194,15 +357,54 @@ export default function LiveDemoController({ onInteractionCapture }) {
         }
       }
 
-      const fullTranscript = (finalTranscript + interimTranscript).trim();
+      // Accumulate final transcript
+      if (finalTranscript) {
+        finalTranscriptRef.current += finalTranscript;
+      }
+
+      const fullTranscript = (finalTranscriptRef.current + interimTranscript).trim();
       setLiveTranscript(fullTranscript);
 
       if (fullTranscript.split(' ').length >= 4) {
+        // Detect device type and workflow from transcript
+        const textLower = fullTranscript.toLowerCase();
+        let device = 'printer';
+        let workflow = 'printer_offline';
+        
+        if (textLower.includes('laptop') || textLower.includes('notebook') || textLower.includes('elitebook') || textLower.includes('probook') || textLower.includes('spectre') || textLower.includes('zbook') || textLower.includes('envy')) {
+          device = 'laptop';
+          if (textLower.includes('flicker') || textLower.includes('screen') || textLower.includes('display')) {
+            workflow = 'display_issue';
+          } else if (textLower.includes('slow') || textLower.includes('performance')) {
+            workflow = 'slow_performance';
+          } else if (textLower.includes('battery') || textLower.includes('drain')) {
+            workflow = 'battery_drain';
+          } else if (textLower.includes('overheat') || textLower.includes('hot') || textLower.includes('shut down')) {
+            workflow = 'overheating';
+          } else if (textLower.includes('keyboard') || textLower.includes('key')) {
+            workflow = 'keyboard_issue';
+          } else if (textLower.includes('network') || textLower.includes('wifi') || textLower.includes('wi-fi') || textLower.includes('connect')) {
+            workflow = 'network_issue';
+          }
+        } else if (textLower.includes('network') || textLower.includes('wifi') || textLower.includes('wi-fi') || textLower.includes('connect')) {
+          workflow = 'network_issue';
+        } else if (textLower.includes('ink') || textLower.includes('cartridge') || textLower.includes('cyan')) {
+          workflow = 'ink_error';
+        } else if (textLower.includes('paper jam') || textLower.includes('jam')) {
+          workflow = 'paper_jam';
+        } else if (textLower.includes('slow') || textLower.includes('speed')) {
+          workflow = 'slow_print';
+        } else if (textLower.includes('quality') || textLower.includes('streak') || textLower.includes('smudge')) {
+          workflow = 'print_quality';
+        }
+        
         onInteractionCapture({
           channel: 'voice',
           text: fullTranscript,
           from: 'LIVE',
           customerName: 'Live Voice Input',
+          workflow: workflow,
+          device: device,
           isLive: true
         });
       }
@@ -213,8 +415,65 @@ export default function LiveDemoController({ onInteractionCapture }) {
       setIsListening(false);
     };
 
-    recognition.onend = () => {
+    recognition.onend = async () => {
       setIsListening(false);
+      
+      // When recognition ends, create Genesys conversation if we have a final transcript
+      const finalText = finalTranscriptRef.current.trim();
+      if (finalText && finalText.split(' ').length >= 4 && getCurrentProvider() === 'genesys') {
+        try {
+          // Detect device type and workflow from transcript
+          const textLower = finalText.toLowerCase();
+          let device = 'printer';
+          let workflow = 'printer_offline';
+          
+          if (textLower.includes('laptop') || textLower.includes('notebook') || textLower.includes('elitebook') || textLower.includes('probook') || textLower.includes('spectre') || textLower.includes('zbook') || textLower.includes('envy')) {
+            device = 'laptop';
+            if (textLower.includes('flicker') || textLower.includes('screen') || textLower.includes('display')) {
+              workflow = 'display_issue';
+            } else if (textLower.includes('slow') || textLower.includes('performance')) {
+              workflow = 'slow_performance';
+            } else if (textLower.includes('battery') || textLower.includes('drain')) {
+              workflow = 'battery_drain';
+            } else if (textLower.includes('overheat') || textLower.includes('hot') || textLower.includes('shut down')) {
+              workflow = 'overheating';
+            } else if (textLower.includes('keyboard') || textLower.includes('key')) {
+              workflow = 'keyboard_issue';
+            } else if (textLower.includes('network') || textLower.includes('wifi') || textLower.includes('wi-fi') || textLower.includes('connect')) {
+              workflow = 'network_issue';
+            }
+          } else if (textLower.includes('network') || textLower.includes('wifi') || textLower.includes('wi-fi') || textLower.includes('connect')) {
+            workflow = 'network_issue';
+          } else if (textLower.includes('ink') || textLower.includes('cartridge') || textLower.includes('cyan')) {
+            workflow = 'ink_error';
+          } else if (textLower.includes('paper jam') || textLower.includes('jam')) {
+            workflow = 'paper_jam';
+          } else if (textLower.includes('slow') || textLower.includes('speed')) {
+            workflow = 'slow_print';
+          } else if (textLower.includes('quality') || textLower.includes('streak') || textLower.includes('smudge')) {
+            workflow = 'print_quality';
+          }
+          
+          // Create Genesys conversation
+          const result = await createTestConversation({
+            phoneNumber: '+1 (555) LIVE-VOICE',
+            customerName: 'Live Voice Customer',
+            transcript: finalText,
+            workflow: workflow,
+            device: device,
+          });
+          
+          if (result.success && onCreateGenesysConversation) {
+            // Callback to refresh Genesys panel or auto-select
+            onCreateGenesysConversation(result.conversation);
+          }
+        } catch (error) {
+          console.error('Error creating Genesys conversation from live voice:', error);
+        }
+      }
+      
+      // Reset final transcript for next session
+      finalTranscriptRef.current = '';
       setCurrentChannel(null);
     };
 
@@ -222,13 +481,67 @@ export default function LiveDemoController({ onInteractionCapture }) {
     recognitionRef.current = recognition;
   };
 
-  const stopLiveVoice = () => {
+  const stopLiveVoice = async () => {
     if (recognitionRef.current) {
       recognitionRef.current.stop();
       recognitionRef.current = null;
     }
+    
+    // When manually stopped, also create Genesys conversation if we have transcript
+    const finalText = finalTranscriptRef.current.trim();
+    if (finalText && finalText.split(' ').length >= 4 && getCurrentProvider() === 'genesys') {
+      try {
+        // Detect device type and workflow from transcript
+        const textLower = finalText.toLowerCase();
+        let device = 'printer';
+        let workflow = 'printer_offline';
+        
+        if (textLower.includes('laptop') || textLower.includes('notebook') || textLower.includes('elitebook') || textLower.includes('probook') || textLower.includes('spectre') || textLower.includes('zbook') || textLower.includes('envy')) {
+          device = 'laptop';
+          if (textLower.includes('flicker') || textLower.includes('screen') || textLower.includes('display')) {
+            workflow = 'display_issue';
+          } else if (textLower.includes('slow') || textLower.includes('performance')) {
+            workflow = 'slow_performance';
+          } else if (textLower.includes('battery') || textLower.includes('drain')) {
+            workflow = 'battery_drain';
+          } else if (textLower.includes('overheat') || textLower.includes('hot') || textLower.includes('shut down')) {
+            workflow = 'overheating';
+          } else if (textLower.includes('keyboard') || textLower.includes('key')) {
+            workflow = 'keyboard_issue';
+          } else if (textLower.includes('network') || textLower.includes('wifi') || textLower.includes('wi-fi') || textLower.includes('connect')) {
+            workflow = 'network_issue';
+          }
+        } else if (textLower.includes('network') || textLower.includes('wifi') || textLower.includes('wi-fi') || textLower.includes('connect')) {
+          workflow = 'network_issue';
+        } else if (textLower.includes('ink') || textLower.includes('cartridge') || textLower.includes('cyan')) {
+          workflow = 'ink_error';
+        } else if (textLower.includes('paper jam') || textLower.includes('jam')) {
+          workflow = 'paper_jam';
+        } else if (textLower.includes('slow') || textLower.includes('speed')) {
+          workflow = 'slow_print';
+        } else if (textLower.includes('quality') || textLower.includes('streak') || textLower.includes('smudge')) {
+          workflow = 'print_quality';
+        }
+        
+        const result = await createTestConversation({
+          phoneNumber: '+1 (555) LIVE-VOICE',
+          customerName: 'Live Voice Customer',
+          transcript: finalText,
+          workflow: workflow,
+          device: device,
+        });
+        
+        if (result.success && onCreateGenesysConversation) {
+          onCreateGenesysConversation(result.conversation);
+        }
+      } catch (error) {
+        console.error('Error creating Genesys conversation from live voice:', error);
+      }
+    }
+    
     setIsListening(false);
     setLiveTranscript('');
+    finalTranscriptRef.current = '';
     setCurrentChannel(null);
   };
 
@@ -248,124 +561,124 @@ export default function LiveDemoController({ onInteractionCapture }) {
         animate={{ opacity: 1, y: 0 }}
         className="bg-white rounded-lg shadow-lg flex-1 flex flex-col overflow-hidden border-2 border-gray-300"
       >
-        <div className="flex items-center justify-between px-4 py-2.5 bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] border-b-2 border-gray-300">
-          <div className="flex items-center gap-2.5">
+        <div className="flex items-center justify-between px-3 py-2 bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] border-b-2 border-gray-300">
+          <div className="flex items-center gap-2">
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-              className="w-6 h-6 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center shadow-lg"
+              className="w-5 h-5 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center shadow-lg"
             >
-              <Sparkles className="w-3.5 h-3.5 text-white" />
+              <Sparkles className="w-3 h-3 text-white" />
             </motion.div>
             <div>
-              <div className="text-white font-bold text-sm">AI Interaction Hub</div>
-              <div className="text-white/80 text-xs font-medium">Multi-Channel Intelligence Stream</div>
+              <div className="text-white font-bold text-xs">AI Interaction Hub</div>
+              <div className="text-white/80 text-[9px] font-medium">Multi-Channel Intelligence</div>
             </div>
           </div>
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-1.5">
             <motion.div
-              className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-emerald-400 to-green-500 text-white shadow-lg"
+              className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold bg-gradient-to-r from-emerald-400 to-green-500 text-white shadow-lg"
               animate={{ scale: [1, 1.05, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
-              <span className="relative flex h-2 w-2">
+              <span className="relative flex h-1.5 w-1.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-white"></span>
               </span>
               ACTIVE
             </motion.div>
-            <div className="text-xs font-mono text-white bg-white/30 px-2.5 py-1 rounded-md backdrop-blur-sm font-bold">
+            <div className="text-[9px] font-mono text-white bg-white/30 px-2 py-0.5 rounded backdrop-blur-sm font-bold">
               {Math.floor(elapsedTime / 60)}:{(elapsedTime % 60).toString().padStart(2, '0')}
             </div>
           </div>
         </div>
 
-        {/* Mode Selection */}
-        <div className="px-3 py-2.5 bg-gray-50 border-b-2 border-gray-300">
-          <div className="grid grid-cols-3 gap-2">
+        {/* Mode Selection - Compact */}
+        <div className="px-2 py-1.5 bg-gray-50 border-b-2 border-gray-300">
+          <div className="grid grid-cols-3 gap-1.5">
             <button
               onClick={() => setDemoMode('auto')}
-              className={`px-2.5 py-2 rounded-lg text-xs font-bold transition-all ${
+              className={`px-1.5 py-1 rounded text-[9px] font-bold transition-all ${
                 demoMode === 'auto'
                   ? 'bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] text-white shadow-md scale-105'
-                  : 'bg-white text-gray-700 hover:bg-gray-100 border-2 border-gray-300 hover:border-gray-400'
+                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300 hover:border-gray-400'
               }`}
             >
-              <Sparkles className="w-3.5 h-3.5 mx-auto mb-0.5" />
-              AI Auto
+              <Sparkles className="w-3 h-3 mx-auto mb-0.5" />
+              <span className="text-[8px]">Auto</span>
             </button>
             <button
               onClick={() => setDemoMode('manual')}
-              className={`px-2.5 py-2 rounded-lg text-xs font-bold transition-all ${
+              className={`px-1.5 py-1 rounded text-[9px] font-bold transition-all ${
                 demoMode === 'manual'
                   ? 'bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] text-white shadow-md scale-105'
-                  : 'bg-white text-gray-700 hover:bg-gray-100 border-2 border-gray-300 hover:border-gray-400'
+                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300 hover:border-gray-400'
               }`}
             >
-              <Zap className="w-3.5 h-3.5 mx-auto mb-0.5" />
-              Manual
+              <Zap className="w-3 h-3 mx-auto mb-0.5" />
+              <span className="text-[8px]">Manual</span>
             </button>
             <button
               onClick={() => setDemoMode('live-voice')}
-              className={`px-2.5 py-2 rounded-lg text-xs font-bold transition-all ${
+              className={`px-1.5 py-1 rounded text-[9px] font-bold transition-all ${
                 demoMode === 'live-voice'
                   ? 'bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] text-white shadow-md scale-105'
-                  : 'bg-white text-gray-700 hover:bg-gray-100 border-2 border-gray-300 hover:border-gray-400'
+                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300 hover:border-gray-400'
               }`}
             >
-              <Mic className="w-3.5 h-3.5 mx-auto mb-0.5" />
-              Live
+              <Mic className="w-3 h-3 mx-auto mb-0.5" />
+              <span className="text-[8px]">Live</span>
             </button>
           </div>
         </div>
 
-        {/* Controls and Active Channels */}
-        <div className="px-3 py-2 flex-1 flex flex-col bg-gradient-to-b from-white via-purple-50/30 to-white min-h-0">
+        {/* Controls and Active Channels - Compact */}
+        <div className="px-2 py-1.5 flex-1 flex flex-col bg-gradient-to-b from-white via-purple-50/30 to-white min-h-0 overflow-y-auto">
           {demoMode === 'auto' && (
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
+            <div className="space-y-1.5">
+              <div className="flex items-center gap-1.5">
                 <button
                   onClick={() => setIsPlaying(!isPlaying)}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] text-white rounded-lg font-bold hover:shadow-lg transition-all shadow-md text-xs"
+                  className="flex-1 flex items-center justify-center gap-1.5 px-2 py-1.5 bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] text-white rounded font-bold hover:shadow-lg transition-all shadow-md text-[9px]"
                 >
-                  {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
-                  {isPlaying ? 'Pause Flow' : 'Start AI Flow'}
+                  {isPlaying ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
+                  {isPlaying ? 'Pause' : 'Start'}
                 </button>
                 <button
                   onClick={resetDemo}
-                  className="px-3 py-2 bg-white hover:bg-gray-100 text-[#2E2E2E] rounded-lg transition-all border-2 border-gray-300 hover:border-gray-400"
+                  className="px-2 py-1.5 bg-white hover:bg-gray-100 text-[#2E2E2E] rounded transition-all border border-gray-300 hover:border-gray-400"
                   title="Reset"
                 >
-                  <RotateCcw className="w-3.5 h-3.5" />
+                  <RotateCcw className="w-3 h-3" />
                 </button>
               </div>
               
-              {/* Active Channels Status */}
-              <div className="bg-gradient-to-br from-purple-50 to-indigo-50 border-2 border-purple-200 rounded-lg p-2">
-                <div className="text-xs font-bold text-purple-900 mb-1.5 flex items-center gap-1.5">
-                  <Activity className="w-4 h-4" />
-                  AI-Monitored Channels
+              {/* Active Channels Status - Compact */}
+              <div className="bg-gradient-to-br from-purple-50 to-indigo-50 border border-purple-200 rounded-lg p-1.5">
+                <div className="text-[9px] font-bold text-purple-900 mb-1 flex items-center gap-1">
+                  <Activity className="w-3 h-3" />
+                  Channels
                 </div>
-                <div className="grid grid-cols-2 gap-1.5">
-                  <div className="flex items-center gap-1.5 bg-white rounded px-2 py-1 border border-purple-200">
-                    <Phone className="w-3.5 h-3.5 text-purple-600" />
-                    <span className="text-[10px] font-semibold text-gray-700">Voice</span>
-                    <span className="ml-auto w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+                <div className="grid grid-cols-2 gap-1">
+                  <div className="flex items-center gap-1 bg-white rounded px-1.5 py-0.5 border border-purple-200">
+                    <Phone className="w-2.5 h-2.5 text-purple-600" />
+                    <span className="text-[8px] font-semibold text-gray-700">Voice</span>
+                    <span className="ml-auto w-1 h-1 bg-green-500 rounded-full"></span>
                   </div>
-                  <div className="flex items-center gap-1.5 bg-white rounded px-2 py-1 border border-purple-200">
-                    <MessageSquare className="w-3.5 h-3.5 text-purple-600" />
-                    <span className="text-[10px] font-semibold text-gray-700">SMS</span>
-                    <span className="ml-auto w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+                  <div className="flex items-center gap-1 bg-white rounded px-1.5 py-0.5 border border-purple-200">
+                    <MessageSquare className="w-2.5 h-2.5 text-purple-600" />
+                    <span className="text-[8px] font-semibold text-gray-700">SMS</span>
+                    <span className="ml-auto w-1 h-1 bg-green-500 rounded-full"></span>
                   </div>
-                  <div className="flex items-center gap-1.5 bg-white rounded px-2 py-1 border border-purple-200">
-                    <MessageSquare className="w-3.5 h-3.5 text-purple-600" />
-                    <span className="text-[10px] font-semibold text-gray-700">WhatsApp</span>
-                    <span className="ml-auto w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+                  <div className="flex items-center gap-1 bg-white rounded px-1.5 py-0.5 border border-purple-200">
+                    <MessageSquare className="w-2.5 h-2.5 text-purple-600" />
+                    <span className="text-[8px] font-semibold text-gray-700">WhatsApp</span>
+                    <span className="ml-auto w-1 h-1 bg-green-500 rounded-full"></span>
                   </div>
-                  <div className="flex items-center gap-1.5 bg-white rounded px-2 py-1 border border-purple-200">
-                    <Mail className="w-3.5 h-3.5 text-purple-600" />
-                    <span className="text-[10px] font-semibold text-gray-700">Chat</span>
-                    <span className="ml-auto w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+                  <div className="flex items-center gap-1 bg-white rounded px-1.5 py-0.5 border border-purple-200">
+                    <Mail className="w-2.5 h-2.5 text-purple-600" />
+                    <span className="text-[8px] font-semibold text-gray-700">Chat</span>
+                    <span className="ml-auto w-1 h-1 bg-green-500 rounded-full"></span>
                   </div>
                 </div>
               </div>
@@ -373,54 +686,61 @@ export default function LiveDemoController({ onInteractionCapture }) {
           )}
 
           {demoMode === 'live-voice' && (
-            <div className="flex items-center gap-2">
-              <button
-                onClick={isListening ? stopLiveVoice : startLiveVoice}
-                className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-bold transition-all shadow-md text-xs ${
-                  isListening
-                    ? 'bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white'
-                    : 'bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] text-white hover:shadow-lg'
-                }`}
-              >
-                <Mic className="w-3.5 h-3.5" />
-                {isListening ? 'Stop Recording' : 'Start Speaking'}
-              </button>
-              {!hasSpeechAPI && (
-                <span className="text-[9px] bg-red-100 text-red-700 px-2.5 py-1 rounded-md border border-red-200 font-semibold">
-                  Chrome Required
-                </span>
+            <div className="space-y-1.5">
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={isListening ? stopLiveVoice : startLiveVoice}
+                  className={`flex-1 flex items-center justify-center gap-1.5 px-2 py-1.5 rounded font-bold transition-all shadow-md text-[9px] ${
+                    isListening
+                      ? 'bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white'
+                      : 'bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] text-white hover:shadow-lg'
+                  }`}
+                >
+                  <Mic className="w-3 h-3" />
+                  {isListening ? 'Stop' : 'Start'}
+                </button>
+                {!hasSpeechAPI && (
+                  <span className="text-[8px] bg-red-100 text-red-700 px-1.5 py-0.5 rounded border border-red-200 font-semibold">
+                    Chrome
+                  </span>
+                )}
+              </div>
+              {getCurrentProvider() === 'genesys' && (
+                <div className="text-[8px] text-gray-600 dark:text-gray-400 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded px-1.5 py-1">
+                  <span className="font-semibold">💡</span> Auto-creates Genesys conversation when finished.
+                </div>
               )}
             </div>
           )}
 
           {demoMode === 'manual' && (
-            <div className="grid grid-cols-2 gap-1.5">
+            <div className="grid grid-cols-2 gap-1">
               <button
                 onClick={() => startVoiceSimulation(DEMO_SCENARIOS.voice[0])}
-                className="flex flex-col items-center gap-1 px-2 py-2 bg-white hover:bg-gray-100 text-gray-700 rounded-lg text-[9px] font-bold transition-all border-2 border-gray-300 hover:border-gray-400 shadow-sm"
+                className="flex flex-col items-center gap-0.5 px-1.5 py-1.5 bg-white hover:bg-gray-100 text-gray-700 rounded text-[8px] font-bold transition-all border border-gray-300 hover:border-gray-400 shadow-sm"
               >
-                <Phone className="w-3.5 h-3.5 text-[#780096]" />
+                <Phone className="w-3 h-3 text-[#780096]" />
                 Voice
               </button>
               <button
                 onClick={() => receiveMessage('sms', DEMO_SCENARIOS.sms[0])}
-                className="flex flex-col items-center gap-1 px-2 py-2 bg-white hover:bg-gray-100 text-gray-700 rounded-lg text-[9px] font-bold transition-all border-2 border-gray-300 hover:border-gray-400 shadow-sm"
+                className="flex flex-col items-center gap-0.5 px-1.5 py-1.5 bg-white hover:bg-gray-100 text-gray-700 rounded text-[8px] font-bold transition-all border border-gray-300 hover:border-gray-400 shadow-sm"
               >
-                <MessageSquare className="w-3.5 h-3.5 text-[#780096]" />
+                <MessageSquare className="w-3 h-3 text-[#780096]" />
                 SMS
               </button>
               <button
                 onClick={() => receiveMessage('whatsapp', DEMO_SCENARIOS.whatsapp[0])}
-                className="flex flex-col items-center gap-1 px-2 py-2 bg-white hover:bg-purple-50 text-gray-700 rounded-lg text-[10px] font-bold transition-all border-2 border-purple-200 hover:border-purple-300 shadow-sm"
+                className="flex flex-col items-center gap-0.5 px-1.5 py-1.5 bg-white hover:bg-purple-50 text-gray-700 rounded text-[8px] font-bold transition-all border border-purple-200 hover:border-purple-300 shadow-sm"
               >
-                <MessageSquare className="w-3.5 h-3.5 text-[#780096]" />
+                <MessageSquare className="w-3 h-3 text-[#780096]" />
                 WhatsApp
               </button>
               <button
                 onClick={() => receiveMessage('chat', DEMO_SCENARIOS.chat[0])}
-                className="flex flex-col items-center gap-1 px-2 py-2 bg-white hover:bg-gray-100 text-gray-700 rounded-lg text-[9px] font-bold transition-all border-2 border-gray-300 hover:border-gray-400 shadow-sm"
+                className="flex flex-col items-center gap-0.5 px-1.5 py-1.5 bg-white hover:bg-gray-100 text-gray-700 rounded text-[8px] font-bold transition-all border border-gray-300 hover:border-gray-400 shadow-sm"
               >
-                <Mail className="w-3.5 h-3.5 text-[#780096]" />
+                <Mail className="w-3 h-3 text-[#780096]" />
                 Chat
               </button>
             </div>

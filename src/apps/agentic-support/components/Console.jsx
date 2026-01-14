@@ -4,7 +4,7 @@
  * Author: Vinod Kumar V (VKV)
  */
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import {
   Mic,
   MessageCircle,
@@ -28,6 +28,7 @@ import {
   Phone,
   FileText,
   ExternalLink,
+  ArrowRight,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import AgenticSupportDemo from "../../../components/AgenticSupportDemo";
@@ -119,6 +120,13 @@ export default function AgenticSupportConsole({ onNavigate }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [selectedGenesysConversation, setSelectedGenesysConversation] = useState(null);
   const [showGenesysFlow, setShowGenesysFlow] = useState(false);
+  const [currentProcessingAgent, setCurrentProcessingAgent] = useState(null);
+  const [processingStartTime, setProcessingStartTime] = useState(null);
+  const [streamingTranscript, setStreamingTranscript] = useState('');
+  const [isStreaming, setIsStreaming] = useState(false);
+  
+  // Ref for Genesys Conversations Panel to refresh it
+  const genesysPanelRef = useRef(null);
   
   // Track if demo/interaction is active
   useEffect(() => {
@@ -126,6 +134,31 @@ export default function AgenticSupportConsole({ onNavigate }) {
       setIsPlaying(true);
     }
   }, [stage]);
+
+  // Track current processing agent based on stage
+  useEffect(() => {
+    if (stage === 'capture') {
+      setCurrentProcessingAgent(channel === 'voice' ? 'Voice Capture Agent' : channel === 'chat' ? 'Chat Capture Agent' : 'Email Parsing Agent');
+      setProcessingStartTime(new Date());
+    } else if (stage === 'intent-detecting') {
+      setCurrentProcessingAgent('Intent Detection Agent');
+      setProcessingStartTime(new Date());
+    } else if (stage === 'intent-ready') {
+      setCurrentProcessingAgent('Intent Detection Agent');
+    } else if (stage === 'knowledge-ready') {
+      setCurrentProcessingAgent('Knowledge Base Agent');
+      setProcessingStartTime(new Date());
+    } else if (stage === 'telemetry') {
+      setCurrentProcessingAgent('Diagnostic Agent');
+      setProcessingStartTime(new Date());
+    } else if (stage === 'running') {
+      setCurrentProcessingAgent('Action Execution Agent');
+      setProcessingStartTime(new Date());
+    } else if (stage === 'completed' || stage === 'escalated') {
+      setCurrentProcessingAgent(null);
+      setProcessingStartTime(null);
+    }
+  }, [stage, channel]);
 
   // Email-specific state
   const [emailFrom, setEmailFrom] = useState("");
@@ -164,7 +197,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
     // For voice, interactionText is set directly by speech recognition
   }, [channel, emailSubject, emailBody, chatMessages]);
 
-  // Detect device type from customer input
+  // Detect device type from customer input (enhanced for HP products)
   useEffect(() => {
     if (!interactionText) {
       setDetectedDevice(null);
@@ -173,10 +206,10 @@ export default function AgenticSupportConsole({ onNavigate }) {
 
     const text = interactionText.toLowerCase();
     
-    // Check for device keywords
-    if (text.includes('laptop') || text.includes('notebook')) {
+    // Check for device keywords - enhanced for HP products
+    if (text.includes('laptop') || text.includes('elitebook') || text.includes('spectre') || text.includes('probook') || text.includes('zbook') || text.includes('envy') || text.includes('notebook') || text.includes('screen') || text.includes('display') || text.includes('battery') || text.includes('keyboard') || text.includes('overheating') || text.includes('flickering')) {
       setDetectedDevice('laptop');
-    } else if (text.includes('printer') || text.includes('print')) {
+    } else if (text.includes('printer') || text.includes('laserjet') || text.includes('officejet') || text.includes('print') || text.includes('ink') || text.includes('cartridge') || text.includes('toner') || text.includes('paper jam')) {
       setDetectedDevice('printer');
     } else if (text.includes('computer') || text.includes('desktop') || text.includes('pc')) {
       setDetectedDevice('computer');
@@ -334,27 +367,59 @@ export default function AgenticSupportConsole({ onNavigate }) {
 
     const recognition = new SpeechRecognition();
     recognition.lang = "en-US";
-    recognition.interimResults = true;
+    recognition.interimResults = true; // Enable incremental results
+    recognition.continuous = true; // Keep listening
 
     recognition.onresult = (event) => {
-      const text = Array.from(event.results)
-        .map((r) => r[0].transcript)
-        .join(" ");
-      setInteractionText(text);
+      // Process both final and interim results for incremental processing
+      let finalText = '';
+      let interimText = '';
+      
+      Array.from(event.results).forEach((result, index) => {
+        const transcript = result[0].transcript;
+        if (result.isFinal) {
+          finalText += transcript + ' ';
+        } else {
+          interimText += transcript;
+        }
+      });
+      
+      // Combine final and interim for real-time display
+      const combinedText = finalText + interimText;
+      setInteractionText(combinedText);
+      
+      // Mark as streaming if we have interim results
+      if (interimText) {
+        setIsStreaming(true);
+        setStreamingTranscript(combinedText);
+      } else {
+        setIsStreaming(false);
+      }
     };
-    recognition.onerror = () => {
+    
+    recognition.onerror = (event) => {
+      console.error('Speech recognition error:', event.error);
       setIsListening(false);
+      setIsStreaming(false);
     };
+    
     recognition.onend = () => {
       setIsListening(false);
-      setLastResult(null);
+      setIsStreaming(false);
+      // Process final transcript if we have enough words
+      if (interactionText.trim().split(/\s+/).length >= 4) {
+        setLastResult(null);
+      }
     };
 
     try {
       recognition.start();
       setIsListening(true);
-    } catch {
+      setIsStreaming(true);
+    } catch (error) {
+      console.error('Failed to start speech recognition:', error);
       setIsListening(false);
+      setIsStreaming(false);
     }
   };
 
@@ -390,15 +455,33 @@ export default function AgenticSupportConsole({ onNavigate }) {
   };
 
   // Orchestrate the step-by-step flow with intelligent pause detection
+  // For voice conversations, support incremental processing as transcript streams in
   useEffect(() => {
     const trimmed = (interactionText || "").trim();
     const wordCount = trimmed ? trimmed.split(/\s+/).length : 0;
+
+    // For voice channel with streaming, process incrementally
+    if (channel === 'voice' && isStreaming && wordCount >= 3) {
+      // Start processing with partial transcript
+      setStreamingTranscript(trimmed);
+      if (stage === 'idle' || stage === 'capture') {
+        setStage("capture");
+      }
+      // Don't proceed to intent detection until streaming stops
+      return;
+    }
 
     // Require at least 4 words before processing (reasonable minimum)
     if (!trimmed || wordCount < 4) {
       setStage("idle");
       setLastResult(null);
+      setIsStreaming(false);
       return;
+    }
+
+    // If we were streaming and now have enough text, stop streaming and process
+    if (isStreaming && wordCount >= 4) {
+      setIsStreaming(false);
     }
 
     // Show capture immediately
@@ -409,30 +492,33 @@ export default function AgenticSupportConsole({ onNavigate }) {
 
     // Debounce: Wait for user to pause (stop typing/speaking)
     // This gives them time to complete their thought
+    // For voice, use shorter debounce to process faster
+    const debounceDelay = channel === 'voice' ? 500 : 1000;
+    
     debounceTimer = setTimeout(() => {
       // After pause, show customer input capture
     t1 = setTimeout(() => {
       setStage("intent-detecting");
-      }, 2500); // Customer input visible for 2.5s - time to explain what was captured
+      }, channel === 'voice' ? 1500 : 2500); // Faster for voice
 
     t2 = setTimeout(() => {
       setStage("intent-ready");
-      }, 5000); // Intent Brain analyzing - 2.5s to explain AI reasoning
+      }, channel === 'voice' ? 3500 : 5000); // Faster for voice
 
     t3 = setTimeout(() => {
         setStage("knowledge-ready");
-      }, 7000); // Knowledge matched - 2s to explain knowledge base lookup
+      }, channel === 'voice' ? 5000 : 7000); // Faster for voice
 
     t4 = setTimeout(() => {
         setStage("telemetry");
-      }, 9500); // Telemetry gathering - 2.5s to explain device snapshot
+      }, channel === 'voice' ? 7000 : 9500); // Faster for voice
 
       const t5 = setTimeout(() => {
         // Continue workflow for all cases - don't pause on unknown
         setStage("running");
         setAutoRunToken(String(Date.now()));
-      }, 12000); // Execute workflow - 2.5s to explain actions
-    }, 1000); // Wait 1 second after user stops typing/speaking
+      }, channel === 'voice' ? 9000 : 12000); // Faster for voice
+    }, debounceDelay); // Wait after user stops typing/speaking
 
     return () => {
       clearTimeout(debounceTimer);
@@ -441,7 +527,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
       clearTimeout(t3);
       clearTimeout(t4);
     };
-  }, [interactionText, selectedWorkflow]);
+  }, [interactionText, selectedWorkflow, channel, isStreaming]);
 
   const currentOutcome = useMemo(() => {
     if (!lastResult) return null;
@@ -669,6 +755,21 @@ export default function AgenticSupportConsole({ onNavigate }) {
     // Update interaction text
     setInteractionText(interaction.text);
     
+    // Detect device type from interaction text or use provided device type
+    const text = (interaction.text || '').toLowerCase();
+    let deviceType = interaction.device || null;
+    
+    if (!deviceType) {
+      // Auto-detect from text
+      if (text.includes('laptop') || text.includes('elitebook') || text.includes('spectre') || text.includes('probook') || text.includes('zbook') || text.includes('envy') || text.includes('screen') || text.includes('display') || text.includes('battery') || text.includes('keyboard') || text.includes('overheating') || text.includes('flickering')) {
+        deviceType = 'laptop';
+      } else if (text.includes('printer') || text.includes('laserjet') || text.includes('officejet') || text.includes('ink') || text.includes('cartridge') || text.includes('toner') || text.includes('paper jam')) {
+        deviceType = 'printer';
+      }
+    }
+    
+    setDetectedDevice(deviceType);
+    
     // Update chat messages if not voice
     if (interaction.channel !== 'voice') {
       setChatMessages([
@@ -745,73 +846,102 @@ export default function AgenticSupportConsole({ onNavigate }) {
 
       {/* Main Content */}
       <div className="flex-1 space-y-6 p-6 overflow-y-auto min-h-0">
-      {/* CCAS Infrastructure Section - Integrations */}
+      {/* CCAS Infrastructure Section - Compact, Space-Optimized */}
       {showCCASInfra && (
-        <div className="bg-white dark:bg-gray-900 rounded-xl p-6 border-2 border-gray-300 dark:border-gray-700 shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
-          <div className="flex items-center gap-3 mb-4 pb-3 border-b-2 border-gray-300 dark:border-gray-700">
-            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center shadow-sm">
-              <Zap className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <h3 className="text-base font-bold text-[#2E2E2E] dark:text-white">CCAS Integration Layer</h3>
-              <p className="text-xs text-[#2E2E2E] dark:text-gray-300 font-medium">External Contact Center Infrastructure</p>
-          </div>
-          </div>
-          <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
-            {/* Live Interaction Monitor */}
-            <div className="h-[360px]">
-              <LiveDemoController onInteractionCapture={handleDemoInteraction} />
-          </div>
-            
-            {/* CCAS Connection Status */}
-            <div className="h-[360px]">
-              <CCASConnectionPanel provider={getCurrentProvider()} />
-        </div>
-          </div>
-
-          {/* Genesys Conversations Panel - Show if Genesys is selected */}
-          {getCurrentProvider() === 'genesys' && (
-            <div className="mt-6">
-              <div className="mb-4">
-                <h3 className="text-base font-bold text-[#2E2E2E] dark:text-white mb-1">Genesys Conversations</h3>
-                <p className="text-xs text-gray-600 dark:text-gray-400">Select a conversation to process with FAB Agents</p>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white dark:bg-gray-900 rounded-xl p-3 border-2 border-gray-300 dark:border-gray-700 shadow-[0_4px_12px_rgba(0,0,0,0.08)]"
+        >
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#2E2E2E] to-[#4A4A4A] flex items-center justify-center shadow-md">
+                <Zap className="w-4 h-4 text-white" />
               </div>
-              <div className="h-[400px]">
+              <div>
+                <h3 className="text-sm font-bold text-[#2E2E2E] dark:text-white">CCAS Integration</h3>
+                <p className="text-[10px] text-[#989898] dark:text-gray-400">Enterprise Contact Center Infrastructure</p>
+              </div>
+            </div>
+            <button
+              onClick={() => setShowCCASInfra(false)}
+              className="text-[10px] text-gray-500 hover:text-gray-700 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors font-medium"
+            >
+              Collapse
+            </button>
+          </div>
+          
+          {/* Compact 3-column layout for better space usage */}
+          <div className="grid gap-3 grid-cols-1 lg:grid-cols-3">
+            {/* Column 1: Live Interaction Monitor - Compact */}
+            <div className="h-[240px] lg:col-span-1">
+              <LiveDemoController 
+                onInteractionCapture={handleDemoInteraction}
+                onCreateGenesysConversation={async (conversation) => {
+                  if (genesysPanelRef.current) {
+                    await genesysPanelRef.current.refresh();
+                    const autoProcess = localStorage.getItem('agenticSupport.autoProcessGenesys') === 'true';
+                    if (autoProcess && genesysPanelRef.current.selectConversation) {
+                      setTimeout(() => {
+                        genesysPanelRef.current.selectConversation(conversation);
+                      }, 1000);
+                    }
+                  }
+                }}
+              />
+            </div>
+            
+            {/* Column 2: CCAS Connection Status - Compact */}
+            <div className="h-[240px] lg:col-span-1">
+              <CCASConnectionPanel provider={getCurrentProvider()} />
+            </div>
+
+            {/* Column 3: Genesys Conversations Panel - Compact, only if Genesys */}
+            {getCurrentProvider() === 'genesys' && (
+              <div className="h-[240px] lg:col-span-1">
                 <GenesysConversationsPanel 
+                  ref={genesysPanelRef}
                   onSelectConversation={(conversation) => {
                     setSelectedGenesysConversation(conversation);
-                    setShowGenesysFlow(true);
-                    // Process conversation through FAB Agents
                     if (conversation.participants?.[0]) {
                       const participant = conversation.participants[0];
+                      const transcript = conversation._demoTranscript || 
+                                       (conversation.messages?.[0]?.textBody) ||
+                                       `Customer inquiry from Genesys conversation ${conversation.id}`;
+                      const workflow = conversation._demoWorkflow || 'printer_offline';
+                      const device = conversation._demoDevice || null;
+                      
                       handleDemoInteraction({
                         channel: conversation.mediaType === 'call' ? 'voice' : 'chat',
-                        text: `Customer inquiry from Genesys conversation ${conversation.id}`,
+                        text: transcript,
                         from: participant.address || participant.name,
                         customerName: participant.name || 'Genesys Customer',
-                        workflow: 'printer_offline', // Default, will be detected by intent agent
+                        workflow: workflow,
+                        device: device,
                         genesysConversationId: conversation.id,
                       });
                     }
                   }}
                 />
               </div>
-            </div>
-          )}
-
-          {/* Genesys Flow Demo - Show when conversation is selected */}
-          {showGenesysFlow && selectedGenesysConversation && (
-            <div className="mt-6">
-              <GenesysFlowDemo 
-                conversationId={selectedGenesysConversation.id}
-                onComplete={() => {
-                  setShowGenesysFlow(false);
-                  setSelectedGenesysConversation(null);
-                }}
-              />
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        </motion.div>
+      )}
+      
+      {/* Show toggle button when CCAS section is hidden */}
+      {!showCCASInfra && (
+        <motion.button
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          onClick={() => setShowCCASInfra(true)}
+          className="w-full py-3 px-4 text-sm font-medium text-gray-700 hover:text-gray-900 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-300 rounded-lg border-2 border-gray-200 dark:border-gray-700 transition-all hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-sm"
+        >
+          <div className="flex items-center justify-center gap-2">
+            <Zap className="w-4 h-4" />
+            Show CCAS Integration
+          </div>
+        </motion.button>
       )}
 
 
@@ -883,7 +1013,22 @@ export default function AgenticSupportConsole({ onNavigate }) {
 
                 {/* Main text */}
                 <div className="bg-gradient-to-br from-white to-indigo-50/30 rounded-lg border border-indigo-200 p-3">
-                  <p className="text-base text-gray-900 leading-relaxed">{interactionText}</p>
+                  <p className="text-base text-gray-900 leading-relaxed">
+                    {interactionText}
+                    {isStreaming && channel === 'voice' && (
+                      <motion.span
+                        animate={{ opacity: [1, 0.3, 1] }}
+                        transition={{ duration: 1, repeat: Infinity }}
+                        className="inline-block w-2 h-4 bg-indigo-600 ml-1"
+                      />
+                    )}
+                  </p>
+                  {isStreaming && channel === 'voice' && (
+                    <div className="mt-2 flex items-center gap-2 text-xs text-indigo-600">
+                      <Activity className="w-3 h-3 animate-pulse" />
+                      <span className="font-semibold">Streaming transcript...</span>
+                    </div>
+                  )}
                 </div>
 
                 {/* Analysis metadata */}
@@ -1543,6 +1688,111 @@ export default function AgenticSupportConsole({ onNavigate }) {
         </div>
         {/* End of 3-column grid */}
 
+        {/* Handoff Strip - Visual connection between Genesys and Workflow */}
+        {selectedGenesysConversation && interactionText && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.5 }}
+            className="mt-4 px-4 py-3 bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 dark:from-blue-900/20 dark:via-indigo-900/20 dark:to-purple-900/20 border-2 border-blue-200 dark:border-blue-800 rounded-lg shadow-sm"
+          >
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3 flex-1 min-w-0">
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  <Activity className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                  <span className="text-xs font-bold text-gray-700 dark:text-gray-300">Genesys Conversation:</span>
+                  <span className="text-xs font-mono text-gray-600 dark:text-gray-400 truncate">
+                    {selectedGenesysConversation.id?.substring(0, 12)}...
+                  </span>
+                </div>
+                <motion.div
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                  className="flex-shrink-0"
+                >
+                  <ArrowRight className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                </motion.div>
+                <div className="flex items-center gap-2 flex-1 min-w-0">
+                  <Sparkles className="w-4 h-4 text-purple-600 dark:text-purple-400 flex-shrink-0" />
+                  <span className="text-xs font-bold text-gray-700 dark:text-gray-300">FAB Agents Workflow:</span>
+                  <span className="text-xs font-mono font-bold bg-[#2E2E2E] text-white px-2 py-0.5 rounded border border-gray-400">
+                    {selectedWorkflow || 'printer_offline'}
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <div className="px-2 py-1 bg-emerald-100 dark:bg-emerald-900/30 border border-emerald-300 dark:border-emerald-700 rounded-full">
+                  <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-300">Handoff Active</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Timeline Rail - Workflow Stages Progress */}
+        {interactionText && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="mt-4 px-4 py-3 bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 rounded-lg shadow-sm"
+          >
+            <div className="flex items-center justify-between gap-2">
+              {[
+                { label: 'Capture', stage: 'capture', icon: User },
+                { label: 'Intent', stage: 'intent-ready', icon: Brain },
+                { label: 'Knowledge', stage: 'knowledge-ready', icon: BookOpen },
+                { label: 'Telemetry', stage: 'telemetry', icon: Cpu },
+                { label: 'Action', stage: 'running', icon: Zap },
+                { label: 'Escalation', stage: 'escalated', icon: AlertCircle },
+              ].map((step, idx) => {
+                const isActive = stage === step.stage || 
+                  (step.stage === 'capture' && ['capture', 'intent-detecting', 'intent-ready', 'knowledge-ready', 'telemetry', 'running', 'completed', 'escalated'].includes(stage)) ||
+                  (step.stage === 'intent-ready' && ['intent-ready', 'knowledge-ready', 'telemetry', 'running', 'completed', 'escalated'].includes(stage)) ||
+                  (step.stage === 'knowledge-ready' && ['knowledge-ready', 'telemetry', 'running', 'completed', 'escalated'].includes(stage)) ||
+                  (step.stage === 'telemetry' && ['telemetry', 'running', 'completed', 'escalated'].includes(stage)) ||
+                  (step.stage === 'running' && ['running', 'completed', 'escalated'].includes(stage)) ||
+                  (step.stage === 'escalated' && stage === 'escalated');
+                const isCompleted = ['completed', 'escalated'].includes(stage) && idx < 5;
+                const Icon = step.icon;
+                
+                return (
+                  <div key={step.stage} className="flex items-center flex-1">
+                    <div className="flex flex-col items-center flex-1">
+                      <div className={`flex items-center justify-center w-8 h-8 rounded-full border-2 transition-all ${
+                        isActive
+                          ? 'bg-[#2E2E2E] border-[#2E2E2E] text-white shadow-md scale-110'
+                          : isCompleted
+                          ? 'bg-emerald-100 dark:bg-emerald-900/30 border-emerald-400 dark:border-emerald-600 text-emerald-700 dark:text-emerald-300'
+                          : 'bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-400 dark:text-gray-500'
+                      }`}>
+                        <Icon className="w-4 h-4" />
+                      </div>
+                      <span className={`text-[10px] font-semibold mt-1 ${
+                        isActive
+                          ? 'text-[#2E2E2E] dark:text-white'
+                          : isCompleted
+                          ? 'text-emerald-700 dark:text-emerald-300'
+                          : 'text-gray-500 dark:text-gray-400'
+                      }`}>
+                        {step.label}
+                      </span>
+                    </div>
+                    {idx < 5 && (
+                      <div className={`flex-1 h-0.5 mx-2 transition-all ${
+                        isCompleted || (isActive && idx < 4)
+                          ? 'bg-gradient-to-r from-[#2E2E2E] to-emerald-500'
+                          : 'bg-gray-200 dark:bg-gray-700'
+                      }`} />
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+
         {/* Workflow Outcome - AI Console Output */}
         <motion.div
           animate={{
@@ -1922,6 +2172,25 @@ export default function AgenticSupportConsole({ onNavigate }) {
                 </div>
               </div>
               <div className="flex items-center gap-2">
+                {currentProcessingAgent && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="px-3 py-1.5 rounded-full bg-amber-500/30 backdrop-blur-sm border border-amber-400/50"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Loader2 className="w-3 h-3 text-amber-300 animate-spin" />
+                      <span className="text-xs font-semibold text-white">
+                        Processing: {currentProcessingAgent}
+                      </span>
+                      {processingStartTime && (
+                        <span className="text-[10px] text-white/80">
+                          ({Math.floor((new Date() - processingStartTime) / 1000)}s)
+                        </span>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
                 <div className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/30">
                   <div className="flex items-center gap-2">
                     <span className="relative flex h-2 w-2">
@@ -2005,13 +2274,27 @@ export default function AgenticSupportConsole({ onNavigate }) {
                       >
                         <div className="rounded-xl bg-white dark:bg-gray-900 border-2 border-gray-300 dark:border-gray-700 hover:border-[#2E2E2E] dark:hover:border-gray-500 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-md">
                           {/* Agent Header */}
-                          <div className="px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border-b-2 border-gray-300 dark:border-gray-700">
+                          <div className={`px-4 py-2.5 border-b-2 ${
+                            currentProcessingAgent === step.label
+                              ? 'bg-amber-50 dark:bg-amber-900/20 border-amber-300 dark:border-amber-700'
+                              : 'bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-700'
+                          }`}>
                             <div className="flex items-center justify-between gap-2">
                               <div className="flex items-center gap-2 flex-1 min-w-0">
                                 <span className={`font-bold text-sm ${step.color} truncate`}>
                                   {step.label}
                               </span>
-                                {idx === timeline.length - 1 && (
+                                {currentProcessingAgent === step.label && (
+                                  <motion.span
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    className="px-2 py-0.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 text-white text-[10px] font-bold uppercase tracking-wide flex items-center gap-1 shadow-sm"
+                                  >
+                                    <Loader2 className="w-3 h-3 animate-spin" />
+                                    Processing
+                                  </motion.span>
+                                )}
+                                {idx === timeline.length - 1 && !currentProcessingAgent && (
                                   <motion.span
                                     initial={{ scale: 0 }}
                                     animate={{ scale: 1 }}

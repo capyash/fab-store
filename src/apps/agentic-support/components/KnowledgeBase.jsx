@@ -506,12 +506,18 @@ Step 2: Test Device on Different Computer
 SECTION 3: HP LAPTOP ISSUES (FIELD SOP)
 
 CONTEXT:
-These are typical HP laptop issues seen in the field. Use these steps when the device is identified as an HP laptop or when the user describes the same symptoms.
+These are typical HP laptop issues seen in the field. Use these steps when the device is identified as an HP laptop (EliteBook, ProBook, Spectre, ZBook, Envy, Pavilion) or when the user describes the same symptoms.
 
 TYPICAL ISSUES:
 - Power adapter not working
 - Laptop not booting up
 - Microphone/Camera not working
+- Display flickering or screen issues
+- Slow performance
+- Battery draining fast
+- Overheating and automatic shutdown
+- Keyboard not working
+- Network connectivity issues
 
 STANDARD RESOLUTION STEPS:
 
@@ -538,7 +544,69 @@ MICROPHONE / CAMERA NOT WORKING:
 - Check OS‑level privacy and app permissions for Mic/Camera.
 - If hardware fault is suspected:
   * For **warranty devices**: raise a case with OEM (HP) for repair/replacement.
-  * For **non‑warranty devices**: engage a third‑party vendor for diagnosis and repair`,
+  * For **non‑warranty devices**: engage a third‑party vendor for diagnosis and repair.
+
+DISPLAY FLICKERING OR SCREEN ISSUES:
+- Check display cable connections (if external monitor).
+- Update graphics drivers using HP Support Assistant or HP.com/drivers.
+- Test display in safe mode to rule out software issues.
+- Check for physical damage to screen (cracks, pressure marks).
+- Adjust display refresh rate in Display Settings.
+- If flickering persists:
+  * For **warranty devices**: raise a case with OEM (HP) for display replacement.
+  * For **non‑warranty devices**: engage a third‑party vendor for display repair.
+
+SLOW PERFORMANCE:
+- Check Task Manager for high CPU/memory usage and close unnecessary applications.
+- Run HP Support Assistant to check for driver and BIOS updates.
+- Check disk space (should have at least 10% free space).
+- Run Windows Disk Cleanup and remove temporary files.
+- Check for malware using Windows Defender or HP recommended antivirus.
+- If performance issues persist:
+  * Consider upgrading RAM (check HP specifications for maximum supported).
+  * Replace HDD with SSD if applicable (check warranty status first).
+  * For **warranty devices**: raise a case with OEM (HP) if hardware issue suspected.
+
+BATTERY DRAINING FAST:
+- Check battery health in HP Support Assistant (Battery Check).
+- Review power settings and adjust power plan (Balanced or Power Saver).
+- Check for background applications consuming battery (Task Manager > Battery column).
+- Calibrate battery: fully charge, then fully discharge, then recharge.
+- Check if battery is swollen or damaged (safety risk - replace immediately).
+- If battery health is below 50% or device is out of warranty:
+  * Replace with HP‑approved battery (check model compatibility).
+  * For **warranty devices**: raise a case with OEM (HP) for battery replacement.
+
+OVERHEATING AND AUTOMATIC SHUTDOWN:
+- Check for blocked air vents and clean with compressed air (power off first).
+- Ensure laptop is on a hard, flat surface (not on bed/sofa blocking vents).
+- Check Task Manager for CPU‑intensive processes and close if needed.
+- Update BIOS and system drivers using HP Support Assistant.
+- Check thermal paste (if device is out of warranty and user is comfortable):
+  * May need professional service to reapply thermal paste.
+- If overheating persists:
+  * For **warranty devices**: raise a case with OEM (HP) - may need fan or heatsink replacement.
+  * For **non‑warranty devices**: engage a third‑party vendor for thermal system repair.
+
+KEYBOARD NOT WORKING:
+- Check for physical damage (spills, stuck keys, debris).
+- Update keyboard drivers in Device Manager.
+- Test keyboard in BIOS/UEFI (if keys work there, it's a software issue).
+- Check for Windows updates that may affect keyboard drivers.
+- Try external USB keyboard to confirm if issue is with built‑in keyboard.
+- If hardware issue confirmed:
+  * For **warranty devices**: raise a case with OEM (HP) for keyboard replacement.
+  * For **non‑warranty devices**: engage a third‑party vendor for keyboard repair.
+
+NETWORK CONNECTIVITY ISSUES (HP LAPTOP):
+- Verify Wi‑Fi adapter is enabled (Function key + Wi‑Fi icon, or Settings > Network).
+- Update Wi‑Fi drivers using HP Support Assistant or HP.com/drivers.
+- Check if device MAC address is whitelisted on corporate WLC/NAC.
+- Verify correct SSID and security profile (WPA2/WPA3, 802.1x).
+- Run Windows Network Troubleshooter.
+- If Wi‑Fi issues persist:
+  * For **warranty devices**: raise a case with OEM (HP) - may need Wi‑Fi adapter replacement.
+  * For **non‑warranty devices**: engage a third‑party vendor for Wi‑Fi adapter diagnosis.`,
 
     "cat-email-communication": `EMAIL & COMMUNICATION TROUBLESHOOTING GUIDE
 Version 1.7 | Last Updated: January 2025

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Shield, Server, Globe, Zap, Save, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Shield, Server, Globe, Zap, Save, CheckCircle2, AlertCircle, RefreshCw } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { getCCASConfig, updateCCASConfig, validateProviderConfig, getCurrentProvider } from '../services/ccasService';
+import { getCCASConfig, updateCCASConfig, validateProviderConfig, getCurrentProvider, quickSetupGenesys } from '../services/ccasService';
 
 export default function CCASConfigPanel() {
   const [selectedProvider, setSelectedProvider] = useState(getCurrentProvider());
@@ -73,12 +73,40 @@ export default function CCASConfigPanel() {
     }
   };
 
+  const handleQuickSetup = () => {
+    // Quick setup with provided credentials
+    const credentials = {
+      clientId: 'ae284fa3-a0c9-4451-8182-65dc522ce479',
+      clientSecret: '5n2C2JvmfYs2Ns00rtoi_Ugu3kOXSPCmhKbV8X4qjCY',
+      orgName: 'tp-ctss42',
+      region: 'usw2',
+      apiEndpoint: 'https://api.usw2.pure.cloud',
+      oauthEndpoint: 'https://login.usw2.pure.cloud/oauth/token',
+      environment: 'usw2.pure.cloud',
+    };
+    
+    quickSetupGenesys(credentials);
+    loadConfiguration();
+    setSaveStatus('success');
+    setTimeout(() => setSaveStatus(null), 3000);
+  };
+
   const renderGenesysConfig = () => (
     <div className="space-y-3">
       <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg p-3 border-2 border-blue-200">
-        <div className="flex items-center gap-1.5 mb-2">
-          <Shield className="w-4 h-4 text-blue-600" />
-          <span className="text-gray-700 font-bold text-xs">Genesys Cloud Configuration</span>
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-1.5">
+            <Shield className="w-4 h-4 text-blue-600" />
+            <span className="text-gray-700 font-bold text-xs">Genesys Cloud Configuration</span>
+          </div>
+          <button
+            onClick={handleQuickSetup}
+            className="flex items-center gap-1.5 px-2 py-1 bg-blue-600 text-white rounded text-[10px] font-bold hover:bg-blue-700 transition-all"
+            title="Quick setup with provided credentials"
+          >
+            <RefreshCw className="w-3 h-3" />
+            Quick Setup
+          </button>
         </div>
         
         <div className="space-y-2">
@@ -159,10 +187,10 @@ export default function CCASConfigPanel() {
                 } focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none`}
               >
                 <option value="">Select Region</option>
-                <option value="us-east-1">US East 1</option>
-                <option value="us-west-2">US West 2</option>
-                <option value="eu-west-1">EU West 1</option>
-                <option value="ap-southeast-2">AP Southeast 2</option>
+                <option value="use1">US East 1 (use1)</option>
+                <option value="usw2">US West 2 (usw2)</option>
+                <option value="euw1">EU West 1 (euw1)</option>
+                <option value="aps2">AP Southeast 2 (aps2)</option>
               </select>
             </div>
 

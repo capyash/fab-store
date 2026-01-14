@@ -56,8 +56,20 @@ export function getCategoryForWorkflow(workflowType) {
   
   // Simple mapping (in production, use ML to match workflow to category)
   const workflowToCategory = {
+    // Printer workflows
     printer_offline: "Printer Troubleshooting",
     ink_error: "Printer Troubleshooting",
+    paper_jam: "Printer Troubleshooting",
+    print_quality: "Printer Troubleshooting",
+    slow_print: "Printer Troubleshooting",
+    // Laptop workflows
+    display_issue: "Hardware Diagnostics",
+    slow_performance: "Hardware Diagnostics",
+    battery_drain: "Hardware Diagnostics",
+    overheating: "Hardware Diagnostics",
+    keyboard_issue: "Hardware Diagnostics",
+    // Network workflows (can be printer or laptop)
+    network_issue: "Network Connectivity",
   };
 
   const categoryTitle = workflowToCategory[workflowType];

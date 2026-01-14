@@ -132,3 +132,22 @@ export function validateProviderConfig(provider, config) {
     errors,
   };
 }
+
+/**
+ * Quick setup for Genesys credentials (for demo/testing)
+ * @param {Object} credentials - { clientId, clientSecret, orgName, region, apiEndpoint, oauthEndpoint }
+ */
+export function quickSetupGenesys(credentials) {
+  const defaultConfig = {
+    orgName: credentials.orgName || "tp-ctss42",
+    clientId: credentials.clientId || "",
+    clientSecret: credentials.clientSecret || "",
+    apiEndpoint: credentials.apiEndpoint || "https://api.usw2.pure.cloud",
+    region: credentials.region || "usw2",
+    oauthEndpoint: credentials.oauthEndpoint || "https://login.usw2.pure.cloud/oauth/token",
+    environment: credentials.environment || "usw2.pure.cloud",
+  };
+
+  updateCCASConfig("genesys", defaultConfig);
+  return defaultConfig;
+}
