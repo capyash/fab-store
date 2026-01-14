@@ -1,6 +1,6 @@
 # Author Attribution
 
-This codebase is authored and maintained by **Vinod Kumar V (VKV)**.
+This codebase is authored and maintained by **Vinod Kumar V (VKV)** with contributions from **Yash Capoor**.
 
 ## Files with Author Attribution
 
@@ -34,9 +34,10 @@ All TODO comments in this codebase are marked with `TODO(VKV)` to indicate owner
 - `src/apps/agentic-support/services/knowledgeBase.js`: Replace keyword matching with vector similarity search
 - `src/apps/cogniclaim/components/HomeDashboard.jsx`: Revisit hidden features
 
-## Setup Script
+## Setup Scripts
 
-The `setup.sh` script automates environment setup and is authored by VKV.
+- `setup.sh` - Linux/macOS setup script (authored by VKV)
+- `setup.ps1` - Windows PowerShell setup script
 
 ## License
 

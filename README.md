@@ -2,9 +2,12 @@
 
 AI-powered claims intelligence and agentic support platform.
 
-## Author
+## Authors
 
-**Vinod Kumar V (VKV)**
+**Vinod Kumar V (VKV)** - Original Author and Maintainer
+
+**Contributors:**
+- Yash Capoor
 
 ## Overview
 
@@ -28,9 +31,15 @@ Cogniclaim is a comprehensive platform that includes:
 
 Run the automated setup script:
 
+**Linux/macOS:**
 ```bash
 chmod +x setup.sh
 ./setup.sh
+```
+
+**Windows (PowerShell):**
+```powershell
+.\setup.ps1
 ```
 
 Or manually:
