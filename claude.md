@@ -1,0 +1,1 @@
+* All colors and typography styles are defined in theme.md.
