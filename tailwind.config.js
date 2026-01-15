@@ -4,34 +4,65 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Flamingo 2.0 Design System Colors
-        // Backgrounds
-        bg01: "#FFFFFF",
-        bg02: "#F7F7F7",
-        bg02Alt: "#EEECEA",
-        // Text
-        text01: "#2E2E2E",
-        text02: "#4B4C6A",
-        text03: "#989898",
-        // Strokes
-        stroke01: "#DEDAE4",
+        // === Flamingo 2.0 Design System - Theme Colors ===
+
         // Slate Theme - Primary
         primary: "#4B4C6A",
         tertiary: "#DBDBE4",
-        // Slate Theme - Selectors
+
+        // Shades - Backgrounds
+        bg01: "#FFFFFF",
+        bg02: "#F7F7F7",
+        bg03: "#EEECEA",
+
+        // Shades - Text
+        text01: "#2E2E2E",
+        text02: "#4B4C6A",
+        text03: "#989898",
+
+        // Shades - Strokes
+        stroke01: "#DEDAE4",
+
+        // Selectors
         hover: "#F5F5F5",
         select: "#E6E6E5",
-        // Special Colors
+
+        // Hover Icons and Details
         pinkTP: "#FF0082",
         textLink: "#A5125D",
-        // Button Colors - Flamingo 2.0
+
+        // Messages - Neutral
+        neutral01: "#D3E1FC",
+        neutral02: "#002C81",
+
+        // Messages - Success
+        success01: "#CEF3E5",
+        success02: "#00462F",
+
+        // Messages - Error
+        error01: "#FFD7D7",
+        error02: "#850117",
+
+        // Messages - Alert/Warning
+        alert01: "#FFF7DA",
+        alert02: "#5B4900",
+
+        // Status
+        success03: "#009A58",
+        error03: "#CC0000",
+
+        // Notifications
+        notifications: "#FB0077",
+
+        // Button Colors (derived from theme)
         buttonPrimary: "#2E2E2E",
         "buttonPrimary-hover": "#4A4A4A",
         "buttonPrimary-active": "#666666",
         "buttonPrimary-disabled": "#E0E0E0",
         buttonText: "#2E2E2E",
         "buttonText-disabled": "#A0A0A0",
-        // Legacy colors (keeping for backward compatibility)
+
+        // === Legacy Colors (backward compatibility) ===
         tpPurple: "#780096",
         tpPink: "#E91E63",
         textMain: "#2E2E2E",
@@ -40,14 +71,13 @@ export default {
         bgPrimary: "#FFFFFF",
         bgSecondary: "#FAFAFA",
         bgTertiary: "#DDE4F8",
-        // Status Colors
         success: "#10b981",
         error: "#ef4444",
         warning: "#f59e0b",
         info: "#3b82f6",
       },
       fontFamily: {
-        sans: ['"Noto Sans"', '"TP Sans"', "-apple-system", "BlinkMacSystemFont", '"Segoe UI"', "Roboto", '"Helvetica Neue"', "Arial", "sans-serif"],
+        sans: ['"TP Sans"', '"Noto Sans"', "-apple-system", "BlinkMacSystemFont", '"Segoe UI"', "Roboto", '"Helvetica Neue"', "Arial", "sans-serif"],
       },
       fontSize: {
         // Flamingo 2.0 Typography - Base sizes (mobile-first, use responsive classes)
@@ -75,11 +105,11 @@ export default {
         select: ["12px", { lineHeight: "normal", fontWeight: "500" }],
       },
       screens: {
-        // Flamingo 2.0 Breakpoints (extends Tailwind defaults)
-        'tablet': '700px', // 700px+ (md equivalent)
-        'desktop': '1024px', // 1024px+ (lg equivalent)
-        'large': '1200px', // 1200px+ (xl equivalent)
-        'xlarge': '1536px', // 1536px+ (2xl equivalent)
+        // TP Sans Type System Breakpoints
+        'tablet': '768px',   // Tablet (md)
+        'desktop': '1024px', // Desktop (lg)
+        'large': '1280px',   // Large (xl)
+        'xlarge': '1536px',  // XLarge (2xl)
       },
       borderRadius: {
         DEFAULT: "4px",

@@ -16,45 +16,68 @@ body {
 }
 
 :root {
-  /* Flamingo 2.0 Design System Colors */
-  /* Backgrounds */
-  --bg-01: #FFFFFF;
-  --bg-02: #F7F7F7;
-  --bg-02-alt: #EEECEA;
-  
-  /* Text */
-  --text-01: #2E2E2E;
-  --text-02: #4B4C6A;
-  --text-03: #989898;
-  
-  /* Strokes */
-  --stroke-01: #DEDAE4;
-  
+  /* === Flamingo 2.0 Design System - Theme Colors === */
+
   /* Slate Theme - Primary */
   --primary: #4B4C6A;
   --tertiary: #DBDBE4;
-  
-  /* Slate Theme - Selectors */
+
+  /* Shades - Backgrounds */
+  --bg-01: #FFFFFF;
+  --bg-02: #F7F7F7;
+  --bg-03: #EEECEA;
+
+  /* Shades - Text */
+  --text-01: #2E2E2E;
+  --text-02: #4B4C6A;
+  --text-03: #989898;
+
+  /* Shades - Strokes */
+  --stroke-01: #DEDAE4;
+
+  /* Selectors */
   --hover: #F5F5F5;
   --select: #E6E6E5;
-  
-  /* Special Colors */
+
+  /* Hover Icons and Details */
   --pink-tp: #FF0082;
   --text-link: #A5125D;
-  
-  /* Button Colors */
+
+  /* Messages - Neutral */
+  --neutral-01: #D3E1FC;
+  --neutral-02: #002C81;
+
+  /* Messages - Success */
+  --success-01: #CEF3E5;
+  --success-02: #00462F;
+
+  /* Messages - Error */
+  --error-01: #FFD7D7;
+  --error-02: #850117;
+
+  /* Messages - Alert/Warning */
+  --alert-01: #FFF7DA;
+  --alert-02: #5B4900;
+
+  /* Status */
+  --success-03: #009A58;
+  --error-03: #CC0000;
+
+  /* Notifications */
+  --notifications: #FB0077;
+
+  /* Button Colors (derived from theme) */
   --button-primary: #2E2E2E;
   --button-primary-hover: #4A4A4A;
   --button-primary-active: #666666;
   --button-primary-disabled: #E0E0E0;
   --button-text: #2E2E2E;
-  
-  /* Shadows - Flamingo 2.0 Design System */
-  /* Drop shadow: X: 0, Y: 4, Blur: 15, Spread: 0, Color: #959DA5 35% Opacity */
-  --shadow-drop: 0px 4px 15px 0px rgba(149, 157, 165, 0.35);
   --button-text-disabled: #A0A0A0;
-  
-  /* Legacy colors (keeping for backward compatibility) */
+
+  /* Shadows - Flamingo 2.0 Design System */
+  --shadow-drop: 0px 4px 15px 0px rgba(149, 157, 165, 0.35);
+
+  /* === Legacy Colors (backward compatibility) === */
   --color-primary: #780096;
   --color-text-main: #2E2E2E;
   --color-text-secondary: #656A71;
@@ -65,27 +88,44 @@ body {
   --tp-pink: #e91e63;
   --tp-dark: #1a1a1a;
   --tp-gray: #f5f5f5;
-  
-  /* Status Colors */
   --color-success: #10b981;
   --color-error: #ef4444;
   --color-warning: #f59e0b;
   --color-info: #3b82f6;
-  
-  /* Flamingo 2.0 Typography Tokens - TP Sans Type System */
+
+  /* === Typography - TP Sans Type System === */
+
+  /* Font Family */
   --font-family: "TP Sans", "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-scale: 1.125; /* Major Second scale */
   --line-height-base: 1.2;
   --letter-spacing: 0.3px;
-  
-  /* Text Colors */
-  --text-01: #2E2E2E;
-  --text-02: #4B4C6A;
-  --text-03: #989898;
-  --text-heading: #2E2E2E;
-  
-  /* Legacy Typography (keeping for backward compatibility) */
+
+  /* Font Weights */
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+
+  /* Mobile (Default - 767px below) */
+  --display-xl-size: 1.75rem;
+  --display-l-size: 1.5rem;
+  --display-s-size: 1.375rem;
+  --h1-size: 1.25rem;
+  --h2-size: 1.125rem;
+  --h3-size: 1rem;
+  --h4-size: 0.9375rem;
+  --body-size: 0.875rem;
+  --caption-size: 0.8125rem;
+  --label-size: 0.75rem;
+
+  /* Responsive Typography Breakpoints */
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1024px;
+  --breakpoint-large: 1280px;
+  --breakpoint-xlarge: 1536px;
+
+  /* Legacy Typography Variables (backward compatibility) */
   --text-text-01: #2E2E2E;
+  --text-heading: #2E2E2E;
   --text-title-size: 18px;
   --text-title-weight: 700;
   --text-title-line-height: normal;
@@ -98,15 +138,80 @@ body {
   --text-heading-size: 20px;
   --text-heading-weight: 700;
   --text-heading-line-height: normal;
-  
+
+  /* Base Styles */
   font-family: var(--font-family);
   line-height: 1.5;
-  font-weight: 400;
+  font-weight: var(--font-weight-regular);
   color-scheme: light dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* === Responsive Typography - Tablet (768px+) === */
+@media (min-width: 768px) {
+  :root {
+    --display-xl-size: 2rem;
+    --display-l-size: 1.75rem;
+    --display-s-size: 1.625rem;
+    --h1-size: 1.5rem;
+    --h2-size: 1.375rem;
+    --h3-size: 1.25rem;
+    --h4-size: 1.125rem;
+    --body-size: 1rem;
+    --caption-size: 0.875rem;
+    --label-size: 0.75rem;
+  }
+}
+
+/* === Responsive Typography - Desktop (1024px+) === */
+@media (min-width: 1024px) {
+  :root {
+    --display-xl-size: 2.25rem;
+    --display-l-size: 2rem;
+    --display-s-size: 1.75rem;
+    --h1-size: 1.625rem;
+    --h2-size: 1.5rem;
+    --h3-size: 1.25rem;
+    --h4-size: 1.125rem;
+    --body-size: 1rem;
+    --caption-size: 0.875rem;
+    --label-size: 0.75rem;
+  }
+}
+
+/* === Responsive Typography - Large (1280px+) === */
+@media (min-width: 1280px) {
+  :root {
+    --display-xl-size: 2.5rem;
+    --display-l-size: 2.25rem;
+    --display-s-size: 2rem;
+    --h1-size: 1.75rem;
+    --h2-size: 1.625rem;
+    --h3-size: 1.375rem;
+    --h4-size: 1.25rem;
+    --body-size: 1.125rem;
+    --caption-size: 1rem;
+    --label-size: 0.875rem;
+  }
+}
+
+/* === Responsive Typography - XLarge (1536px+) === */
+@media (min-width: 1536px) {
+  :root {
+    --display-xl-size: 2.75rem;
+    --display-l-size: 2.5rem;
+    --display-s-size: 2.25rem;
+    --h1-size: 2rem;
+    --h2-size: 1.75rem;
+    --h3-size: 1.5rem;
+    --h4-size: 1.375rem;
+    --body-size: 1.25rem;
+    --caption-size: 1.125rem;
+    --label-size: 1rem;
+  }
 }
 
 a {
