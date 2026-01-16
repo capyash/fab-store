@@ -1,1 +1,1 @@
-* All colors and typography styles are defined in theme.md.
+* Load and understand design_update.md to understand how to make new pages and re-design existing ones. 
