@@ -1,5 +1,157 @@
 @import "tailwindcss";
 
+@theme {
+  /* === Flamingo 2.0 Design System - Theme Colors === */
+
+  /* Slate Theme - Primary */
+  --color-primary: #4B4C6A;
+  --color-tertiary: #DBDBE4;
+
+  /* === Typography Configuration === */
+
+  /* Font Family */
+  --font-family-sans: "TP Sans", "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* Font Sizes - Flamingo 2.0 Typography (mobile-first base sizes) */
+  /* Display sizes */
+  --font-size-display-xl: 28px;
+  --font-size-display-l: 24px;
+  --font-size-display-s: 22px;
+
+  /* Headings */
+  --font-size-h1: 20px;
+  --font-size-h2: 18px;
+  --font-size-h3: 16px;
+  --font-size-h4: 15px;
+
+  /* Body */
+  --font-size-body: 14px;
+  --font-size-body-bold: 14px;
+
+  /* Caption */
+  --font-size-caption: 13px;
+  --font-size-caption-bold: 13px;
+
+  /* Label */
+  --font-size-label: 12px;
+  --font-size-label-bold: 12px;
+
+  /* Legacy */
+  --font-size-title: 18px;
+  --font-size-heading: 20px;
+  --font-size-select: 12px;
+
+  /* Line Heights */
+  --line-height-display-xl: 1.2;
+  --line-height-display-l: 1.2;
+  --line-height-display-s: 1.2;
+  --line-height-h1: 1.2;
+  --line-height-h2: 1.2;
+  --line-height-h3: 1.2;
+  --line-height-h4: 1.2;
+  --line-height-body: 1.2;
+  --line-height-caption: 1.2;
+  --line-height-label: 1.2;
+  --line-height-title: normal;
+  --line-height-heading: normal;
+  --line-height-select: normal;
+
+  /* Letter Spacing */
+  --letter-spacing-tight: 0.3px;
+
+  /* Font Weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  /* === Responsive Breakpoints === */
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1024px;
+  --breakpoint-large: 1280px;
+  --breakpoint-xlarge: 1536px;
+
+  /* === Border Radius === */
+  --radius: 4px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-icon16: 1px;
+  --radius-icon24: 2px;
+  --radius-icon32: 3px;
+
+  /* === Shadows === */
+  /* Flamingo 2.0 Design System Shadow */
+  /* Drop shadow: X: 0, Y: 4, Blur: 15, Spread: 0, Color: #959DA5 35% Opacity */
+  --shadow-drop: 0px 4px 15px 0px rgba(149, 157, 165, 0.35);
+  --shadow: 0px 4px 15px 0px rgba(149, 157, 165, 0.35);
+
+  /* Shades - Backgrounds */
+  --color-bg01: #FFFFFF;
+  --color-bg02: #F7F7F7;
+  --color-bg03: #EEECEA;
+
+  /* Shades - Text */
+  --color-text01: #2E2E2E;
+  --color-text02: #4B4C6A;
+  --color-text03: #989898;
+
+  /* Shades - Strokes */
+  --color-stroke01: #DEDAE4;
+
+  /* Selectors */
+  --color-hover: #F5F5F5;
+  --color-select: #E6E6E5;
+
+  /* Hover Icons and Details */
+  --color-pinkTP: #FF0082;
+  --color-textLink: #A5125D;
+
+  /* Messages - Neutral */
+  --color-neutral01: #D3E1FC;
+  --color-neutral02: #002C81;
+
+  /* Messages - Success */
+  --color-success01: #CEF3E5;
+  --color-success02: #00462F;
+
+  /* Messages - Error */
+  --color-error01: #FFD7D7;
+  --color-error02: #850117;
+
+  /* Messages - Alert/Warning */
+  --color-alert01: #FFF7DA;
+  --color-alert02: #5B4900;
+
+  /* Status */
+  --color-success03: #009A58;
+  --color-error03: #CC0000;
+
+  /* Notifications */
+  --color-notifications: #FB0077;
+
+  /* Button Colors (derived from theme) */
+  --color-buttonPrimary: #2E2E2E;
+  --color-buttonPrimary-hover: #4A4A4A;
+  --color-buttonPrimary-active: #666666;
+  --color-buttonPrimary-disabled: #E0E0E0;
+  --color-buttonText: #2E2E2E;
+  --color-buttonText-disabled: #A0A0A0;
+
+  /* === Legacy Colors (backward compatibility) === */
+  --color-tpPurple: #780096;
+  --color-tpPink: #E91E63;
+  --color-textMain: #2E2E2E;
+  --color-textSecondary: #656A71;
+  --color-textHeading: #2D2D2D;
+  --color-bgPrimary: #FFFFFF;
+  --color-bgSecondary: #FAFAFA;
+  --color-bgTertiary: #DDE4F8;
+  --color-success: #10b981;
+  --color-error: #ef4444;
+  --color-warning: #f59e0b;
+  --color-info: #3b82f6;
+}
+
 html,
 body,
 #root {
