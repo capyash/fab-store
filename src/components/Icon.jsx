@@ -100,6 +100,8 @@ const iconMap = {
   Wand2: MaterialIcons.AutoFixHigh,
   AutoFixHigh: MaterialIcons.AutoFixHigh,
   Activity: MaterialIcons.Timeline,
+  Inbox: MaterialIcons.Inbox,
+  Shield: MaterialIcons.Shield,
   Mic: MaterialIcons.Mic,
   Cpu: MaterialIcons.Memory,
   Memory: MaterialIcons.Memory,

@@ -40,9 +40,11 @@ import TPInventoryLayout from "./apps/tp-inventory/components/Layout";
 import ArchitecturePage from "./components/ArchitecturePage";
 import AgenticSupportLayout from "./apps/agentic-support/components/Layout";
 import AgenticSupportConsole from "./apps/agentic-support/components/Console";
+import AgenticSupportInbox from "./apps/agentic-support/components/Inbox";
 import AgenticSupportWatchtower from "./apps/agentic-support/components/Watchtower";
 import AgenticSupportExecutiveDashboard from "./apps/agentic-support/components/ExecutiveDashboard";
 import AgenticSupportKnowledgeBase from "./apps/agentic-support/components/KnowledgeBase";
+import AgenticSupportResponsibleAI from "./apps/agentic-support/components/ResponsibleAI";
 import AgenticSupportAdmin from "./apps/agentic-support/components/Admin";
 
 const SHOW_LEGACY_LOGIN = false;
@@ -137,9 +139,11 @@ function AppContent() {
     if (currentPage === "inventory") return "inventory-home";
     if (currentPage === "inventory/list") return "inventory-list";
     if (currentPage === "agentic") return "agentic";
+    if (currentPage === "agentic/inbox") return "agentic/inbox";
     if (currentPage === "agentic/watchtower") return "agentic/watchtower";
     if (currentPage === "agentic/executive") return "agentic/executive";
     if (currentPage === "agentic/knowledge-base") return "agentic/knowledge-base";
+    if (currentPage === "agentic/responsible-ai") return "agentic/responsible-ai";
     if (currentPage === "agentic/admin") return "agentic/admin";
     return "home"; // Default to home
   };
@@ -312,11 +316,21 @@ function AppContent() {
   }
 
   // Agentic Support shell: console + watchtower + executive + knowledge base + admin
-  if (view === "agentic" || view === "agentic/watchtower" || view === "agentic/executive" || view === "agentic/knowledge-base" || view === "agentic/admin") {
+  if (view === "agentic" || view === "agentic/inbox" || view === "agentic/watchtower" || view === "agentic/executive" || view === "agentic/knowledge-base" || view === "agentic/responsible-ai" || view === "agentic/admin") {
     return (
       <AgenticSupportLayout onNavigate={handleNavigate} active={currentPage}>
         <AnimatePresence mode="wait">
-          {view === "agentic/watchtower" ? (
+          {view === "agentic/inbox" ? (
+            <motion.div
+              key="agentic-inbox"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.4 }}
+            >
+              <AgenticSupportInbox onNavigate={handleNavigate} />
+            </motion.div>
+          ) : view === "agentic/watchtower" ? (
             <motion.div
               key="agentic-watchtower"
               initial={{ opacity: 0, y: 10 }}
@@ -345,6 +359,16 @@ function AppContent() {
               transition={{ duration: 0.4 }}
             >
               <AgenticSupportExecutiveDashboard onNavigate={handleNavigate} />
+            </motion.div>
+          ) : view === "agentic/responsible-ai" ? (
+            <motion.div
+              key="agentic-responsible-ai"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.4 }}
+            >
+              <AgenticSupportResponsibleAI onNavigate={handleNavigate} />
             </motion.div>
           ) : view === "agentic/admin" ? (
             <motion.div

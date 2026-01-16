@@ -5,6 +5,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
+from ..utils.metrics_tracker import track_agent_execution, get_trace_id_for_workflow
 from .models import (
     AccountEntitlement,
     CustomerInteraction,
@@ -38,9 +39,53 @@ class WorkflowContext:
 
 class BaseAgent:
     name: str
+    description: str = ""
 
     async def run(self, ctx: WorkflowContext, state: WorkflowState) -> WorkflowState:
         raise NotImplementedError
+
+    async def _run_with_metrics(self, ctx: WorkflowContext, state: WorkflowState) -> WorkflowState:
+        """Wrapper that adds metrics tracking to agent execution."""
+        # Get or create trace ID for workflow
+        trace_id = get_trace_id_for_workflow(ctx.workflow_id)
+        
+        # Determine category from workflow type
+        category_id = ctx.workflow_type.value
+        category_name = ctx.workflow_type.value.replace("_", " ").title()
+        
+        # Get ticket ID from state if available
+        ticket_id = getattr(state, "ticket_id", None)
+        
+        # Prepare input text
+        input_text = ctx.interaction.text
+        
+        # Track execution with metrics
+        with track_agent_execution(
+            agent_name=self.name,
+            agent_description=self.description or f"{self.name} agent",
+            ticket_id=ticket_id,
+            category_id=category_id,
+            category_name=category_name,
+            trace_id=trace_id,
+            input_text=input_text,
+        ) as tracker:
+            # Execute the actual agent logic
+            result_state = await self.run(ctx, state)
+            
+            # Set output for metrics tracking
+            output_text = str(result_state.diagnosis) if result_state.diagnosis else str(result_state.summary or "")
+            tracker.set_output(output_text)
+            
+            # Track any tool calls if present
+            if hasattr(result_state, "actions") and result_state.actions:
+                for action in result_state.actions:
+                    tracker.add_tool_call(
+                        tool_name=action.name,
+                        tool_input={"action": action.name},
+                        tool_output={"success": action.success, "details": action.details}
+                    )
+            
+            return result_state
 
     def _log(self, state: WorkflowState, level: str, message: str, **data: Any) -> None:
         state.logs.append(
@@ -61,6 +106,7 @@ class IntentDetectionAgent(BaseAgent):
     """
 
     name = "intent_detection"
+    description = "Classifies customer intents using multi-class LLM reasoning, matching queries to known workflows with confidence scoring."
 
     async def run(self, ctx: WorkflowContext, state: WorkflowState) -> WorkflowState:
         text = ctx.interaction.text.lower()
@@ -85,6 +131,7 @@ class DiagnosticAgent(BaseAgent):
     """
 
     name = "diagnostic"
+    description = "Performs workflow-specific diagnostics to identify root causes of device issues."
 
     async def run(self, ctx: WorkflowContext, state: WorkflowState) -> WorkflowState:
         self._log(state, "info", "Starting diagnostic phase")
@@ -160,6 +207,7 @@ class ActionExecutionAgent(BaseAgent):
     """
 
     name = "action_execution"
+    description = "Executes remediation actions based on diagnosis, including device management and RPA operations."
 
     async def run(self, ctx: WorkflowContext, state: WorkflowState) -> WorkflowState:
         self._log(state, "info", "Starting action phase")
@@ -251,6 +299,7 @@ class VerificationAgent(BaseAgent):
     """
 
     name = "verification"
+    description = "Verifies if self-heal actions resolved the issue using telemetry and validation rules."
 
     async def run(self, ctx: WorkflowContext, state: WorkflowState) -> WorkflowState:
         self._log(state, "info", "Starting verification phase")
@@ -302,6 +351,7 @@ class EscalationDecisionAgent(BaseAgent):
     """
 
     name = "escalation_decision"
+    description = "Decides whether to escalate to a human agent or external system based on workflow outcome."
 
     async def run(self, ctx: WorkflowContext, state: WorkflowState) -> WorkflowState:
         self._log(state, "info", "Evaluating escalation rules")

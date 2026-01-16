@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 import logging
-from typing import Dict
+from datetime import datetime, timedelta
+from typing import Dict, Optional
 
-from fastapi import BackgroundTasks, FastAPI, HTTPException
+from fastapi import BackgroundTasks, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 
 from .engine import engine
@@ -16,6 +17,15 @@ from .models import (
 
 logger = logging.getLogger("agentic_support")
 logging.basicConfig(level=logging.INFO)
+
+# Initialize database on startup
+try:
+    from ..db.schema import init_database
+    from ..services.metrics_service import metrics_service
+    init_database()
+except ImportError as e:
+    logger.warning(f"Could not import metrics modules: {e}")
+    metrics_service = None
 
 app = FastAPI(
     title="Agentic Customer Support Self-Healing API",
@@ -98,6 +108,156 @@ async def simulate_telemetry(payload: SimulateTelemetryRequest) -> Dict[str, str
     _TELEMETRY_STORE[payload.device_id] = payload.telemetry.model_dump()
     logger.info("Updated simulated telemetry for device %s", payload.device_id)
     return {"status": "ok", "device_id": payload.device_id}
+
+
+@app.get("/api/v1/metrics/channels")
+async def get_channel_metrics(
+    from_date: Optional[str] = Query(None),
+    to_date: Optional[str] = Query(None),
+) -> Dict:
+    """Get entry channel volumes."""
+    if not metrics_service:
+        return {"channels": []}
+    return {"channels": metrics_service.get_channel_volumes(from_date, to_date)}
+
+
+@app.get("/api/v1/metrics/kpi")
+async def get_kpi_metrics(
+    from_date: Optional[str] = Query(None),
+    to_date: Optional[str] = Query(None),
+) -> Dict:
+    """Get key performance indicators."""
+    if not metrics_service:
+        return {"self_heal_rate": 0, "avg_resolution_time_seconds": 0, "cost_savings_usd": 0}
+    return metrics_service.get_kpi_metrics(from_date, to_date)
+
+
+@app.get("/api/v1/metrics/agents")
+async def get_agent_metrics(
+    agent_name: Optional[str] = Query(None),
+    from_date: Optional[str] = Query(None),
+    to_date: Optional[str] = Query(None),
+) -> Dict:
+    """Get agent performance data."""
+    if not metrics_service:
+        return {"agents": []}
+    if agent_name:
+        # Get individual agent details
+        executions = metrics_service.get_agent_metrics(agent_name, from_date, to_date)
+        aggregates = metrics_service.get_agent_aggregates(agent_name, from_date, to_date)
+        return {
+            "agent_name": agent_name,
+            "aggregates": aggregates[0] if aggregates else {},
+            "executions": executions,
+        }
+    else:
+        # Get all agents aggregates
+        aggregates = metrics_service.get_agent_aggregates(None, from_date, to_date)
+        return {"agents": aggregates}
+
+
+@app.get("/api/v1/metrics/agents/{agent_name}/details")
+async def get_agent_details(
+    agent_name: str,
+    from_date: Optional[str] = Query(None),
+    to_date: Optional[str] = Query(None),
+    limit: int = Query(100),
+) -> Dict:
+    """Get detailed agent execution history."""
+    if not metrics_service:
+        return {"agent_name": agent_name, "aggregates": {}, "executions": []}
+    executions = metrics_service.get_agent_metrics(agent_name, from_date, to_date, limit)
+    aggregates = metrics_service.get_agent_aggregates(agent_name, from_date, to_date)
+    return {
+        "agent_name": agent_name,
+        "aggregates": aggregates[0] if aggregates else {},
+        "executions": executions,
+    }
+
+
+@app.get("/api/v1/metrics/categories")
+async def get_category_metrics(
+    category_id: Optional[str] = Query(None),
+    from_date: Optional[str] = Query(None),
+    to_date: Optional[str] = Query(None),
+) -> Dict:
+    """Get category performance data."""
+    if not metrics_service:
+        return {"categories": [], "resolution": {"total": 0, "breakdown": {}}}
+    categories = metrics_service.get_category_metrics(category_id, from_date, to_date)
+    resolution = metrics_service.get_resolution_metrics(category_id, from_date, to_date)
+    return {
+        "categories": categories,
+        "resolution": resolution,
+    }
+
+
+@app.get("/api/v1/metrics/collaboration")
+async def get_collaboration_metrics(
+    from_date: Optional[str] = Query(None),
+    to_date: Optional[str] = Query(None),
+) -> Dict:
+    """Get agent collaboration patterns."""
+    if not metrics_service:
+        return {
+            "autonomous_agent_chain": {},
+            "ai_to_human_handoff": {},
+            "human_initiated_ai_assist": {},
+        }
+    return metrics_service.get_collaboration_metrics(from_date, to_date)
+
+
+@app.get("/api/v1/metrics/insights")
+async def get_insights(
+    from_date: Optional[str] = Query(None),
+    to_date: Optional[str] = Query(None),
+) -> Dict:
+    """Get category insights comparing AI vs Human performance."""
+    if not metrics_service:
+        return {"insights": []}
+    categories = metrics_service.get_category_metrics(None, from_date, to_date)
+    resolution = metrics_service.get_resolution_metrics(None, from_date, to_date)
+    
+    # Build insights for each category
+    insights = []
+    for cat in categories[:10]:  # Top 10 categories
+        cat_id = cat["category_id"]
+        cat_resolution = metrics_service.get_resolution_metrics(cat_id, from_date, to_date)
+        
+        # Get AI metrics for this category
+        ai_metrics = metrics_service.get_agent_aggregates(None, from_date, to_date)
+        # Filter by category (would need category_id in agent_metrics for real implementation)
+        
+        insights.append({
+            "category_id": cat_id,
+            "category_name": cat["category_name"],
+            "ai_handled": {
+                "resolution_rate": cat["success_rate"],
+                "avg_time_seconds": (cat.get("avg_latency_ms", 0) / 1000) if cat.get("avg_latency_ms") else 0,
+                "accuracy": cat["success_rate"],  # Simplified
+                "cost_usd": cat.get("total_cost_usd", 0.0),
+            },
+            "human_handled": {
+                "resolution_rate": 82.0,  # Placeholder
+                "avg_time_seconds": 432.0,  # 7.2 minutes placeholder
+                "csat": 4.3,  # Placeholder
+                "cost_usd": 12.50,  # Placeholder
+            },
+        })
+    
+    return {"insights": insights}
+
+
+@app.get("/api/v1/metrics/alerts")
+async def get_alerts(
+    from_date: Optional[str] = Query(None),
+    to_date: Optional[str] = Query(None),
+) -> Dict:
+    """Get system health alerts."""
+    if not metrics_service:
+        return {"alerts": []}
+    alerts = metrics_service.get_alerts(from_date, to_date)
+    return {"alerts": alerts}
 
 
 @app.get("/health")
