@@ -25,7 +25,7 @@ export default function Sidebar({
 
   return (
     <aside
-      className={`h-full border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 flex flex-col transition-all duration-300 ${
+      className={`h-full border-r border-stroke01 bg-bg01 flex flex-col transition-all duration-300 ${
         collapsed ? "w-16" : "w-64"
       }`}
     >
@@ -40,8 +40,8 @@ export default function Sidebar({
               onClick={() => onNavigate(key)}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all group relative ${
                 isActive
-                  ? "bg-primary/10 dark:bg-primary/30"
-                  : "hover:bg-gray-100 dark:hover:bg-gray-800"
+                  ? "bg-primary/10"
+                  : "hover:bg-hover"
               }`}
               title={collapsed ? label : ""}
             >
@@ -54,8 +54,8 @@ export default function Sidebar({
                 <span
                   className={`text-sm font-medium ${
                     isActive
-                      ? "text-primary dark:text-primary"
-                      : "text-gray-600 dark:text-gray-400"
+                      ? "text-primary"
+                      : "text-text03"
                   }`}
                 >
                   {label}
@@ -64,9 +64,9 @@ export default function Sidebar({
 
               {/* Tooltip for collapsed state */}
               {collapsed && (
-                <div className="absolute left-full ml-2 px-3 py-1.5 bg-gray-900 dark:bg-gray-800 text-white text-xs rounded-lg opacity-0 hidden group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 pointer-events-none">
+                <div className="absolute left-full ml-2 px-3 py-1.5 bg-text01 text-white text-xs rounded-lg opacity-0 hidden group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 pointer-events-none">
                   {label}
-                  <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-gray-900 dark:bg-gray-800 rotate-45" />
+                  <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-text01 rotate-45" />
                 </div>
               )}
             </button>
@@ -75,14 +75,14 @@ export default function Sidebar({
       </nav>
 
       {/* Bottom section with Demo Mode, Settings (optional) and Collapse Toggle */}
-      <div className="border-t border-gray-200 dark:border-gray-800">
+      <div className="border-t border-stroke01">
         {/* Demo Mode Toggle */}
         <button
           type="button"
           className={`w-full flex items-center gap-3 px-3 py-2.5 transition-all group relative ${
             isDemoMode
-              ? "bg-primary/10 dark:bg-primary/30 text-primary dark:text-primary"
-              : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
+              ? "bg-primary/10 text-primary"
+              : "text-text03 hover:bg-hover"
           }`}
           title={
             collapsed
@@ -102,8 +102,8 @@ export default function Sidebar({
               <span
                 className={`text-sm font-medium ${
                   isDemoMode
-                    ? "text-primary dark:text-primary"
-                    : "text-gray-600 dark:text-gray-400"
+                    ? "text-primary"
+                    : "text-text03"
                 }`}
               >
                 {isDemoMode ? "Frontend Mode" : "Backend Mode"}
@@ -113,9 +113,9 @@ export default function Sidebar({
 
           {/* Tooltip for collapsed state */}
           {collapsed && (
-            <div className="absolute left-full ml-2 px-3 py-1.5 bg-gray-900 dark:bg-gray-800 text-white text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 pointer-events-none">
+            <div className="absolute left-full ml-2 px-3 py-1.5 bg-text01 text-white text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 pointer-events-none">
               {isDemoMode ? "Demo Mode: Frontend" : "Demo Mode: Backend"}
-              <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-gray-900 dark:bg-gray-800 rotate-45" />
+              <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-text01 rotate-45" />
             </div>
           )}
         </button>
@@ -127,8 +127,8 @@ export default function Sidebar({
             onClick={() => onNavigate("settings")}
             className={`w-full flex items-center gap-3 px-3 py-2.5 transition-all group relative ${
               active === "settings"
-                ? "bg-primary/10 dark:bg-primary/30 text-primary dark:text-primary"
-                : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
+                ? "bg-primary/10 text-primary"
+                : "text-text03 hover:bg-hover"
             }`}
             title={collapsed ? "Settings" : ""}
           >
@@ -142,8 +142,8 @@ export default function Sidebar({
                 <span
                   className={`text-sm font-medium ${
                     active === "settings"
-                      ? "text-primary dark:text-primary"
-                      : "text-gray-600 dark:text-gray-400"
+                      ? "text-primary"
+                      : "text-text03"
                   }`}
                 >
                   Settings
@@ -153,9 +153,9 @@ export default function Sidebar({
 
             {/* Tooltip for collapsed state */}
             {collapsed && (
-              <div className="absolute left-full ml-2 px-3 py-1.5 bg-gray-900 dark:bg-gray-800 text-white text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 pointer-events-none">
+              <div className="absolute left-full ml-2 px-3 py-1.5 bg-text01 text-white text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 pointer-events-none">
                 Settings
-                <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-gray-900 dark:bg-gray-800 rotate-45" />
+                <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-text01 rotate-45" />
               </div>
             )}
           </button>
@@ -164,13 +164,13 @@ export default function Sidebar({
         {/* Help/Support Button */}
         <button
           type="button"
-          className="w-full flex items-center gap-3 px-3 py-2.5 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all group relative"
+          className="w-full flex items-center gap-3 px-3 py-2.5 text-text03 hover:bg-hover transition-all group relative"
           title={collapsed ? "Help & Support" : ""}
         >
           <div className="w-full flex items-center gap-3 px-2">
             <Icon name="MessageSquare" size="24" state="default" />
             {!collapsed && (
-              <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+              <span className="text-sm font-medium text-text03">
                 Help & Support
               </span>
             )}
@@ -178,9 +178,9 @@ export default function Sidebar({
 
           {/* Tooltip for collapsed state */}
           {collapsed && (
-            <div className="absolute left-full ml-2 px-3 py-1.5 bg-gray-900 dark:bg-gray-800 text-white text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 pointer-events-none">
+            <div className="absolute left-full ml-2 px-3 py-1.5 bg-text01 text-white text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 pointer-events-none">
               Help & Support
-              <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-gray-900 dark:bg-gray-800 rotate-45" />
+              <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-text01 rotate-45" />
             </div>
           )}
         </button>
@@ -189,7 +189,7 @@ export default function Sidebar({
         <button
           type="button"
           onClick={() => setCollapsed(!collapsed)}
-          className="w-full flex items-center gap-3 px-3 py-2.5 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all group relative"
+          className="w-full flex items-center gap-3 px-3 py-2.5 text-text03 hover:bg-hover transition-all group relative"
           title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
           <div className="w-full flex items-center gap-3 px-2">
@@ -198,7 +198,7 @@ export default function Sidebar({
             ) : (
               <>
                 <Icon name="ChevronLeft" size="24" state="default" />
-                <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                <span className="text-sm font-medium text-text03">
                   Collapse
                 </span>
               </>
@@ -207,9 +207,9 @@ export default function Sidebar({
 
           {/* Tooltip for collapsed state */}
           {collapsed && (
-            <div className="absolute left-full ml-2 px-3 py-1.5 bg-gray-900 dark:bg-gray-800 text-white text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 pointer-events-none">
+            <div className="absolute left-full ml-2 px-3 py-1.5 bg-text01 text-white text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 pointer-events-none">
               Expand sidebar
-              <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-gray-900 dark:bg-gray-800 rotate-45" />
+              <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-text01 rotate-45" />
             </div>
           )}
         </button>

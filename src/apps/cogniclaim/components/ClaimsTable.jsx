@@ -17,27 +17,27 @@ const STATUS_FILTERS = ["All", "Pending Review", "Under Process", "Information N
 
 // AI Priority indicator component
 function AIPriorityBadge({ score }) {
-  if (!score && score !== 0) return <span className="text-gray-400 text-xs">—</span>;
-  
+  if (!score && score !== 0) return <span className="text-text03 text-xs">—</span>;
+
   const numScore = typeof score === 'string' ? parseFloat(score) : score;
-  
-  let color = "text-gray-600 dark:text-gray-400";
-  let dotColor = "bg-gray-400";
-  
+
+  let color = "text-text03";
+  let dotColor = "bg-text03";
+
   if (numScore >= 8.0) {
-    color = "text-red-700 dark:text-red-400";
-    dotColor = "bg-red-500";
+    color = "text-error02";
+    dotColor = "bg-error03";
   } else if (numScore >= 7.0) {
-    color = "text-orange-600 dark:text-orange-400";
-    dotColor = "bg-orange-500";
+    color = "text-alert02";
+    dotColor = "bg-alert02";
   } else if (numScore >= 6.0) {
-    color = "text-yellow-600 dark:text-yellow-400";
-    dotColor = "bg-yellow-500";
+    color = "text-alert02";
+    dotColor = "bg-alert02";
   } else if (numScore >= 5.0) {
-    color = "text-green-600 dark:text-green-400";
-    dotColor = "bg-green-500";
+    color = "text-success02";
+    dotColor = "bg-success03";
   }
-  
+
   return (
     <div className="flex items-center gap-2">
       <span className={`text-sm font-bold ${color}`}>{numScore.toFixed(1)}</span>
@@ -143,20 +143,20 @@ export default function ClaimsTable({ onSelect }) {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden">
+    <div className="bg-bg01 rounded-xl border border-stroke01 shadow-sm overflow-hidden">
       {/* AI Smart Filters */}
       <div className="px-6 pt-5 pb-4">
         <div className="flex items-center gap-2 mb-3">
-          <Sparkles className="w-4 h-4 text-[#780096] dark:text-[#780096]" />
-          <span className="text-sm font-semibold text-gray-700 dark:text-gray-200">AI Smart Filters</span>
+          <Sparkles className="w-4 h-4 text-primary" />
+          <span className="text-sm font-semibold text-text01">AI Smart Filters</span>
         </div>
         <div className="flex gap-3">
-          <button className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#F5F3FF] dark:bg-[#4B2E83]/30 text-[#780096] dark:text-[#780096] border border-[#780096]/30 dark:border-[#780096]/30 text-xs font-medium hover:bg-[#EDE9FE] dark:hover:bg-[#4B2E83]/40 transition-colors">
+          <button className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-neutral01 text-primary border border-primary/30 text-xs font-medium hover:bg-primary/10 transition-colors">
             <Sparkles className="w-3.5 h-3.5" />
             <span>High Priority ({aiInsights.highPriority})</span>
             <span className="ml-0.5 opacity-75">({aiInsights.highPriorityPercent}%)</span>
           </button>
-          <button className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FEF3F2] dark:bg-red-900/20 text-red-700 dark:text-red-400 border border-red-300 dark:border-red-800/50 text-xs font-medium hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors">
+          <button className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-error01 text-error02 border border-error03 text-xs font-medium hover:bg-error03/10 transition-colors">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Escalation Risk ({aiInsights.escalationRisk})</span>
             <span className="ml-0.5 opacity-75">({aiInsights.escalationPercent}%)</span>
@@ -175,8 +175,8 @@ export default function ClaimsTable({ onSelect }) {
               disabled={loading}
               className={`text-xs px-3 py-1.5 rounded-md transition-colors font-medium ${
                 status === s
-                  ? "bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                  : "bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700"
+                  ? "bg-select text-text01"
+                  : "bg-bg01 hover:bg-hover text-text01 border border-stroke01"
               } disabled:opacity-50 disabled:cursor-not-allowed`}
             >
               {s}
@@ -190,19 +190,19 @@ export default function ClaimsTable({ onSelect }) {
           onChange={(e) => handleSearchChange(e.target.value)}
           placeholder="Search by ID, Member, Provider, Status (min 3 chars)"
           disabled={loading}
-          className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg px-4 py-2 text-sm w-80 disabled:opacity-50 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#780096]/50 dark:focus:ring-[#780096]/50"
+          className="border border-stroke01 bg-bg01 rounded-lg px-4 py-2 text-sm w-80 disabled:opacity-50 text-text01 placeholder-text03 focus:outline-none focus:ring-2 focus:ring-primary/50"
         />
       </div>
 
       {/* Error State */}
       {error && (
-        <div className="mx-6 mb-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-start gap-3">
-          <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
+        <div className="mx-6 mb-4 p-4 bg-error01 border border-error03 rounded-lg flex items-start gap-3">
+          <AlertCircle className="w-5 h-5 text-error02 shrink-0 mt-0.5" />
           <div className="flex-1">
-            <p className="text-sm font-medium text-red-800 dark:text-red-200">{error}</p>
+            <p className="text-sm font-medium text-error02">{error}</p>
             <button
               onClick={fetchClaims}
-              className="mt-2 text-xs text-red-600 dark:text-red-400 hover:underline flex items-center gap-1"
+              className="mt-2 text-xs text-error02 hover:underline flex items-center gap-1"
             >
               <RefreshCw className="w-3 h-3" />
               Try again
@@ -214,8 +214,8 @@ export default function ClaimsTable({ onSelect }) {
       {/* Loading State */}
       {loading && !error && (
         <div className="flex flex-col items-center justify-center py-16 px-6">
-          <Loader2 className="w-8 h-8 text-[#780096] dark:text-[#780096] animate-spin mb-3" />
-          <p className="text-sm text-gray-500 dark:text-gray-400">Loading claims...</p>
+          <Loader2 className="w-8 h-8 text-primary animate-spin mb-3" />
+          <p className="text-sm text-text03">Loading claims...</p>
         </div>
       )}
 
@@ -224,13 +224,13 @@ export default function ClaimsTable({ onSelect }) {
         <>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="bg-gray-50 dark:bg-gray-800/50 text-gray-600 dark:text-gray-300 text-[11px] font-semibold tracking-wide">
+              <thead className="bg-bg02 text-text02 text-[11px] font-semibold tracking-wide">
                 <tr>
                   {HEADERS.map((h) => (
                     <th
                       key={h.key}
                       onClick={() => h.key !== 'date' && toggleSort(h.key)}
-                      className={`text-left px-4 py-3 ${h.key !== 'date' ? 'cursor-pointer select-none hover:bg-gray-100 dark:hover:bg-gray-700/50' : ''} transition`}
+                      className={`text-left px-4 py-3 ${h.key !== 'date' ? 'cursor-pointer select-none hover:bg-hover' : ''} transition`}
                       title={h.key !== 'date' ? "Click to sort" : ""}
                     >
                       {h.label}
@@ -239,17 +239,17 @@ export default function ClaimsTable({ onSelect }) {
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
+              <tbody className="divide-y divide-stroke01">
                 {sorted.map((c) => (
                   <>
                     <tr
                       key={c.id}
-                      className="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors cursor-pointer"
+                      className="hover:bg-hover transition-colors cursor-pointer"
                       onClick={() =>
                         setExpandedId((prev) => (prev === c.id ? null : c.id))
                       }
                     >
-                      <td className="px-4 py-3 font-medium text-gray-900 dark:text-gray-100">
+                      <td className="px-4 py-3 font-medium text-text01">
                         <div className="flex items-center gap-2">
                           <span>{c.id}</span>
                           {Array.isArray(c.lineItems) && c.lineItems.length > 0 && (
@@ -259,7 +259,7 @@ export default function ClaimsTable({ onSelect }) {
                                 e.stopPropagation();
                                 setExpandedId((prev) => (prev === c.id ? null : c.id));
                               }}
-                              className="text-[11px] px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700"
+                              className="text-[11px] px-2 py-0.5 rounded-full bg-bg02 text-text01 border border-stroke01"
                             >
                               {c.lineItems.length} line item{c.lineItems.length > 1 ? "s" : ""}
                             </button>
@@ -270,7 +270,7 @@ export default function ClaimsTable({ onSelect }) {
                             e.stopPropagation();
                             onSelect?.(c);
                           }}
-                          className="inline-flex items-center justify-center text-[11px] px-2 py-0.5 rounded-full bg-white dark:bg-gray-900 text-[#780096] dark:text-[#780096] border border-[#780096]/40 dark:border-[#780096]/50 hover:bg-[#F5F3FF] dark:hover:bg-[#4B2E83]/40"
+                          className="inline-flex items-center justify-center text-[11px] px-2 py-0.5 rounded-full bg-bg01 text-primary border border-primary/40 hover:bg-primary/10"
                           title="Open in AI Reasoning"
                         >
                           <Sparkles className="w-3.5 h-3.5" />
@@ -278,52 +278,52 @@ export default function ClaimsTable({ onSelect }) {
                         </button>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-gray-900 dark:text-gray-100">{c.member}</td>
-                      <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{c.provider}</td>
+                      <td className="px-4 py-3 text-text01">{c.member}</td>
+                      <td className="px-4 py-3 text-text03">{c.provider}</td>
                       <td className="px-4 py-3">
                         <StatusPill status={c.status} />
                       </td>
-                      <td className="px-4 py-3 font-medium text-gray-900 dark:text-gray-100">{c.amount?.toLocaleString() || '0'}</td>
-                      <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{c.date}</td>
+                      <td className="px-4 py-3 font-medium text-text01">{c.amount?.toLocaleString() || '0'}</td>
+                      <td className="px-4 py-3 text-text03">{c.date}</td>
                       <td className="px-4 py-3">
                         <AIPriorityBadge score={c.aiPriority} />
                       </td>
                     </tr>
                     {expandedId === c.id && Array.isArray(c.lineItems) && c.lineItems.length > 0 && (
-                      <tr key={`${c.id}-lines`} className="bg-gray-50/60 dark:bg-gray-900/60">
+                      <tr key={`${c.id}-lines`} className="bg-bg02">
                         <td colSpan={HEADERS.length} className="px-6 pb-4 pt-0">
-                          <div className="mt-1 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden max-h-64 overflow-y-auto">
+                          <div className="mt-1 border border-stroke01 rounded-lg overflow-hidden max-h-64 overflow-y-auto">
                             <table className="w-full text-xs">
-                              <thead className="bg-gray-100 dark:bg-gray-800">
+                              <thead className="bg-bg03">
                                 <tr>
-                                  <th className="px-2 py-1 text-left font-medium text-gray-600 dark:text-gray-300">Line</th>
-                                  <th className="px-2 py-1 text-left font-medium text-gray-600 dark:text-gray-300">Description</th>
-                                  <th className="px-2 py-1 text-left font-medium text-gray-600 dark:text-gray-300">CPT</th>
-                                  <th className="px-2 py-1 text-left font-medium text-gray-600 dark:text-gray-300">ICD‑10</th>
-                                  <th className="px-2 py-1 text-left font-medium text-gray-600 dark:text-gray-300">Amount</th>
-                                  <th className="px-2 py-1 text-left font-medium text-gray-600 dark:text-gray-300">Status</th>
+                                  <th className="px-2 py-1 text-left font-medium text-text02">Line</th>
+                                  <th className="px-2 py-1 text-left font-medium text-text02">Description</th>
+                                  <th className="px-2 py-1 text-left font-medium text-text02">CPT</th>
+                                  <th className="px-2 py-1 text-left font-medium text-text02">ICD‑10</th>
+                                  <th className="px-2 py-1 text-left font-medium text-text02">Amount</th>
+                                  <th className="px-2 py-1 text-left font-medium text-text02">Status</th>
                                 </tr>
                               </thead>
-                              <tbody className="divide-y divide-gray-100 dark:divide-gray-700/70">
+                              <tbody className="divide-y divide-stroke01">
                                 {c.lineItems.map((li) => (
                                   <tr
                                     key={li.lineId}
-                                    className="hover:bg-gray-50 dark:hover:bg-gray-800/70 cursor-pointer"
+                                    className="hover:bg-hover cursor-pointer"
                                     onClick={(e) => {
                                       e.stopPropagation();
                                       // Surface the parent claim in the side panel; line-level next steps are shown in details panel
                                       onSelect?.(c);
                                     }}
                                   >
-                                    <td className="px-2 py-1 font-medium text-gray-800 dark:text-gray-100">{li.lineId}</td>
-                                    <td className="px-2 py-1 text-gray-700 dark:text-gray-300">{li.description}</td>
-                                    <td className="px-2 py-1 text-gray-700 dark:text-gray-300">{li.cptCode}</td>
-                                    <td className="px-2 py-1 text-gray-700 dark:text-gray-300">{li.icd10Code}</td>
-                                    <td className="px-2 py-1 text-gray-800 dark:text-gray-100">
+                                    <td className="px-2 py-1 font-medium text-text01">{li.lineId}</td>
+                                    <td className="px-2 py-1 text-text01">{li.description}</td>
+                                    <td className="px-2 py-1 text-text01">{li.cptCode}</td>
+                                    <td className="px-2 py-1 text-text01">{li.icd10Code}</td>
+                                    <td className="px-2 py-1 text-text01">
                                       {li.amount != null ? `$${li.amount.toLocaleString()}` : "—"}
                                     </td>
                                     <td className="px-2 py-1">
-                                      <span className="inline-flex px-2 py-0.5 rounded-full text-[10px] font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+                                      <span className="inline-flex px-2 py-0.5 rounded-full text-[10px] font-semibold bg-bg02 text-text01">
                                         {li.status || c.status}
                                       </span>
                                     </td>
@@ -339,7 +339,7 @@ export default function ClaimsTable({ onSelect }) {
                 ))}
                 {sorted.length === 0 && (
                   <tr>
-                    <td colSpan={HEADERS.length} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
+                    <td colSpan={HEADERS.length} className="px-4 py-12 text-center text-text03">
                       No matching claims found.
                     </td>
                   </tr>
@@ -349,25 +349,25 @@ export default function ClaimsTable({ onSelect }) {
           </div>
 
           {/* Pagination */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-6 py-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/30">
-            <div className="text-xs text-gray-600 dark:text-gray-400">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-6 py-4 border-t border-stroke01 bg-bg02">
+            <div className="text-xs text-text03">
               Showing {Math.min((page - 1) * pageSize + 1, total)}–{Math.min(page * pageSize, total)} of {total} claims
             </div>
             <div className="flex items-center gap-2">
               <button
                 disabled={page === 1 || loading}
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
-                className="px-3 py-1.5 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-xs font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-gray-700 dark:text-gray-300"
+                className="px-3 py-1.5 rounded-md border border-stroke01 bg-bg01 text-xs font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-hover transition-colors text-text01"
               >
                 Previous
               </button>
-              <span className="text-xs text-gray-600 dark:text-gray-300 px-2">
+              <span className="text-xs text-text01 px-2">
                 Page {page} of {totalPages}
               </span>
               <button
                 disabled={page === totalPages || loading}
                 onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                className="px-3 py-1.5 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-xs font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-gray-700 dark:text-gray-300"
+                className="px-3 py-1.5 rounded-md border border-stroke01 bg-bg01 text-xs font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-hover transition-colors text-text01"
               >
                 Next
               </button>

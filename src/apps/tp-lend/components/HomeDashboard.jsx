@@ -103,50 +103,50 @@ export default function HomeDashboard({ onSelectLoan, onNavigate }) {
       title: "Total Loans",
       value: stats.totalLoans,
       icon: FileText,
-      gradient: "from-[#780096] to-[#780096]",
+      gradient: "from-primary to-primary",
     },
     {
       title: "Under Review",
       value: stats.underReview,
       icon: AlertCircle,
-      gradient: "from-blue-500 to-indigo-500",
+      gradient: "from-neutral02 to-neutral02",
     },
     {
       title: "In Underwriting",
       value: stats.inUnderwriting,
       icon: Activity,
-      gradient: "from-orange-500 to-red-500",
+      gradient: "from-alert02 to-error02",
     },
     {
       title: "Conditional Approval",
       value: stats.conditionalApproval,
       icon: FileText,
-      gradient: "from-yellow-500 to-amber-500",
+      gradient: "from-alert02 to-alert02",
     },
     {
       title: "Urgent SLA",
       value: stats.urgentSLA,
       icon: Clock,
-      gradient: "from-red-500 to-orange-500",
+      gradient: "from-error02 to-alert02",
     },
     {
       title: "Approved",
       value: stats.approved,
       icon: TrendingUp,
-      gradient: "from-green-500 to-emerald-500",
+      gradient: "from-success02 to-success03",
     },
     {
       title: "Total Loan Volume",
       value: `$${(stats.totalAmount / 1000000).toFixed(1)}M`,
       icon: DollarSign,
-      gradient: "from-amber-500 to-yellow-500",
+      gradient: "from-alert02 to-alert02",
     },
   ];
 
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#780096]"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
       </div>
     );
   }
@@ -175,7 +175,7 @@ export default function HomeDashboard({ onSelectLoan, onNavigate }) {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
           <div className="flex items-center gap-3">
-            <div className="p-3 rounded-xl bg-gradient-to-br from-[#780096] via-[#780096] to-[#0EA5E9] shadow-lg">
+            <div className="p-3 rounded-xl bg-gradient-to-br from-primary via-primary to-neutral02 shadow-lg">
               <Zap className="w-6 h-6 text-white" />
             </div>
             <div>
@@ -195,7 +195,7 @@ export default function HomeDashboard({ onSelectLoan, onNavigate }) {
             {onNavigate && (
               <button
                 onClick={() => onNavigate("store")}
-                className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-[#780096] dark:hover:text-[#780096] rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-textLink dark:hover:text-textLink rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                 title="Back to FAB Store"
               >
                 <Store className="w-3.5 h-3.5" />
@@ -267,13 +267,13 @@ export default function HomeDashboard({ onSelectLoan, onNavigate }) {
         {/* AI-Powered Priority Queue for loans */}
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-4">
-            <div className="p-1.5 rounded-lg bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-indigo-500/30">
-              <Activity className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+            <div className="p-1.5 rounded-lg bg-gradient-to-br from-neutral02/20 to-primary/20 border border-neutral02/30">
+              <Activity className="w-4 h-4 text-neutral02 dark:text-neutral01" />
             </div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
               AI-Powered Priority Queue
             </h3>
-            <span className="text-xs px-2 py-1 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 font-medium">
+            <span className="text-xs px-2 py-1 rounded-full bg-neutral01 dark:bg-neutral02/30 text-neutral02 dark:text-neutral01 font-medium">
               🤖 AI Recommended
             </span>
           </div>
@@ -286,7 +286,7 @@ export default function HomeDashboard({ onSelectLoan, onNavigate }) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.08 }}
                   onClick={() => onSelectLoan && onSelectLoan(loan)}
-                  className="rounded-xl border-2 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 border-indigo-200 dark:border-indigo-800 bg-white/90 dark:bg-gray-900/90 backdrop-blur p-4 hover:shadow-xl transition-all hover:scale-[1.02] cursor-pointer"
+                  className="rounded-xl border-2 bg-gradient-to-br from-neutral01 to-bg02 dark:from-neutral02/20 dark:to-primary/20 border-neutral02 dark:border-neutral02 bg-white/90 dark:bg-gray-900/90 backdrop-blur p-4 hover:shadow-xl transition-all hover:scale-[1.02] cursor-pointer"
                 >
                   <div className="flex items-start justify-between mb-2">
                     <div className="flex-1">
@@ -310,8 +310,8 @@ export default function HomeDashboard({ onSelectLoan, onNavigate }) {
                       ? `${loan.daysUntilSLA}d to SLA`
                       : "No SLA set"}
                   </div>
-                  <div className="mt-2 pt-2 border-t border-indigo-200 dark:border-indigo-800">
-                    <div className="text-xs text-indigo-600 dark:text-indigo-400 font-medium">
+                  <div className="mt-2 pt-2 border-t border-neutral02 dark:border-neutral02">
+                    <div className="text-xs text-neutral02 dark:text-neutral01 font-medium">
                       → Open in AI Watchtower
                     </div>
                   </div>
@@ -328,13 +328,13 @@ export default function HomeDashboard({ onSelectLoan, onNavigate }) {
         {/* Anomaly Detection for loans */}
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-4">
-            <div className="p-1.5 rounded-lg bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30">
-              <AlertCircle className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+            <div className="p-1.5 rounded-lg bg-gradient-to-br from-textLink/20 to-pinkTP/20 border border-textLink/30">
+              <AlertCircle className="w-4 h-4 text-textLink dark:text-pinkTP" />
             </div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
               Anomaly Detection
             </h3>
-            <span className="text-xs px-2 py-1 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 font-medium">
+            <span className="text-xs px-2 py-1 rounded-full bg-error01 dark:bg-textLink/30 text-error02 dark:text-pinkTP font-medium">
               🤖 AI Detected
             </span>
           </div>
@@ -348,8 +348,8 @@ export default function HomeDashboard({ onSelectLoan, onNavigate }) {
                   transition={{ delay: idx * 0.08 }}
                   className={`rounded-xl border-2 bg-gradient-to-br ${
                     a.severity === "high"
-                      ? "from-red-500/20 to-orange-500/20 border-red-500/30"
-                      : "from-yellow-500/20 to-amber-500/20 border-yellow-500/30"
+                      ? "from-error01 to-alert01 border-error03/30"
+                      : "from-alert01 to-alert01 border-alert02/30"
                   } bg-white/90 dark:bg-gray-900/90 backdrop-blur p-4 hover:shadow-xl transition-all`}
                 >
                   <div className="flex items-start justify-between mb-2">
@@ -385,11 +385,11 @@ export default function HomeDashboard({ onSelectLoan, onNavigate }) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <button
               onClick={() => onSelectLoan && onSelectLoan({ id: "new-loan", loanType: "Conventional" })}
-              className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-[#780096] hover:bg-[#780096]/5 transition-all text-left"
+              className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-textLink hover:bg-textLink/5 transition-all text-left"
             >
               <div className="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                 New Application
-                <ArrowRight className="w-3 h-3 text-[#780096]" />
+                <ArrowRight className="w-3 h-3 text-textLink" />
               </div>
               <div className="text-sm text-gray-600 dark:text-gray-400">
                 Start a conventional loan and walk through SOP-aware checks.
@@ -397,11 +397,11 @@ export default function HomeDashboard({ onSelectLoan, onNavigate }) {
             </button>
             <button
               onClick={() => onSelectLoan && onSelectLoan({ id: "new-fha", loanType: "FHA" })}
-              className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-[#780096] hover:bg-[#780096]/5 transition-all text-left"
+              className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-textLink hover:bg-textLink/5 transition-all text-left"
             >
               <div className="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                 FHA Application
-                <ArrowRight className="w-3 h-3 text-[#780096]" />
+                <ArrowRight className="w-3 h-3 text-textLink" />
               </div>
               <div className="text-sm text-gray-600 dark:text-gray-400">
                 Showcase policy-heavy FHA scenarios with bankruptcy / DTI logic.
@@ -409,11 +409,11 @@ export default function HomeDashboard({ onSelectLoan, onNavigate }) {
             </button>
             <button
               onClick={() => onNavigate && onNavigate("lend/worklist")}
-              className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-[#780096] hover:bg-[#780096]/5 transition-all text-left"
+              className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-textLink hover:bg-textLink/5 transition-all text-left"
             >
               <div className="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                 Open Worklist
-                <ArrowRight className="w-3 h-3 text-[#780096]" />
+                <ArrowRight className="w-3 h-3 text-textLink" />
               </div>
               <div className="text-sm text-gray-600 dark:text-gray-400">
                 Jump into prioritized loans sorted by AI priority and SLA risk.

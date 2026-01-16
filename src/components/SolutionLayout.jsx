@@ -74,12 +74,12 @@ export default function SolutionLayout({
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50 dark:bg-gray-950 overflow-hidden">
-      <header className="fixed top-0 left-0 right-0 h-16 bg-white/95 dark:bg-gray-900 backdrop-blur-xl border-b border-gray-200/60 dark:border-gray-800 flex items-center shadow-[0_12px_30px_rgba(15,14,63,0.08)] z-50">
+    <div className="flex flex-col h-screen bg-bg02 overflow-hidden">
+      <header className="fixed top-0 left-0 right-0 h-16 bg-bg01/95 backdrop-blur-xl border-b border-stroke01/60 flex items-center shadow-drop z-50">
         {/* Hamburger Menu - aligned with sidebar (w-16 = 64px) */}
         <button
           onClick={() => setNavMenuOpen(!navMenuOpen)}
-          className="h-full w-16 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border-r border-gray-200 dark:border-gray-800 shrink-0"
+          className="h-full w-16 flex items-center justify-center hover:bg-hover transition-colors border-r border-stroke01 shrink-0"
           aria-label="Open navigation menu"
         >
           <Icon 
@@ -98,13 +98,13 @@ export default function SolutionLayout({
             <>
               <span className="hidden sm:block h-5 w-px bg-gradient-to-b from-transparent via-primary/30 dark:via-primary/40 to-transparent shrink-0" />
               <div className="hidden sm:flex items-center shrink-0">
-                <span className="relative inline-flex items-center px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-[#2E2E2E]/20 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-300 group">
+                <span className="relative inline-flex items-center px-4 py-2 rounded-lg bg-bg01 border border-text01/20 shadow-sm hover:shadow-md transition-all duration-300 group">
                   {/* Hover effect */}
-                  <span className="absolute inset-0 rounded-lg bg-[#F5F5F5] dark:bg-gray-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <span className="absolute inset-0 rounded-lg bg-hover opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   {/* Accent dot */}
-                  <span className="absolute -left-1 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#2E2E2E] dark:bg-white opacity-80 group-hover:opacity-100 group-hover:scale-125 transition-all duration-300" />
+                  <span className="absolute -left-1 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-text01 opacity-80 group-hover:opacity-100 group-hover:scale-125 transition-all duration-300" />
                   {/* Text with perfect alignment and brand color */}
-                  <span className="relative text-[11px] uppercase tracking-[0.3em] font-black text-[#2E2E2E] dark:text-white leading-tight whitespace-nowrap">
+                  <span className="relative text-[11px] uppercase tracking-[0.3em] font-black text-text01 leading-tight whitespace-nowrap">
                     {tagline}
                   </span>
                 </span>
@@ -120,7 +120,7 @@ export default function SolutionLayout({
 
           <button
             onClick={() => setDarkMode(!darkMode)}
-            className="p-2 rounded-lg transition-all hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="p-2 rounded-lg transition-all hover:bg-hover"
             aria-label="Toggle dark mode"
           >
             <Icon 
@@ -134,7 +134,7 @@ export default function SolutionLayout({
             <button
               type="button"
               onClick={() => setUserMenuOpen(!userMenuOpen)}
-              className="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-all shadow-sm hover:shadow-md"
+              className="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-bg01 border-2 border-stroke01 hover:border-text03 transition-all shadow-sm hover:shadow-md"
               title={user?.name || "Vinod Kumar V"}
             >
               <img
@@ -142,46 +142,46 @@ export default function SolutionLayout({
                 alt={user?.name || "User"}
                 className="w-full h-full rounded-full object-cover"
               />
-              <span className={`absolute -bottom-0.5 -right-0.5 bg-white dark:bg-gray-800 rounded-full border-2 border-gray-200 dark:border-gray-700 shadow-sm transition-transform ${userMenuOpen ? "rotate-180" : ""}`}>
+              <span className={`absolute -bottom-0.5 -right-0.5 bg-bg01 rounded-full border-2 border-stroke01 shadow-sm transition-transform ${userMenuOpen ? "rotate-180" : ""}`}>
                 <Icon name="ChevronDown" size="16" state="default" />
               </span>
             </button>
 
             {userMenuOpen && (
-              <div className="absolute right-4 top-16 w-64 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 py-2 z-50">
-                <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-800">
+              <div className="absolute right-4 top-16 w-64 bg-bg01 rounded-2xl shadow-2xl border border-stroke01 py-2 z-50">
+                <div className="px-4 py-3 border-b border-stroke01">
                   <div className="flex items-center gap-3 mb-3">
                     <img
                       src={user?.avatar || AVATAR_DEFAULT}
                       alt={user?.name || "User"}
-                      className="w-12 h-12 rounded-full object-cover border-2 border-gray-200 dark:border-gray-700"
+                      className="w-12 h-12 rounded-full object-cover border-2 border-stroke01"
                     />
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate">
+                      <p className="text-sm font-semibold text-text01 truncate">
                         {user?.name || "Vinod Kumar V"}
                       </p>
                       {user?.email && (
-                        <p className="text-xs text-gray-500 dark:text-gray-400 truncate mt-0.5">{user.email}</p>
+                        <p className="text-xs text-text03 truncate mt-0.5">{user.email}</p>
                       )}
                     </div>
                   </div>
                   {user?.role && (
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Role:</span>
-                      <span className="text-xs text-[#780096] dark:text-[#780096] font-semibold capitalize px-2 py-0.5 rounded-full bg-[#780096]/10 dark:bg-[#780096]/20">
+                      <span className="text-xs font-medium text-text03 uppercase tracking-wide">Role:</span>
+                      <span className="text-xs text-primary font-semibold capitalize px-2 py-0.5 rounded-full bg-primary/10">
                         {user.role}
                       </span>
                     </div>
                   )}
                 </div>
-                <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-800">
+                <div className="px-4 py-2 border-b border-stroke01">
                   <RoleSwitcher />
                 </div>
                 <div className="px-4 py-2">
                   <button
                     type="button"
                     onClick={handleLogout}
-                    className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 transition-colors rounded-lg"
+                    className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-text01 hover:bg-error01 hover:text-error02 transition-colors rounded-lg"
                   >
                     <Icon name="Logout" size="16" state="default" />
                     <span>Logout</span>
@@ -199,10 +199,10 @@ export default function SolutionLayout({
           <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40" onClick={() => setNavMenuOpen(false)} />
           <div
             ref={navMenuRef}
-            className="fixed left-0 top-16 bottom-0 w-80 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 shadow-2xl z-50 overflow-hidden flex flex-col animate-in slide-in-from-left duration-200"
+            className="fixed left-0 top-16 bottom-0 w-80 bg-bg01 border-r border-stroke01 shadow-2xl z-50 overflow-hidden flex flex-col animate-in slide-in-from-left duration-200"
           >
             {/* Search Bar */}
-            <div className="p-4 border-b border-gray-200 dark:border-gray-800">
+            <div className="p-4 border-b border-stroke01">
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2">
                   <Icon name="Search" size="16" state="default" />
@@ -212,11 +212,11 @@ export default function SolutionLayout({
                   placeholder="Search navigation..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#780096]/50 focus:border-[#780096]"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-stroke01 bg-bg02 text-sm text-text01 placeholder-text03 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   autoFocus
                 />
               </div>
-              <div className="mt-2 flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+              <div className="mt-2 flex items-center gap-2 text-xs text-text03">
                 <Icon name="Settings" size="16" state="default" />
                 <span>Press Cmd/Ctrl + K to open</span>
               </div>
@@ -240,8 +240,8 @@ export default function SolutionLayout({
                         }}
                         className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all group ${
                           isActive
-                            ? "bg-[#780096]/10 dark:bg-[#780096]/30 text-[#780096] dark:text-[#780096]"
-                            : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                            ? "bg-primary/10 text-primary"
+                            : "text-text01 hover:bg-hover"
                         }`}
                       >
                         {iconToUse ? (
@@ -249,7 +249,7 @@ export default function SolutionLayout({
                         ) : null}
                         <span className="text-sm font-medium flex-1 text-left">{label}</span>
                         {isActive && (
-                          <div className="w-1.5 h-1.5 rounded-full bg-[#780096]" />
+                          <div className="w-1.5 h-1.5 rounded-full bg-primary" />
                         )}
                         <Icon 
                           name="ArrowForward" 
@@ -261,7 +261,7 @@ export default function SolutionLayout({
                     );
                   })
                 ) : (
-                  <div className="text-center py-8 text-gray-500 dark:text-gray-400 text-sm">
+                  <div className="text-center py-8 text-text03 text-sm">
                     No results found
                   </div>
                 )}
@@ -269,8 +269,8 @@ export default function SolutionLayout({
             </div>
 
             {/* Quick Actions Footer */}
-            <div className="border-t border-gray-200 dark:border-gray-800 p-4 space-y-2">
-              <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">
+            <div className="border-t border-stroke01 p-4 space-y-2">
+              <div className="text-xs font-semibold text-text03 uppercase tracking-wide mb-2">
                 Quick Actions
               </div>
               <button
@@ -278,7 +278,7 @@ export default function SolutionLayout({
                   onNavigate("store");
                   setNavMenuOpen(false);
                 }}
-                className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-text01 hover:bg-hover transition-colors"
               >
                 <Icon name="Zap" size="16" state="default" />
                 <span>Back to FAB Store</span>
@@ -287,12 +287,12 @@ export default function SolutionLayout({
                 onClick={() => {
                   setDarkMode(!darkMode);
                 }}
-                className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-text01 hover:bg-hover transition-colors"
               >
-                <Icon 
-                  name={darkMode ? "LightMode" : "DarkMode"} 
-                  size="16" 
-                  state="default" 
+                <Icon
+                  name={darkMode ? "LightMode" : "DarkMode"}
+                  size="16"
+                  state="default"
                 />
                 <span>Toggle {darkMode ? "Light" : "Dark"} Mode</span>
               </button>
@@ -310,10 +310,10 @@ export default function SolutionLayout({
         />
 
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-          <main className="flex-1 overflow-auto bg-gray-50 dark:bg-gray-950 min-h-0">
+          <main className="flex-1 overflow-auto bg-bg02 min-h-0">
             {children}
           </main>
-          <footer className="shrink-0 text-xs text-gray-500 dark:text-gray-400 py-3 px-6 border-t border-gray-200 dark:border-gray-800 bg-white/95 dark:bg-gray-900/95 backdrop-blur">
+          <footer className="shrink-0 text-xs text-text03 py-3 px-6 border-t border-stroke01 bg-bg01/95 backdrop-blur">
             {footerText}
           </footer>
         </div>

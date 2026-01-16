@@ -26,17 +26,17 @@ export default function AppLogo({
       {/* Text block: TP.ai FAB and Application Name */}
       <div className="flex flex-col leading-none">
         {/* Top line: TP.ai FAB - smaller, bold, uppercase TP and FAB, lowercase .ai (about half the height of bottom line) */}
-        <div className="text-[13px] font-bold text-gray-900 dark:text-gray-100 tracking-tight mb-1">
+        <div className="text-[13px] font-bold text-text01 tracking-tight mb-1">
           <span className="uppercase">TP</span>
           <span className="lowercase">.ai</span>
           <span className="uppercase"> FAB</span>
         </div>
         {/* Bottom line: Application Name with ™ - much larger, bold, uppercase (dominant size) */}
         <div className="flex items-baseline gap-0.5">
-          <span className="text-[26px] font-bold text-gray-900 dark:text-gray-100 leading-none tracking-tight uppercase">
+          <span className="text-[26px] font-bold text-text01 leading-none tracking-tight uppercase">
             {displayName}
           </span>
-          <span className="text-[9px] font-normal text-gray-900 dark:text-gray-100 leading-none align-super -mt-1">
+          <span className="text-[9px] font-normal text-text01 leading-none align-super -mt-1">
             ™
           </span>
         </div>
@@ -47,11 +47,11 @@ export default function AppLogo({
         <div className="relative flex-shrink-0">
           <div className="relative w-[32px] h-[32px]">
             {/* Top layer - dark grey/muted purple */}
-            <div className="absolute top-0 left-0 w-[24px] h-[16px] rounded-[3px] bg-gradient-to-br from-gray-600/90 to-purple-600/80 dark:from-gray-500 dark:to-purple-500 shadow-sm" />
+            <div className="absolute top-0 left-0 w-[24px] h-[16px] rounded-icon16 bg-linear-to-br from-text02/90 to-primary/80 shadow-sm" />
             {/* Middle layer - vibrant purple */}
-            <div className="absolute top-2 left-1 w-[24px] h-[16px] rounded-[3px] bg-gradient-to-br from-purple-500 to-purple-400 dark:from-purple-400 dark:to-purple-300 shadow-sm" />
+            <div className="absolute top-2 left-1 w-[24px] h-[16px] rounded-icon16 bg-linear-to-br from-primary to-primary/80 shadow-sm" />
             {/* Bottom layer - light grey/pale purple */}
-            <div className="absolute top-4 left-2 w-[24px] h-[16px] rounded-[3px] bg-gradient-to-br from-purple-300/90 to-gray-300/80 dark:from-purple-200 dark:to-gray-200 shadow-md" />
+            <div className="absolute top-4 left-2 w-[24px] h-[16px] rounded-icon16 bg-linear-to-br from-tertiary/90 to-stroke01/80 shadow-drop" />
           </div>
         </div>
       )}

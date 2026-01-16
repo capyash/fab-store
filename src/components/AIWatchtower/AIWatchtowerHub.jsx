@@ -40,7 +40,7 @@ export default function AIWatchtowerHub({
   };
 
   return (
-    <div className="flex flex-col h-full overflow-hidden bg-gray-50 dark:bg-gray-950">
+    <div className="flex flex-col h-full overflow-hidden bg-bg02">
       {/* Context Bar */}
       {ContextBar && (
         <ContextBar
@@ -78,17 +78,17 @@ export default function AIWatchtowerHub({
       {/* Reference Viewer Modal */}
       {viewerOpen && viewerItem && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl p-6 max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
+          <div className="bg-bg01 rounded-lg p-6 max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold">{viewerItem.name || viewerItem.id}</h3>
+              <h3 className="text-lg font-semibold text-text01">{viewerItem.name || viewerItem.id}</h3>
               <button
                 onClick={() => setViewerOpen(false)}
-                className="text-gray-500 hover:text-gray-700"
+                className="text-text03 hover:text-text01"
               >
                 ✕
               </button>
             </div>
-            <div className="text-sm text-gray-700">
+            <div className="text-sm text-text01">
               <pre className="whitespace-pre-wrap">{JSON.stringify(viewerItem, null, 2)}</pre>
             </div>
           </div>
