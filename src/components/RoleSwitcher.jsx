@@ -33,7 +33,7 @@ export default function RoleSwitcher() {
     <div className="relative w-full">
       <button
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between gap-2 px-3 py-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700 border border-gray-200"
+        className="w-full flex items-center justify-between gap-2 px-3 py-2 rounded-lg bg-bg02 hover:bg-bg03 transition-colors text-sm font-medium text-text01 border border-stroke01"
         title="Switch Role (Testing Only)"
       >
         <div className="flex items-center gap-2">
@@ -49,10 +49,10 @@ export default function RoleSwitcher() {
             className="fixed inset-0 z-40"
             onClick={() => setOpen(false)}
           />
-          <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-gray-200 py-2 z-50">
-            <div className="px-4 py-2 border-b border-gray-100">
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Switch Role</p>
-              <p className="text-xs text-gray-400 mt-0.5">For testing personas</p>
+          <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-stroke01 py-2 z-50">
+            <div className="px-4 py-2 border-b border-bg03">
+              <p className="text-xs font-semibold text-text03 uppercase tracking-wide">Switch Role</p>
+              <p className="text-xs text-text03 mt-0.5">For testing personas</p>
             </div>
             {roles.map((roleOption) => {
               const Icon = roleOption.icon;
@@ -63,8 +63,8 @@ export default function RoleSwitcher() {
                   onClick={() => handleRoleChange(roleOption.value)}
                   className={`w-full flex items-start gap-3 px-4 py-3 text-left transition-colors ${
                     isActive
-                      ? "bg-[#F5F3FF] text-[#780096]"
-                      : "text-gray-700 hover:bg-gray-50"
+                      ? "bg-[tertiary] text-pinkTP"
+                      : "text-text01 hover:bg-bg02"
                   }`}
                 >
                   <Icon className="w-5 h-5 shrink-0 mt-0.5" />
@@ -72,12 +72,12 @@ export default function RoleSwitcher() {
                     <div className="flex items-center gap-2">
                       <span className="font-semibold text-sm">{roleOption.label}</span>
                       {isActive && (
-                        <span className="text-xs px-1.5 py-0.5 rounded bg-[#780096] text-white">
+                        <span className="text-xs px-1.5 py-0.5 rounded bg-pinkTP text-white">
                           Active
                         </span>
                       )}
                     </div>
-                    <p className="text-xs text-gray-500 mt-0.5">{roleOption.description}</p>
+                    <p className="text-xs text-text03 mt-0.5">{roleOption.description}</p>
                   </div>
                 </button>
               );

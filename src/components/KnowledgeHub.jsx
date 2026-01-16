@@ -93,27 +93,27 @@ export default function KnowledgeHub({ onBack, onNavigate }) {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F7F8FF]">
+    <div className="min-h-screen bg-[bg02]">
       <div className="max-w-7xl mx-auto px-4 md:px-10 py-8">
         {/* Header */}
         <div className="mb-8">
           <button
             onClick={onBack}
-            className="flex items-center gap-2 text-[#780096] hover:text-[#780096]/90 transition-colors mb-4"
+            className="flex items-center gap-2 text-pinkTP hover:text-pinkTP/90 transition-colors mb-4"
           >
             <ArrowLeft className="w-4 h-4" />
             <span className="font-medium">Back to Store</span>
           </button>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center shadow-lg">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-pinkTP to-pinkTP flex items-center justify-center shadow-lg">
               <BookOpen className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h1 className="text-4xl font-bold text-gray-900">Knowledge Hub</h1>
-              <p className="text-lg text-gray-600 mt-1">Documentation, guides, and resources</p>
+              <h1 className="text-4xl font-bold text-text01">Knowledge Hub</h1>
+              <p className="text-lg text-text02 mt-1">Documentation, guides, and resources</p>
             </div>
           </div>
-          <p className="text-gray-700 max-w-3xl leading-relaxed">
+          <p className="text-text01 max-w-3xl leading-relaxed">
             Comprehensive documentation and guides to help you understand, build, and deploy applications on the FAB Store platform. 
             Learn about platforms, components, AI capabilities, and best practices.
           </p>
@@ -121,7 +121,7 @@ export default function KnowledgeHub({ onBack, onNavigate }) {
 
         {/* Quick Links */}
         <section className="mb-12">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Quick Links</h2>
+          <h2 className="text-xl font-semibold text-text01 mb-4">Quick Links</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {quickLinks.map((link) => {
               const Icon = link.icon;
@@ -129,15 +129,15 @@ export default function KnowledgeHub({ onBack, onNavigate }) {
                 <button
                   key={link.key}
                   onClick={() => onNavigate && onNavigate(link.key)}
-                  className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-all text-left group"
+                  className="bg-white rounded-xl p-6 border border-stroke01 shadow-sm hover:shadow-md transition-all text-left group"
                 >
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#780096]/10 to-[#780096]/10 flex items-center justify-center group-hover:from-[#780096]/20 group-hover:to-[#780096]/20 transition-colors">
-                      <Icon className="w-5 h-5 text-[#780096]" />
+                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-pinkTP/10 to-pinkTP/10 flex items-center justify-center group-hover:from-pinkTP/30 group-hover:to-pinkTP/30 transition-colors">
+                      <Icon className="w-5 h-5 text-pinkTP" />
                     </div>
-                    <span className="font-semibold text-gray-900">{link.label}</span>
+                    <span className="font-semibold text-text01">{link.label}</span>
                   </div>
-                  <p className="text-sm text-gray-600">Click to view detailed information</p>
+                  <p className="text-sm text-text02">Click to view detailed information</p>
                 </button>
               );
             })}
@@ -146,28 +146,28 @@ export default function KnowledgeHub({ onBack, onNavigate }) {
 
         {/* Knowledge Sections */}
         <section>
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Knowledge Base</h2>
+          <h2 className="text-2xl font-bold text-text01 mb-6">Knowledge Base</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {knowledgeSections.map((section, idx) => {
               const Icon = section.icon;
               return (
                 <div
                   key={idx}
-                  className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
+                  className="bg-white rounded-2xl p-6 border border-stroke01 shadow-sm hover:shadow-md transition-shadow"
                 >
                   <div className="flex items-start gap-4 mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#780096]/10 to-[#780096]/10 flex items-center justify-center shrink-0">
-                      <Icon className="w-6 h-6 text-[#780096]" />
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-pinkTP/10 to-pinkTP/10 flex items-center justify-center shrink-0">
+                      <Icon className="w-6 h-6 text-pinkTP" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">{section.title}</h3>
-                      <p className="text-sm text-gray-600 leading-relaxed">{section.description}</p>
+                      <h3 className="text-lg font-semibold text-text01 mb-2">{section.title}</h3>
+                      <p className="text-sm text-text02 leading-relaxed">{section.description}</p>
                     </div>
                   </div>
                   <ul className="space-y-2 mb-4">
                     {section.items.map((item, itemIdx) => (
-                      <li key={itemIdx} className="text-sm text-gray-600 flex items-start gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#780096]/30 mt-1.5 shrink-0" />
+                      <li key={itemIdx} className="text-sm text-text02 flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-pinkTP/30 mt-1.5 shrink-0" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -175,7 +175,7 @@ export default function KnowledgeHub({ onBack, onNavigate }) {
                   {section.action && (
                     <button
                       onClick={() => onNavigate && onNavigate(section.action.key)}
-                      className="text-sm font-medium text-[#780096] hover:text-[#780096]/90 transition-colors"
+                      className="text-sm font-medium text-pinkTP hover:text-pinkTP/90 transition-colors"
                     >
                       {section.action.label} →
                     </button>
@@ -188,24 +188,24 @@ export default function KnowledgeHub({ onBack, onNavigate }) {
 
         {/* Statistics */}
         <section className="mt-12">
-          <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Platform Statistics</h2>
+          <div className="bg-white rounded-2xl p-8 border border-stroke01 shadow-sm">
+            <h2 className="text-2xl font-bold text-text01 mb-6">Platform Statistics</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               <div className="text-center">
-                <div className="text-3xl font-bold text-[#780096] mb-1">5</div>
-                <div className="text-sm text-gray-600">Live Applications</div>
+                <div className="text-3xl font-bold text-pinkTP mb-1">5</div>
+                <div className="text-sm text-text02">Live Applications</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-[#780096] mb-1">2</div>
-                <div className="text-sm text-gray-600">AI Platforms</div>
+                <div className="text-3xl font-bold text-pinkTP mb-1">2</div>
+                <div className="text-sm text-text02">AI Platforms</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-[#780096] mb-1">67</div>
-                <div className="text-sm text-gray-600">Builder Components</div>
+                <div className="text-3xl font-bold text-pinkTP mb-1">67</div>
+                <div className="text-sm text-text02">Builder Components</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-[#780096] mb-1">3</div>
-                <div className="text-sm text-gray-600">User Roles</div>
+                <div className="text-3xl font-bold text-pinkTP mb-1">3</div>
+                <div className="text-sm text-text02">User Roles</div>
               </div>
             </div>
           </div>

@@ -44,7 +44,7 @@ export default function CollaborationFlow({ agents }) {
 
   return (
     <div className="p-6">
-      <div className="text-sm text-gray-600 mb-6">Agent Collaboration Flow</div>
+      <div className="text-sm text-text02 mb-6">Agent Collaboration Flow</div>
       
       <div className="relative overflow-x-auto" style={{ height: "400px", minWidth: "900px" }}>
         {/* Agent Nodes */}
@@ -63,24 +63,24 @@ export default function CollaborationFlow({ agents }) {
                 <div
                   className={`w-24 h-24 rounded-lg border-2 flex flex-col items-center justify-center ${
                     isHealthy
-                      ? "bg-green-50 border-green-200"
+                      ? "bg-success01 border-success01"
                       : successRate >= 70
-                      ? "bg-yellow-50 border-yellow-200"
-                      : "bg-red-50 border-red-200"
+                      ? "bg-alert01 border-alert01"
+                      : "bg-error01 border-error01"
                   }`}
                 >
                   <Bot className={`w-6 h-6 ${
-                    isHealthy ? "text-green-600" : successRate >= 70 ? "text-yellow-600" : "text-red-600"
+                    isHealthy ? "text-success03" : successRate >= 70 ? "text-alert02" : "text-error03"
                   }`} />
-                  <div className="text-xs font-semibold text-gray-700 mt-1 text-center px-1">
+                  <div className="text-xs font-semibold text-text01 mt-1 text-center px-1">
                     {agent.name}
                   </div>
                 </div>
-                <div className="mt-2 text-xs text-gray-500">
+                <div className="mt-2 text-xs text-text03">
                   {agentData?.execution_count?.toLocaleString() || 0} exec
                 </div>
                 <div className={`text-xs font-semibold ${
-                  isHealthy ? "text-green-600" : successRate >= 70 ? "text-yellow-600" : "text-red-600"
+                  isHealthy ? "text-success03" : successRate >= 70 ? "text-alert02" : "text-error03"
                 }`}>
                   {successRate.toFixed(1)}%
                 </div>
@@ -106,8 +106,8 @@ export default function CollaborationFlow({ agents }) {
               }}
             >
               <div className="relative h-full flex items-center">
-                <ArrowRight className="w-5 h-5 text-gray-400 absolute" />
-                <div className="absolute right-0 -top-6 text-xs text-gray-500 bg-white px-1">
+                <ArrowRight className="w-5 h-5 text-text03 absolute" />
+                <div className="absolute right-0 -top-6 text-xs text-text03 bg-white px-1">
                   {volume.toLocaleString()}
                 </div>
               </div>
@@ -121,11 +121,11 @@ export default function CollaborationFlow({ agents }) {
           style={{ left: "800px", top: "120px" }}
         >
           <div className="flex flex-col items-center">
-            <div className="w-24 h-24 rounded-lg border-2 border-purple-200 bg-purple-50 flex flex-col items-center justify-center">
-              <User className="w-6 h-6 text-purple-600" />
-              <div className="text-xs font-semibold text-gray-700 mt-1">Human</div>
+            <div className="w-24 h-24 rounded-lg border-2 border-pinkTP/40 bg-pinkTP/10 flex flex-col items-center justify-center">
+              <User className="w-6 h-6 text-pinkTP" />
+              <div className="text-xs font-semibold text-text01 mt-1">Human</div>
             </div>
-            <div className="mt-2 text-xs text-gray-500">
+            <div className="mt-2 text-xs text-text03">
               {escalatedVolume.toLocaleString()} escalated
             </div>
           </div>
@@ -150,16 +150,16 @@ export default function CollaborationFlow({ agents }) {
       {/* Legend */}
       <div className="mt-8 flex items-center justify-center gap-6 text-xs">
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded bg-green-200 border border-green-300" />
-          <span className="text-gray-600">Healthy (&gt;90%)</span>
+          <div className="w-3 h-3 rounded bg-success01 border border-success03" />
+          <span className="text-text02">Healthy (&gt;90%)</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded bg-yellow-200 border border-yellow-300" />
-          <span className="text-gray-600">Warning (70-90%)</span>
+          <div className="w-3 h-3 rounded bg-alert01 border border-alert02" />
+          <span className="text-text02">Warning (70-90%)</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded bg-red-200 border border-red-300" />
-          <span className="text-gray-600">Critical (&lt;70%)</span>
+          <div className="w-3 h-3 rounded bg-error01 border border-error03" />
+          <span className="text-text02">Critical (&lt;70%)</span>
         </div>
       </div>
     </div>

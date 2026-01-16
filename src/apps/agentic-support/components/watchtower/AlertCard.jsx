@@ -13,15 +13,15 @@ const ALERT_ICONS = {
 };
 
 const ALERT_COLORS = {
-  performance: "border-amber-200 bg-amber-50",
-  volume_spike: "border-orange-200 bg-orange-50",
-  cost: "border-red-200 bg-red-50",
-  success_rate: "border-blue-200 bg-blue-50",
+  performance: "border-alert01 bg-alert01",
+  volume_spike: "border-alert01 bg-alert01",
+  cost: "border-error01 bg-error01",
+  success_rate: "border-neutral01 bg-neutral01",
 };
 
 export default function AlertCard({ alert }) {
   const Icon = ALERT_ICONS[alert.type] || AlertTriangle;
-  const colorClass = ALERT_COLORS[alert.type] || "border-gray-300 bg-gray-50";
+  const colorClass = ALERT_COLORS[alert.type] || "border-stroke01 bg-bg02";
   
   const getTimeAgo = (timestamp) => {
     const now = new Date();
@@ -39,24 +39,24 @@ export default function AlertCard({ alert }) {
     <div className={`rounded-lg border ${colorClass} p-4`}>
       <div className="flex items-start gap-3">
         <div className={`p-2 rounded-lg ${
-          alert.type === "performance" ? "bg-yellow-100" :
-          alert.type === "volume_spike" ? "bg-orange-100" :
-          alert.type === "cost" ? "bg-red-100" :
-          "bg-blue-100"
+          alert.type === "performance" ? "bg-alert01" :
+          alert.type === "volume_spike" ? "bg-alert01" :
+          alert.type === "cost" ? "bg-error01" :
+          "bg-neutral01"
         }`}>
           <Icon className={`w-5 h-5 ${
-            alert.type === "performance" ? "text-yellow-600" :
-            alert.type === "volume_spike" ? "text-orange-600" :
-            alert.type === "cost" ? "text-red-600" :
-            "text-blue-600"
+            alert.type === "performance" ? "text-alert02" :
+            alert.type === "volume_spike" ? "text-pinkTP" :
+            alert.type === "cost" ? "text-error03" :
+            "text-neutral02"
           }`} />
         </div>
         <div className="flex-1">
-          <div className="font-bold text-gray-900 mb-1">{alert.title}</div>
-          <div className="text-sm text-gray-600 mb-2">{alert.description}</div>
-          <div className="text-xs text-gray-500">{getTimeAgo(alert.timestamp)}</div>
+          <div className="font-bold text-text01 mb-1">{alert.title}</div>
+          <div className="text-sm text-text02 mb-2">{alert.description}</div>
+          <div className="text-xs text-text03">{getTimeAgo(alert.timestamp)}</div>
         </div>
-        <button className="text-xs text-[#780096] hover:underline">View</button>
+        <button className="text-xs text-pinkTP hover:underline">View</button>
       </div>
     </div>
   );

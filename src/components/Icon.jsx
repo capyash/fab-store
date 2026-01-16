@@ -3,7 +3,7 @@
  * 
  * Follows Material Design icon anatomy:
  * - Default: Text 02 color, no background
- * - Hover: Hover background (#F5F5F5), corner radius based on size
+ * - Hover: Hover background (hover), corner radius based on size
  * - Selected: Primary color icon, Hover background
  * - Toggle: Primary color icon, Hover background, corner radius
  * 

@@ -254,23 +254,23 @@ export default function AgenticSupportDemo({
   };
 
   const statusColor = (status) => {
-    if (!status) return "bg-gray-200 text-gray-800";
+    if (!status) return "bg-stroke01 text-text01";
     switch (status.status) {
       case "completed":
-        return "bg-emerald-100 text-emerald-700";
+        return "bg-success01 text-success02";
       case "escalated":
-        return "bg-amber-100 text-amber-700";
+        return "bg-alert01 text-amber-700";
       case "failed":
-        return "bg-red-100 text-red-700";
+        return "bg-error01 text-error02";
       default:
-        return "bg-blue-100 text-blue-700";
+        return "bg-neutral01 text-neutral02";
     }
   };
 
   const stageLabel = status?.stage?.replace(/_/g, " ") || "Not started";
 
   return (
-    <div className={embedded ? "" : "min-h-screen bg-[#F7F8FF]"}>
+    <div className={embedded ? "" : "min-h-screen bg-[bg02]"}>
       <div className={embedded ? "w-full" : "max-w-6xl mx-auto px-4 md:px-10 py-8"}>
         {!embedded && (
           <>
@@ -279,24 +279,24 @@ export default function AgenticSupportDemo({
               <div className="flex items-center gap-3">
                 <button
                   onClick={onBack}
-                  className="mr-2 inline-flex items-center text-sm text-[#780096] hover:text-[#780096]"
+                  className="mr-2 inline-flex items-center text-sm text-pinkTP hover:text-pinkTP"
                 >
                   ← Back
                 </button>
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center shadow-lg">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-pinkTP to-pinkTP flex items-center justify-center shadow-lg">
                   <Activity className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+                  <h1 className="text-2xl md:text-3xl font-bold text-text01">
                     Agentic Support – Self-Healing Demo
                   </h1>
-                  <p className="text-sm text-gray-600 mt-1 max-w-2xl">
+                  <p className="text-sm text-text02 mt-1 max-w-2xl">
                     Trigger end-to-end agentic workflows for printer issues. The system will diagnose, act,
                     verify and decide whether to resolve or escalate – no UI wiring required.
                   </p>
                 </div>
               </div>
-              <span className="px-3 py-1 rounded-full bg-purple-50 text-xs font-semibold text-[#780096]">
+              <span className="px-3 py-1 rounded-full bg-pinkTP/10 text-xs font-semibold text-pinkTP">
                 Mode: Simulated agentic run · Workflows: 2
               </span>
             </div>
@@ -305,8 +305,8 @@ export default function AgenticSupportDemo({
         
         {embedded && (
           <div className="mb-4">
-            <h2 className="text-lg font-bold text-gray-900 mb-2">Agentic Support Demo</h2>
-            <p className="text-xs text-gray-600">
+            <h2 className="text-lg font-bold text-text01 mb-2">Agentic Support Demo</h2>
+            <p className="text-xs text-text02">
               Trigger end-to-end agentic workflows for printer issues. The system will diagnose, act, verify and decide whether to resolve or escalate.
             </p>
           </div>
@@ -314,16 +314,16 @@ export default function AgenticSupportDemo({
 
         <div className={`grid ${embedded ? 'grid-cols-1 gap-4' : 'grid-cols-1 lg:grid-cols-2 gap-6'} items-start`}>
           {/* Left: configuration */}
-          <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm space-y-4">
+          <div className="bg-white rounded-2xl p-6 border border-stroke01 shadow-sm space-y-4">
             <div>
-              <h2 className="text-sm font-semibold text-gray-900 mb-2">1. Choose a workflow</h2>
+              <h2 className="text-sm font-semibold text-text01 mb-2">1. Choose a workflow</h2>
               <div className="flex gap-2">
                 <button
                   type="button"
                   className={`flex-1 flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium border ${
                     selectedWorkflow === "printer_offline"
-                      ? "bg-[#780096] text-white border-[#780096]"
-                      : "bg-gray-50 text-gray-700 border-gray-200"
+                      ? "bg-pinkTP text-white border-pinkTP"
+                      : "bg-bg02 text-text01 border-stroke01"
                   }`}
                   onClick={() => setSelectedWorkflow("printer_offline")}
                 >
@@ -334,8 +334,8 @@ export default function AgenticSupportDemo({
                   type="button"
                   className={`flex-1 flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium border ${
                     selectedWorkflow === "ink_error"
-                      ? "bg-[#780096] text-white border-[#780096]"
-                      : "bg-gray-50 text-gray-700 border-gray-200"
+                      ? "bg-pinkTP text-white border-pinkTP"
+                      : "bg-bg02 text-text01 border-stroke01"
                   }`}
                   onClick={() => setSelectedWorkflow("ink_error")}
                 >
@@ -343,13 +343,13 @@ export default function AgenticSupportDemo({
                   Ink Cartridge Error
                 </button>
               </div>
-              <p className="mt-2 text-xs text-gray-500">{currentPreset.description}</p>
+              <p className="mt-2 text-xs text-text03">{currentPreset.description}</p>
             </div>
 
             <div className="space-y-2">
-              <h3 className="text-sm font-semibold text-gray-900">2. Customer interaction</h3>
+              <h3 className="text-sm font-semibold text-text01">2. Customer interaction</h3>
               <textarea
-                className="w-full min-h-[80px] text-sm border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#780096]"
+                className="w-full min-h-[80px] text-sm border border-stroke01 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-pinkTP"
                 value={form.interaction.text}
                 onChange={(e) =>
                   setForm((f) => ({
@@ -361,8 +361,8 @@ export default function AgenticSupportDemo({
             </div>
 
             <div className="space-y-2">
-              <h3 className="text-sm font-semibold text-gray-900">3. Device & telemetry (preset)</h3>
-              <div className="text-xs text-gray-600 bg-gray-50 border border-dashed border-gray-200 rounded-lg p-3 space-y-1">
+              <h3 className="text-sm font-semibold text-text01">3. Device & telemetry (preset)</h3>
+              <div className="text-xs text-text02 bg-bg02 border border-dashed border-stroke01 rounded-lg p-3 space-y-1">
                 <div>
                   <span className="font-semibold">Device:</span> {form.device.model} · {form.device.os} ·{" "}
                   FW {form.device.firmware_version}
@@ -392,7 +392,7 @@ export default function AgenticSupportDemo({
             </div>
 
             <div className="pt-2 flex items-center justify-between">
-              <div className="text-xs text-gray-500 flex items-center gap-2">
+              <div className="text-xs text-text03 flex items-center gap-2">
                 <Clock className="w-3 h-3" />
                 <span>End-to-end run: typically &lt; 1–2 seconds</span>
               </div>
@@ -401,7 +401,7 @@ export default function AgenticSupportDemo({
                   type="button"
                   onClick={handleTrigger}
                   disabled={isTriggering}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#780096] text-white text-sm font-semibold hover:bg-[#780096] disabled:opacity-60"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-pinkTP text-white text-sm font-semibold hover:bg-pinkTP disabled:opacity-60"
                 >
                   {isTriggering ? <Loader2 className="w-4 h-4 animate-spin" /> : <Play className="w-4 h-4" />}
                   {isTriggering ? "Starting..." : "Run Workflow"}
@@ -410,22 +410,22 @@ export default function AgenticSupportDemo({
             </div>
 
             {pollError && (
-              <div className="mt-2 flex items-start gap-2 text-sm text-red-700 bg-red-50 border-2 border-red-300 rounded-lg p-3">
+              <div className="mt-2 flex items-start gap-2 text-sm text-error02 bg-error01 border-2 border-error03 rounded-lg p-3">
                 <AlertCircle className="w-5 h-5 mt-0.5 shrink-0" />
                 <div className="flex-1">
                   <div className="font-bold mb-1">Connection Error</div>
-                  <div className="text-red-600 whitespace-pre-line">{pollError}</div>
+                  <div className="text-error03 whitespace-pre-line">{pollError}</div>
                 </div>
               </div>
             )}
           </div>
 
           {/* Right: live status */}
-          <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm space-y-4">
+          <div className="bg-white rounded-2xl p-6 border border-stroke01 shadow-sm space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-sm font-semibold text-gray-900">Workflow status</h2>
-                <p className="text-xs text-gray-500">
+                <h2 className="text-sm font-semibold text-text01">Workflow status</h2>
+                <p className="text-xs text-text03">
                   {workflowId ? `Workflow ID: ${workflowId}` : "Trigger a workflow to see live status."}
                 </p>
               </div>
@@ -439,48 +439,48 @@ export default function AgenticSupportDemo({
             {status && (
               <div className="space-y-3 text-sm">
                 <div className="flex flex-wrap gap-2">
-                  <span className="inline-flex items-center px-2 py-1 rounded-full bg-gray-100 text-xs text-gray-700">
+                  <span className="inline-flex items-center px-2 py-1 rounded-full bg-bg03 text-xs text-text01">
                     Stage: {stageLabel}
                   </span>
-                  <span className="inline-flex items-center px-2 py-1 rounded-full bg-gray-100 text-xs text-gray-700">
+                  <span className="inline-flex items-center px-2 py-1 rounded-full bg-bg03 text-xs text-text01">
                     Attempts: {status.attempts}
                   </span>
                   {status.workflow_type && (
-                    <span className="inline-flex items-center px-2 py-1 rounded-full bg-purple-50 text-xs text-[#780096]">
+                    <span className="inline-flex items-center px-2 py-1 rounded-full bg-pinkTP/10 text-xs text-pinkTP">
                       {status.workflow_type === "printer_offline" ? "Printer Offline" : "Ink Error"}
                     </span>
                   )}
                 </div>
 
                 {status.diagnosis && (
-                  <div className="border border-gray-200 rounded-lg p-3">
-                    <div className="text-xs font-semibold text-gray-700 mb-1 flex items-center gap-1">
-                      <Activity className="w-3.5 h-3.5 text-[#780096]" />
+                  <div className="border border-stroke01 rounded-lg p-3">
+                    <div className="text-xs font-semibold text-text01 mb-1 flex items-center gap-1">
+                      <Activity className="w-3.5 h-3.5 text-pinkTP" />
                       Diagnosis
                     </div>
-                    <pre className="bg-gray-50 text-[11px] p-2 rounded-md max-h-40 overflow-auto">
+                    <pre className="bg-bg02 text-[11px] p-2 rounded-md max-h-40 overflow-auto">
                       {JSON.stringify(status.diagnosis, null, 2)}
                     </pre>
                   </div>
                 )}
 
                 {status.actions && status.actions.length > 0 && (
-                  <div className="border border-gray-200 rounded-lg p-3">
-                    <div className="text-xs font-semibold text-gray-700 mb-1 flex items-center gap-1">
-                      <RefreshCw className="w-3.5 h-3.5 text-[#780096]" />
+                  <div className="border border-stroke01 rounded-lg p-3">
+                    <div className="text-xs font-semibold text-text01 mb-1 flex items-center gap-1">
+                      <RefreshCw className="w-3.5 h-3.5 text-pinkTP" />
                       Actions Executed
                     </div>
-                    <ul className="space-y-1 text-xs text-gray-700">
+                    <ul className="space-y-1 text-xs text-text01">
                       {status.actions.map((a) => (
                         <li key={`${a.name}-${a.started_at}`} className="flex items-start gap-2">
                           {a.success ? (
-                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 mt-0.5" />
+                            <CheckCircle2 className="w-3.5 h-3.5 text-success03 mt-0.5" />
                           ) : (
-                            <AlertCircle className="w-3.5 h-3.5 text-red-600 mt-0.5" />
+                            <AlertCircle className="w-3.5 h-3.5 text-error03 mt-0.5" />
                           )}
                           <div>
                             <div className="font-medium">{a.name}</div>
-                            {a.details && <div className="text-[11px] text-gray-500">{a.details}</div>}
+                            {a.details && <div className="text-[11px] text-text03">{a.details}</div>}
                           </div>
                         </li>
                       ))}
@@ -489,42 +489,42 @@ export default function AgenticSupportDemo({
                 )}
 
                 {status.verification && (
-                  <div className="border border-gray-200 rounded-lg p-3">
-                    <div className="text-xs font-semibold text-gray-700 mb-1 flex items-center gap-1">
+                  <div className="border border-stroke01 rounded-lg p-3">
+                    <div className="text-xs font-semibold text-text01 mb-1 flex items-center gap-1">
                       <CheckCircle2
                         className={`w-3.5 h-3.5 ${
-                          status.verification.success ? "text-emerald-600" : "text-amber-600"
+                          status.verification.success ? "text-success03" : "text-alert02"
                         }`}
                       />
                       Verification
                     </div>
-                    <ul className="text-xs text-gray-700 space-y-1">
+                    <ul className="text-xs text-text01 space-y-1">
                       {Object.entries(status.verification.checks || {}).map(([k, v]) => (
                         <li key={k}>
                           <span className="font-mono mr-1">{k}:</span>
-                          <span className={v ? "text-emerald-700" : "text-red-700"}>
+                          <span className={v ? "text-success02" : "text-error02"}>
                             {v ? "PASS" : "FAIL"}
                           </span>
                         </li>
                       ))}
                     </ul>
                     {status.verification.details && (
-                      <div className="mt-1 text-[11px] text-gray-500">{status.verification.details}</div>
+                      <div className="mt-1 text-[11px] text-text03">{status.verification.details}</div>
                     )}
                   </div>
                 )}
 
                 {status.escalation && (
-                  <div className="border border-gray-200 rounded-lg p-3">
-                    <div className="text-xs font-semibold text-gray-700 mb-1 flex items-center gap-1">
+                  <div className="border border-stroke01 rounded-lg p-3">
+                    <div className="text-xs font-semibold text-text01 mb-1 flex items-center gap-1">
                       <AlertCircle
                         className={`w-3.5 h-3.5 ${
-                          status.escalation.required ? "text-amber-600" : "text-emerald-600"
+                          status.escalation.required ? "text-alert02" : "text-success03"
                         }`}
                       />
                       Escalation Decision
                     </div>
-                    <div className="text-xs text-gray-700">
+                    <div className="text-xs text-text01">
                       {status.escalation.required ? (
                         <>
                           <div className="font-medium text-amber-700">Escalation required</div>
@@ -537,7 +537,7 @@ export default function AgenticSupportDemo({
                           )}
                         </>
                       ) : (
-                        <div className="flex items-center gap-1 text-emerald-700">
+                        <div className="flex items-center gap-1 text-success02">
                           <CheckCircle2 className="w-3.5 h-3.5" />
                           <span>No escalation required – issue resolved autonomously.</span>
                         </div>
@@ -547,16 +547,16 @@ export default function AgenticSupportDemo({
                 )}
 
                 {status.resolution_reason && (
-                  <div className="border border-gray-200 rounded-lg p-3 bg-gradient-to-br from-[#780096]/5 to-[#780096]/5">
-                    <div className="text-xs font-semibold text-gray-700 mb-1">AI Case Summary</div>
-                    <div className="text-sm text-gray-800 whitespace-pre-line">{status.resolution_reason}</div>
+                  <div className="border border-stroke01 rounded-lg p-3 bg-gradient-to-br from-pinkTP/5 to-pinkTP/5">
+                    <div className="text-xs font-semibold text-text01 mb-1">AI Case Summary</div>
+                    <div className="text-sm text-text01 whitespace-pre-line">{status.resolution_reason}</div>
                   </div>
                 )}
               </div>
             )}
 
             {!status && !pollError && (
-              <div className="border border-dashed border-gray-200 rounded-lg p-6 text-center text-sm text-gray-500">
+              <div className="border border-dashed border-stroke01 rounded-lg p-6 text-center text-sm text-text03">
                 Trigger a workflow to see the full agentic trace, including diagnosis, actions, verification and
                 escalation decisions.
               </div>

@@ -466,7 +466,7 @@ const COMPONENT_LIBRARY = {
         showIcon: { type: "boolean", default: true, label: "Show Icon" },
         showTrend: { type: "boolean", default: false, label: "Show Trend" },
         backgroundColor: { type: "color", default: "#ffffff", label: "Background" },
-        borderColor: { type: "color", default: "#e5e7eb", label: "Border" },
+        borderColor: { type: "color", default: "stroke01", label: "Border" },
       },
     },
     "stat-card": {
@@ -659,7 +659,7 @@ const COMPONENT_LIBRARY = {
         showInfo: { type: "boolean", default: true, label: "Show Percentage" },
         status: { type: "select", default: "active", label: "Status", options: ["active", "success", "exception", "normal"] },
         strokeWidth: { type: "number", default: 8, label: "Stroke Width", min: 2, max: 20 },
-        strokeColor: { type: "color", default: "#1890ff", label: "Stroke Color" },
+        strokeColor: { type: "color", default: "neutral02", label: "Stroke Color" },
       },
     },
     "spinner": {
@@ -1191,11 +1191,11 @@ function DroppableCanvas({ children, onDrop }) {
   });
 
   return (
-    <div className="min-h-full bg-slate-50 py-4">
+    <div className="min-h-full bg-bg02 py-4">
       <div
         ref={setNodeRef}
         className={`max-w-6xl mx-auto bg-white rounded-2xl shadow-md border p-6 transition-colors ${
-          isOver ? "border-[#780096] ring-2 ring-[#780096]/30" : "border-slate-200"
+          isOver ? "border-pinkTP ring-2 ring-pinkTP/30" : "border-stroke01"
         }`}
       >
         {children}
@@ -1226,10 +1226,10 @@ function DraggableComponent({ id, name, icon: Icon, disabled = false }) {
       {...attributes}
       className={`w-full text-left px-2.5 py-1.5 rounded-md text-xs cursor-move transition-all ${
         disabled
-          ? "bg-gray-50 text-gray-300 cursor-not-allowed"
+          ? "bg-bg02 text-stroke01 cursor-not-allowed"
           : isDragging
-          ? "bg-indigo-50 text-[#780096]"
-          : "bg-white text-gray-800 hover:bg-indigo-50"
+          ? "bg-neutral01 text-pinkTP"
+          : "bg-white text-text01 hover:bg-neutral01"
       }`}
     >
       <span className="truncate">{name}</span>
@@ -1246,11 +1246,11 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
         <div className="bg-white rounded-2xl p-8 max-w-md mx-4 shadow-2xl">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Sign In Required</h2>
-          <p className="text-gray-600 mb-6">Please sign in to access the AppBuilder.</p>
+          <h2 className="text-2xl font-bold text-text01 mb-2">Sign In Required</h2>
+          <p className="text-text02 mb-6">Please sign in to access the AppBuilder.</p>
           <button
             onClick={onClose}
-            className="w-full px-4 py-2 bg-[#780096] text-white rounded-lg font-semibold hover:bg-[#780096] transition"
+            className="w-full px-4 py-2 bg-pinkTP text-white rounded-lg font-semibold hover:bg-pinkTP transition"
           >
             Close
           </button>
@@ -1264,11 +1264,11 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
         <div className="bg-white rounded-2xl p-8 max-w-md mx-4 shadow-2xl">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Access Restricted</h2>
-          <p className="text-gray-600 mb-6">You need Developer or Admin access to use AppBuilder.</p>
+          <h2 className="text-2xl font-bold text-text01 mb-2">Access Restricted</h2>
+          <p className="text-text02 mb-6">You need Developer or Admin access to use AppBuilder.</p>
           <button
             onClick={onClose}
-            className="w-full px-4 py-2 bg-[#780096] text-white rounded-lg font-semibold hover:bg-[#780096] transition"
+            className="w-full px-4 py-2 bg-pinkTP text-white rounded-lg font-semibold hover:bg-pinkTP transition"
           >
             Close
           </button>
@@ -1660,7 +1660,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
   // Welcome Screen
   if (mode === "welcome") {
     return (
-      <div className="fixed inset-0 bg-gray-900 z-50 flex items-center justify-center p-4">
+      <div className="fixed inset-0 bg-text01 z-50 flex items-center justify-center p-4">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -1668,21 +1668,21 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
         >
           <div className="p-8 space-y-6">
             <div className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-[#780096] to-[#780096] mb-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-pinkTP to-pinkTP mb-4">
                 <Wand2 className="w-8 h-8 text-white" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Create New Application</h2>
-              <p className="text-gray-600">Choose how you'd like to build your app</p>
+              <h2 className="text-2xl font-bold text-text01 mb-2">Create New Application</h2>
+              <p className="text-text02">Choose how you'd like to build your app</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <button
                 onClick={() => setMode("ai-create")}
-                className="p-6 rounded-xl border-2 border-[#780096] bg-gradient-to-br from-indigo-50 to-purple-50 hover:shadow-lg transition-all text-left"
+                className="p-6 rounded-xl border-2 border-pinkTP bg-gradient-to-br from-neutral01 to-pinkTP/10 hover:shadow-lg transition-all text-left"
               >
-                <Sparkles className="w-6 h-6 text-[#780096] mb-3" />
-                <h3 className="font-semibold text-gray-900 mb-2">AI-Powered Creation</h3>
-                <p className="text-sm text-gray-600">
+                <Sparkles className="w-6 h-6 text-pinkTP mb-3" />
+                <h3 className="font-semibold text-text01 mb-2">AI-Powered Creation</h3>
+                <p className="text-sm text-text02">
                   Describe your app and let AI generate it automatically
                 </p>
               </button>
@@ -1692,11 +1692,11 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                   // First capture basic info
                   setMode("basic-info");
                 }}
-                className="p-6 rounded-xl border-2 border-gray-200 hover:border-[#780096] hover:shadow-lg transition-all text-left"
+                className="p-6 rounded-xl border-2 border-stroke01 hover:border-pinkTP hover:shadow-lg transition-all text-left"
               >
-                <Layers className="w-6 h-6 text-gray-600 mb-3" />
-                <h3 className="font-semibold text-gray-900 mb-2">Manual Builder</h3>
-                <p className="text-sm text-gray-600">
+                <Layers className="w-6 h-6 text-text02 mb-3" />
+                <h3 className="font-semibold text-text01 mb-2">Manual Builder</h3>
+                <p className="text-sm text-text02">
                   Build your app step by step with full control
                 </p>
               </button>
@@ -1705,7 +1705,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
             <div className="flex justify-end gap-2">
               <button
                 onClick={onClose}
-                className="px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+                className="px-4 py-2 rounded-lg text-text01 hover:bg-bg03 transition-colors"
               >
                 Cancel
               </button>
@@ -1719,7 +1719,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
   // Basic Info Screen (before builder)
   if (mode === "basic-info") {
     return (
-      <div className="fixed inset-0 bg-gray-900 z-50 flex items-center justify-center p-4">
+      <div className="fixed inset-0 bg-text01 z-50 flex items-center justify-center p-4">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -1727,44 +1727,44 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
         >
           <div className="p-8 space-y-6">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Basic Information</h2>
-              <p className="text-gray-600">Tell us about your application</p>
+              <h2 className="text-2xl font-bold text-text01 mb-2">Basic Information</h2>
+              <p className="text-text02">Tell us about your application</p>
             </div>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">App Name *</label>
+                <label className="block text-sm font-medium text-text01 mb-1">App Name *</label>
                 <input
                   type="text"
                   value={basicInfo.name}
                   onChange={(e) => setBasicInfo({ ...basicInfo, name: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                  className="w-full px-4 py-2 border border-stroke01 rounded-lg focus:ring-2 focus:ring-pinkTP focus:border-transparent"
                   placeholder="My Custom App"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Tagline</label>
+                <label className="block text-sm font-medium text-text01 mb-1">Tagline</label>
                 <input
                   type="text"
                   value={basicInfo.tagline}
                   onChange={(e) => setBasicInfo({ ...basicInfo, tagline: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                  className="w-full px-4 py-2 border border-stroke01 rounded-lg focus:ring-2 focus:ring-pinkTP focus:border-transparent"
                   placeholder="AI-powered solution"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <label className="block text-sm font-medium text-text01 mb-1">Description</label>
                 <textarea
                   value={basicInfo.description}
                   onChange={(e) => setBasicInfo({ ...basicInfo, description: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                  className="w-full px-4 py-2 border border-stroke01 rounded-lg focus:ring-2 focus:ring-pinkTP focus:border-transparent"
                   rows={3}
                   placeholder="Describe what your app does..."
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Platform</label>
+                  <label className="block text-sm font-medium text-text01 mb-1">Platform</label>
                   <select
                     value={basicInfo.platform}
                     onChange={(e) => {
@@ -1778,18 +1778,18 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                         platformName: platformMap[e.target.value] || "SOP Executor",
                       });
                     }}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                    className="w-full px-4 py-2 border border-stroke01 rounded-lg focus:ring-2 focus:ring-pinkTP focus:border-transparent"
                   >
                     <option value="sop-navigator">SOP Executor</option>
                     <option value="field-service">Field Service Platform</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Industry</label>
+                  <label className="block text-sm font-medium text-text01 mb-1">Industry</label>
                   <select
                     value={basicInfo.industry}
                     onChange={(e) => setBasicInfo({ ...basicInfo, industry: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                    className="w-full px-4 py-2 border border-stroke01 rounded-lg focus:ring-2 focus:ring-pinkTP focus:border-transparent"
                   >
                     <option value="Cross-Industry">Cross-Industry</option>
                     <option value="Healthcare">Healthcare</option>
@@ -1804,7 +1804,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setMode("welcome")}
-                className="px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+                className="px-4 py-2 rounded-lg text-text01 hover:bg-bg03 transition-colors"
               >
                 Back
               </button>
@@ -1814,7 +1814,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                   setMode("builder");
                 }}
                 disabled={!basicInfo.name}
-                className="px-6 py-2 rounded-lg bg-gradient-to-r from-[#780096] to-[#780096] text-white font-medium hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-6 py-2 rounded-lg bg-gradient-to-r from-pinkTP to-pinkTP text-white font-medium hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Continue to Builder
               </button>
@@ -1828,7 +1828,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
   // AI Creation Screen
   if (mode === "ai-create") {
     return (
-      <div className="fixed inset-0 bg-gray-900 z-50 flex items-center justify-center p-4">
+      <div className="fixed inset-0 bg-text01 z-50 flex items-center justify-center p-4">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -1836,21 +1836,21 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
         >
           <div className="p-8 space-y-6">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">AI-Powered App Creation</h2>
-              <p className="text-gray-600">Describe your app and we'll build it for you</p>
+              <h2 className="text-2xl font-bold text-text01 mb-2">AI-Powered App Creation</h2>
+              <p className="text-text02">Describe your app and we'll build it for you</p>
             </div>
 
             {!isGenerating ? (
               <>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Basic Information</label>
+                    <label className="block text-sm font-medium text-text01 mb-1">Basic Information</label>
                     <div className="grid grid-cols-2 gap-4 mb-4">
                       <input
                         type="text"
                         value={basicInfo.name}
                         onChange={(e) => setBasicInfo({ ...basicInfo, name: e.target.value })}
-                        className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                        className="px-4 py-2 border border-stroke01 rounded-lg focus:ring-2 focus:ring-pinkTP focus:border-transparent"
                         placeholder="App Name"
                       />
                       <select
@@ -1866,7 +1866,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                             platformName: platformMap[e.target.value] || "SOP Executor",
                           });
                         }}
-                        className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                        className="px-4 py-2 border border-stroke01 rounded-lg focus:ring-2 focus:ring-pinkTP focus:border-transparent"
                       >
                         <option value="sop-navigator">SOP Executor</option>
                         <option value="field-service">Field Service Platform</option>
@@ -1874,16 +1874,16 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-text01 mb-1">
                       Describe your app in detail
                     </label>
                     <textarea
                       value={aiDescription}
                       onChange={(e) => setAiDescription(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent min-h-[200px]"
+                      className="w-full px-4 py-2 border border-stroke01 rounded-lg focus:ring-2 focus:ring-pinkTP focus:border-transparent min-h-[200px]"
                       placeholder="Example: I need an app to manage healthcare claims. It should have a table to view all claims, show claim details, and use AI to analyze each claim against SOP guidelines..."
                     />
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-xs text-text03 mt-1">
                       Be as detailed as possible. Include entities, features, and any specific requirements.
                     </p>
                   </div>
@@ -1892,14 +1892,14 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                 <div className="flex justify-end gap-2">
                   <button
                     onClick={() => setMode("welcome")}
-                    className="px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+                    className="px-4 py-2 rounded-lg text-text01 hover:bg-bg03 transition-colors"
                   >
                     Back
                   </button>
                   <button
                     onClick={handleAICreate}
                     disabled={!aiDescription.trim() || !basicInfo.name}
-                    className="px-6 py-2 rounded-lg bg-gradient-to-r from-[#780096] to-[#780096] text-white font-medium hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                    className="px-6 py-2 rounded-lg bg-gradient-to-r from-pinkTP to-pinkTP text-white font-medium hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                   >
                     <Sparkles className="w-4 h-4" />
                     Generate App
@@ -1909,21 +1909,21 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
             ) : (
               <div className="space-y-4">
                 <div className="text-center py-8">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-[#780096] to-[#780096] mb-4 animate-pulse">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-pinkTP to-pinkTP mb-4 animate-pulse">
                     <Sparkles className="w-8 h-8 text-white" />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  <h3 className="text-lg font-semibold text-text01 mb-2">
                     {generationProgress.label}
                   </h3>
-                  <div className="w-full bg-gray-200 rounded-full h-3 max-w-md mx-auto">
+                  <div className="w-full bg-stroke01 rounded-full h-3 max-w-md mx-auto">
                     <motion.div
-                      className="bg-gradient-to-r from-[#780096] to-[#780096] h-3 rounded-full"
+                      className="bg-gradient-to-r from-pinkTP to-pinkTP h-3 rounded-full"
                       initial={{ width: 0 }}
                       animate={{ width: `${generationProgress.progress}%` }}
                       transition={{ duration: 0.3 }}
                     />
                   </div>
-                  <p className="text-sm text-gray-600 mt-2">{generationProgress.progress}%</p>
+                  <p className="text-sm text-text02 mt-2">{generationProgress.progress}%</p>
                 </div>
               </div>
             )}
@@ -1935,27 +1935,27 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
 
   // Main Builder
   return (
-    <div className="fixed inset-0 bg-gray-900 z-50 flex flex-col">
+    <div className="fixed inset-0 bg-text01 z-50 flex flex-col">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+      <div className="bg-white border-b border-stroke01 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="p-2 rounded-lg bg-[#780096]">
+          <div className="p-2 rounded-lg bg-pinkTP">
             <Wand2 className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-gray-900">AI App Builder</h2>
-            <p className="text-xs text-gray-600">
+            <h2 className="text-lg font-semibold text-text01">AI App Builder</h2>
+            <p className="text-xs text-text02">
               {appData.name || basicInfo.name || "New Application"} • {basicInfo.platformName || appData.platformName}
             </p>
           </div>
         </div>
         <div className="flex items-center gap-2">
           {/* Responsive Controls */}
-          <div className="flex items-center gap-1 border border-gray-200 rounded-lg p-1">
+          <div className="flex items-center gap-1 border border-stroke01 rounded-lg p-1">
             <button
               onClick={() => setResponsiveMode("desktop")}
               className={`p-1.5 rounded transition-colors ${
-                responsiveMode === "desktop" ? "bg-[#780096] text-white" : "text-gray-600 hover:bg-gray-100"
+                responsiveMode === "desktop" ? "bg-pinkTP text-white" : "text-text02 hover:bg-bg03"
               }`}
               title="Desktop"
             >
@@ -1964,7 +1964,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
             <button
               onClick={() => setResponsiveMode("tablet")}
               className={`p-1.5 rounded transition-colors ${
-                responsiveMode === "tablet" ? "bg-[#780096] text-white" : "text-gray-600 hover:bg-gray-100"
+                responsiveMode === "tablet" ? "bg-pinkTP text-white" : "text-text02 hover:bg-bg03"
               }`}
               title="Tablet"
             >
@@ -1973,7 +1973,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
             <button
               onClick={() => setResponsiveMode("mobile")}
               className={`p-1.5 rounded transition-colors ${
-                responsiveMode === "mobile" ? "bg-[#780096] text-white" : "text-gray-600 hover:bg-gray-100"
+                responsiveMode === "mobile" ? "bg-pinkTP text-white" : "text-text02 hover:bg-bg03"
               }`}
               title="Mobile"
             >
@@ -1983,11 +1983,11 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
 
           {/* View Mode + Run Controls */}
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1 border border-gray-200 rounded-lg p-1">
+            <div className="flex items-center gap-1 border border-stroke01 rounded-lg p-1">
               <button
                 onClick={() => setViewMode("canvas")}
                 className={`p-1.5 rounded transition-colors ${
-                  viewMode === "canvas" ? "bg-[#780096] text-white" : "text-gray-600 hover:bg-gray-100"
+                  viewMode === "canvas" ? "bg-pinkTP text-white" : "text-text02 hover:bg-bg03"
                 }`}
                 title="Canvas Only"
               >
@@ -1996,7 +1996,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
               <button
                 onClick={() => setViewMode("split")}
                 className={`p-1.5 rounded transition-colors ${
-                  viewMode === "split" ? "bg-[#780096] text-white" : "text-gray-600 hover:bg-gray-100"
+                  viewMode === "split" ? "bg-pinkTP text-white" : "text-text02 hover:bg-bg03"
                 }`}
                 title="Split View"
               >
@@ -2005,7 +2005,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
               <button
                 onClick={() => setViewMode("preview")}
                 className={`p-1.5 rounded transition-colors ${
-                  viewMode === "preview" ? "bg-[#780096] text-white" : "text-gray-600 hover:bg-gray-100"
+                  viewMode === "preview" ? "bg-pinkTP text-white" : "text-text02 hover:bg-bg03"
                 }`}
                 title="Preview Only"
               >
@@ -2016,7 +2016,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
             <button
               type="button"
               onClick={handleOpenFullPreview}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-gray-200 text-sm text-gray-700 hover:bg-gray-100"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-stroke01 text-sm text-text01 hover:bg-bg03"
               title="Run app in new tab"
             >
               <Play className="w-4 h-4" />
@@ -2025,14 +2025,14 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
           </div>
           <button
             onClick={handleSave}
-            className="px-4 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors flex items-center gap-2"
+            className="px-4 py-2 rounded-lg bg-bg03 text-text01 hover:bg-stroke01 transition-colors flex items-center gap-2"
           >
             <Save className="w-4 h-4" />
             Save
           </button>
           <button
             onClick={() => setShowCodeGenerator(true)}
-            className="px-4 py-2 rounded-lg bg-[#780096] text-white hover:bg-[#780096]/90 hover:shadow-lg transition-all flex items-center gap-2"
+            className="px-4 py-2 rounded-lg bg-pinkTP text-white hover:bg-pinkTP/30 hover:shadow-lg transition-all flex items-center gap-2"
           >
             <Code className="w-4 h-4" />
             Generate & Deploy
@@ -2040,7 +2040,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
           {isSaved && (
             <button
               onClick={handlePublish}
-              className="px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition-all flex items-center gap-2"
+              className="px-4 py-2 rounded-lg bg-success03 text-white hover:bg-success02 transition-all flex items-center gap-2"
             >
               <Sparkles className="w-4 h-4" />
               Publish to Store
@@ -2048,9 +2048,9 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
           )}
           <button
             onClick={onClose}
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="p-2 rounded-lg hover:bg-bg03 transition-colors"
           >
-            <X className="w-5 h-5 text-gray-600" />
+            <X className="w-5 h-5 text-text02" />
           </button>
         </div>
       </div>
@@ -2064,11 +2064,11 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
           onDragEnd={handleDragEnd}
         >
         {/* Left Sidebar - Pages, Data Model & Component Library */}
-        <div className="w-80 bg-white border-r border-gray-200 overflow-y-auto">
+        <div className="w-80 bg-white border-r border-stroke01 overflow-y-auto">
           <div className="p-4 space-y-4">
             {/* Pages Section */}
             <div>
-              <div className="text-[10px] font-semibold text-gray-500 tracking-[0.18em] uppercase mb-2">
+              <div className="text-[10px] font-semibold text-text03 tracking-[0.18em] uppercase mb-2">
                 Pages
               </div>
               <div className="space-y-1">
@@ -2084,8 +2084,8 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                       type="button"
                       className={`w-full flex items-center gap-2 px-2.5 py-1.5 rounded-md text-xs text-left transition-colors ${
                         isActive
-                          ? "bg-[#780096]/10 text-[#780096] border border-[#780096]/40"
-                          : "bg-transparent text-gray-700 hover:bg-gray-50 border border-transparent"
+                          ? "bg-pinkTP/10 text-pinkTP border border-pinkTP/40"
+                          : "bg-transparent text-text01 hover:bg-bg02 border border-transparent"
                       }`}
                     >
                       <FileText className="w-3.5 h-3.5" />
@@ -2099,8 +2099,8 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
             {/* Data Model Section */}
             <div>
               <div className="flex items-center justify-between mb-2">
-                <h3 className="text-sm font-semibold text-gray-900 flex items-center gap-2">
-                  <Database className="w-4 h-4 text-[#780096]" />
+                <h3 className="text-sm font-semibold text-text01 flex items-center gap-2">
+                  <Database className="w-4 h-4 text-pinkTP" />
                   Data Model
                 </h3>
                 <button
@@ -2120,7 +2120,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                       },
                     });
                   }}
-                  className="p-1.5 rounded-lg bg-[#780096] text-white hover:bg-[#780096] transition-colors"
+                  className="p-1.5 rounded-lg bg-pinkTP text-white hover:bg-pinkTP transition-colors"
                 >
                   <Plus className="w-3 h-3" />
                 </button>
@@ -2129,21 +2129,21 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                 {appData.dataModel.entities?.map((entity, idx) => (
                   <div
                     key={entity.id || idx}
-                    className="p-2 rounded-lg border border-gray-200 text-xs hover:border-[#780096] hover:bg-indigo-50 cursor-pointer transition-all"
+                    className="p-2 rounded-lg border border-stroke01 text-xs hover:border-pinkTP hover:bg-neutral01 cursor-pointer transition-all"
                     onClick={() => setEditingEntity(entity)}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="font-medium text-gray-900">{entity.name}</span>
+                      <span className="font-medium text-text01">{entity.name}</span>
                       <div className="flex items-center gap-1">
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
                             setEditingEntity(entity);
                           }}
-                          className="p-1 rounded hover:bg-gray-100"
+                          className="p-1 rounded hover:bg-bg03"
                           title="Edit"
                         >
-                          <Edit className="w-3 h-3 text-gray-600" />
+                          <Edit className="w-3 h-3 text-text02" />
                         </button>
                         <button
                           onClick={(e) => {
@@ -2154,14 +2154,14 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                               dataModel: { entities: updated },
                             });
                           }}
-                          className="p-1 rounded hover:bg-gray-100"
+                          className="p-1 rounded hover:bg-bg03"
                           title="Delete"
                         >
-                          <Trash2 className="w-3 h-3 text-red-600" />
+                          <Trash2 className="w-3 h-3 text-error03" />
                         </button>
                       </div>
                     </div>
-                    <div className="text-gray-500 mt-1">
+                    <div className="text-text03 mt-1">
                       {entity.fields?.length || 0} fields
                       {entity.relationships?.length > 0 && ` • ${entity.relationships.length} relationships`}
                     </div>
@@ -2169,28 +2169,28 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                 ))}
               </div>
               {(!appData.dataModel.entities || appData.dataModel.entities.length === 0) && (
-                <div className="text-center py-4 text-gray-400 text-xs">
+                <div className="text-center py-4 text-text03 text-xs">
                   <Database className="w-6 h-6 mx-auto mb-2" />
                   <p>No entities yet</p>
                 </div>
               )}
             </div>
 
-            <div className="border-t border-gray-200 pt-4">
+            <div className="border-t border-stroke01 pt-4">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-semibold text-gray-900">Component Library</h3>
+                <h3 className="text-sm font-semibold text-text01">Component Library</h3>
               </div>
 
               {/* Component Search */}
               <div className="mb-3">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-text03" />
                   <input
                     type="text"
                     value={componentSearch}
                     onChange={(e) => setComponentSearch(e.target.value)}
                     placeholder="Search components..."
-                    className="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                    className="w-full pl-9 pr-3 py-2 text-sm border border-stroke01 rounded-lg focus:ring-2 focus:ring-pinkTP focus:border-transparent"
                   />
                 </div>
               </div>
@@ -2199,16 +2199,16 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
               <div className="mb-3">
                 <button
                   onClick={() => toggleCategory("templates")}
-                  className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-bg02 transition-colors"
                 >
                   <div className="flex items-center gap-2">
-                    <Copy className="w-4 h-4 text-gray-600" />
-                    <span className="text-sm font-medium text-gray-900">Templates</span>
+                    <Copy className="w-4 h-4 text-text02" />
+                    <span className="text-sm font-medium text-text01">Templates</span>
                   </div>
                   {expandedCategories.templates ? (
-                    <ChevronUp className="w-4 h-4 text-gray-600" />
+                    <ChevronUp className="w-4 h-4 text-text02" />
                   ) : (
-                    <ChevronDown className="w-4 h-4 text-gray-600" />
+                    <ChevronDown className="w-4 h-4 text-text02" />
                   )}
                 </button>
                 {expandedCategories.templates && (
@@ -2232,13 +2232,13 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                               updatedPages[activePage].components.push(...newComponents);
                               setAppData({ ...appData, pages: updatedPages });
                             }}
-                            className="p-2 rounded-lg border border-gray-200 hover:border-[#780096] hover:bg-indigo-50 cursor-pointer transition-all"
+                            className="p-2 rounded-lg border border-stroke01 hover:border-pinkTP hover:bg-neutral01 cursor-pointer transition-all"
                           >
                             <div className="flex items-center gap-2">
-                              <Icon className="w-4 h-4 text-gray-600" />
+                              <Icon className="w-4 h-4 text-text02" />
                               <div className="flex-1 min-w-0">
-                                <div className="text-xs font-medium text-gray-900 truncate">{template.name}</div>
-                                <div className="text-[10px] text-gray-500 truncate">{template.description}</div>
+                                <div className="text-xs font-medium text-text01 truncate">{template.name}</div>
+                                <div className="text-[10px] text-text03 truncate">{template.description}</div>
                               </div>
                             </div>
                           </div>
@@ -2252,16 +2252,16 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
               <div className="mb-3">
                 <button
                   onClick={() => toggleCategory("layout")}
-                  className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-bg02 transition-colors"
                 >
                   <div className="flex items-center gap-2">
-                    <Layout className="w-4 h-4 text-gray-600" />
-                    <span className="text-sm font-medium text-gray-900">Layout</span>
+                    <Layout className="w-4 h-4 text-text02" />
+                    <span className="text-sm font-medium text-text01">Layout</span>
                   </div>
                   {expandedCategories.layout ? (
-                    <ChevronUp className="w-4 h-4 text-gray-600" />
+                    <ChevronUp className="w-4 h-4 text-text02" />
                   ) : (
-                    <ChevronDown className="w-4 h-4 text-gray-600" />
+                    <ChevronDown className="w-4 h-4 text-text02" />
                   )}
                 </button>
                 {expandedCategories.layout && (
@@ -2289,16 +2289,16 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
               <div className="mb-3">
                 <button
                   onClick={() => toggleCategory("platform")}
-                  className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-bg02 transition-colors"
                 >
                   <div className="flex items-center gap-2">
-                    <Component className="w-4 h-4 text-gray-600" />
-                    <span className="text-sm font-medium text-gray-900">Platform Components</span>
+                    <Component className="w-4 h-4 text-text02" />
+                    <span className="text-sm font-medium text-text01">Platform Components</span>
                   </div>
                   {expandedCategories.platform ? (
-                    <ChevronUp className="w-4 h-4 text-gray-600" />
+                    <ChevronUp className="w-4 h-4 text-text02" />
                   ) : (
-                    <ChevronDown className="w-4 h-4 text-gray-600" />
+                    <ChevronDown className="w-4 h-4 text-text02" />
                   )}
                 </button>
                 {expandedCategories.platform && (
@@ -2331,16 +2331,16 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                 <div className="mb-3">
                   <button
                     onClick={() => toggleCategory("form-controls")}
-                    className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 transition-colors"
+                    className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-bg02 transition-colors"
                   >
                     <div className="flex items-center gap-2">
-                      <Settings className="w-4 h-4 text-gray-600" />
-                      <span className="text-sm font-medium text-gray-900">Form Controls</span>
+                      <Settings className="w-4 h-4 text-text02" />
+                      <span className="text-sm font-medium text-text01">Form Controls</span>
                     </div>
                     {expandedCategories["form-controls"] ? (
-                      <ChevronUp className="w-4 h-4 text-gray-600" />
+                      <ChevronUp className="w-4 h-4 text-text02" />
                     ) : (
-                      <ChevronDown className="w-4 h-4 text-gray-600" />
+                      <ChevronDown className="w-4 h-4 text-text02" />
                     )}
                   </button>
                   {expandedCategories["form-controls"] && (
@@ -2370,16 +2370,16 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                 <div className="mb-3">
                   <button
                     onClick={() => toggleCategory("data-display")}
-                    className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 transition-colors"
+                    className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-bg02 transition-colors"
                   >
                     <div className="flex items-center gap-2">
-                      <Layers className="w-4 h-4 text-gray-600" />
-                      <span className="text-sm font-medium text-gray-900">Data Display</span>
+                      <Layers className="w-4 h-4 text-text02" />
+                      <span className="text-sm font-medium text-text01">Data Display</span>
                     </div>
                     {expandedCategories["data-display"] ? (
-                      <ChevronUp className="w-4 h-4 text-gray-600" />
+                      <ChevronUp className="w-4 h-4 text-text02" />
                     ) : (
-                      <ChevronDown className="w-4 h-4 text-gray-600" />
+                      <ChevronDown className="w-4 h-4 text-text02" />
                     )}
                   </button>
                   {expandedCategories["data-display"] && (
@@ -2409,16 +2409,16 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                 <div className="mb-3">
                   <button
                     onClick={() => toggleCategory("charts-graphs")}
-                    className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 transition-colors"
+                    className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-bg02 transition-colors"
                   >
                     <div className="flex items-center gap-2">
-                      <BarChart3 className="w-4 h-4 text-gray-600" />
-                      <span className="text-sm font-medium text-gray-900">Charts & Graphs</span>
+                      <BarChart3 className="w-4 h-4 text-text02" />
+                      <span className="text-sm font-medium text-text01">Charts & Graphs</span>
                     </div>
                     {expandedCategories["charts-graphs"] ? (
-                      <ChevronUp className="w-4 h-4 text-gray-600" />
+                      <ChevronUp className="w-4 h-4 text-text02" />
                     ) : (
-                      <ChevronDown className="w-4 h-4 text-gray-600" />
+                      <ChevronDown className="w-4 h-4 text-text02" />
                     )}
                   </button>
                   {expandedCategories["charts-graphs"] && (
@@ -2448,16 +2448,16 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                 <div className="mb-3">
                   <button
                     onClick={() => toggleCategory("navigation")}
-                    className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 transition-colors"
+                    className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-bg02 transition-colors"
                   >
                     <div className="flex items-center gap-2">
-                      <Menu className="w-4 h-4 text-gray-600" />
-                      <span className="text-sm font-medium text-gray-900">Navigation</span>
+                      <Menu className="w-4 h-4 text-text02" />
+                      <span className="text-sm font-medium text-text01">Navigation</span>
                     </div>
                     {expandedCategories.navigation ? (
-                      <ChevronUp className="w-4 h-4 text-gray-600" />
+                      <ChevronUp className="w-4 h-4 text-text02" />
                     ) : (
-                      <ChevronDown className="w-4 h-4 text-gray-600" />
+                      <ChevronDown className="w-4 h-4 text-text02" />
                     )}
                   </button>
                   {expandedCategories.navigation && (
@@ -2487,16 +2487,16 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                 <div className="mb-3">
                   <button
                     onClick={() => toggleCategory("feedback")}
-                    className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 transition-colors"
+                    className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-bg02 transition-colors"
                   >
                     <div className="flex items-center gap-2">
-                      <Bell className="w-4 h-4 text-gray-600" />
-                      <span className="text-sm font-medium text-gray-900">Feedback</span>
+                      <Bell className="w-4 h-4 text-text02" />
+                      <span className="text-sm font-medium text-text01">Feedback</span>
                     </div>
                     {expandedCategories.feedback ? (
-                      <ChevronUp className="w-4 h-4 text-gray-600" />
+                      <ChevronUp className="w-4 h-4 text-text02" />
                     ) : (
-                      <ChevronDown className="w-4 h-4 text-gray-600" />
+                      <ChevronDown className="w-4 h-4 text-text02" />
                     )}
                   </button>
                   {expandedCategories.feedback && (
@@ -2526,16 +2526,16 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                 <div className="mb-3">
                   <button
                     onClick={() => toggleCategory("advanced")}
-                    className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 transition-colors"
+                    className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-bg02 transition-colors"
                   >
                     <div className="flex items-center gap-2">
-                      <GripVertical className="w-4 h-4 text-gray-600" />
-                      <span className="text-sm font-medium text-gray-900">Advanced</span>
+                      <GripVertical className="w-4 h-4 text-text02" />
+                      <span className="text-sm font-medium text-text01">Advanced</span>
                     </div>
                     {expandedCategories.advanced ? (
-                      <ChevronUp className="w-4 h-4 text-gray-600" />
+                      <ChevronUp className="w-4 h-4 text-text02" />
                     ) : (
-                      <ChevronDown className="w-4 h-4 text-gray-600" />
+                      <ChevronDown className="w-4 h-4 text-text02" />
                     )}
                   </button>
                   {expandedCategories.advanced && (
@@ -2565,18 +2565,18 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
 
         {/* Center - Canvas/Preview */}
         <div
-          className={`flex-1 bg-gray-50 overflow-y-auto ${
+          className={`flex-1 bg-bg02 overflow-y-auto ${
             viewMode === "split" ? "flex" : ""
           }`}
         >
           {/* Canvas View */}
           {(viewMode === "canvas" || viewMode === "split") && (
             <div
-              className={`bg-gray-50 overflow-y-auto p-6 ${
-                viewMode === "split" ? "w-1/2 border-r border-gray-200" : "flex-1"
+              className={`bg-bg02 overflow-y-auto p-6 ${
+                viewMode === "split" ? "w-1/2 border-r border-stroke01" : "flex-1"
               }`}
             >
-              <div className={`mb-4 text-xs font-medium text-gray-500 ${
+              <div className={`mb-4 text-xs font-medium text-text03 ${
                 responsiveMode === "desktop" ? "" : 
                 responsiveMode === "tablet" ? "max-w-3xl mx-auto" : "max-w-sm mx-auto"
               }`}>
@@ -2590,7 +2590,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                 `}>
                 <DroppableCanvas>
                   {appData.pages[activePage].components.filter((c) => c.parentId == null).length === 0 ? (
-                    <div className="flex flex-col items-center justify-center h-64 text-gray-400">
+                    <div className="flex flex-col items-center justify-center h-64 text-text03">
                       <Layers className="w-12 h-12 mb-4" />
                       <p className="text-sm">Drag components here to build your app</p>
                     </div>
@@ -2603,7 +2603,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
               </div>
               <DragOverlay>
                 {draggedComponent && (
-                  <div className="p-4 bg-white rounded-lg shadow-xl border-2 border-[#780096]">
+                  <div className="p-4 bg-white rounded-lg shadow-xl border-2 border-pinkTP">
                     {Object.values(COMPONENT_LIBRARY)
                       .flatMap((cat) => Object.entries(cat))
                       .find(([key]) => key === draggedComponent)?.[1]?.name || draggedComponent}
@@ -2620,7 +2620,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
                 viewMode === "split" ? "w-1/2" : "flex-1"
               }`}
             >
-              <div className={`mb-4 text-xs font-medium text-gray-500 ${
+              <div className={`mb-4 text-xs font-medium text-text03 ${
                 responsiveMode === "desktop" ? "" : 
                 responsiveMode === "tablet" ? "max-w-3xl mx-auto" : "max-w-sm mx-auto"
               }`}>
@@ -2651,7 +2651,7 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
         </div>
 
         {/* Right Sidebar - Enhanced Properties */}
-        <div className="w-80 bg-white border-l border-gray-200 overflow-y-auto">
+        <div className="w-80 bg-white border-l border-stroke01 overflow-y-auto">
           <div className="p-4 space-y-4">
             {selectedComponent ? (
               <EnhancedPropertyPanel
@@ -2699,15 +2699,15 @@ export default function AppBuilder({ app: existingApp, onClose, onSave }) {
               />
             ) : (
               <div className="space-y-4">
-                <div className="p-4 rounded-lg bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200">
+                <div className="p-4 rounded-lg bg-gradient-to-br from-neutral01 to-pinkTP/10 border border-neutral02/40">
                   <div className="flex items-center gap-2 mb-2">
-                    <Sparkles className="w-4 h-4 text-indigo-600" />
-                    <h3 className="font-semibold text-gray-900 text-sm">AI Watchtower</h3>
+                    <Sparkles className="w-4 h-4 text-primary" />
+                    <h3 className="font-semibold text-text01 text-sm">AI Watchtower</h3>
                   </div>
-                  <p className="text-xs text-gray-600">
+                  <p className="text-xs text-text02">
                     AI Watchtower will be automatically integrated with your app for intelligent reasoning and chat.
                   </p>
-                  <div className="flex items-center gap-2 mt-3 text-xs text-gray-500">
+                  <div className="flex items-center gap-2 mt-3 text-xs text-text03">
                     <span className="px-2 py-1 rounded bg-white">✓ Auto-configured</span>
                     <span className="px-2 py-1 rounded bg-white">✓ Platform-aware</span>
                   </div>
@@ -2781,9 +2781,9 @@ function ComponentPreview({ component, isSelected, onClick, hasChildren = false 
 
   const wrapperBase =
     "rounded-lg border cursor-pointer transition-all bg-white";
-  const wrapperSelected = isSelected ? "border-[#780096] shadow-sm" : "border-gray-200 hover:border-gray-300";
+  const wrapperSelected = isSelected ? "border-pinkTP shadow-sm" : "border-stroke01 hover:border-stroke01";
   const wrapperOver =
-    isOver && isContainerType ? "border-dashed border-[#780096]" : "";
+    isOver && isContainerType ? "border-dashed border-pinkTP" : "";
 
   // Side nav should look like a vertical left rail, not a full-width rectangle
   const sideNavWrapper = isSideNav
@@ -2802,27 +2802,27 @@ function ComponentPreview({ component, isSelected, onClick, hasChildren = false 
       <div className="text-xs">
         {/* Layout: App Header */}
         {component.type === "app-header" && (
-          <div className="flex items-center justify-between px-4 py-2.5 bg-gray-900 rounded-md">
+          <div className="flex items-center justify-between px-4 py-2.5 bg-text01 rounded-md">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-md bg-indigo-500 flex items-center justify-center text-[10px] font-bold text-white">
+              <div className="w-7 h-7 rounded-md bg-neutral010 flex items-center justify-center text-[10px] font-bold text-white">
                 LOGO
               </div>
               <div className="flex flex-col">
                 <span className="text-[11px] font-semibold text-white">
                   {props.title || "Application Header"}
                 </span>
-                <span className="text-[10px] text-gray-300">Branding · Nav · Avatar</span>
+                <span className="text-[10px] text-stroke01">Branding · Nav · Avatar</span>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <div className="hidden sm:flex items-center gap-2 text-[10px] text-gray-300">
+              <div className="hidden sm:flex items-center gap-2 text-[10px] text-stroke01">
                 <span>Home</span>
                 <span>·</span>
                 <span>Worklist</span>
                 <span>·</span>
                 <span>AI Watchtower</span>
               </div>
-              <div className="w-7 h-7 rounded-full bg-gray-700 flex items-center justify-center text-[10px] text-gray-100">
+              <div className="w-7 h-7 rounded-full bg-text01 flex items-center justify-center text-[10px] text-bg03">
                 VK
               </div>
             </div>
@@ -2831,14 +2831,14 @@ function ComponentPreview({ component, isSelected, onClick, hasChildren = false 
 
         {/* Layout containers / sections */}
         {["container", "section", "card"].includes(component.type) && !isSideNav && !hasChildren && (
-          <div className="rounded-md border border-dashed border-gray-300 bg-gray-50 px-4 py-3 text-[11px] text-gray-500 text-left">
+          <div className="rounded-md border border-dashed border-stroke01 bg-bg02 px-4 py-3 text-[11px] text-text03 text-left">
             {component.type === "section" ? "Section – drop cards, grids, or forms here" : "Container – drop layout or UI controls here"}
           </div>
         )}
 
         {/* Layout: Grid skeleton when empty */}
         {component.type === "grid" && !hasChildren && (
-          <div className="rounded-md border border-dashed border-gray-300 bg-gray-50 px-3 py-3">
+          <div className="rounded-md border border-dashed border-stroke01 bg-bg02 px-3 py-3">
             <div
               className="grid gap-3"
               style={{
@@ -2848,7 +2848,7 @@ function ComponentPreview({ component, isSelected, onClick, hasChildren = false 
               {Array.from({ length: props.columns || 3 }).map((_, idx) => (
                 <div
                   key={idx}
-                  className="h-10 rounded-md border border-gray-200 bg-white flex items-center justify-center text-[11px] text-gray-400"
+                  className="h-10 rounded-md border border-stroke01 bg-white flex items-center justify-center text-[11px] text-text03"
                 >
                   Column {idx + 1}
                 </div>
@@ -2859,9 +2859,9 @@ function ComponentPreview({ component, isSelected, onClick, hasChildren = false 
 
         {/* Side nav preview */}
         {isSideNav && (
-          <div className="flex border border-gray-200 rounded-lg overflow-hidden text-[11px]">
-            <div className="w-28 bg-gray-900 text-gray-100 py-2">
-              <div className="px-3 pb-2 text-[10px] uppercase tracking-wide text-gray-400">
+          <div className="flex border border-stroke01 rounded-lg overflow-hidden text-[11px]">
+            <div className="w-28 bg-text01 text-bg03 py-2">
+              <div className="px-3 pb-2 text-[10px] uppercase tracking-wide text-text03">
                 Navigation
               </div>
               {(() => {
@@ -2878,8 +2878,8 @@ function ComponentPreview({ component, isSelected, onClick, hasChildren = false 
                     key={idx}
                     className={`px-3 py-1 ${
                       idx === 0
-                        ? "bg-gray-800 text-white"
-                        : "text-gray-300 hover:bg-gray-800/60"
+                        ? "bg-text01 text-white"
+                        : "text-stroke01 hover:bg-text01/60"
                     }`}
                   >
                     {item}
@@ -2887,7 +2887,7 @@ function ComponentPreview({ component, isSelected, onClick, hasChildren = false 
                 ));
               })()}
             </div>
-            <div className="flex-1 bg-white py-3 px-4 text-gray-400">
+            <div className="flex-1 bg-white py-3 px-4 text-text03">
               Page content
             </div>
           </div>
@@ -2898,18 +2898,18 @@ function ComponentPreview({ component, isSelected, onClick, hasChildren = false 
           <input
             type={props.type || "text"}
             placeholder={props.placeholder || "Text input"}
-            className="w-full px-3 py-1.5 rounded-md border border-gray-300 text-xs focus:outline-none focus:ring-1 focus:ring-[#780096]"
+            className="w-full px-3 py-1.5 rounded-md border border-stroke01 text-xs focus:outline-none focus:ring-1 focus:ring-pinkTP"
           />
         )}
         {component.type === "textarea" && (
           <textarea
             rows={props.rows || 3}
             placeholder={props.placeholder || "Textarea"}
-            className="w-full px-3 py-1.5 rounded-md border border-gray-300 text-xs focus:outline-none focus:ring-1 focus:ring-[#780096]"
+            className="w-full px-3 py-1.5 rounded-md border border-stroke01 text-xs focus:outline-none focus:ring-1 focus:ring-pinkTP"
           />
         )}
         {component.type === "dropdown" && (
-          <select className="w-full px-3 py-1.5 rounded-md border border-gray-300 text-xs focus:outline-none focus:ring-1 focus:ring-[#780096]">
+          <select className="w-full px-3 py-1.5 rounded-md border border-stroke01 text-xs focus:outline-none focus:ring-1 focus:ring-pinkTP">
             {(props.options || "Option 1, Option 2, Option 3")
               .split(",")
               .map((o) => o.trim())
@@ -2920,11 +2920,11 @@ function ComponentPreview({ component, isSelected, onClick, hasChildren = false 
           </select>
         )}
         {component.type === "checkbox" && (
-          <label className="inline-flex items-center gap-1.5 text-xs text-gray-700">
+          <label className="inline-flex items-center gap-1.5 text-xs text-text01">
             <input
               type="checkbox"
               defaultChecked={props.checked}
-              className="h-3.5 w-3.5 rounded border-gray-300 text-[#780096] focus:ring-[#780096]"
+              className="h-3.5 w-3.5 rounded border-stroke01 text-pinkTP focus:ring-pinkTP"
             />
             <span>{props.label || "Checkbox"}</span>
           </label>
@@ -2940,7 +2940,7 @@ function ComponentPreview({ component, isSelected, onClick, hasChildren = false 
                   <input
                     type="radio"
                     name={component.id}
-                    className="h-3.5 w-3.5 border-gray-300 text-[#780096] focus:ring-[#780096]"
+                    className="h-3.5 w-3.5 border-stroke01 text-pinkTP focus:ring-pinkTP"
                   />
                   <span>{opt}</span>
                 </label>
@@ -2952,8 +2952,8 @@ function ComponentPreview({ component, isSelected, onClick, hasChildren = false 
             type="button"
             className={`relative inline-flex h-4 w-7 items-center rounded-full border ${
               props.checked
-                ? "bg-[#780096] border-[#780096]"
-                : "bg-gray-200 border-gray-300"
+                ? "bg-pinkTP border-pinkTP"
+                : "bg-stroke01 border-stroke01"
             }`}
           >
             <span
@@ -2966,7 +2966,7 @@ function ComponentPreview({ component, isSelected, onClick, hasChildren = false 
         {component.type === "date-picker" && (
           <input
             type="date"
-            className="w-full px-3 py-1.5 rounded-md border border-gray-300 text-xs focus:outline-none focus:ring-1 focus:ring-[#780096]"
+            className="w-full px-3 py-1.5 rounded-md border border-stroke01 text-xs focus:outline-none focus:ring-1 focus:ring-pinkTP"
           />
         )}
         {component.type === "button" && (
@@ -2981,7 +2981,7 @@ function ComponentPreview({ component, isSelected, onClick, hasChildren = false 
           >
             <button
               type="button"
-              className="inline-flex items-center justify-center px-3 py-1.5 rounded-md bg-[#780096] text-white text-xs font-medium hover:bg-[#780096]"
+              className="inline-flex items-center justify-center px-3 py-1.5 rounded-md bg-pinkTP text-white text-xs font-medium hover:bg-pinkTP"
             >
               {props.label || component.name || "Button"}
             </button>
@@ -2990,28 +2990,28 @@ function ComponentPreview({ component, isSelected, onClick, hasChildren = false 
 
         {/* Data display previews */}
         {component.type === "metric-card" && (
-          <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
-            <div className="text-[10px] uppercase tracking-wide text-slate-500 mb-1">
+          <div className="rounded-lg border border-stroke01 bg-bg02 px-3 py-2">
+            <div className="text-[10px] uppercase tracking-wide text-text03 mb-1">
               Metric Card
             </div>
-            <div className="text-lg font-semibold text-slate-900">1,234</div>
-            <div className="text-[11px] text-slate-500">Metric value</div>
+            <div className="text-lg font-semibold text-text01">1,234</div>
+            <div className="text-[11px] text-text03">Metric value</div>
           </div>
         )}
         {component.type === "data-table" && (
-          <div className="rounded-lg border border-slate-200 bg-white overflow-hidden">
-            <div className="px-3 py-1.5 border-b border-slate-100 text-[11px] font-semibold text-slate-700">
+          <div className="rounded-lg border border-stroke01 bg-white overflow-hidden">
+            <div className="px-3 py-1.5 border-b border-bg03 text-[11px] font-semibold text-text01">
               Data Table
             </div>
             <table className="min-w-full text-[11px]">
-              <thead className="bg-slate-50 text-slate-500">
+              <thead className="bg-bg02 text-text03">
                 <tr>
                   <th className="px-3 py-1 text-left font-medium">ID</th>
                   <th className="px-3 py-1 text-left font-medium">Status</th>
                   <th className="px-3 py-1 text-left font-medium">Owner</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-bg03">
                 <tr>
                   <td className="px-3 py-1">REC-101</td>
                   <td className="px-3 py-1">Open</td>
@@ -3029,15 +3029,15 @@ function ComponentPreview({ component, isSelected, onClick, hasChildren = false 
 
         {/* Charts */}
         {component.type === "bar-chart" && (
-          <div className="rounded-lg border border-slate-200 bg-white px-3 py-2">
-            <div className="text-[10px] uppercase tracking-wide text-slate-500 mb-1">
+          <div className="rounded-lg border border-stroke01 bg-white px-3 py-2">
+            <div className="text-[10px] uppercase tracking-wide text-text03 mb-1">
               Bar Chart
             </div>
             <div className="h-24 flex items-end gap-1.5">
               {[35, 70, 50, 90, 60].map((h, idx) => (
                 <div
                   key={idx}
-                  className="flex-1 rounded-t-md bg-indigo-500"
+                  className="flex-1 rounded-t-md bg-neutral010"
                   style={{ height: `${h}%` }}
                 />
               ))}
@@ -3045,12 +3045,12 @@ function ComponentPreview({ component, isSelected, onClick, hasChildren = false 
           </div>
         )}
         {component.type === "line-chart" && (
-          <div className="rounded-lg border border-slate-200 bg-white px-3 py-2">
-            <div className="text-[10px] uppercase tracking-wide text-slate-500 mb-1">
+          <div className="rounded-lg border border-stroke01 bg-white px-3 py-2">
+            <div className="text-[10px] uppercase tracking-wide text-text03 mb-1">
               Line Chart
             </div>
             <div className="h-24 relative">
-              <svg viewBox="0 0 100 40" className="w-full h-full text-indigo-500">
+              <svg viewBox="0 0 100 40" className="w-full h-full text-neutral010">
                 <polyline
                   fill="none"
                   stroke="currentColor"
@@ -3063,7 +3063,7 @@ function ComponentPreview({ component, isSelected, onClick, hasChildren = false 
                     cx={x}
                     cy={[30, 20, 25, 10, 18, 8, 15, 5][idx]}
                     r="1.3"
-                    className="fill-indigo-500"
+                    className="fill-neutral010"
                   />
                 ))}
               </svg>
@@ -3087,10 +3087,10 @@ function EnhancedPropertyPanel({ component, appData, activePage, dataModel, onUp
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="font-semibold text-gray-900">Component Properties</h3>
+        <h3 className="font-semibold text-text01">Component Properties</h3>
         <button
           onClick={onDelete}
-          className="p-1.5 rounded-lg hover:bg-red-50 text-red-600 transition-colors"
+          className="p-1.5 rounded-lg hover:bg-error01 text-error03 transition-colors"
           title="Delete"
         >
           <Trash2 className="w-4 h-4" />
@@ -3100,21 +3100,21 @@ function EnhancedPropertyPanel({ component, appData, activePage, dataModel, onUp
       {/* Basic Properties */}
       <div className="space-y-3">
         <div>
-          <label className="block text-xs font-medium text-gray-700 mb-1">Component Name</label>
+          <label className="block text-xs font-medium text-text01 mb-1">Component Name</label>
           <input
             type="text"
             value={component.name}
             onChange={(e) => onUpdate({ ...component, name: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+            className="w-full px-3 py-2 border border-stroke01 rounded-lg text-sm focus:ring-2 focus:ring-pinkTP focus:border-transparent"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-gray-700 mb-1">Data Binding</label>
+          <label className="block text-xs font-medium text-text01 mb-1">Data Binding</label>
           <select
             value={component.dataBinding || ""}
             onChange={(e) => onUpdate({ ...component, dataBinding: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+            className="w-full px-3 py-2 border border-stroke01 rounded-lg text-sm focus:ring-2 focus:ring-pinkTP focus:border-transparent"
           >
             <option value="">None</option>
             {dataModel.entities?.map((entity) => (
@@ -3128,12 +3128,12 @@ function EnhancedPropertyPanel({ component, appData, activePage, dataModel, onUp
 
       {/* Component-Specific Properties */}
       {Object.keys(properties).length > 0 && (
-        <div className="border-t border-gray-200 pt-4">
-          <h4 className="text-xs font-semibold text-gray-700 mb-3 uppercase">Style & Layout</h4>
+        <div className="border-t border-stroke01 pt-4">
+          <h4 className="text-xs font-semibold text-text01 mb-3 uppercase">Style & Layout</h4>
           <div className="space-y-3">
             {Object.entries(properties).map(([key, prop]) => (
               <div key={key}>
-                <label className="block text-xs font-medium text-gray-700 mb-1">{prop.label}</label>
+                <label className="block text-xs font-medium text-text01 mb-1">{prop.label}</label>
                 {prop.type === "number" && (
                   <input
                     type="number"
@@ -3146,7 +3146,7 @@ function EnhancedPropertyPanel({ component, appData, activePage, dataModel, onUp
                     }
                     min={prop.min}
                     max={prop.max}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                    className="w-full px-3 py-2 border border-stroke01 rounded-lg text-sm focus:ring-2 focus:ring-pinkTP focus:border-transparent"
                   />
                 )}
                 {prop.type === "color" && (
@@ -3160,7 +3160,7 @@ function EnhancedPropertyPanel({ component, appData, activePage, dataModel, onUp
                           props: { ...component.props, [key]: e.target.value },
                         })
                       }
-                      className="w-12 h-10 border border-gray-300 rounded cursor-pointer"
+                      className="w-12 h-10 border border-stroke01 rounded cursor-pointer"
                     />
                     <input
                       type="text"
@@ -3171,7 +3171,7 @@ function EnhancedPropertyPanel({ component, appData, activePage, dataModel, onUp
                           props: { ...component.props, [key]: e.target.value },
                         })
                       }
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                      className="flex-1 px-3 py-2 border border-stroke01 rounded-lg text-sm focus:ring-2 focus:ring-pinkTP focus:border-transparent"
                     />
                   </div>
                 )}
@@ -3185,7 +3185,7 @@ function EnhancedPropertyPanel({ component, appData, activePage, dataModel, onUp
                         props: { ...component.props, [key]: e.target.value },
                       })
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                    className="w-full px-3 py-2 border border-stroke01 rounded-lg text-sm focus:ring-2 focus:ring-pinkTP focus:border-transparent"
                   />
                 )}
                 {prop.type === "boolean" && (
@@ -3199,9 +3199,9 @@ function EnhancedPropertyPanel({ component, appData, activePage, dataModel, onUp
                           props: { ...component.props, [key]: e.target.checked },
                         })
                       }
-                      className="w-4 h-4 text-[#780096] rounded focus:ring-[#780096]"
+                      className="w-4 h-4 text-pinkTP rounded focus:ring-pinkTP"
                     />
-                    <span className="text-xs text-gray-600">{prop.label}</span>
+                    <span className="text-xs text-text02">{prop.label}</span>
                   </label>
                 )}
                 {prop.type === "select" && (
@@ -3213,7 +3213,7 @@ function EnhancedPropertyPanel({ component, appData, activePage, dataModel, onUp
                         props: { ...component.props, [key]: e.target.value },
                       })
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                    className="w-full px-3 py-2 border border-stroke01 rounded-lg text-sm focus:ring-2 focus:ring-pinkTP focus:border-transparent"
                   >
                     {prop.options?.map((opt) => (
                       <option key={opt} value={opt}>
@@ -3230,12 +3230,12 @@ function EnhancedPropertyPanel({ component, appData, activePage, dataModel, onUp
 
       {/* Generic Styles for layout / button components */}
       {["container", "section", "card", "grid", "button"].includes(component.type) && (
-        <div className="border-t border-gray-200 pt-4">
-          <h4 className="text-xs font-semibold text-gray-700 mb-3 uppercase">Styles</h4>
+        <div className="border-t border-stroke01 pt-4">
+          <h4 className="text-xs font-semibold text-text01 mb-3 uppercase">Styles</h4>
           <div className="space-y-3">
             {component.type === "button" && (
               <div>
-                <label className="block text-xs font-medium text-gray-700 mb-1">
+                <label className="block text-xs font-medium text-text01 mb-1">
                   Text Align
                 </label>
                 <div className="flex gap-1">
@@ -3251,8 +3251,8 @@ function EnhancedPropertyPanel({ component, appData, activePage, dataModel, onUp
                       }
                       className={`flex-1 px-2 py-1 rounded border text-xs ${
                         styleProps.textAlign === align
-                          ? "bg-[#780096] text-white border-[#780096]"
-                          : "bg-white text-gray-700 border-gray-300"
+                          ? "bg-pinkTP text-white border-pinkTP"
+                          : "bg-white text-text01 border-stroke01"
                       }`}
                     >
                       {align.charAt(0).toUpperCase() + align.slice(1)}
@@ -3264,7 +3264,7 @@ function EnhancedPropertyPanel({ component, appData, activePage, dataModel, onUp
 
             {["container", "section", "card"].includes(component.type) && (
               <div>
-                <label className="block text-xs font-medium text-gray-700 mb-1">
+                <label className="block text-xs font-medium text-text01 mb-1">
                   Content Justification
                 </label>
                 <div className="flex gap-1">
@@ -3284,8 +3284,8 @@ function EnhancedPropertyPanel({ component, appData, activePage, dataModel, onUp
                       }
                       className={`flex-1 px-2 py-1 rounded border text-xs ${
                         styleProps.justify === key
-                          ? "bg-[#780096] text-white border-[#780096]"
-                          : "bg-white text-gray-700 border-gray-300"
+                          ? "bg-pinkTP text-white border-pinkTP"
+                          : "bg-white text-text01 border-stroke01"
                       }`}
                     >
                       {label}
@@ -3299,10 +3299,10 @@ function EnhancedPropertyPanel({ component, appData, activePage, dataModel, onUp
       )}
 
       {/* Actions */}
-      <div className="border-t border-gray-200 pt-4">
+      <div className="border-t border-stroke01 pt-4">
         <button
           onClick={onDelete}
-          className="w-full px-4 py-2 rounded-lg border border-red-200 text-red-700 font-medium hover:bg-red-50 transition-colors flex items-center justify-center gap-2"
+          className="w-full px-4 py-2 rounded-lg border border-error01 text-error02 font-medium hover:bg-error01 transition-colors flex items-center justify-center gap-2"
         >
           <Trash2 className="w-4 h-4" />
           Remove Component
@@ -3400,33 +3400,33 @@ function EntityEditor({ entity, entities, onSave, onClose }) {
         animate={{ opacity: 1, scale: 1 }}
         className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col"
       >
-        <div className="p-6 border-b border-gray-200 flex items-center justify-between">
+        <div className="p-6 border-b border-stroke01 flex items-center justify-between">
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">Edit Entity: {entity.name}</h3>
-            <p className="text-sm text-gray-600 mt-1">Configure fields, types, and relationships</p>
+            <h3 className="text-lg font-semibold text-text01">Edit Entity: {entity.name}</h3>
+            <p className="text-sm text-text02 mt-1">Configure fields, types, and relationships</p>
           </div>
-          <button onClick={onClose} className="p-2 rounded-lg hover:bg-gray-100 transition-colors">
-            <X className="w-5 h-5 text-gray-600" />
+          <button onClick={onClose} className="p-2 rounded-lg hover:bg-bg03 transition-colors">
+            <X className="w-5 h-5 text-text02" />
           </button>
         </div>
 
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Entity Name</label>
+            <label className="block text-sm font-medium text-text01 mb-1">Entity Name</label>
             <input
               type="text"
               value={editedEntity.name}
               onChange={(e) => setEditedEntity({ ...editedEntity, name: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+              className="w-full px-3 py-2 border border-stroke01 rounded-lg text-sm focus:ring-2 focus:ring-pinkTP focus:border-transparent"
             />
           </div>
 
           <div>
             <div className="flex items-center justify-between mb-3">
-              <h4 className="text-sm font-semibold text-gray-900">Fields</h4>
+              <h4 className="text-sm font-semibold text-text01">Fields</h4>
               <button
                 onClick={addField}
-                className="px-3 py-1.5 rounded-lg bg-[#780096] text-white text-sm font-medium hover:bg-[#780096] transition-colors flex items-center gap-2"
+                className="px-3 py-1.5 rounded-lg bg-pinkTP text-white text-sm font-medium hover:bg-pinkTP transition-colors flex items-center gap-2"
               >
                 <Plus className="w-4 h-4" />
                 Add Field
@@ -3436,23 +3436,23 @@ function EntityEditor({ entity, entities, onSave, onClose }) {
               {editedEntity.fields.map((field) => {
                 const FieldTypeIcon = fieldTypes.find((ft) => ft.value === field.type)?.icon || Type;
                 return (
-                  <div key={field.id} className="p-4 rounded-lg border border-gray-200 bg-gray-50">
+                  <div key={field.id} className="p-4 rounded-lg border border-stroke01 bg-bg02">
                     <div className="grid grid-cols-12 gap-3 items-start">
                       <div className="col-span-4">
-                        <label className="block text-xs font-medium text-gray-700 mb-1">Field Name</label>
+                        <label className="block text-xs font-medium text-text01 mb-1">Field Name</label>
                         <input
                           type="text"
                           value={field.name}
                           onChange={(e) => updateField(field.id, { name: e.target.value })}
-                          className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                          className="w-full px-2 py-1.5 border border-stroke01 rounded text-sm focus:ring-2 focus:ring-pinkTP focus:border-transparent"
                         />
                       </div>
                       <div className="col-span-3">
-                        <label className="block text-xs font-medium text-gray-700 mb-1">Type</label>
+                        <label className="block text-xs font-medium text-text01 mb-1">Type</label>
                         <select
                           value={field.type}
                           onChange={(e) => updateField(field.id, { type: e.target.value })}
-                          className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                          className="w-full px-2 py-1.5 border border-stroke01 rounded text-sm focus:ring-2 focus:ring-pinkTP focus:border-transparent"
                         >
                           {fieldTypes.map((ft) => (
                             <option key={ft.value} value={ft.value}>
@@ -3462,30 +3462,30 @@ function EntityEditor({ entity, entities, onSave, onClose }) {
                         </select>
                       </div>
                       <div className="col-span-2">
-                        <label className="block text-xs font-medium text-gray-700 mb-1">Required</label>
+                        <label className="block text-xs font-medium text-text01 mb-1">Required</label>
                         <label className="flex items-center h-9 cursor-pointer">
                           <input
                             type="checkbox"
                             checked={field.required || false}
                             onChange={(e) => updateField(field.id, { required: e.target.checked })}
-                            className="w-4 h-4 text-[#780096] rounded focus:ring-[#780096]"
+                            className="w-4 h-4 text-pinkTP rounded focus:ring-pinkTP"
                           />
                         </label>
                       </div>
                       <div className="col-span-2">
-                        <label className="block text-xs font-medium text-gray-700 mb-1">Default</label>
+                        <label className="block text-xs font-medium text-text01 mb-1">Default</label>
                         <input
                           type="text"
                           value={field.defaultValue || ""}
                           onChange={(e) => updateField(field.id, { defaultValue: e.target.value })}
                           placeholder="Optional"
-                          className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                          className="w-full px-2 py-1.5 border border-stroke01 rounded text-sm focus:ring-2 focus:ring-pinkTP focus:border-transparent"
                         />
                       </div>
                       <div className="col-span-1 flex items-end">
                         <button
                           onClick={() => removeField(field.id)}
-                          className="p-1.5 rounded hover:bg-red-50 text-red-600"
+                          className="p-1.5 rounded hover:bg-error01 text-error03"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
@@ -3493,8 +3493,8 @@ function EntityEditor({ entity, entities, onSave, onClose }) {
                     </div>
 
                     {field.type === "enum" && (
-                      <div className="mt-3 pt-3 border-t border-gray-200">
-                        <label className="block text-xs font-medium text-gray-700 mb-1">Enum Values</label>
+                      <div className="mt-3 pt-3 border-t border-stroke01">
+                        <label className="block text-xs font-medium text-text01 mb-1">Enum Values</label>
                         <input
                           type="text"
                           value={field.enumValues?.join(", ") || ""}
@@ -3504,18 +3504,18 @@ function EntityEditor({ entity, entities, onSave, onClose }) {
                             })
                           }
                           placeholder="Option1, Option2, Option3"
-                          className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                          className="w-full px-2 py-1.5 border border-stroke01 rounded text-sm focus:ring-2 focus:ring-pinkTP focus:border-transparent"
                         />
                       </div>
                     )}
 
                     {field.type === "reference" && (
-                      <div className="mt-3 pt-3 border-t border-gray-200">
-                        <label className="block text-xs font-medium text-gray-700 mb-1">References Entity</label>
+                      <div className="mt-3 pt-3 border-t border-stroke01">
+                        <label className="block text-xs font-medium text-text01 mb-1">References Entity</label>
                         <select
                           value={field.referenceEntity || ""}
                           onChange={(e) => updateField(field.id, { referenceEntity: e.target.value })}
-                          className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                          className="w-full px-2 py-1.5 border border-stroke01 rounded text-sm focus:ring-2 focus:ring-pinkTP focus:border-transparent"
                         >
                           <option value="">Select entity...</option>
                           {entities
@@ -3529,37 +3529,37 @@ function EntityEditor({ entity, entities, onSave, onClose }) {
                       </div>
                     )}
 
-                    <div className="mt-3 pt-3 border-t border-gray-200 grid grid-cols-2 gap-3">
+                    <div className="mt-3 pt-3 border-t border-stroke01 grid grid-cols-2 gap-3">
                       {field.type === "number" && (
                         <>
                           <div>
-                            <label className="block text-xs font-medium text-gray-700 mb-1">Min Value</label>
+                            <label className="block text-xs font-medium text-text01 mb-1">Min Value</label>
                             <input
                               type="number"
                               value={field.min || ""}
                               onChange={(e) => updateField(field.id, { min: e.target.value ? Number(e.target.value) : null })}
-                              className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm"
+                              className="w-full px-2 py-1.5 border border-stroke01 rounded text-sm"
                             />
                           </div>
                           <div>
-                            <label className="block text-xs font-medium text-gray-700 mb-1">Max Value</label>
+                            <label className="block text-xs font-medium text-text01 mb-1">Max Value</label>
                             <input
                               type="number"
                               value={field.max || ""}
                               onChange={(e) => updateField(field.id, { max: e.target.value ? Number(e.target.value) : null })}
-                              className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm"
+                              className="w-full px-2 py-1.5 border border-stroke01 rounded text-sm"
                             />
                           </div>
                         </>
                       )}
                       {field.type === "string" && (
                         <div>
-                          <label className="block text-xs font-medium text-gray-700 mb-1">Max Length</label>
+                          <label className="block text-xs font-medium text-text01 mb-1">Max Length</label>
                           <input
                             type="number"
                             value={field.maxLength || ""}
                             onChange={(e) => updateField(field.id, { maxLength: e.target.value ? Number(e.target.value) : null })}
-                            className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm"
+                            className="w-full px-2 py-1.5 border border-stroke01 rounded text-sm"
                           />
                         </div>
                       )}
@@ -3572,10 +3572,10 @@ function EntityEditor({ entity, entities, onSave, onClose }) {
 
           <div>
             <div className="flex items-center justify-between mb-3">
-              <h4 className="text-sm font-semibold text-gray-900">Relationships</h4>
+              <h4 className="text-sm font-semibold text-text01">Relationships</h4>
               <button
                 onClick={addRelationship}
-                className="px-3 py-1.5 rounded-lg bg-[#780096] text-white text-sm font-medium hover:bg-[#780096] transition-colors flex items-center gap-2"
+                className="px-3 py-1.5 rounded-lg bg-pinkTP text-white text-sm font-medium hover:bg-pinkTP transition-colors flex items-center gap-2"
               >
                 <Plus className="w-4 h-4" />
                 Add Relationship
@@ -3583,14 +3583,14 @@ function EntityEditor({ entity, entities, onSave, onClose }) {
             </div>
             <div className="space-y-3">
               {editedEntity.relationships.map((rel) => (
-                <div key={rel.id} className="p-4 rounded-lg border border-gray-200 bg-gray-50">
+                <div key={rel.id} className="p-4 rounded-lg border border-stroke01 bg-bg02">
                   <div className="grid grid-cols-12 gap-3 items-center">
                     <div className="col-span-4">
-                      <label className="block text-xs font-medium text-gray-700 mb-1">Type</label>
+                      <label className="block text-xs font-medium text-text01 mb-1">Type</label>
                       <select
                         value={rel.type}
                         onChange={(e) => updateRelationship(rel.id, { type: e.target.value })}
-                        className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                        className="w-full px-2 py-1.5 border border-stroke01 rounded text-sm focus:ring-2 focus:ring-pinkTP focus:border-transparent"
                       >
                         <option value="one-to-many">One-to-Many</option>
                         <option value="many-to-many">Many-to-Many</option>
@@ -3598,11 +3598,11 @@ function EntityEditor({ entity, entities, onSave, onClose }) {
                       </select>
                     </div>
                     <div className="col-span-4">
-                      <label className="block text-xs font-medium text-gray-700 mb-1">Target Entity</label>
+                      <label className="block text-xs font-medium text-text01 mb-1">Target Entity</label>
                       <select
                         value={rel.targetEntity}
                         onChange={(e) => updateRelationship(rel.id, { targetEntity: e.target.value })}
-                        className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                        className="w-full px-2 py-1.5 border border-stroke01 rounded text-sm focus:ring-2 focus:ring-pinkTP focus:border-transparent"
                       >
                         <option value="">Select entity...</option>
                         {entities
@@ -3615,19 +3615,19 @@ function EntityEditor({ entity, entities, onSave, onClose }) {
                       </select>
                     </div>
                     <div className="col-span-3">
-                      <label className="block text-xs font-medium text-gray-700 mb-1">Field Name</label>
+                      <label className="block text-xs font-medium text-text01 mb-1">Field Name</label>
                       <input
                         type="text"
                         value={rel.field}
                         onChange={(e) => updateRelationship(rel.id, { field: e.target.value })}
                         placeholder="fieldName"
-                        className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                        className="w-full px-2 py-1.5 border border-stroke01 rounded text-sm focus:ring-2 focus:ring-pinkTP focus:border-transparent"
                       />
                     </div>
                     <div className="col-span-1 flex items-end">
                       <button
                         onClick={() => removeRelationship(rel.id)}
-                        className="p-1.5 rounded hover:bg-red-50 text-red-600"
+                        className="p-1.5 rounded hover:bg-error01 text-error03"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -3636,16 +3636,16 @@ function EntityEditor({ entity, entities, onSave, onClose }) {
                 </div>
               ))}
               {editedEntity.relationships.length === 0 && (
-                <div className="text-center py-4 text-gray-400 text-xs">No relationships defined</div>
+                <div className="text-center py-4 text-text03 text-xs">No relationships defined</div>
               )}
             </div>
           </div>
         </div>
 
-        <div className="p-6 border-t border-gray-200 flex justify-end gap-2">
+        <div className="p-6 border-t border-stroke01 flex justify-end gap-2">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+            className="px-4 py-2 rounded-lg text-text01 hover:bg-bg03 transition-colors"
           >
             Cancel
           </button>
@@ -3654,7 +3654,7 @@ function EntityEditor({ entity, entities, onSave, onClose }) {
               onSave(editedEntity);
               onClose();
             }}
-            className="px-6 py-2 rounded-lg bg-gradient-to-r from-[#780096] to-[#780096] text-white font-medium hover:shadow-lg transition-all"
+            className="px-6 py-2 rounded-lg bg-gradient-to-r from-pinkTP to-pinkTP text-white font-medium hover:shadow-lg transition-all"
           >
             Save Entity
           </button>
@@ -3724,22 +3724,22 @@ function CodeGenerator({ appData, basicInfo, onClose, onDeploy }) {
         animate={{ opacity: 1, scale: 1 }}
         className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col"
       >
-        <div className="p-6 border-b border-gray-200 flex items-center justify-between">
+        <div className="p-6 border-b border-stroke01 flex items-center justify-between">
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">Generate & Deploy Application</h3>
-            <p className="text-sm text-gray-600 mt-1">Generate code structure and deploy to FAB Store</p>
+            <h3 className="text-lg font-semibold text-text01">Generate & Deploy Application</h3>
+            <p className="text-sm text-text02 mt-1">Generate code structure and deploy to FAB Store</p>
           </div>
-          <button onClick={onClose} className="p-2 rounded-lg hover:bg-gray-100 transition-colors">
-            <X className="w-5 h-5 text-gray-600" />
+          <button onClick={onClose} className="p-2 rounded-lg hover:bg-bg03 transition-colors">
+            <X className="w-5 h-5 text-text02" />
           </button>
         </div>
 
         <div className="flex-1 overflow-y-auto p-6">
           {!generating && !generatedCode && (
             <div className="space-y-4">
-              <div className="p-4 rounded-lg bg-indigo-50 border border-indigo-200">
-                <h4 className="font-semibold text-gray-900 mb-2">What will be generated:</h4>
-                <ul className="text-sm text-gray-700 space-y-1 list-disc list-inside">
+              <div className="p-4 rounded-lg bg-neutral01 border border-neutral02/40">
+                <h4 className="font-semibold text-text01 mb-2">What will be generated:</h4>
+                <ul className="text-sm text-text01 space-y-1 list-disc list-inside">
                   <li>Solution structure: <code className="text-xs bg-white px-1 rounded">src/apps/{basicInfo.name.toLowerCase().replace(/\s+/g, "-")}/</code></li>
                   <li>Data files from your entity schema</li>
                   <li>Component files from canvas</li>
@@ -3750,7 +3750,7 @@ function CodeGenerator({ appData, basicInfo, onClose, onDeploy }) {
               </div>
               <button
                 onClick={generateCode}
-                className="w-full px-6 py-3 rounded-lg bg-gradient-to-r from-[#780096] to-[#780096] text-white font-medium hover:shadow-lg transition-all flex items-center justify-center gap-2"
+                className="w-full px-6 py-3 rounded-lg bg-gradient-to-r from-pinkTP to-pinkTP text-white font-medium hover:shadow-lg transition-all flex items-center justify-center gap-2"
               >
                 <Code className="w-5 h-5" />
                 Generate Code
@@ -3761,41 +3761,41 @@ function CodeGenerator({ appData, basicInfo, onClose, onDeploy }) {
           {generating && (
             <div className="space-y-4">
               <div className="text-center py-8">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-[#780096] to-[#780096] mb-4 animate-pulse">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-pinkTP to-pinkTP mb-4 animate-pulse">
                   <Code className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{progress.step}</h3>
-                <div className="w-full bg-gray-200 rounded-full h-3 max-w-md mx-auto">
+                <h3 className="text-lg font-semibold text-text01 mb-2">{progress.step}</h3>
+                <div className="w-full bg-stroke01 rounded-full h-3 max-w-md mx-auto">
                   <motion.div
-                    className="bg-gradient-to-r from-[#780096] to-[#780096] h-3 rounded-full"
+                    className="bg-gradient-to-r from-pinkTP to-pinkTP h-3 rounded-full"
                     initial={{ width: 0 }}
                     animate={{ width: `${progress.progress}%` }}
                     transition={{ duration: 0.3 }}
                   />
                 </div>
-                <p className="text-sm text-gray-600 mt-2">{progress.progress}%</p>
+                <p className="text-sm text-text02 mt-2">{progress.progress}%</p>
               </div>
             </div>
           )}
 
           {generatedCode && (
             <div className="space-y-4">
-              <div className="p-4 rounded-lg bg-emerald-50 border border-emerald-200">
+              <div className="p-4 rounded-lg bg-success01 border border-success01">
                 <div className="flex items-center gap-2 mb-2">
-                  <Check className="w-5 h-5 text-emerald-600" />
-                  <h4 className="font-semibold text-gray-900">Code Generated Successfully!</h4>
+                  <Check className="w-5 h-5 text-success03" />
+                  <h4 className="font-semibold text-text01">Code Generated Successfully!</h4>
                 </div>
-                <p className="text-sm text-gray-700">
+                <p className="text-sm text-text01">
                   Your application code has been generated. Review the structure below, then deploy to FAB Store.
                 </p>
               </div>
 
               <div>
-                <h4 className="font-semibold text-gray-900 mb-2">Generated Structure:</h4>
-                <div className="bg-gray-900 rounded-lg p-4 text-xs text-gray-300 font-mono space-y-1">
+                <h4 className="font-semibold text-text01 mb-2">Generated Structure:</h4>
+                <div className="bg-text01 rounded-lg p-4 text-xs text-stroke01 font-mono space-y-1">
                   {generatedCode.structure.files.map((file, idx) => (
                     <div key={idx} className="flex items-center gap-2">
-                      <span className="text-gray-500">📄</span>
+                      <span className="text-text03">📄</span>
                       <span>{generatedCode.structure.basePath}{file.path}</span>
                     </div>
                   ))}
@@ -3808,14 +3808,14 @@ function CodeGenerator({ appData, basicInfo, onClose, onDeploy }) {
                     const codeStr = JSON.stringify(generatedCode.structure, null, 2);
                     navigator.clipboard.writeText(codeStr);
                   }}
-                  className="flex-1 px-4 py-2 rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
+                  className="flex-1 px-4 py-2 rounded-lg border border-stroke01 text-text01 hover:bg-bg02 transition-colors flex items-center justify-center gap-2"
                 >
                   <Copy className="w-4 h-4" />
                   Copy Structure
                 </button>
                 <button
                   onClick={() => onDeploy(generatedCode.appConfig)}
-                  className="flex-1 px-6 py-2 rounded-lg bg-gradient-to-r from-[#780096] to-[#780096] text-white font-medium hover:shadow-lg transition-all flex items-center justify-center gap-2"
+                  className="flex-1 px-6 py-2 rounded-lg bg-gradient-to-r from-pinkTP to-pinkTP text-white font-medium hover:shadow-lg transition-all flex items-center justify-center gap-2"
                 >
                   <Sparkles className="w-4 h-4" />
                   Deploy to FAB Store
@@ -3844,7 +3844,7 @@ function LivePreview({
 }) {
   if (components.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center h-64 text-gray-400">
+      <div className="flex flex-col items-center justify-center h-64 text-text03">
         <Eye className="w-12 h-12 mb-4" />
         <p className="text-sm">No components to preview</p>
         <p className="text-xs mt-1">Add components to see live preview</p>
@@ -3890,23 +3890,23 @@ function LivePreview({
 
   // Main content reused across embedded and full-screen modes
   const mainContent = (
-    <div className={fullScreen ? "h-full bg-slate-50" : "min-h-full bg-slate-50 py-4"}>
+    <div className={fullScreen ? "h-full bg-bg02" : "min-h-full bg-bg02 py-4"}>
       <div
         className={
           fullScreen
             ? "h-full w-full bg-white overflow-hidden"
-            : "max-w-6xl mx-auto bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden"
+            : "max-w-6xl mx-auto bg-white rounded-2xl shadow-md border border-stroke01 overflow-hidden"
         }
       >
         {/* Top App Header */}
-        <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-900 text-white">
+        <div className="px-6 py-4 border-b border-stroke01 flex items-center justify-between bg-text01 text-white">
           <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-lg bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center">
+            <div className="h-9 w-9 rounded-lg bg-gradient-to-br from-primary to-pinkTP/100 flex items-center justify-center">
               <Layers className="w-5 h-5" />
             </div>
             <div>
               {showBuilderChrome && (
-                <div className="text-xs uppercase tracking-[0.18em] text-slate-300">
+                <div className="text-xs uppercase tracking-[0.18em] text-stroke01">
                   FAB Builder Preview
                 </div>
               )}
@@ -3914,24 +3914,24 @@ function LivePreview({
             </div>
           </div>
           {showBuilderChrome && (
-            <div className="flex items-center gap-3 text-xs text-slate-200">
+            <div className="flex items-center gap-3 text-xs text-stroke01">
               <span>Demo User</span>
-              <div className="h-7 w-7 rounded-full bg-slate-700" />
+              <div className="h-7 w-7 rounded-full bg-text01" />
             </div>
           )}
         </div>
 
         {/* Toolbar */}
-        <div className="px-6 py-3 border-b border-slate-100 bg-slate-50/80 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2 text-xs text-slate-500">
+        <div className="px-6 py-3 border-b border-bg03 bg-bg02/80 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2 text-xs text-text03">
             <Search className="w-3.5 h-3.5" />
             <span>Search or filter records</span>
           </div>
           <div className="flex items-center gap-2 text-xs">
-            <button className="px-2.5 py-1 rounded-full bg-white border border-slate-200 text-slate-600 hover:bg-slate-50">
+            <button className="px-2.5 py-1 rounded-full bg-white border border-stroke01 text-text02 hover:bg-bg02">
               Add Filter
             </button>
-            <button className="px-2.5 py-1 rounded-full bg-indigo-600 text-white hover:bg-indigo-700 flex items-center gap-1.5">
+            <button className="px-2.5 py-1 rounded-full bg-primary text-white hover:bg-textLink flex items-center gap-1.5">
               <Sparkles className="w-3 h-3" />
               Run AI
             </button>
@@ -3975,15 +3975,15 @@ function LivePreview({
                 ).map((m) => (
                   <div
                     key={m.id}
-                    className="rounded-xl border border-slate-200 bg-slate-50/80 px-3 py-3"
+                    className="rounded-xl border border-stroke01 bg-bg02/80 px-3 py-3"
                   >
-                    <div className="text-[11px] uppercase tracking-wide text-slate-500">
+                    <div className="text-[11px] uppercase tracking-wide text-text03">
                       {m.title}
                     </div>
-                    <div className="mt-1 text-lg font-semibold text-slate-900">
+                    <div className="mt-1 text-lg font-semibold text-text01">
                       {m.value}
                     </div>
-                    <div className="mt-0.5 text-[11px] text-slate-500 text-[11px]">
+                    <div className="mt-0.5 text-[11px] text-text03 text-[11px]">
                       {m.subtitle}
                     </div>
                   </div>
@@ -4000,9 +4000,9 @@ function LivePreview({
                   return (
                     <div
                       key={ch.id}
-                      className="rounded-xl border border-slate-200 bg-white px-3 py-3"
+                      className="rounded-xl border border-stroke01 bg-white px-3 py-3"
                     >
-                      <div className="text-[11px] font-semibold text-slate-700 mb-1.5">
+                      <div className="text-[11px] font-semibold text-text01 mb-1.5">
                         {title}
                       </div>
                       {isBar ? (
@@ -4010,14 +4010,14 @@ function LivePreview({
                           {[35, 70, 50, 90, 60].map((h, idx) => (
                             <div
                               key={idx}
-                              className="flex-1 rounded-t-md bg-indigo-500/80"
+                              className="flex-1 rounded-t-md bg-neutral010/80"
                               style={{ height: `${h}%` }}
                             />
                           ))}
                         </div>
                       ) : (
                         <div className="h-28 relative">
-                          <svg viewBox="0 0 100 40" className="w-full h-full text-indigo-500">
+                          <svg viewBox="0 0 100 40" className="w-full h-full text-neutral010">
                             <polyline
                               fill="none"
                               stroke="currentColor"
@@ -4030,7 +4030,7 @@ function LivePreview({
                                 cx={x}
                                 cy={[30, 20, 25, 10, 18, 8, 15, 5][idx]}
                                 r="1.3"
-                                className="fill-indigo-500"
+                                className="fill-neutral010"
                               />
                             ))}
                           </svg>
@@ -4044,20 +4044,20 @@ function LivePreview({
 
             {/* Primary table */}
             {tables[0] && (
-              <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
-                <div className="px-4 py-2.5 border-b border-slate-100 flex items-center justify-between">
+              <div className="rounded-xl border border-stroke01 bg-white overflow-hidden">
+                <div className="px-4 py-2.5 border-b border-bg03 flex items-center justify-between">
                   <div>
-                    <div className="text-sm font-semibold text-slate-900">
+                    <div className="text-sm font-semibold text-text01">
                       {tables[0].name || "Records"}
                     </div>
                     {tables[0].dataBinding && (
-                      <div className="text-[11px] text-indigo-600 flex items-center gap-1">
+                      <div className="text-[11px] text-primary flex items-center gap-1">
                         <Database className="w-3 h-3" />
                         Bound to: {tables[0].dataBinding}
                       </div>
                     )}
                   </div>
-                  <button className="text-[11px] px-2 py-1 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50">
+                  <button className="text-[11px] px-2 py-1 rounded-full border border-stroke01 text-text02 hover:bg-bg02">
                     View all
                   </button>
                 </div>
@@ -4065,14 +4065,14 @@ function LivePreview({
                   <div className="overflow-x-auto">
                     <table className="min-w-full text-[11px]">
                       <thead>
-                        <tr className="text-slate-500 bg-slate-50 border-b border-slate-100">
+                        <tr className="text-text03 bg-bg02 border-b border-bg03">
                           <th className="text-left font-medium py-2 pr-4">ID</th>
                           <th className="text-left font-medium py-2 pr-4">Status</th>
                           <th className="text-left font-medium py-2 pr-4">Owner</th>
                           <th className="text-right font-medium py-2 pl-4">Value</th>
                         </tr>
                       </thead>
-                      <tbody className="text-xs text-slate-700">
+                      <tbody className="text-xs text-text01">
                         {(() => {
                           const binding = (tables[0].dataBinding || "Item").toString();
                           const prefix = binding
@@ -4093,16 +4093,16 @@ function LivePreview({
                           return rows.map((row) => (
                             <tr
                               key={row.id}
-                              className="border-b border-slate-100 last:border-0 hover:bg-slate-50 cursor-pointer"
+                              className="border-b border-bg03 last:border-0 hover:bg-bg02 cursor-pointer"
                             >
                               <td className="py-2 pr-4 font-medium">{row.id}</td>
                               <td className="py-2 pr-4">
-                                <span className="text-amber-700 bg-amber-50 rounded-full px-2 py-0.5 text-[11px]">
+                                <span className="text-amber-700 bg-alert01 rounded-full px-2 py-0.5 text-[11px]">
                                   {row.status}
                                 </span>
                               </td>
-                              <td className="py-2 pr-4 text-slate-600">{row.owner}</td>
-                              <td className="py-2 pl-4 text-right text-slate-900">
+                              <td className="py-2 pr-4 text-text02">{row.owner}</td>
+                              <td className="py-2 pl-4 text-right text-text01">
                                 {row.value}
                               </td>
                             </tr>
@@ -4117,8 +4117,8 @@ function LivePreview({
 
             {/* Form controls preview */}
             {formControls.length > 0 && (
-              <div className="rounded-xl border border-slate-200 bg-white px-4 py-4">
-                <div className="text-xs font-semibold text-slate-500 mb-3 uppercase tracking-wide">
+              <div className="rounded-xl border border-stroke01 bg-white px-4 py-4">
+                <div className="text-xs font-semibold text-text03 mb-3 uppercase tracking-wide">
                   Sample Form
                 </div>
                 <div className="space-y-3">
@@ -4128,13 +4128,13 @@ function LivePreview({
                     if (fc.type === "input") {
                       return (
                         <div key={fc.id} className="flex flex-col gap-1">
-                          <label className="text-xs font-medium text-slate-700">
+                          <label className="text-xs font-medium text-text01">
                             {props.label || "Text Input"}
                           </label>
                           <input
                             type={props.type || "text"}
                             placeholder={props.placeholder || "Enter text..."}
-                            className="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                            className="w-full px-3 py-2 rounded-lg border border-stroke01 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                           />
                         </div>
                       );
@@ -4142,13 +4142,13 @@ function LivePreview({
                     if (fc.type === "textarea") {
                       return (
                         <div key={fc.id} className="flex flex-col gap-1">
-                          <label className="text-xs font-medium text-slate-700">
+                          <label className="text-xs font-medium text-text01">
                             {props.label || "Textarea"}
                           </label>
                           <textarea
                             rows={props.rows || 3}
                             placeholder={props.placeholder || "Enter long text..."}
-                            className="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                            className="w-full px-3 py-2 rounded-lg border border-stroke01 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                           />
                         </div>
                       );
@@ -4161,10 +4161,10 @@ function LivePreview({
                           .filter(Boolean);
                       return (
                         <div key={fc.id} className="flex flex-col gap-1">
-                          <label className="text-xs font-medium text-slate-700">
+                          <label className="text-xs font-medium text-text01">
                             {props.label || "Dropdown"}
                           </label>
-                          <select className="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                          <select className="w-full px-3 py-2 rounded-lg border border-stroke01 text-sm focus:outline-none focus:ring-2 focus:ring-primary">
                             {options.map((opt, idx) => (
                               <option key={idx}>{opt}</option>
                             ))}
@@ -4176,12 +4176,12 @@ function LivePreview({
                       return (
                         <label
                           key={fc.id}
-                          className="inline-flex items-center gap-2 text-xs text-slate-700"
+                          className="inline-flex items-center gap-2 text-xs text-text01"
                         >
                           <input
                             type="checkbox"
                             defaultChecked={props.checked}
-                            className="h-3.5 w-3.5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                            className="h-3.5 w-3.5 rounded border-stroke01 text-primary focus:ring-neutral010"
                           />
                           <span>{props.label || "Checkbox label"}</span>
                         </label>
@@ -4194,7 +4194,7 @@ function LivePreview({
                           .map((o) => o.trim())
                           .filter(Boolean);
                       return (
-                        <div key={fc.id} className="flex flex-col gap-1 text-xs text-slate-700">
+                        <div key={fc.id} className="flex flex-col gap-1 text-xs text-text01">
                           <span className="font-medium">
                             {props.label || "Radio group"}
                           </span>
@@ -4204,7 +4204,7 @@ function LivePreview({
                                 <input
                                   type="radio"
                                   name={fc.id}
-                                  className="h-3.5 w-3.5 border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                                  className="h-3.5 w-3.5 border-stroke01 text-primary focus:ring-neutral010"
                                 />
                                 <span>{opt}</span>
                               </label>
@@ -4216,15 +4216,15 @@ function LivePreview({
                     if (fc.type === "switch") {
                       return (
                         <div key={fc.id} className="flex items-center justify-between text-xs">
-                          <span className="text-slate-700">
+                          <span className="text-text01">
                             {props.label || "Toggle switch"}
                           </span>
                           <button
                             type="button"
                             className={`relative inline-flex h-4 w-7 items-center rounded-full border ${
                               props.checked
-                                ? "bg-indigo-600 border-indigo-600"
-                                : "bg-slate-200 border-slate-300"
+                                ? "bg-primary border-primary"
+                                : "bg-stroke01 border-stroke01"
                             }`}
                           >
                             <span
@@ -4239,12 +4239,12 @@ function LivePreview({
                     if (fc.type === "date-picker") {
                       return (
                         <div key={fc.id} className="flex flex-col gap-1">
-                          <label className="text-xs font-medium text-slate-700">
+                          <label className="text-xs font-medium text-text01">
                             {props.label || "Date"}
                           </label>
                           <input
                             type="date"
-                            className="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                            className="w-full px-3 py-2 rounded-lg border border-stroke01 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                           />
                         </div>
                       );
@@ -4255,7 +4255,7 @@ function LivePreview({
                       const value = props.defaultValue ?? Math.round((min + max) / 2);
                       return (
                         <div key={fc.id} className="flex flex-col gap-1">
-                          <label className="text-xs font-medium text-slate-700">
+                          <label className="text-xs font-medium text-text01">
                             {props.label || "Slider"}
                           </label>
                           <div className="flex items-center gap-3">
@@ -4266,10 +4266,10 @@ function LivePreview({
                               defaultValue={value}
                               step={props.step ?? 1}
                               disabled={props.disabled}
-                              className="flex-1 accent-indigo-600"
+                              className="flex-1 accent-primary"
                             />
                             {props.showValue !== false && (
-                              <span className="text-xs text-slate-600 w-10 text-right">
+                              <span className="text-xs text-text02 w-10 text-right">
                                 {value}
                               </span>
                             )}
@@ -4282,7 +4282,7 @@ function LivePreview({
                       const current = Math.min(max, Math.max(0, props.defaultValue || 0));
                       return (
                         <div key={fc.id} className="flex flex-col gap-1">
-                          <label className="text-xs font-medium text-slate-700">
+                          <label className="text-xs font-medium text-text01">
                             {props.label || "Rating"}
                           </label>
                           <div className="flex items-center gap-1">
@@ -4292,7 +4292,7 @@ function LivePreview({
                                 <svg
                                   key={idx}
                                   className={`w-4 h-4 ${
-                                    filled ? "text-yellow-400" : "text-slate-300"
+                                    filled ? "text-alert02" : "text-stroke01"
                                   }`}
                                   viewBox="0 0 20 20"
                                   fill="currentColor"
@@ -4313,10 +4313,10 @@ function LivePreview({
                         "inline-flex items-center justify-center px-3 py-1.5 rounded-lg text-xs font-medium";
                       const variantClass =
                         variant === "secondary"
-                          ? "bg-white border border-slate-300 text-slate-700 hover:bg-slate-50"
+                          ? "bg-white border border-stroke01 text-text01 hover:bg-bg02"
                           : variant === "outline"
-                          ? "border border-indigo-600 text-indigo-600 bg-white hover:bg-indigo-50"
-                          : "bg-indigo-600 text-white hover:bg-indigo-700";
+                          ? "border border-primary text-primary bg-white hover:bg-neutral01"
+                          : "bg-primary text-white hover:bg-textLink";
                       const justify =
                         styleProps.textAlign === "center"
                           ? "justify-center"
@@ -4343,8 +4343,8 @@ function LivePreview({
                 !renderedIds.has(c.id) &&
                 !["app-header", "toolbar", "container", "grid", "section", "side-nav"].includes(c.type)
             ) && (
-              <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 px-4 py-4">
-                <div className="text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wide">
+              <div className="rounded-xl border border-dashed border-stroke01 bg-bg02 px-4 py-4">
+                <div className="text-xs font-semibold text-text03 mb-2 uppercase tracking-wide">
                   Additional Components
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -4357,12 +4357,12 @@ function LivePreview({
                     .map((c) => (
                       <div
                         key={c.id}
-                        className="border border-slate-200 rounded-lg bg-white px-3 py-2 text-[11px]"
+                        className="border border-stroke01 rounded-lg bg-white px-3 py-2 text-[11px]"
                       >
-                        <div className="font-semibold text-slate-800 mb-0.5">
+                        <div className="font-semibold text-text01 mb-0.5">
                           {c.name || c.type}
                         </div>
-                        <div className="text-slate-500">
+                        <div className="text-text03">
                           Preview placeholder for <span className="font-mono">{c.type}</span> component.
                         </div>
                       </div>
@@ -4383,22 +4383,22 @@ function LivePreview({
                   const description = props.description || "AI-powered analysis and insights.";
                   
                   return (
-                    <div key={card.id} className="rounded-xl border border-slate-200 bg-white px-4 py-3">
+                    <div key={card.id} className="rounded-xl border border-stroke01 bg-white px-4 py-3">
                       <div className="flex items-center gap-2 mb-1.5">
-                        <div className="p-1.5 rounded-lg bg-indigo-600 text-white">
+                        <div className="p-1.5 rounded-lg bg-primary text-white">
                           <Sparkles className="w-3.5 h-3.5" />
                         </div>
                         <div>
-                          <div className="text-xs font-semibold text-slate-900">
+                          <div className="text-xs font-semibold text-text01">
                             {cardName}
                           </div>
-                          <div className="text-[11px] text-slate-500">
+                          <div className="text-[11px] text-text03">
                             {description}
                           </div>
                         </div>
                       </div>
                       {props.details && (
-                        <div className="mt-1.5 text-[11px] text-slate-700">
+                        <div className="mt-1.5 text-[11px] text-text01">
                           {typeof props.details === "string" ? (
                             <p>{props.details}</p>
                           ) : Array.isArray(props.details) ? (
@@ -4420,12 +4420,12 @@ function LivePreview({
             {metrics.slice(3).map((m) => (
               <div
                 key={m.id}
-                className="rounded-xl border border-slate-200 bg-white px-3 py-3"
+                className="rounded-xl border border-stroke01 bg-white px-3 py-3"
               >
-                <div className="text-[11px] uppercase tracking-wide text-slate-500">
+                <div className="text-[11px] uppercase tracking-wide text-text03">
                   {m.props?.title || m.name}
                 </div>
-                <div className="mt-1 text-lg font-semibold text-slate-900">
+                <div className="mt-1 text-lg font-semibold text-text01">
                   {m.props?.value || "0"}
                 </div>
               </div>
@@ -4446,14 +4446,14 @@ function LivePreview({
 
   const shellClass = fullScreen
     ? "h-screen w-screen"
-    : "w-full min-h-[520px] rounded-2xl border border-slate-800 overflow-hidden";
+    : "w-full min-h-[520px] rounded-2xl border border-text01 overflow-hidden";
 
   return (
-    <div className={`${shellClass} bg-slate-950 text-slate-100 flex`}>
+    <div className={`${shellClass} bg-slate-950 text-bg03 flex`}>
       {/* Left sidebar nav */}
-      <aside className="w-56 border-r border-slate-800 flex flex-col">
-        <div className="px-4 py-4 border-b border-slate-800">
-          <div className="text-[10px] uppercase tracking-[0.18em] text-slate-400">
+      <aside className="w-56 border-r border-text01 flex flex-col">
+        <div className="px-4 py-4 border-b border-text01">
+          <div className="text-[10px] uppercase tracking-[0.18em] text-text03">
             FAB App
           </div>
           <div className="mt-1 text-sm font-semibold text-white truncate">{appTitle}</div>
@@ -4467,11 +4467,11 @@ function LivePreview({
                 onClick={() => onNavigatePage && onNavigatePage(index)}
                 className={`w-full flex items-center gap-2 px-4 py-2 text-left transition ${
                   isActive
-                    ? "bg-slate-800 text-white"
-                    : "text-slate-300 hover:bg-slate-800/60 hover:text-white"
+                    ? "bg-text01 text-white"
+                    : "text-stroke01 hover:bg-text01/60 hover:text-white"
                 }`}
               >
-                <span className="inline-block h-1.5 w-1.5 rounded-full bg-indigo-400" />
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary" />
                 <span>{label}</span>
               </button>
             );

@@ -63,8 +63,8 @@ const INTENT_CATALOG = [
 
 function HeadsetIcon() {
   return (
-    <span className="inline-flex items-center justify-center rounded-lg bg-[var(--color-primary)]/40 p-1.5">
-      <Headphones className="w-4 h-4 text-[var(--color-alert01)]" />
+    <span className="inline-flex items-center justify-center rounded-lg bg-primary/40 p-1.5">
+      <Headphones className="w-4 h-4 text-alert01" />
     </span>
   );
 }
@@ -73,7 +73,7 @@ function AvatarCircle({ icon, active, pulse = false }) {
   return (
     <motion.div
       className={`relative w-8 h-8 rounded-full flex items-center justify-center ${
-        active ? "bg-[var(--color-text01)] text-[var(--color-bg01)]" : "bg-[var(--color-bg02)] text-[var(--color-text01)]"
+        active ? "bg-text01 text-bg01" : "bg-bg02 text-text01"
       } transition-all duration-300`}
       animate={{ scale: active ? 1.1 : 1 }}
       transition={{ type: "spring", stiffness: 500, damping: 30 }}
@@ -81,7 +81,7 @@ function AvatarCircle({ icon, active, pulse = false }) {
       {icon}
       {active && pulse && (
         <motion.span
-          className="absolute inset-0 rounded-full bg-[var(--color-primary)] opacity-75"
+          className="absolute inset-0 rounded-full bg-primary opacity-75"
           animate={{ scale: [1, 1.5], opacity: [0.75, 0] }}
           transition={{ repeat: Infinity, duration: 1.5 }}
         />
@@ -606,20 +606,20 @@ export default function AgenticSupportConsole({ onNavigate }) {
         voice: {
           label: "Voice Capture Agent",
           icon: <Mic className="w-3.5 h-3.5" />,
-          color: "text-[var(--color-neutral02)]",
-          bg: "bg-[var(--color-neutral01)]",
+          color: "text-neutral02",
+          bg: "bg-neutral01",
         },
         chat: {
           label: "Chat Capture Agent",
           icon: <MessageCircle className="w-3.5 h-3.5" />,
-          color: "text-[var(--color-success02)]",
-          bg: "bg-[var(--color-success01)]",
+          color: "text-success02",
+          bg: "bg-success01",
         },
         email: {
           label: "Email Parsing Agent",
           icon: <Mail className="w-3.5 h-3.5" />,
           color: "text-primary",
-          bg: "bg-[var(--color-bg02)] ",
+          bg: "bg-bg02 ",
         },
       };
       
@@ -640,8 +640,8 @@ export default function AgenticSupportConsole({ onNavigate }) {
       key: "intent",
       label: "Intent Detection Agent",
       icon: <Brain className="w-3.5 h-3.5" />,
-      color: "text-[var(--color-primary)]",
-      bg: "bg-[var(--color-neutral01)]",
+      color: "text-primary",
+      bg: "bg-neutral01",
       body:
         lastResult.diagnosis?.workflow || lastResult.workflow_type
           ? `Matched workflow: ${lastResult.diagnosis?.workflow || lastResult.workflow_type}`
@@ -657,7 +657,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
           label: "Knowledge Base Agent",
           icon: <BookOpen className="w-3.5 h-3.5" />,
           color: "text-primary",
-          bg: "bg-[var(--color-bg02)] ",
+          bg: "bg-bg02 ",
           body: `Retrieved ${kbResults.length} relevant knowledge chunks from vectorized database. Context: ${kbResults[0]?.text?.substring(0, 100)}...`,
         });
       }
@@ -668,8 +668,8 @@ export default function AgenticSupportConsole({ onNavigate }) {
         key: "diagnosis",
         label: "Diagnostic Agent",
         icon: <Activity className="w-3.5 h-3.5" />,
-        color: "text-[var(--color-alert02)]",
-        bg: "bg-[var(--color-alert01)]",
+        color: "text-alert02",
+        bg: "bg-alert01",
         body: `${lastResult.diagnosis.root_cause} ${lastResult.diagnosis.confidence ? `(Confidence: ${(lastResult.diagnosis.confidence * 100).toFixed(0)}%)` : ""}`,
       });
     }
@@ -679,8 +679,8 @@ export default function AgenticSupportConsole({ onNavigate }) {
         key: "actions",
         label: "Action Execution Agent",
         icon: <Wand2 className="w-3.5 h-3.5" />,
-        color: "text-[var(--color-alert02)]",
-        bg: "bg-[var(--color-alert01)]",
+        color: "text-alert02",
+        bg: "bg-alert01",
         body: actionNames,
       });
     }
@@ -689,8 +689,8 @@ export default function AgenticSupportConsole({ onNavigate }) {
         key: "verify",
         label: "Verification Agent",
         icon: <CheckCircle2 className="w-3.5 h-3.5" />,
-        color: "text-[var(--color-success02)]",
-        bg: "bg-[var(--color-success01)]",
+        color: "text-success02",
+        bg: "bg-success01",
         body:
           lastResult.verification.details ||
           "Key checks passed so we trust the self-heal before closing.",
@@ -704,8 +704,8 @@ export default function AgenticSupportConsole({ onNavigate }) {
       ) : (
         <Zap className="w-3.5 h-3.5" />
       ),
-      color: lastResult.escalation?.required ? "text-[var(--color-error02)]" : "text-[var(--color-pinkTP)]",
-      bg: lastResult.escalation?.required ? "bg-rose-50" : "bg-pink-50",
+      color: lastResult.escalation?.required ? "text-error02" : "text-pinkTP",
+      bg: lastResult.escalation?.required ? "bg-pinkTP/10" : "bg-pinkTP/10",
       body:
         lastResult.resolution_reason ||
         (lastResult.escalation?.required
@@ -724,8 +724,8 @@ export default function AgenticSupportConsole({ onNavigate }) {
         key: systemName,
         label: `${systemDisplayName} Integration Agent`,
         icon: <Cloud className="w-3.5 h-3.5" />,
-        color: "text-[var(--color-neutral02)]",
-        bg: "bg-[var(--color-neutral01)]",
+        color: "text-neutral02",
+        bg: "bg-neutral01",
         body: `Ticket ${ticketId} created in ${systemDisplayName}.${ticketUrl ? ` View ticket: ${ticketUrl}` : ""} Payload includes: customer interaction, telemetry snapshot, diagnostic results, and escalation reason. API response: 201 Created.`,
       });
     }
@@ -786,26 +786,26 @@ export default function AgenticSupportConsole({ onNavigate }) {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[var(--color-bg02)]">
+    <div className="flex flex-col h-screen bg-bg02">
       {/* Enhanced Top Bar - Prominent Header */}
-      <div className="relative flex items-center justify-between px-6 lg:px-8 py-4 bg-gradient-to-r from-[var(--color-bg01)] via-[var(--color-bg02)]/50 to-[var(--color-bg01)] border-b-2 border-[var(--color-stroke01)] shadow-[var(--shadow-drop)]">
+      <div className="relative flex items-center justify-between px-6 lg:px-8 py-4 bg-gradient-to-r from-bg01 via-bg02/50 to-bg01 border-b-2 border-stroke01 shadow-shadow-drop">
         {/* Subtle background pattern overlay */}
         <div className="absolute inset-0 opacity-[0.02] bg-[linear-gradient(45deg,transparent_25%,rgba(46,46,46,0.1)_25%,rgba(46,46,46,0.1)_50%,transparent_50%,transparent_75%,rgba(46,46,46,0.1)_75%,rgba(46,46,46,0.1))] bg-[length:20px_20px]" />
         
         <div className="relative flex items-center gap-5 flex-1 min-w-0">
           {/* Icon with enhanced styling */}
-          <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-gradient-to-br from-[var(--color-text01)] to-[var(--color-buttonPrimary-hover)] flex items-center justify-center shadow-lg border-2 border-[var(--color-stroke01)]">
-            <Headphones className="w-6 h-6 text-[var(--color-bg01)]" />
+          <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-gradient-to-br from-text01 to-buttonPrimary-hover flex items-center justify-center shadow-lg border-2 border-stroke01">
+            <Headphones className="w-6 h-6 text-bg01" />
           </div>
           
           {/* Title Section - More Prominent */}
           <div className="flex-shrink-0 min-w-0">
-            <h2 className="text-lg font-bold text-[var(--color-text01)]  tracking-tight mb-0.5">AI Console</h2>
-            <p className="text-xs font-semibold text-[var(--color-text02)] uppercase tracking-wider">Multi-Channel Intelligence Stream</p>
+            <h2 className="text-lg font-bold text-text01  tracking-tight mb-0.5">AI Console</h2>
+            <p className="text-xs font-semibold text-text02 uppercase tracking-wider">Multi-Channel Intelligence Stream</p>
           </div>
           
           {/* Divider */}
-          <span className="hidden sm:block h-8 w-px bg-gradient-to-b from-transparent via-[var(--color-stroke01)] to-transparent" />
+          <span className="hidden sm:block h-8 w-px bg-gradient-to-b from-transparent via-stroke01 to-transparent" />
           
           {/* Navigation Buttons - Enhanced */}
           <div className="flex items-center gap-2 flex-shrink-0">
@@ -813,8 +813,8 @@ export default function AgenticSupportConsole({ onNavigate }) {
               onClick={() => setShowCCASInfra(!showCCASInfra)}
               className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all shadow-sm ${
                 showCCASInfra
-                  ? 'bg-gradient-to-r from-[var(--color-text01)] to-[var(--color-buttonPrimary-hover)] text-[var(--color-bg01)] shadow-md hover:from-[var(--color-buttonPrimary-hover)] hover:to-[var(--color-buttonPrimary-active)] border-2 border-[var(--color-text01)]'
-                  : 'bg-[var(--color-bg01)] text-[var(--color-text01)]  hover:bg-[var(--color-bg02)]  border-2 border-[var(--color-stroke01)]'
+                  ? 'bg-gradient-to-r from-text01 to-buttonPrimary-hover text-bg01 shadow-md hover:from-buttonPrimary-hover hover:to-buttonPrimary-active border-2 border-text01'
+                  : 'bg-bg01 text-text01  hover:bg-bg02  border-2 border-stroke01'
               }`}
             >
               <Zap className="w-4 h-4" />
@@ -823,7 +823,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
             {onNavigate && (
               <button
                 onClick={() => onNavigate("store")}
-                className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-[var(--color-text01)]  hover:bg-[var(--color-bg02)]  rounded-lg transition-all bg-[var(--color-bg01)] border-2 border-[var(--color-stroke01)] shadow-sm hover:shadow-md hover:border-[var(--color-stroke01)] "
+                className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-text01  hover:bg-bg02  rounded-lg transition-all bg-bg01 border-2 border-stroke01 shadow-sm hover:shadow-md hover:border-stroke01 "
               >
                 <Store className="w-4 h-4" />
                 Store
@@ -834,10 +834,10 @@ export default function AgenticSupportConsole({ onNavigate }) {
         
         {/* Live Status Badge - Enhanced */}
         <div className="relative flex items-center gap-3 flex-shrink-0">
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-emerald-50 to-emerald-100/50 border-2 border-[var(--color-success03)] text-[var(--color-success02)] text-xs font-bold shadow-sm">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-success01 to-success01/50 border-2 border-success03 text-success02 text-xs font-bold shadow-sm">
             <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--color-success01)]0 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--color-success01)]0" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success010 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-success010" />
             </span>
             LIVE
           </span>
@@ -851,21 +851,21 @@ export default function AgenticSupportConsole({ onNavigate }) {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-[var(--color-bg01)] rounded-xl p-3 border-2 border-[var(--color-stroke01)] shadow-[var(--shadow-drop)]"
+          className="bg-bg01 rounded-xl p-3 border-2 border-stroke01 shadow-shadow-drop"
         >
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[var(--color-text01)] to-[var(--color-buttonPrimary-hover)] flex items-center justify-center shadow-md">
-                <Zap className="w-4 h-4 text-[var(--color-bg01)]" />
+              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-text01 to-buttonPrimary-hover flex items-center justify-center shadow-md">
+                <Zap className="w-4 h-4 text-bg01" />
               </div>
               <div>
-                <h3 className="text-sm font-bold text-[var(--color-text01)] ">CCAS Integration</h3>
-                <p className="text-[10px] text-[var(--color-text03)]">Enterprise Contact Center Infrastructure</p>
+                <h3 className="text-sm font-bold text-text01 ">CCAS Integration</h3>
+                <p className="text-[10px] text-text03">Enterprise Contact Center Infrastructure</p>
               </div>
             </div>
             <button
               onClick={() => setShowCCASInfra(false)}
-              className="text-[10px] text-[var(--color-text03)] hover:text-[var(--color-text02)] px-2 py-1 rounded hover:bg-[var(--color-bg02)]  transition-colors font-medium"
+              className="text-[10px] text-text03 hover:text-text02 px-2 py-1 rounded hover:bg-bg02  transition-colors font-medium"
             >
               Collapse
             </button>
@@ -935,7 +935,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           onClick={() => setShowCCASInfra(true)}
-          className="w-full py-3 px-4 text-sm font-medium text-[var(--color-text02)] hover:text-[var(--color-text01)] bg-[var(--color-bg02)] hover:bg-[var(--color-bg02)]    rounded-lg border-2 border-[var(--color-stroke01)] transition-all hover:border-[var(--color-stroke01)] hover:shadow-sm"
+          className="w-full py-3 px-4 text-sm font-medium text-text02 hover:text-text01 bg-bg02 hover:bg-bg02    rounded-lg border-2 border-stroke01 transition-all hover:border-stroke01 hover:shadow-sm"
         >
           <div className="flex items-center justify-center gap-2">
             <Zap className="w-4 h-4" />
@@ -946,19 +946,19 @@ export default function AgenticSupportConsole({ onNavigate }) {
 
 
       {/* TP Console Core - Our Product/IP */}
-      <div className="relative bg-[var(--color-bg01)] rounded-xl p-6 border-2 border-[var(--color-stroke01)] shadow-[var(--shadow-drop)]">
+      <div className="relative bg-bg01 rounded-xl p-6 border-2 border-stroke01 shadow-shadow-drop">
         {/* Clean Header */}
-        <div className="flex items-center justify-between mb-6 pb-4 border-b-2 border-[var(--color-stroke01)]">
+        <div className="flex items-center justify-between mb-6 pb-4 border-b-2 border-stroke01">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center shadow-sm">
-              <Sparkles className="w-5 h-5 text-[var(--color-bg01)]" />
+              <Sparkles className="w-5 h-5 text-bg01" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-[var(--color-text01)] ">TP Console Core</h3>
-              <p className="text-xs text-[var(--color-text01)]  font-medium">Real-time AI Support Intelligence</p>
+              <h3 className="text-lg font-bold text-text01 ">TP Console Core</h3>
+              <p className="text-xs text-text01  font-medium">Real-time AI Support Intelligence</p>
             </div>
           </div>
-          <div className="px-3 py-1.5 bg-gradient-to-r from-[var(--color-text01)] to-[var(--color-buttonPrimary-hover)] text-[var(--color-bg01)] text-xs font-bold rounded-lg shadow-sm">
+          <div className="px-3 py-1.5 bg-gradient-to-r from-text01 to-buttonPrimary-hover text-bg01 text-xs font-bold rounded-lg shadow-sm">
             PROPRIETARY
           </div>
         </div>
@@ -975,16 +975,16 @@ export default function AgenticSupportConsole({ onNavigate }) {
             transition={{ duration: 0.3 }}
             className={`relative rounded-xl border-2 px-5 py-5 flex flex-col gap-4 transition-all duration-300 h-[320px] ${
               stage === "capture"
-                ? "border-[var(--color-text01)] bg-[var(--color-bg01)] shadow-lg"
-                : "border-[var(--color-stroke01)] bg-[var(--color-bg01)] shadow-sm"
+                ? "border-text01 bg-bg01 shadow-lg"
+                : "border-stroke01 bg-bg01 shadow-sm"
             }`}
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <AvatarCircle active={stage !== "idle"} pulse={stage === "capture"} icon={<User className="w-4 h-4" />} />
-                <p className="text-base font-bold text-[var(--color-text01)] ">Customer Input</p>
+                <p className="text-base font-bold text-text01 ">Customer Input</p>
               </div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[var(--color-bg01)] bg-buttonPrimary rounded-lg shadow-sm">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-bg01 bg-buttonPrimary rounded-lg shadow-sm">
                 {channel === "voice" && <><Phone className="w-3.5 h-3.5" /> Voice</>}
                 {channel === "chat" && <><MessageCircle className="w-3.5 h-3.5" /> Chat</>}
                 {channel === "email" && <><Mail className="w-3.5 h-3.5" /> Email</>}
@@ -995,7 +995,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
             {interactionText ? (
               <div className="space-y-2">
                 {/* Metadata bar */}
-                <div className="flex items-center justify-between text-xs text-[var(--color-text03)]">
+                <div className="flex items-center justify-between text-xs text-text03">
                   <div className="flex items-center gap-3">
                     <span className="flex items-center gap-1">
                       <Clock className="w-3 h-3" />
@@ -1006,25 +1006,25 @@ export default function AgenticSupportConsole({ onNavigate }) {
                       Customer #{Math.floor(Math.random() * 9000) + 1000}
                     </span>
                   </div>
-                  <span className="px-2 py-0.5 bg-[var(--color-success01)] text-[var(--color-success02)] rounded-full font-semibold">
+                  <span className="px-2 py-0.5 bg-success01 text-success02 rounded-full font-semibold">
                     Captured
                   </span>
                 </div>
 
                 {/* Main text */}
-                <div className="bg-gradient-to-br from-[var(--color-bg01)] to-[var(--color-neutral01)]/30 rounded-lg border border-[var(--color-neutral01)] p-3">
-                  <p className="text-base text-[var(--color-text01)] leading-relaxed">
+                <div className="bg-gradient-to-br from-bg01 to-neutral01/30 rounded-lg border border-neutral01 p-3">
+                  <p className="text-base text-text01 leading-relaxed">
                     {interactionText}
                     {isStreaming && channel === 'voice' && (
                       <motion.span
                         animate={{ opacity: [1, 0.3, 1] }}
                         transition={{ duration: 1, repeat: Infinity }}
-                        className="inline-block w-2 h-4 bg-[var(--color-neutral02)] ml-1"
+                        className="inline-block w-2 h-4 bg-neutral02 ml-1"
                       />
                     )}
                   </p>
                   {isStreaming && channel === 'voice' && (
-                    <div className="mt-2 flex items-center gap-2 text-xs text-[var(--color-neutral02)]">
+                    <div className="mt-2 flex items-center gap-2 text-xs text-neutral02">
                       <Activity className="w-3 h-3 animate-pulse" />
                       <span className="font-semibold">Streaming transcript...</span>
                     </div>
@@ -1033,15 +1033,15 @@ export default function AgenticSupportConsole({ onNavigate }) {
 
                 {/* Analysis metadata */}
                 <div className="grid grid-cols-3 gap-2 text-xs">
-                  <div className="flex items-center gap-1.5 text-[var(--color-text01)] ">
+                  <div className="flex items-center gap-1.5 text-text01 ">
                     <span className="font-semibold">Words:</span>
                     <span>{interactionText.trim().split(/\s+/).length}</span>
                   </div>
-                  <div className="flex items-center gap-1.5 text-[var(--color-text01)] ">
+                  <div className="flex items-center gap-1.5 text-text01 ">
                     <span className="font-semibold">Lang:</span>
                     <span>EN</span>
                   </div>
-                  <div className="flex items-center gap-1.5 text-[var(--color-text01)] ">
+                  <div className="flex items-center gap-1.5 text-text01 ">
                     <span className="font-semibold">Sentiment:</span>
                     {/* Production: Use OpenAI GPT-4 with sentiment classification or specialized models like:
                         - DistilBERT fine-tuned on emotion/sentiment datasets
@@ -1051,10 +1051,10 @@ export default function AgenticSupportConsole({ onNavigate }) {
                     <span className={`font-semibold ${
                       interactionText.toLowerCase().includes('not working') || 
                       interactionText.toLowerCase().includes('error') ||
-                      interactionText.toLowerCase().includes('problem') ? 'text-[var(--color-error02)]' :
+                      interactionText.toLowerCase().includes('problem') ? 'text-error02' :
                       interactionText.toLowerCase().includes('slow') ||
-                      interactionText.toLowerCase().includes('issue') ? 'text-[var(--color-alert02)]' :
-                      'text-[var(--color-success02)]'
+                      interactionText.toLowerCase().includes('issue') ? 'text-alert02' :
+                      'text-success02'
                     }`}>
                       {interactionText.toLowerCase().includes('not working') || 
                        interactionText.toLowerCase().includes('error') ||
@@ -1069,13 +1069,13 @@ export default function AgenticSupportConsole({ onNavigate }) {
             ) : (
               <div className="flex-1 flex items-center justify-center">
                 <div className="text-center py-6">
-                  <div className="w-12 h-12 mx-auto mb-2 rounded-full bg-[var(--color-bg02)]  flex items-center justify-center">
-                    <User className="w-6 h-6 text-[var(--color-text03)]" />
+                  <div className="w-12 h-12 mx-auto mb-2 rounded-full bg-bg02  flex items-center justify-center">
+                    <User className="w-6 h-6 text-text03" />
                   </div>
-                  <p className="text-xs text-[var(--color-text01)]  font-medium">
+                  <p className="text-xs text-text01  font-medium">
                     Waiting for input...
                   </p>
-                  <p className="text-[10px] text-[var(--color-text03)] mt-0.5">
+                  <p className="text-[10px] text-text03 mt-0.5">
                     Use Live Monitor above
               </p>
             </div>
@@ -1087,31 +1087,31 @@ export default function AgenticSupportConsole({ onNavigate }) {
               {/* Keeping structure for state management only */}
               {channel === "email" && (
                 <div className="space-y-2">
-                  <div className="bg-[var(--color-bg01)] rounded-lg border border-[var(--color-stroke01)] p-2">
+                  <div className="bg-bg01 rounded-lg border border-stroke01 p-2">
                 <input
                       type="email"
                       placeholder="From: customer@company.com"
                       value={emailFrom}
                       onChange={(e) => setEmailFrom(e.target.value)}
-                      className="w-full text-xs px-2 py-1 border-2 border-[var(--color-stroke01)] rounded focus:ring-2 focus:ring-[var(--color-text01)]/20 focus:border-[var(--color-text01)] outline-none"
+                      className="w-full text-xs px-2 py-1 border-2 border-stroke01 rounded focus:ring-2 focus:ring-text01/20 focus:border-text01 outline-none"
                     />
                   </div>
-                  <div className="bg-[var(--color-bg01)] rounded-lg border border-[var(--color-stroke01)] p-2">
+                  <div className="bg-bg01 rounded-lg border border-stroke01 p-2">
                 <input
                       type="text"
                       placeholder="Subject: Describe your issue"
                       value={emailSubject}
                       onChange={(e) => setEmailSubject(e.target.value)}
-                      className="w-full text-xs px-2 py-1 border-2 border-[var(--color-stroke01)] rounded focus:ring-2 focus:ring-[var(--color-text01)]/20 focus:border-[var(--color-text01)] outline-none"
+                      className="w-full text-xs px-2 py-1 border-2 border-stroke01 rounded focus:ring-2 focus:ring-text01/20 focus:border-text01 outline-none"
                     />
                   </div>
-                  <div className="bg-[var(--color-bg01)] rounded-lg border border-[var(--color-stroke01)] p-2">
+                  <div className="bg-bg01 rounded-lg border border-stroke01 p-2">
                     <textarea
                       placeholder="Email body: Explain the problem in detail..."
                       value={emailBody}
                       onChange={(e) => setEmailBody(e.target.value)}
                       rows={4}
-                      className="w-full text-xs px-2 py-1 border-2 border-[var(--color-stroke01)] rounded focus:ring-2 focus:ring-[var(--color-text01)]/20 focus:border-[var(--color-text01)] outline-none resize-none"
+                      className="w-full text-xs px-2 py-1 border-2 border-stroke01 rounded focus:ring-2 focus:ring-text01/20 focus:border-text01 outline-none resize-none"
                     />
             </div>
                 </div>
@@ -1120,9 +1120,9 @@ export default function AgenticSupportConsole({ onNavigate }) {
               {/* Chat Input */}
               {channel === "chat" && (
                 <div className="space-y-2">
-                  <div className="bg-[var(--color-bg01)] rounded-lg border border-[var(--color-stroke01)] p-2 max-h-40 overflow-y-auto">
+                  <div className="bg-bg01 rounded-lg border border-stroke01 p-2 max-h-40 overflow-y-auto">
                     {chatMessages.length === 0 ? (
-                      <p className="text-xs text-[var(--color-text03)] italic py-2 text-center">Start a conversation...</p>
+                      <p className="text-xs text-text03 italic py-2 text-center">Start a conversation...</p>
                     ) : (
                       <div className="space-y-2">
                         {chatMessages.map((msg) => (
@@ -1133,8 +1133,8 @@ export default function AgenticSupportConsole({ onNavigate }) {
                             <div
                               className={`max-w-[80%] rounded-lg px-3 py-1.5 ${
                                 msg.sender === "user"
-                                  ? "bg-gradient-to-r from-[var(--color-text01)] to-[var(--color-buttonPrimary-hover)] text-[var(--color-bg01)]"
-                                  : "bg-[var(--color-bg02)] text-[var(--color-text01)]"
+                                  ? "bg-gradient-to-r from-text01 to-buttonPrimary-hover text-bg01"
+                                  : "bg-bg02 text-text01"
                               }`}
                             >
                               <p className="text-xs">{msg.text}</p>
@@ -1152,12 +1152,12 @@ export default function AgenticSupportConsole({ onNavigate }) {
                       value={chatInput}
                       onChange={(e) => setChatInput(e.target.value)}
                       onKeyPress={(e) => e.key === 'Enter' && handleSendChatMessage()}
-                      className="flex-1 text-xs px-3 py-2 border border-[var(--color-stroke01)] rounded-lg focus:ring-2 focus:ring-emerald-200 focus:border-[var(--color-success03)] outline-none"
+                      className="flex-1 text-xs px-3 py-2 border border-stroke01 rounded-lg focus:ring-2 focus:ring-success01 focus:border-success03 outline-none"
                     />
                 <button
                       onClick={handleSendChatMessage}
                       disabled={!chatInput.trim()}
-                      className="px-3 py-2 bg-gradient-to-r from-[var(--color-text01)] to-[var(--color-buttonPrimary-hover)] text-[var(--color-bg01)] rounded-lg hover:from-[var(--color-buttonPrimary-hover)] hover:to-[var(--color-buttonPrimary-active)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
+                      className="px-3 py-2 bg-gradient-to-r from-text01 to-buttonPrimary-hover text-bg01 rounded-lg hover:from-buttonPrimary-hover hover:to-buttonPrimary-active disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
                 >
                       <Send className="w-3.5 h-3.5" />
                 </button>
@@ -1177,8 +1177,8 @@ export default function AgenticSupportConsole({ onNavigate }) {
             transition={{ duration: 0.3 }}
             className={`relative rounded-xl px-5 py-5 flex flex-col gap-4 transition-all duration-300 border-2 h-[320px] overflow-y-auto ${
               ["intent-detecting", "intent-ready"].includes(stage)
-                ? "border-[var(--color-text01)] bg-[var(--color-bg01)] shadow-lg"
-                : "border-[var(--color-stroke01)] bg-[var(--color-bg01)] shadow-sm"
+                ? "border-text01 bg-bg01 shadow-lg"
+                : "border-stroke01 bg-bg01 shadow-sm"
             }`}
           >
             <div className="flex items-center justify-between">
@@ -1188,20 +1188,20 @@ export default function AgenticSupportConsole({ onNavigate }) {
                   pulse={["intent-detecting"].includes(stage)}
                   icon={<Brain className="w-4 h-4" />}
                 />
-                <p className="text-lg font-bold text-[var(--color-text01)] ">Intent Brain</p>
+                <p className="text-lg font-bold text-text01 ">Intent Brain</p>
               </div>
-              <p className="text-[11px] text-[var(--color-text03)]">{intentStatus}</p>
+              <p className="text-[11px] text-text03">{intentStatus}</p>
             </div>
             {(!interactionText || interactionText.trim().split(/\s+/).length < 3) ? (
               <div className="flex-1 flex items-center justify-center">
                 <div className="text-center py-6">
-                  <div className="w-12 h-12 mx-auto mb-2 rounded-full bg-gradient-to-br from-teal-100 to-cyan-100 flex items-center justify-center border-2 border-teal-200">
-                    <Brain className="w-6 h-6 text-teal-600" />
+                  <div className="w-12 h-12 mx-auto mb-2 rounded-full bg-gradient-to-br from-neutral01 to-neutral01 flex items-center justify-center border-2 border-neutral01">
+                    <Brain className="w-6 h-6 text-primary" />
                   </div>
-                  <p className="text-xs text-[var(--color-text01)]  font-medium">
+                  <p className="text-xs text-text01  font-medium">
                     Waiting for customer issue
                   </p>
-                  <p className="text-[10px] text-[var(--color-text03)] mt-0.5">
+                  <p className="text-[10px] text-text03 mt-0.5">
                     Intent Brain will analyze and route to workflow
                   </p>
                 </div>
@@ -1209,13 +1209,13 @@ export default function AgenticSupportConsole({ onNavigate }) {
             ) : selectedWorkflow === "unknown" ? (
               <div className="flex-1 flex items-center justify-center">
                 <div className="text-center py-6 px-4">
-                  <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center border-2 border-[var(--color-alert01)]">
-                    <AlertCircle className="w-6 h-6 text-[var(--color-alert02)]" />
+                  <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-gradient-to-br from-alert01 to-alert01 flex items-center justify-center border-2 border-alert01">
+                    <AlertCircle className="w-6 h-6 text-alert02" />
                   </div>
-                  <p className="text-xs text-[var(--color-text02)] font-medium mb-1">
+                  <p className="text-xs text-text02 font-medium mb-1">
                     No matching workflow found
                 </p>
-                  <p className="text-[10px] text-[var(--color-text03)]">
+                  <p className="text-[10px] text-text03">
                     Escalating to human agent with full context
                 </p>
                 </div>
@@ -1228,28 +1228,28 @@ export default function AgenticSupportConsole({ onNavigate }) {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.2 }}
-                    className="bg-[var(--color-bg01)] border-2 border-[var(--color-stroke01)] rounded-lg p-4 shadow-sm"
+                    className="bg-bg01 border-2 border-stroke01 rounded-lg p-4 shadow-sm"
                   >
                     <div className="flex items-start gap-2 mb-2">
-                      <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-br from-[var(--color-text01)] to-[var(--color-buttonPrimary-hover)] flex items-center justify-center shadow-sm border border-[var(--color-stroke01)]">
-                        <CheckCircle2 className="w-4 h-4 text-[var(--color-bg01)]" />
+                      <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-br from-text01 to-buttonPrimary-hover flex items-center justify-center shadow-sm border border-stroke01">
+                        <CheckCircle2 className="w-4 h-4 text-bg01" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap mb-1">
-                          <span className="font-bold text-[var(--color-text01)]  text-sm">Matched Category</span>
-                          <span className="px-2 py-0.5 rounded-full bg-gradient-to-r from-[var(--color-text01)] to-[var(--color-buttonPrimary-hover)] text-[var(--color-bg01)] text-[10px] font-bold uppercase tracking-wide">
+                          <span className="font-bold text-text01  text-sm">Matched Category</span>
+                          <span className="px-2 py-0.5 rounded-full bg-gradient-to-r from-text01 to-buttonPrimary-hover text-bg01 text-[10px] font-bold uppercase tracking-wide">
                             Primary
                           </span>
                         </div>
-                        <p className="font-semibold text-[var(--color-text01)]  text-base mb-1">
+                        <p className="font-semibold text-text01  text-base mb-1">
                           {intentScores[0].intent.label}
                         </p>
                         <div className="flex items-center gap-2 text-[11px]">
-                          <span className="text-[var(--color-text02)]">Workflow:</span>
-                          <span className="font-mono font-semibold text-[var(--color-text01)]  bg-[var(--color-bg01)] px-2 py-0.5 rounded border-2 border-[var(--color-stroke01)]">
+                          <span className="text-text02">Workflow:</span>
+                          <span className="font-mono font-semibold text-text01  bg-bg01 px-2 py-0.5 rounded border-2 border-stroke01">
                             {intentScores[0].intent.workflow}
                           </span>
-                          <span className="ml-auto font-bold text-[var(--color-text01)] ">
+                          <span className="ml-auto font-bold text-text01 ">
                             {(intentScores[0].score * 25).toFixed(0)}% confidence
                           </span>
                         </div>
@@ -1266,19 +1266,19 @@ export default function AgenticSupportConsole({ onNavigate }) {
                     initial={{ opacity: 0, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.2 }}
-                    className="bg-[var(--color-bg02)] /50 rounded-lg border border-[var(--color-stroke01)] px-3 py-2.5 shadow-sm"
+                    className="bg-bg02 /50 rounded-lg border border-stroke01 px-3 py-2.5 shadow-sm"
                   >
                     <div className="flex items-start gap-2 justify-between">
                       <div className="flex items-start gap-2 min-w-0 flex-1">
-                        <div className="w-5 h-5 rounded-md bg-[var(--color-bg02)]  flex items-center justify-center border-2 border-[var(--color-stroke01)] flex-shrink-0 mt-0.5">
-                          <BookOpen className="w-3 h-3 text-[var(--color-text01)] " />
+                        <div className="w-5 h-5 rounded-md bg-bg02  flex items-center justify-center border-2 border-stroke01 flex-shrink-0 mt-0.5">
+                          <BookOpen className="w-3 h-3 text-text01 " />
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center gap-1.5 mb-0.5">
-                            <span className="text-[10px] font-bold text-[var(--color-text01)] ">Knowledge Source</span>
-                            <span className="px-1 py-0.5 rounded bg-[var(--color-success01)] text-[var(--color-success02)] text-[8px] font-bold uppercase">Verified</span>
+                            <span className="text-[10px] font-bold text-text01 ">Knowledge Source</span>
+                            <span className="px-1 py-0.5 rounded bg-success01 text-success02 text-[8px] font-bold uppercase">Verified</span>
                           </div>
-                          <p className="text-[10px] text-[var(--color-text02)]  leading-snug line-clamp-2">
+                          <p className="text-[10px] text-text02  leading-snug line-clamp-2">
                             {selectedWorkflow === 'printer_offline' 
                               ? 'Matched "printer", "floor 3", "offline" → Network connectivity procedure (Sec 3.2) • Printer_Guide.pdf p.12-15 • 94%'
                               : 'Matched "ink cartridge", "not recognized" → INK_AUTH_001 troubleshooting (Sec 2.1) • Ink_Error_Resolution.pdf p.8-10 • 94%'
@@ -1293,7 +1293,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                           setDocViewerPage(startPage);
                           setShowDocViewer(true);
                         }}
-                        className="flex-shrink-0 flex items-center gap-1 px-2 py-1 bg-gradient-to-r from-[var(--color-text01)] to-[var(--color-buttonPrimary-hover)] text-[var(--color-bg01)] rounded hover:from-[var(--color-buttonPrimary-hover)] hover:to-[var(--color-buttonPrimary-active)] transition-all text-[10px] font-semibold whitespace-nowrap shadow-sm"
+                        className="flex-shrink-0 flex items-center gap-1 px-2 py-1 bg-gradient-to-r from-text01 to-buttonPrimary-hover text-bg01 rounded hover:from-buttonPrimary-hover hover:to-buttonPrimary-active transition-all text-[10px] font-semibold whitespace-nowrap shadow-sm"
                       >
                         <ExternalLink className="w-2.5 h-2.5" />
                         View
@@ -1305,7 +1305,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                 {/* Alternative Matches - Always show when available */}
                 {intentScores.length > 1 && (
                   <div className="space-y-1.5">
-                    <p className="text-[11px] font-semibold text-[var(--color-text03)] uppercase tracking-wide">
+                    <p className="text-[11px] font-semibold text-text03 uppercase tracking-wide">
                       Alternative Matches
                     </p>
                     {intentScores.slice(1, 3).map(({ intent, score }, idx) => (
@@ -1314,21 +1314,21 @@ export default function AgenticSupportConsole({ onNavigate }) {
                         initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: (idx + 1) * 0.1 + 0.3 }}
-                        className="flex items-center gap-2 rounded-lg px-2.5 py-2 bg-[var(--color-bg01)]/70 border border-[var(--color-stroke01)] hover:border-[var(--color-stroke01)] transition-colors"
+                        className="flex items-center gap-2 rounded-lg px-2.5 py-2 bg-bg01/70 border border-stroke01 hover:border-stroke01 transition-colors"
                       >
-                        <div className="w-5 h-5 rounded-md bg-gradient-to-br from-[var(--color-bg02)] to-[var(--color-bg03)] flex items-center justify-center border border-[var(--color-stroke01)] flex-shrink-0">
-                          <Sparkles className="w-3 h-3 text-[var(--color-text02)]" />
+                        <div className="w-5 h-5 rounded-md bg-gradient-to-br from-bg02 to-bg03 flex items-center justify-center border border-stroke01 flex-shrink-0">
+                          <Sparkles className="w-3 h-3 text-text02" />
                         </div>
                         <div className="flex flex-col flex-1 min-w-0">
-                          <span className="font-medium text-[var(--color-text02)] text-xs truncate">
+                          <span className="font-medium text-text02 text-xs truncate">
                           {intent.label}
                         </span>
-                          <span className="text-[10px] text-[var(--color-text03)]">
+                          <span className="text-[10px] text-text03">
                             {intent.workflow}
                         </span>
                       </div>
                         <div className="flex items-center gap-2 flex-shrink-0">
-                          <div className="w-12 bg-gray-200 rounded-full h-1.5 overflow-hidden">
+                          <div className="w-12 bg-stroke01 rounded-full h-1.5 overflow-hidden">
                           <motion.div
                             initial={{ width: 0 }}
                             animate={{
@@ -1337,10 +1337,10 @@ export default function AgenticSupportConsole({ onNavigate }) {
                                   : 0,
                             }}
                               transition={{ duration: 0.5, delay: (idx + 1) * 0.08 + 0.4 }}
-                              className="h-1.5 rounded-full bg-gray-400"
+                              className="h-1.5 rounded-full bg-text03"
                           />
                         </div>
-                          <span className="text-[10px] text-[var(--color-text03)] w-8 text-right">{(score * 25).toFixed(0)}%</span>
+                          <span className="text-[10px] text-text03 w-8 text-right">{(score * 25).toFixed(0)}%</span>
                       </div>
                     </motion.div>
                     ))}
@@ -1348,13 +1348,13 @@ export default function AgenticSupportConsole({ onNavigate }) {
                 )}
 
                 {!intentScores.length && (
-                  <p className="text-xs text-[var(--color-text03)] text-center py-2">
+                  <p className="text-xs text-text03 text-center py-2">
                     Start speaking or typing to see how we route to a workflow.
                   </p>
                 )}
               </div>
             )}
-            <p className="mt-1 text-[11px] text-[var(--color-text03)]">
+            <p className="mt-1 text-[11px] text-text03">
               {selectedWorkflow === "unknown"
                 ? "No matching workflow found. Escalating to human agent with full context."
                 : "Intent successfully classified and mapped to resolution workflow."}
@@ -1371,7 +1371,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
             }}
             transition={{ duration: 0.3 }}
             className={`relative rounded-xl px-5 py-5 flex flex-col gap-4 transition-all duration-300 border-2 h-[320px] overflow-y-auto ${
-              stage === "telemetry" ? "border-[var(--color-text01)] bg-[var(--color-bg01)] shadow-lg" : "border-[var(--color-stroke01)] bg-[var(--color-bg01)] shadow-sm"
+              stage === "telemetry" ? "border-text01 bg-bg01 shadow-lg" : "border-stroke01 bg-bg01 shadow-sm"
             }`}
           >
             <div className="flex items-center justify-between">
@@ -1381,13 +1381,13 @@ export default function AgenticSupportConsole({ onNavigate }) {
                 pulse={stage === "telemetry"}
                 icon={<Cpu className="w-4 h-4" />}
               />
-                <p className="text-lg font-bold text-[var(--color-text01)] ">Input Datapoints</p>
+                <p className="text-lg font-bold text-text01 ">Input Datapoints</p>
             </div>
               {stage === "telemetry" && (
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-amber-100 border border-[var(--color-alert01)]"
+                  className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-alert01 border border-alert01"
                 >
                   <Activity className="w-3 h-3 text-amber-700 animate-pulse" />
                   <span className="text-[10px] font-semibold text-amber-700">Scanning...</span>
@@ -1398,33 +1398,33 @@ export default function AgenticSupportConsole({ onNavigate }) {
             {/* Show waiting state until customer provides input */}
             {!interactionText || !detectedDevice ? (
               <div className="mt-4 flex flex-col items-center justify-center py-8 text-center">
-                <Cpu className="w-12 h-12 text-gray-300 mb-3" />
-                <p className="text-sm font-medium text-[var(--color-text03)] mb-1">Waiting for customer input...</p>
-                <p className="text-xs text-[var(--color-text03)]">
+                <Cpu className="w-12 h-12 text-stroke01 mb-3" />
+                <p className="text-sm font-medium text-text03 mb-1">Waiting for customer input...</p>
+                <p className="text-xs text-text03">
                   Telemetry will be captured once the issue is described
                 </p>
               </div>
             ) : (
               <>
-                <p className="text-[11px] text-[var(--color-text03)]">{telemetryStatus}</p>
+                <p className="text-[11px] text-text03">{telemetryStatus}</p>
                 
                 <div className="mt-1 space-y-2">
                   {/* Show detected device type badge */}
                   <div className={`rounded-lg p-3 border ${
-                    detectedDevice === 'laptop' ? 'bg-[var(--color-neutral01)] border-[var(--color-neutral01)]' :
-                    detectedDevice === 'printer' ? 'bg-[var(--color-bg02)]  border-[var(--color-stroke01)]' :
-                    'bg-[var(--color-bg02)]  border-[var(--color-stroke01)]'
+                    detectedDevice === 'laptop' ? 'bg-neutral01 border-neutral01' :
+                    detectedDevice === 'printer' ? 'bg-bg02  border-stroke01' :
+                    'bg-bg02  border-stroke01'
                   }`}>
                     <div className="flex items-center gap-2">
                       <Cpu className={`w-4 h-4 ${
-                        detectedDevice === 'laptop' ? 'text-[var(--color-neutral02)]' :
-                        detectedDevice === 'printer' ? 'text-[var(--color-text01)] ' :
-                        'text-[var(--color-text02)]'
+                        detectedDevice === 'laptop' ? 'text-neutral02' :
+                        detectedDevice === 'printer' ? 'text-text01 ' :
+                        'text-text02'
                       }`} />
                       <span className={`text-xs font-semibold ${
-                        detectedDevice === 'laptop' ? 'text-[var(--color-neutral02)]' :
-                        detectedDevice === 'printer' ? 'text-[var(--color-text01)] ' :
-                        'text-[var(--color-text01)] '
+                        detectedDevice === 'laptop' ? 'text-neutral02' :
+                        detectedDevice === 'printer' ? 'text-text01 ' :
+                        'text-text01 '
                       }`}>
                         Detected Device: {detectedDevice === 'laptop' ? 'Laptop' : detectedDevice === 'printer' ? 'Printer' : 'Computer'}
                       </span>
@@ -1439,69 +1439,69 @@ export default function AgenticSupportConsole({ onNavigate }) {
                         {/* Device Info - Inline */}
                         <div className="grid grid-cols-2 gap-x-3 gap-y-1">
                           <div className="flex justify-between">
-                            <span className="text-[var(--color-text03)]">Model:</span>
-                            <span className="font-semibold text-[var(--color-text01)]">Dell Latitude 5520</span>
+                            <span className="text-text03">Model:</span>
+                            <span className="font-semibold text-text01">Dell Latitude 5520</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-[var(--color-text03)]">Serial:</span>
-                            <span className="font-mono text-[var(--color-text01)] text-[10px]">DL5520X789</span>
+                            <span className="text-text03">Serial:</span>
+                            <span className="font-mono text-text01 text-[10px]">DL5520X789</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-[var(--color-text03)]">OS:</span>
-                            <span className="text-[var(--color-text01)]">Win 11 Pro</span>
+                            <span className="text-text03">OS:</span>
+                            <span className="text-text01">Win 11 Pro</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-[var(--color-text03)]">RAM:</span>
-                            <span className="text-[var(--color-text01)]">16GB</span>
+                            <span className="text-text03">RAM:</span>
+                            <span className="text-text01">16GB</span>
                           </div>
                         </div>
 
-                        <div className="border-t border-[var(--color-stroke01)] pt-2"></div>
+                        <div className="border-t border-stroke01 pt-2"></div>
 
                         {/* Status - Compact */}
                         <div className="space-y-1">
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-1.5">
-                              <AlertCircle className="w-3 h-3 text-[var(--color-error02)]" />
-                              <span className="text-[var(--color-text03)]">Power:</span>
+                              <AlertCircle className="w-3 h-3 text-error02" />
+                              <span className="text-text03">Power:</span>
                             </div>
-                            <span className="font-semibold text-[var(--color-error02)]">Issues Detected</span>
+                            <span className="font-semibold text-error02">Issues Detected</span>
                           </div>
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-1.5">
-                              <AlertCircle className="w-3 h-3 text-[var(--color-alert02)]" />
-                              <span className="text-[var(--color-text03)]">Display:</span>
+                              <AlertCircle className="w-3 h-3 text-alert02" />
+                              <span className="text-text03">Display:</span>
                             </div>
-                            <span className="text-[var(--color-alert02)]">Flickering</span>
+                            <span className="text-alert02">Flickering</span>
                           </div>
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-1.5">
-                              <Activity className="w-3 h-3 text-[var(--color-text03)]" />
-                              <span className="text-[var(--color-text03)]">Battery:</span>
+                              <Activity className="w-3 h-3 text-text03" />
+                              <span className="text-text03">Battery:</span>
                             </div>
-                            <span className="text-[var(--color-text02)]">45%</span>
+                            <span className="text-text02">45%</span>
                           </div>
                         </div>
 
-                        <div className="border-t border-[var(--color-stroke01)] pt-2"></div>
+                        <div className="border-t border-stroke01 pt-2"></div>
 
                         {/* Network - Compact */}
                         <div className="space-y-1">
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-1.5">
-                              <CheckCircle2 className="w-3 h-3 text-[var(--color-success02)]" />
-                              <span className="text-[var(--color-text03)]">WiFi:</span>
+                              <CheckCircle2 className="w-3 h-3 text-success02" />
+                              <span className="text-text03">WiFi:</span>
                             </div>
-                            <span className="text-[var(--color-success02)]">Connected</span>
+                            <span className="text-success02">Connected</span>
                           </div>
                           <div className="flex justify-between pl-5">
-                            <span className="text-[var(--color-text03)]">IP:</span>
-                            <span className="font-mono text-[var(--color-text01)] text-[10px]">192.168.1.105</span>
+                            <span className="text-text03">IP:</span>
+                            <span className="font-mono text-text01 text-[10px]">192.168.1.105</span>
                           </div>
                         </div>
 
-                        <div className="border-t border-green-200 pt-2 mt-2 bg-green-50/50 -mx-2 px-2 py-1.5 rounded">
-                          <div className="flex items-center gap-1.5 text-[var(--color-success02)]">
+                        <div className="border-t border-success01 pt-2 mt-2 bg-success01/50 -mx-2 px-2 py-1.5 rounded">
+                          <div className="flex items-center gap-1.5 text-success02">
                             <CheckCircle2 className="w-3 h-3" />
                             <span className="font-semibold text-[10px]">Premium Support • 24/7 Coverage</span>
                           </div>
@@ -1515,71 +1515,71 @@ export default function AgenticSupportConsole({ onNavigate }) {
                     {/* Device Info - Inline */}
                     <div className="grid grid-cols-2 gap-x-3 gap-y-1">
                       <div className="flex justify-between">
-                        <span className="text-[var(--color-text03)]">Model:</span>
-                        <span className="font-semibold text-[var(--color-text01)]">HP LJ 4200</span>
+                        <span className="text-text03">Model:</span>
+                        <span className="font-semibold text-text01">HP LJ 4200</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-[var(--color-text03)]">Serial:</span>
-                        <span className="font-mono text-[var(--color-text01)] text-[10px]">CNBJW12345</span>
+                        <span className="text-text03">Serial:</span>
+                        <span className="font-mono text-text01 text-[10px]">CNBJW12345</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-[var(--color-text03)]">Firmware:</span>
-                        <span className="text-[var(--color-text01)]">v1.2.3</span>
+                        <span className="text-text03">Firmware:</span>
+                        <span className="text-text01">v1.2.3</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-[var(--color-text03)]">OS:</span>
-                        <span className="text-[var(--color-text01)]">Win 11 Pro</span>
+                        <span className="text-text03">OS:</span>
+                        <span className="text-text01">Win 11 Pro</span>
                       </div>
                     </div>
 
-                    <div className="border-t border-[var(--color-stroke01)] pt-2"></div>
+                    <div className="border-t border-stroke01 pt-2"></div>
 
                     {/* Network - Compact with errors */}
                     <div className="space-y-1">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-1.5">
-                          <AlertCircle className="w-3 h-3 text-[var(--color-error02)]" />
-                          <span className="text-[var(--color-text03)]">Connection:</span>
+                          <AlertCircle className="w-3 h-3 text-error02" />
+                          <span className="text-text03">Connection:</span>
                         </div>
-                        <span className="font-semibold text-[var(--color-error02)]">Offline</span>
+                        <span className="font-semibold text-error02">Offline</span>
                       </div>
                       <div className="flex justify-between pl-5">
-                        <span className="text-[var(--color-text03)]">IP:</span>
-                        <span className="text-[var(--color-text03)] text-[10px]">Not reachable</span>
+                        <span className="text-text03">IP:</span>
+                        <span className="text-text03 text-[10px]">Not reachable</span>
                       </div>
                       <div className="flex justify-between pl-5">
-                        <span className="text-[var(--color-text03)]">Gateway:</span>
-                        <span className="text-[var(--color-text03)] text-[10px]">192.168.1.1</span>
+                        <span className="text-text03">Gateway:</span>
+                        <span className="text-text03 text-[10px]">192.168.1.1</span>
                       </div>
                       <div className="flex justify-between pl-5">
-                        <span className="text-[var(--color-text03)]">Port:</span>
-                        <span className="text-[var(--color-error02)] text-[10px]">9100 (Timeout)</span>
+                        <span className="text-text03">Port:</span>
+                        <span className="text-error02 text-[10px]">9100 (Timeout)</span>
                       </div>
                     </div>
 
-                    <div className="border-t border-[var(--color-stroke01)] pt-2"></div>
+                    <div className="border-t border-stroke01 pt-2"></div>
 
                     {/* Print Queue - Compact */}
                     <div className="space-y-1">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-1.5">
-                          <Clock className="w-3 h-3 text-[var(--color-alert02)]" />
-                          <span className="text-[var(--color-text03)]">Queue:</span>
+                          <Clock className="w-3 h-3 text-alert02" />
+                          <span className="text-text03">Queue:</span>
                         </div>
-                        <span className="font-semibold text-[var(--color-alert02)]">7 jobs</span>
+                        <span className="font-semibold text-alert02">7 jobs</span>
                       </div>
                       <div className="flex justify-between pl-5">
-                        <span className="text-[var(--color-text03)]">Spooler:</span>
-                        <span className="text-[var(--color-error02)]">Unhealthy</span>
+                        <span className="text-text03">Spooler:</span>
+                        <span className="text-error02">Unhealthy</span>
                       </div>
                       <div className="flex justify-between pl-5">
-                        <span className="text-[var(--color-text03)]">Last Job:</span>
-                        <span className="text-[var(--color-text02)]">3 min ago</span>
+                        <span className="text-text03">Last Job:</span>
+                        <span className="text-text02">3 min ago</span>
                       </div>
                     </div>
 
-                    <div className="border-t border-green-200 pt-2 mt-2 bg-green-50/50 -mx-2 px-2 py-1.5 rounded">
-                      <div className="flex items-center gap-1.5 text-[var(--color-success02)]">
+                    <div className="border-t border-success01 pt-2 mt-2 bg-success01/50 -mx-2 px-2 py-1.5 rounded">
+                      <div className="flex items-center gap-1.5 text-success02">
                         <CheckCircle2 className="w-3 h-3" />
                         <span className="font-semibold text-[10px]">Gold Support • Replacement Eligible</span>
                       </div>
@@ -1589,97 +1589,97 @@ export default function AgenticSupportConsole({ onNavigate }) {
               ) : (
                 <>
                   {/* Device Info */}
-                  <div className="bg-[var(--color-bg01)] rounded-lg p-3 border border-[var(--color-stroke01)] space-y-2">
-                    <div className="flex items-center gap-2 pb-2 border-b border-gray-100">
-                      <Cpu className="w-3.5 h-3.5 text-[var(--color-text02)]" />
-                      <span className="text-xs font-semibold text-[var(--color-text01)]">Device Information</span>
+                  <div className="bg-bg01 rounded-lg p-3 border border-stroke01 space-y-2">
+                    <div className="flex items-center gap-2 pb-2 border-b border-bg03">
+                      <Cpu className="w-3.5 h-3.5 text-text02" />
+                      <span className="text-xs font-semibold text-text01">Device Information</span>
                     </div>
                     <div className="grid grid-cols-2 gap-2 text-[11px]">
                       <div>
-                        <span className="text-[var(--color-text03)]">Model:</span>
-                        <p className="font-semibold text-[var(--color-text01)]">Canon PIXMA XL-500</p>
+                        <span className="text-text03">Model:</span>
+                        <p className="font-semibold text-text01">Canon PIXMA XL-500</p>
                       </div>
                       <div>
-                        <span className="text-[var(--color-text03)]">Serial:</span>
-                        <p className="font-mono text-[var(--color-text01)]">CNPX987654</p>
+                        <span className="text-text03">Serial:</span>
+                        <p className="font-mono text-text01">CNPX987654</p>
                       </div>
                       <div>
-                        <span className="text-[var(--color-text03)]">Firmware:</span>
-                        <p className="text-[var(--color-text01)]">v3.4.5</p>
+                        <span className="text-text03">Firmware:</span>
+                        <p className="text-text01">v3.4.5</p>
                       </div>
                       <div>
-                        <span className="text-[var(--color-text03)]">OS:</span>
-                        <p className="text-[var(--color-text01)]">macOS 14.2</p>
+                        <span className="text-text03">OS:</span>
+                        <p className="text-text01">macOS 14.2</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Ink Status */}
-                  <div className="bg-[var(--color-bg01)] rounded-lg p-3 border border-[var(--color-alert01)] space-y-2">
-                    <div className="flex items-center gap-2 pb-2 border-b border-amber-100">
-                      <AlertCircle className="w-3.5 h-3.5 text-[var(--color-alert02)]" />
+                  <div className="bg-bg01 rounded-lg p-3 border border-alert01 space-y-2">
+                    <div className="flex items-center gap-2 pb-2 border-b border-alert01">
+                      <AlertCircle className="w-3.5 h-3.5 text-alert02" />
                       <span className="text-xs font-semibold text-amber-900">Ink Cartridges</span>
                     </div>
                     <div className="space-y-1.5 text-[11px]">
                       <div className="flex items-center justify-between">
-                        <span className="text-[var(--color-text03)]">Black:</span>
+                        <span className="text-text03">Black:</span>
                         <div className="flex items-center gap-2">
-                          <div className="w-16 bg-gray-200 rounded-full h-1.5">
-                            <div className="bg-gray-800 h-1.5 rounded-full" style={{width: "70%"}} />
+                          <div className="w-16 bg-stroke01 rounded-full h-1.5">
+                            <div className="bg-text01 h-1.5 rounded-full" style={{width: "70%"}} />
                           </div>
-                          <span className="font-semibold text-[var(--color-text01)]">70%</span>
+                          <span className="font-semibold text-text01">70%</span>
                         </div>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-[var(--color-text03)]">Cyan:</span>
+                        <span className="text-text03">Cyan:</span>
                         <div className="flex items-center gap-2">
-                          <div className="w-16 bg-gray-200 rounded-full h-1.5">
-                            <div className="bg-cyan-500 h-1.5 rounded-full" style={{width: "40%"}} />
+                          <div className="w-16 bg-stroke01 rounded-full h-1.5">
+                            <div className="bg-neutral010 h-1.5 rounded-full" style={{width: "40%"}} />
                           </div>
-                          <span className="font-semibold text-[var(--color-alert02)]">40%</span>
+                          <span className="font-semibold text-alert02">40%</span>
                         </div>
                       </div>
-                      <div className="px-2 py-1.5 bg-[var(--color-error01)] border border-[var(--color-error01)] rounded text-[var(--color-error02)] mt-2">
+                      <div className="px-2 py-1.5 bg-error01 border border-error01 rounded text-error02 mt-2">
                         Error: INK_AUTH_001 - Cartridge not recognized
                       </div>
                     </div>
                   </div>
 
                   {/* Network Status */}
-                  <div className="bg-[var(--color-bg01)] rounded-lg p-3 border border-[var(--color-stroke01)] space-y-2">
-                    <div className="flex items-center gap-2 pb-2 border-b border-gray-100">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[var(--color-success02)]" />
-                      <span className="text-xs font-semibold text-[var(--color-text01)]">Network Status</span>
+                  <div className="bg-bg01 rounded-lg p-3 border border-stroke01 space-y-2">
+                    <div className="flex items-center gap-2 pb-2 border-b border-bg03">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-success02" />
+                      <span className="text-xs font-semibold text-text01">Network Status</span>
                     </div>
                     <div className="space-y-1.5 text-[11px]">
                       <div className="flex justify-between">
-                        <span className="text-[var(--color-text03)]">Connection:</span>
-                        <span className="font-semibold text-[var(--color-success02)]">Online</span>
+                        <span className="text-text03">Connection:</span>
+                        <span className="font-semibold text-success02">Online</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-[var(--color-text03)]">IP Address:</span>
-                        <span className="font-mono text-[var(--color-text01)]">192.168.1.150</span>
+                        <span className="text-text03">IP Address:</span>
+                        <span className="font-mono text-text01">192.168.1.150</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-[var(--color-text03)]">WiFi Signal:</span>
-                        <span className="text-[var(--color-success02)]">Strong (92%)</span>
+                        <span className="text-text03">WiFi Signal:</span>
+                        <span className="text-success02">Strong (92%)</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Subscription Status */}
-                  <div className="bg-[var(--color-neutral01)] rounded-lg p-3 border border-[var(--color-neutral01)] space-y-1 text-[11px]">
-                    <div className="flex items-center gap-1.5 text-[var(--color-neutral02)] font-semibold">
+                  <div className="bg-neutral01 rounded-lg p-3 border border-neutral01 space-y-1 text-[11px]">
+                    <div className="flex items-center gap-1.5 text-neutral02 font-semibold">
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       Ink Subscription Active
                     </div>
-                    <p className="text-[var(--color-neutral02)]">Auto-ship enabled • Next delivery: 5 days</p>
+                    <p className="text-neutral02">Auto-ship enabled • Next delivery: 5 days</p>
                   </div>
                 </>
               )}
             </div>
                 
-                <p className="mt-2 text-[10px] text-[var(--color-text03)] italic border-t border-[var(--color-stroke01)] pt-2">
+                <p className="mt-2 text-[10px] text-text03 italic border-t border-stroke01 pt-2">
                   ✓ Context-aware telemetry based on customer's actual device
                 </p>
               </>
@@ -1695,14 +1695,14 @@ export default function AgenticSupportConsole({ onNavigate }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.5 }}
-            className="mt-4 px-4 py-3 bg-gradient-to-r from-[var(--color-neutral01)] via-[var(--color-neutral01)] to-[var(--color-tertiary)] border-2 border-[var(--color-neutral01)] rounded-lg shadow-sm"
+            className="mt-4 px-4 py-3 bg-gradient-to-r from-neutral01 via-neutral01 to-tertiary border-2 border-neutral01 rounded-lg shadow-sm"
           >
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-3 flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-shrink-0">
-                  <Activity className="w-4 h-4 text-[var(--color-neutral02)]" />
-                  <span className="text-xs font-bold text-[var(--color-text02)] ">Genesys Conversation:</span>
-                  <span className="text-xs font-mono text-[var(--color-text02)] truncate">
+                  <Activity className="w-4 h-4 text-neutral02" />
+                  <span className="text-xs font-bold text-text02 ">Genesys Conversation:</span>
+                  <span className="text-xs font-mono text-text02 truncate">
                     {selectedGenesysConversation.id?.substring(0, 12)}...
                   </span>
                 </div>
@@ -1711,19 +1711,19 @@ export default function AgenticSupportConsole({ onNavigate }) {
                   transition={{ duration: 1.5, repeat: Infinity }}
                   className="flex-shrink-0"
                 >
-                  <ArrowRight className="w-4 h-4 text-[var(--color-neutral02)]" />
+                  <ArrowRight className="w-4 h-4 text-neutral02" />
                 </motion.div>
                 <div className="flex items-center gap-2 flex-1 min-w-0">
-                  <Sparkles className="w-4 h-4 text-[var(--color-primary)] flex-shrink-0" />
-                  <span className="text-xs font-bold text-[var(--color-text02)] ">FAB Agents Workflow:</span>
-                  <span className="text-xs font-mono font-bold bg-[var(--color-text01)] text-[var(--color-bg01)] px-2 py-0.5 rounded border border-[var(--color-stroke01)]">
+                  <Sparkles className="w-4 h-4 text-primary flex-shrink-0" />
+                  <span className="text-xs font-bold text-text02 ">FAB Agents Workflow:</span>
+                  <span className="text-xs font-mono font-bold bg-text01 text-bg01 px-2 py-0.5 rounded border border-stroke01">
                     {selectedWorkflow || 'printer_offline'}
                   </span>
                 </div>
               </div>
               <div className="flex items-center gap-2 flex-shrink-0">
-                <div className="px-2 py-1 bg-[var(--color-success01)] border border-[var(--color-success03)] rounded-full">
-                  <span className="text-[10px] font-bold text-[var(--color-success02)]">Handoff Active</span>
+                <div className="px-2 py-1 bg-success01 border border-success03 rounded-full">
+                  <span className="text-[10px] font-bold text-success02">Handoff Active</span>
                 </div>
               </div>
             </div>
@@ -1736,7 +1736,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="mt-4 px-4 py-3 bg-[var(--color-bg01)] border-2 border-[var(--color-stroke01)]  rounded-lg shadow-sm"
+            className="mt-4 px-4 py-3 bg-bg01 border-2 border-stroke01  rounded-lg shadow-sm"
           >
             <div className="flex items-center justify-between gap-2">
               {[
@@ -1762,19 +1762,19 @@ export default function AgenticSupportConsole({ onNavigate }) {
                     <div className="flex flex-col items-center flex-1">
                       <div className={`flex items-center justify-center w-8 h-8 rounded-full border-2 transition-all ${
                         isActive
-                          ? 'bg-[var(--color-text01)] border-[var(--color-text01)] text-[var(--color-bg01)] shadow-md scale-110'
+                          ? 'bg-text01 border-text01 text-bg01 shadow-md scale-110'
                           : isCompleted
-                          ? 'bg-[var(--color-success01)] border-[var(--color-success03)] text-[var(--color-success02)]'
-                          : 'bg-[var(--color-bg02)]  border-[var(--color-stroke01)] text-[var(--color-text03)]'
+                          ? 'bg-success01 border-success03 text-success02'
+                          : 'bg-bg02  border-stroke01 text-text03'
                       }`}>
                         <Icon className="w-4 h-4" />
                       </div>
                       <span className={`text-[10px] font-semibold mt-1 ${
                         isActive
-                          ? 'text-[var(--color-text01)] '
+                          ? 'text-text01 '
                           : isCompleted
-                          ? 'text-[var(--color-success02)]'
-                          : 'text-[var(--color-text03)]'
+                          ? 'text-success02'
+                          : 'text-text03'
                       }`}>
                         {step.label}
                       </span>
@@ -1782,8 +1782,8 @@ export default function AgenticSupportConsole({ onNavigate }) {
                     {idx < 5 && (
                       <div className={`flex-1 h-0.5 mx-2 transition-all ${
                         isCompleted || (isActive && idx < 4)
-                          ? 'bg-gradient-to-r from-[var(--color-text01)] to-emerald-500'
-                          : 'bg-gray-200 '
+                          ? 'bg-gradient-to-r from-text01 to-success010'
+                          : 'bg-stroke01 '
                       }`} />
                     )}
                   </div>
@@ -1805,10 +1805,10 @@ export default function AgenticSupportConsole({ onNavigate }) {
           transition={{ duration: 0.3 }}
           className={`relative rounded-xl overflow-hidden px-5 py-5 flex flex-col gap-3 transition-all duration-300 border mt-6 ${
             stage === "completed"
-              ? "border-[var(--color-success03)] bg-[var(--color-success01)]"
+              ? "border-success03 bg-success01"
             : stage === "escalated"
-              ? "border-[var(--color-alert01)] bg-[var(--color-alert01)]"
-              : "border-[var(--color-stroke01)]  bg-[var(--color-bg01)]"
+              ? "border-alert01 bg-alert01"
+              : "border-stroke01  bg-bg01"
           }`}
         >
           <div className="flex items-center justify-between">
@@ -1818,30 +1818,30 @@ export default function AgenticSupportConsole({ onNavigate }) {
                 pulse={["running"].includes(stage)}
                 icon={<Zap className="w-4 h-4" />}
               />
-              <p className="text-sm font-semibold text-[var(--color-text01)]">Workflow outcome</p>
+              <p className="text-sm font-semibold text-text01">Workflow outcome</p>
             </div>
             <span
               className={`px-2.5 py-0.5 rounded-full text-[11px] font-semibold ${
                 stage === "escalated"
-                  ? "bg-rose-100 text-rose-700"
+                  ? "bg-pinkTP/20 text-rose-700"
                   : stage === "completed"
-                  ? "bg-emerald-100 text-[var(--color-success02)]"
-                  : "bg-[var(--color-bg02)] text-[var(--color-text02)]"
+                  ? "bg-success01 text-success02"
+                  : "bg-bg02 text-text02"
               }`}
             >
               {stage === "escalated" ? "Escalated" : stage === "completed" ? "Self-healed" : "Running"}
             </span>
           </div>
-          <div className="mt-2 text-sm text-[var(--color-text02)] space-y-1.5">
+          <div className="mt-2 text-sm text-text02 space-y-1.5">
             {currentOutcome ? (
               <>
                 <p>
-                  <span className="font-medium text-[var(--color-text02)]">Summary:</span>{" "}
-                  <span className="font-semibold text-[var(--color-text01)]">{currentOutcome.summary}</span>
+                  <span className="font-medium text-text02">Summary:</span>{" "}
+                  <span className="font-semibold text-text01">{currentOutcome.summary}</span>
                 </p>
                 <p>
-                  <span className="font-medium text-[var(--color-text02)]">{currentOutcome.kpiLabel}:</span>{" "}
-                  <span className="font-semibold text-[var(--color-text01)]">{currentOutcome.kpi}</span>
+                  <span className="font-medium text-text02">{currentOutcome.kpiLabel}:</span>{" "}
+                  <span className="font-semibold text-text01">{currentOutcome.kpi}</span>
                 </p>
                 {currentOutcome.ticketUrl && (
                   <div className="mt-2">
@@ -1849,7 +1849,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                       href={currentOutcome.ticketUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-medium bg-[var(--color-neutral01)] text-[var(--color-neutral02)] hover:bg-blue-100 border border-[var(--color-neutral01)]"
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-medium bg-neutral01 text-neutral02 hover:bg-neutral01 border border-neutral01"
                     >
                       <Cloud className="w-3 h-3" />
                       View in {currentOutcome.systemName}
@@ -1858,27 +1858,27 @@ export default function AgenticSupportConsole({ onNavigate }) {
                 )}
               </>
             ) : (
-              <p className="text-xs text-[var(--color-text03)]">
+              <p className="text-xs text-text03">
                 We'll show the summary once the first workflow run completes.
               </p>
             )}
           </div>
           <div className="mt-2 flex flex-wrap items-center gap-2">
-            <p className="text-[11px] text-[var(--color-text03)] flex-1">
+            <p className="text-[11px] text-text03 flex-1">
               Executes actions, verifies outcome, and only escalates when necessary.
             </p>
             {stage === "escalated" && !ticketConfirmed && (
               <button
                 type="button"
                 onClick={() => setShowTicketModal(true)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold bg-[var(--color-neutral02)] text-[var(--color-bg01)] hover:bg-indigo-700 shadow-sm"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold bg-neutral02 text-bg01 hover:bg-textLink shadow-sm"
               >
                 <AlertCircle className="w-3.5 h-3.5" />
                 Create ticket in IT system
               </button>
             )}
             {stage === "escalated" && ticketConfirmed && (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold bg-[var(--color-success01)] text-[var(--color-success02)] border border-[var(--color-success01)]">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold bg-success01 text-success02 border border-success01">
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 Ticket created in IT system
               </span>
@@ -1985,25 +1985,25 @@ export default function AgenticSupportConsole({ onNavigate }) {
       {/* Ticket confirmation / summary modal */}
       {showTicketModal && lastResult && (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/40">
-          <div className="bg-[var(--color-bg01)] rounded-2xl shadow-2xl max-w-md w-full mx-4 p-6 border border-[var(--color-stroke01)]">
-            <h2 className="text-base font-semibold text-[var(--color-text01)] mb-1">
+          <div className="bg-bg01 rounded-2xl shadow-2xl max-w-md w-full mx-4 p-6 border border-stroke01">
+            <h2 className="text-base font-semibold text-text01 mb-1">
               Create ticket in your IT system?
             </h2>
-            <p className="text-sm text-[var(--color-text02)] mb-3">
+            <p className="text-sm text-text02 mb-3">
               We'll send this incident, along with the captured customer text and telemetry snapshot, into your ITSM / CRM
               platform (e.g., ServiceNow, Salesforce, SAP, etc.) as a ready-to-work ticket.
             </p>
             {/* Ticketing System Selection */}
-            <div className="mb-4 rounded-lg bg-[var(--color-neutral01)] border border-[var(--color-neutral01)] px-3 py-2">
+            <div className="mb-4 rounded-lg bg-neutral01 border border-neutral01 px-3 py-2">
               <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2 text-[var(--color-neutral02)] text-xs font-medium">
+                <div className="flex items-center gap-2 text-neutral02 text-xs font-medium">
                   <Cloud className="w-3.5 h-3.5" />
                   Ticketing System
                 </div>
                 <select
                   value={selectedTicketingSystem}
                   onChange={(e) => setSelectedTicketingSystem(e.target.value)}
-                  className="text-[11px] px-2 py-1 rounded border border-[var(--color-neutral01)] bg-[var(--color-bg01)] text-[var(--color-neutral02)] focus:ring-1 focus:ring-blue-500"
+                  className="text-[11px] px-2 py-1 rounded border border-neutral01 bg-bg01 text-neutral02 focus:ring-1 focus:ring-neutral010"
                   disabled={ticketCreating}
                 >
                   {availableSystems.map((sys) => (
@@ -2013,19 +2013,19 @@ export default function AgenticSupportConsole({ onNavigate }) {
                   ))}
                 </select>
               </div>
-              <p className="text-[11px] text-[var(--color-neutral02)]">
+              <p className="text-[11px] text-neutral02">
                 {selectedTicketingSystem === "servicenow" && "Ticket will be created via ServiceNow REST API (POST /api/now/table/incident) with full context payload."}
                 {selectedTicketingSystem === "jira" && "Issue will be created via Jira REST API (POST /rest/api/3/issue) with full context payload."}
                 {selectedTicketingSystem === "zendesk" && "Ticket will be created via Zendesk REST API (POST /api/v2/tickets.json) with full context payload."}
                 {selectedTicketingSystem === "salesforce" && "Case will be created via Salesforce REST API (POST /services/data/v58.0/sobjects/Case) with full context payload."}
               </p>
             </div>
-            <div className="mt-2 mb-4 flex items-center justify-between bg-[var(--color-bg02)] border border-[var(--color-stroke01)] rounded-xl px-3 py-2">
+            <div className="mt-2 mb-4 flex items-center justify-between bg-bg02 border border-stroke01 rounded-xl px-3 py-2">
               <div>
-                <p className="text-[11px] uppercase tracking-wide text-[var(--color-text03)] font-medium">
+                <p className="text-[11px] uppercase tracking-wide text-text03 font-medium">
                   Ticket ID
                 </p>
-                <p className="font-mono text-sm text-[var(--color-text01)]">
+                <p className="font-mono text-sm text-text01">
                   {lastResult.escalation.ticket_id}
                 </p>
               </div>
@@ -2046,8 +2046,8 @@ export default function AgenticSupportConsole({ onNavigate }) {
                 }}
                 className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[11px] font-medium border ${
                   ticketCopied
-                    ? "bg-[var(--color-success01)] text-[var(--color-success02)] border-[var(--color-success01)]"
-                    : "bg-[var(--color-bg01)] text-[var(--color-text02)] border-[var(--color-stroke01)] hover:border-[var(--color-stroke01)]"
+                    ? "bg-success01 text-success02 border-success01"
+                    : "bg-bg01 text-text02 border-stroke01 hover:border-stroke01"
                 }`}
               >
                 {ticketCopied ? "Copied" : "Copy ID"}
@@ -2060,7 +2060,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                   setShowTicketModal(false);
                   setTicketCopied(false);
                 }}
-                className="px-3 py-1.5 rounded-full text-[12px] font-medium text-[var(--color-text02)] bg-[var(--color-bg02)] hover:bg-gray-200"
+                className="px-3 py-1.5 rounded-full text-[12px] font-medium text-text02 bg-bg02 hover:bg-stroke01"
               >
                 Cancel
               </button>
@@ -2125,7 +2125,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                   }
                 }}
                 disabled={ticketCreating}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[12px] font-semibold bg-[var(--color-neutral02)] text-[var(--color-bg01)] hover:bg-indigo-700 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[12px] font-semibold bg-neutral02 text-bg01 hover:bg-textLink shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {ticketCreating ? (
                   <>
@@ -2150,25 +2150,25 @@ export default function AgenticSupportConsole({ onNavigate }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="rounded-2xl bg-[var(--color-bg01)] border-2 border-[var(--color-stroke01)] shadow-[var(--shadow-drop)] overflow-hidden"
+          className="rounded-2xl bg-bg01 border-2 border-stroke01 shadow-shadow-drop overflow-hidden"
         >
           {/* Header */}
-          <div className="bg-gradient-to-r from-[var(--color-text01)] to-[var(--color-buttonPrimary-hover)] px-6 py-4 border-b-2 border-[var(--color-stroke01)]">
+          <div className="bg-gradient-to-r from-text01 to-buttonPrimary-hover px-6 py-4 border-b-2 border-stroke01">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <Sparkles className="w-6 h-6 text-[var(--color-bg01)]" />
+                  <Sparkles className="w-6 h-6 text-bg01" />
                   <motion.div
                     className="absolute inset-0"
                     animate={{ rotate: 360 }}
                     transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
         >
-                    <Sparkles className="w-6 h-6 text-[var(--color-bg01)]/30 opacity-50" />
+                    <Sparkles className="w-6 h-6 text-bg01/30 opacity-50" />
                   </motion.div>
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-[var(--color-bg01)] drop-shadow-sm">AI Agent Orchestration</h3>
-                  <p className="text-xs text-[var(--color-bg01)] drop-shadow-sm">Real-time multi-agent reasoning trace</p>
+                  <h3 className="text-lg font-bold text-bg01 drop-shadow-sm">AI Agent Orchestration</h3>
+                  <p className="text-xs text-bg01 drop-shadow-sm">Real-time multi-agent reasoning trace</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -2176,28 +2176,28 @@ export default function AgenticSupportConsole({ onNavigate }) {
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="px-3 py-1.5 rounded-full bg-[var(--color-alert01)]0/30 backdrop-blur-sm border border-amber-400/50"
+                    className="px-3 py-1.5 rounded-full bg-alert010/30 backdrop-blur-sm border border-alert02/50"
                   >
                     <div className="flex items-center gap-2">
-                      <Loader2 className="w-3 h-3 text-amber-300 animate-spin" />
-                      <span className="text-xs font-semibold text-[var(--color-bg01)]">
+                      <Loader2 className="w-3 h-3 text-alert02 animate-spin" />
+                      <span className="text-xs font-semibold text-bg01">
                         Processing: {currentProcessingAgent}
                       </span>
                       {processingStartTime && (
-                        <span className="text-[10px] text-[var(--color-bg01)]/80">
+                        <span className="text-[10px] text-bg01/80">
                           ({Math.floor((new Date() - processingStartTime) / 1000)}s)
                         </span>
                       )}
                     </div>
                   </motion.div>
                 )}
-                <div className="px-3 py-1.5 rounded-full bg-[var(--color-bg01)]/20 backdrop-blur-sm border border-white/30">
+                <div className="px-3 py-1.5 rounded-full bg-bg01/20 backdrop-blur-sm border border-white/30">
                   <div className="flex items-center gap-2">
                     <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-300" />
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success03 opacity-75" />
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-success03" />
                     </span>
-                    <span className="text-xs font-semibold text-[var(--color-bg01)]">{timeline.length} Agents Active</span>
+                    <span className="text-xs font-semibold text-bg01">{timeline.length} Agents Active</span>
                   </div>
                 </div>
               </div>
@@ -2205,19 +2205,19 @@ export default function AgenticSupportConsole({ onNavigate }) {
           </div>
 
           {/* Workflow Info Banner */}
-          <div className="bg-[var(--color-bg01)] px-6 py-3 border-b-2 border-[var(--color-stroke01)]">
+          <div className="bg-bg01 px-6 py-3 border-b-2 border-stroke01">
             <div className="flex flex-wrap items-center gap-4 text-xs">
               <div className="flex items-center gap-2">
-                <Wand2 className="w-4 h-4 text-[var(--color-text01)] " />
-                <span className="font-semibold text-[var(--color-text01)] ">Workflow:</span>
-                <span className="font-mono font-bold bg-[var(--color-text01)] text-[var(--color-bg01)] px-2.5 py-1 rounded border-2 border-[var(--color-text01)]">
+                <Wand2 className="w-4 h-4 text-text01 " />
+                <span className="font-semibold text-text01 ">Workflow:</span>
+                <span className="font-mono font-bold bg-text01 text-bg01 px-2.5 py-1 rounded border-2 border-text01">
                     {selectedWorkflow === "printer_offline" ? "printer_offline" : "ink_error"}
                   </span>
                 </div>
                 {interactionText && (
                 <div className="flex items-center gap-2 flex-1 min-w-0">
-                  <MessageCircle className="w-4 h-4 text-[var(--color-text02)] flex-shrink-0" />
-                  <span className="text-[var(--color-text01)]  truncate italic">"{interactionText.substring(0, 80)}..."</span>
+                  <MessageCircle className="w-4 h-4 text-text02 flex-shrink-0" />
+                  <span className="text-text01  truncate italic">"{interactionText.substring(0, 80)}..."</span>
                 </div>
                 )}
             </div>
@@ -2227,7 +2227,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
           <div className="px-6 py-6">
             <div className="relative">
               {/* Animated connecting line */}
-              <div className="absolute left-[15px] top-2 bottom-2 w-0.5 bg-gradient-to-b from-[var(--color-stroke01)] via-[var(--color-text03)] to-[var(--color-stroke01)]" />
+              <div className="absolute left-[15px] top-2 bottom-2 w-0.5 bg-gradient-to-b from-stroke01 via-text03 to-stroke01" />
               
               <div className="space-y-4">
                   {timeline.map((step, idx) => (
@@ -2247,7 +2247,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                           transition={{ delay: idx * 0.15 + 0.2, type: "spring", stiffness: 200 }}
                           className="relative"
                         >
-                          <div className={`w-8 h-8 rounded-full flex items-center justify-center bg-[var(--color-bg01)] border-2 shadow-lg ${step.color} relative`}>
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center bg-bg01 border-2 shadow-lg ${step.color} relative`}>
                             {step.icon}
                             {/* Pulse effect for active agents */}
                             {idx === timeline.length - 1 && (
@@ -2259,8 +2259,8 @@ export default function AgenticSupportConsole({ onNavigate }) {
                             )}
                           </div>
                           {/* Number badge */}
-                          <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-gradient-to-br from-[var(--color-text01)] to-[var(--color-buttonPrimary-hover)] flex items-center justify-center shadow-md border-2 border-white">
-                            <span className="text-[10px] font-bold text-[var(--color-bg01)]">{idx + 1}</span>
+                          <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-gradient-to-br from-text01 to-buttonPrimary-hover flex items-center justify-center shadow-md border-2 border-white">
+                            <span className="text-[10px] font-bold text-bg01">{idx + 1}</span>
                         </div>
                         </motion.div>
                       </div>
@@ -2272,12 +2272,12 @@ export default function AgenticSupportConsole({ onNavigate }) {
                         transition={{ delay: idx * 0.15 + 0.3, duration: 0.4 }}
                         className="flex-1 group"
                       >
-                        <div className="rounded-xl bg-[var(--color-bg01)] border-2 border-[var(--color-stroke01)] hover:border-[var(--color-text01)]  transition-all duration-300 overflow-hidden shadow-sm hover:shadow-md">
+                        <div className="rounded-xl bg-bg01 border-2 border-stroke01 hover:border-text01  transition-all duration-300 overflow-hidden shadow-sm hover:shadow-md">
                           {/* Agent Header */}
                           <div className={`px-4 py-2.5 border-b-2 ${
                             currentProcessingAgent === step.label
-                              ? 'bg-[var(--color-alert01)] border-[var(--color-alert01)]'
-                              : 'bg-[var(--color-bg02)]  border-[var(--color-stroke01)]'
+                              ? 'bg-alert01 border-alert01'
+                              : 'bg-bg02  border-stroke01'
                           }`}>
                             <div className="flex items-center justify-between gap-2">
                               <div className="flex items-center gap-2 flex-1 min-w-0">
@@ -2288,7 +2288,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                                   <motion.span
                                     initial={{ scale: 0 }}
                                     animate={{ scale: 1 }}
-                                    className="px-2 py-0.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 text-[var(--color-bg01)] text-[10px] font-bold uppercase tracking-wide flex items-center gap-1 shadow-sm"
+                                    className="px-2 py-0.5 rounded-full bg-gradient-to-r from-alert02 to-alert010 text-bg01 text-[10px] font-bold uppercase tracking-wide flex items-center gap-1 shadow-sm"
                                   >
                                     <Loader2 className="w-3 h-3 animate-spin" />
                                     Processing
@@ -2298,7 +2298,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                                   <motion.span
                                     initial={{ scale: 0 }}
                                     animate={{ scale: 1 }}
-                                    className="px-2 py-0.5 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 text-[var(--color-bg01)] text-[10px] font-bold uppercase tracking-wide flex items-center gap-1 shadow-sm"
+                                    className="px-2 py-0.5 rounded-full bg-gradient-to-r from-success03 to-success010 text-bg01 text-[10px] font-bold uppercase tracking-wide flex items-center gap-1 shadow-sm"
                                   >
                                     <CheckCircle2 className="w-3 h-3" />
                                     Final
@@ -2316,8 +2316,8 @@ export default function AgenticSupportConsole({ onNavigate }) {
                       </div>
 
                           {/* Agent Body */}
-                          <div className="px-4 py-3 bg-[var(--color-bg01)]">
-                            <p className="text-xs text-[var(--color-text01)]  leading-relaxed whitespace-pre-wrap">
+                          <div className="px-4 py-3 bg-bg01">
+                            <p className="text-xs text-text01  leading-relaxed whitespace-pre-wrap">
                               {step.body}
                             </p>
                           </div>
@@ -2328,7 +2328,7 @@ export default function AgenticSupportConsole({ onNavigate }) {
                               initial={{ scaleX: 0 }}
                               animate={{ scaleX: 1 }}
                               transition={{ delay: idx * 0.15 + 0.6, duration: 0.8 }}
-                              className="h-1 bg-gradient-to-r from-[var(--color-text01)] via-[var(--color-buttonPrimary-hover)] to-emerald-500 origin-left"
+                              className="h-1 bg-gradient-to-r from-text01 via-buttonPrimary-hover to-success010 origin-left"
                             />
                           )}
                         </div>
@@ -2341,15 +2341,15 @@ export default function AgenticSupportConsole({ onNavigate }) {
           </div>
 
           {/* Footer - Final Status */}
-          <div className="bg-[var(--color-bg02)] /50 px-6 py-4 border-t border-[var(--color-stroke01)] ">
+          <div className="bg-bg02 /50 px-6 py-4 border-t border-stroke01 ">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-[var(--color-success02)]" />
-                <span className="text-sm font-semibold text-[var(--color-text01)]">
-                  Workflow Status: <span className="text-[var(--color-success02)]">{lastResult?.status || "Completed"}</span>
+                <CheckCircle2 className="w-5 h-5 text-success02" />
+                <span className="text-sm font-semibold text-text01">
+                  Workflow Status: <span className="text-success02">{lastResult?.status || "Completed"}</span>
                 </span>
           </div>
-              <div className="flex items-center gap-2 text-xs text-[var(--color-text02)]">
+              <div className="flex items-center gap-2 text-xs text-text02">
                 <Clock className="w-4 h-4" />
                 <span>Total execution time: <span className="font-semibold">~{(timeline.length * 0.8).toFixed(1)}s</span></span>
         </div>

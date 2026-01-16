@@ -377,10 +377,10 @@ If customer has Ink Subscription:
     return (
       <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
         <div className="bg-white rounded-lg p-6 max-w-md">
-          <p className="text-gray-600">Document not found</p>
+          <p className="text-text02">Document not found</p>
           <button
             onClick={onClose}
-            className="mt-4 px-4 py-2 bg-[#780096] text-white rounded-md"
+            className="mt-4 px-4 py-2 bg-pinkTP text-white rounded-md"
           >
             Close
           </button>
@@ -401,7 +401,7 @@ If customer has Ink Subscription:
         className="bg-white rounded-xl shadow-2xl w-full max-w-5xl h-[90vh] flex flex-col"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-[#780096] to-[#780096] text-white">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-stroke01 bg-gradient-to-r from-pinkTP to-pinkTP text-white">
           <div className="flex items-center gap-3">
             <BookOpen className="w-5 h-5" />
             <div>
@@ -437,28 +437,28 @@ If customer has Ink Subscription:
         </div>
 
         {/* Toolbar */}
-        <div className="flex items-center justify-between px-6 py-3 border-b border-gray-200 bg-gray-50">
+        <div className="flex items-center justify-between px-6 py-3 border-b border-stroke01 bg-bg02">
           <div className="flex items-center gap-3">
             <button
               onClick={goToPrevPage}
               disabled={currentPage === 1}
-              className="p-2 hover:bg-gray-200 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              className="p-2 hover:bg-stroke01 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
             
             <div className="flex items-center gap-2 text-sm">
-              <span className="text-gray-600">Page</span>
+              <span className="text-text02">Page</span>
               <input
                 type="text"
                 value={pageInput}
                 onChange={handlePageInputChange}
                 onKeyDown={handlePageInputSubmit}
                 onBlur={handlePageInputSubmit}
-                className="w-12 px-2 py-1 text-center border border-gray-300 rounded focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                className="w-12 px-2 py-1 text-center border border-stroke01 rounded focus:ring-2 focus:ring-pinkTP focus:border-transparent"
               />
-              <span className="text-gray-600">of {document.totalPages}</span>
-              <span className="text-xs text-gray-500 ml-2">
+              <span className="text-text02">of {document.totalPages}</span>
+              <span className="text-xs text-text03 ml-2">
                 (Showing relevant pages: {document.relevantPages.join(', ')})
               </span>
             </div>
@@ -466,19 +466,19 @@ If customer has Ink Subscription:
             <button
               onClick={goToNextPage}
               disabled={currentPage === document.pages.length}
-              className="p-2 hover:bg-gray-200 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              className="p-2 hover:bg-stroke01 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
 
-          <div className="text-xs text-gray-500">
+          <div className="text-xs text-text03">
             Updated: {document.lastUpdated}
           </div>
         </div>
 
         {/* Document Content */}
-        <div className="flex-1 overflow-y-auto bg-gray-100 p-6">
+        <div className="flex-1 overflow-y-auto bg-bg03 p-6">
           <div className="max-w-4xl mx-auto">
             <motion.div
               key={currentPage}
@@ -486,22 +486,22 @@ If customer has Ink Subscription:
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
               className={`bg-white rounded-lg shadow-lg p-8 ${
-                currentPageData?.highlighted ? 'ring-4 ring-yellow-300/50' : ''
+                currentPageData?.highlighted ? 'ring-4 ring-alert02/50' : ''
               }`}
             >
               {/* Page Header */}
-              <div className="border-b border-gray-200 pb-4 mb-6">
+              <div className="border-b border-stroke01 pb-4 mb-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="text-xs font-mono text-gray-500 mb-1">
+                    <div className="text-xs font-mono text-text03 mb-1">
                       Page {actualPageNum}
                     </div>
-                    <h2 className="text-xl font-bold text-gray-900">
+                    <h2 className="text-xl font-bold text-text01">
                       {currentPageData?.title}
                     </h2>
                   </div>
                   {currentPageData?.highlighted && (
-                    <span className="px-3 py-1 bg-yellow-100 border border-yellow-300 text-yellow-800 rounded-full text-xs font-semibold flex items-center gap-1">
+                    <span className="px-3 py-1 bg-alert01 border border-alert02 text-yellow-800 rounded-full text-xs font-semibold flex items-center gap-1">
                       <Sparkles className="w-3 h-3" />
                       Matched Section
                     </span>
@@ -511,14 +511,14 @@ If customer has Ink Subscription:
 
               {/* Page Content */}
               <div className="prose prose-sm max-w-none">
-                <div className="text-gray-800 leading-relaxed whitespace-pre-line">
+                <div className="text-text01 leading-relaxed whitespace-pre-line">
                   {currentPageData?.content}
                 </div>
               </div>
 
               {/* Page Footer */}
-              <div className="mt-8 pt-4 border-t border-gray-200">
-                <div className="flex items-center justify-between text-xs text-gray-500">
+              <div className="mt-8 pt-4 border-t border-stroke01">
+                <div className="flex items-center justify-between text-xs text-text03">
                   <span>{document.title} - {document.version}</span>
                   <span>Page {actualPageNum} of {document.totalPages}</span>
                 </div>
@@ -528,11 +528,11 @@ If customer has Ink Subscription:
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3 border-t border-gray-200 bg-gray-50 flex items-center justify-between">
-          <div className="text-xs text-gray-600">
+        <div className="px-6 py-3 border-t border-stroke01 bg-bg02 flex items-center justify-between">
+          <div className="text-xs text-text02">
             <span className="font-semibold">Source:</span> Vector DB: support_docs_v2 • Confidence: 94%
           </div>
-          <div className="text-xs text-gray-500">
+          <div className="text-xs text-text03">
             Why this document: Matched customer keywords and intent pattern
           </div>
         </div>

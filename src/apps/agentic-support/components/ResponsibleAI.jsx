@@ -8,12 +8,12 @@ import { Shield, Store, CheckCircle2, AlertTriangle, Eye, Lock, Users, FileText,
 
 export default function ResponsibleAI({ onNavigate }) {
   return (
-    <div className="space-y-6 p-6 bg-gradient-to-br from-gray-50 via-purple-50/30 to-blue-50/30 min-h-screen">
+    <div className="space-y-6 p-6 bg-gradient-to-br from-bg02 via-pinkTP/10/30 to-neutral01/30 min-h-screen">
       {/* Header Section */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden rounded-3xl bg-[#780096] p-8 shadow-2xl"
+        className="relative overflow-hidden rounded-3xl bg-pinkTP p-8 shadow-2xl"
       >
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0" style={{
@@ -33,7 +33,7 @@ export default function ResponsibleAI({ onNavigate }) {
                   <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2">
                     Responsible AI
                   </h1>
-                  <p className="text-purple-100 text-sm sm:text-base">
+                  <p className="text-pinkTP/20 text-sm sm:text-base">
                     Ethics, governance, and compliance framework for AI operations
                   </p>
                 </div>
@@ -60,32 +60,32 @@ export default function ResponsibleAI({ onNavigate }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="rounded-3xl bg-white border border-gray-200 shadow-lg p-6"
+          className="rounded-3xl bg-white border border-stroke01 shadow-lg p-6"
         >
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-3 rounded-xl bg-blue-100">
-              <Lock className="w-6 h-6 text-blue-600" />
+            <div className="p-3 rounded-xl bg-neutral01">
+              <Lock className="w-6 h-6 text-neutral02" />
             </div>
-            <h2 className="text-xl font-bold text-gray-900">Privacy & Security</h2>
+            <h2 className="text-xl font-bold text-text01">Privacy & Security</h2>
           </div>
-          <p className="text-gray-600 text-sm mb-4">
+          <p className="text-text02 text-sm mb-4">
             Comprehensive data protection, access controls, and security measures to safeguard sensitive information.
           </p>
-          <ul className="space-y-2 text-sm text-gray-600">
+          <ul className="space-y-2 text-sm text-text02">
             <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-neutral02 mt-0.5 flex-shrink-0" />
               <span>End-to-end encryption for all data</span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-neutral02 mt-0.5 flex-shrink-0" />
               <span>Role-based access control (RBAC)</span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-neutral02 mt-0.5 flex-shrink-0" />
               <span>Regular security audits and compliance checks</span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-neutral02 mt-0.5 flex-shrink-0" />
               <span>GDPR and data privacy compliance</span>
             </li>
           </ul>
@@ -95,32 +95,32 @@ export default function ResponsibleAI({ onNavigate }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="rounded-3xl bg-white border border-gray-200 shadow-lg p-6"
+          className="rounded-3xl bg-white border border-stroke01 shadow-lg p-6"
         >
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-3 rounded-xl bg-green-100">
-              <CheckCircle2 className="w-6 h-6 text-green-600" />
+            <div className="p-3 rounded-xl bg-success01">
+              <CheckCircle2 className="w-6 h-6 text-success03" />
             </div>
-            <h2 className="text-xl font-bold text-gray-900">Fairness & Bias</h2>
+            <h2 className="text-xl font-bold text-text01">Fairness & Bias</h2>
           </div>
-          <p className="text-gray-600 text-sm mb-4">
+          <p className="text-text02 text-sm mb-4">
             Ensuring equitable AI decision-making through bias detection, mitigation, and continuous monitoring.
           </p>
-          <ul className="space-y-2 text-sm text-gray-600">
+          <ul className="space-y-2 text-sm text-text02">
             <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-success03 mt-0.5 flex-shrink-0" />
               <span>Automated bias detection algorithms</span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-success03 mt-0.5 flex-shrink-0" />
               <span>Diverse training data validation</span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-success03 mt-0.5 flex-shrink-0" />
               <span>Fairness metrics and reporting</span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-success03 mt-0.5 flex-shrink-0" />
               <span>Regular model retraining and validation</span>
             </li>
           </ul>
@@ -130,32 +130,32 @@ export default function ResponsibleAI({ onNavigate }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="rounded-3xl bg-white border border-gray-200 shadow-lg p-6"
+          className="rounded-3xl bg-white border border-stroke01 shadow-lg p-6"
         >
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-3 rounded-xl bg-purple-100">
-              <Eye className="w-6 h-6 text-purple-600" />
+            <div className="p-3 rounded-xl bg-pinkTP/20">
+              <Eye className="w-6 h-6 text-pinkTP" />
             </div>
-            <h2 className="text-xl font-bold text-gray-900">Transparency</h2>
+            <h2 className="text-xl font-bold text-text01">Transparency</h2>
           </div>
-          <p className="text-gray-600 text-sm mb-4">
+          <p className="text-text02 text-sm mb-4">
             Explainable AI with comprehensive audit trails, decision logging, and human-understandable reasoning.
           </p>
-          <ul className="space-y-2 text-sm text-gray-600">
+          <ul className="space-y-2 text-sm text-text02">
             <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-purple-600 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-pinkTP mt-0.5 flex-shrink-0" />
               <span>Complete decision audit trails</span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-purple-600 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-pinkTP mt-0.5 flex-shrink-0" />
               <span>Human-readable reasoning explanations</span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-purple-600 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-pinkTP mt-0.5 flex-shrink-0" />
               <span>Model versioning and change tracking</span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-purple-600 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-pinkTP mt-0.5 flex-shrink-0" />
               <span>Public documentation and disclosures</span>
             </li>
           </ul>
@@ -168,29 +168,29 @@ export default function ResponsibleAI({ onNavigate }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="rounded-3xl bg-white border border-gray-200 shadow-lg p-6"
+          className="rounded-3xl bg-white border border-stroke01 shadow-lg p-6"
         >
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-3 rounded-xl bg-amber-100">
-              <Gavel className="w-6 h-6 text-amber-600" />
+            <div className="p-3 rounded-xl bg-alert01">
+              <Gavel className="w-6 h-6 text-alert02" />
             </div>
-            <h2 className="text-xl font-bold text-gray-900">Governance & Compliance</h2>
+            <h2 className="text-xl font-bold text-text01">Governance & Compliance</h2>
           </div>
-          <p className="text-gray-600 text-sm mb-4">
+          <p className="text-text02 text-sm mb-4">
             Structured governance framework ensuring regulatory compliance and ethical standards.
           </p>
           <div className="space-y-3">
-            <div className="p-3 rounded-lg bg-gray-50 border border-gray-200">
-              <div className="font-semibold text-sm text-gray-900 mb-1">Regulatory Compliance</div>
-              <div className="text-xs text-gray-600">EU AI Act, GDPR, CCPA, and industry-specific regulations</div>
+            <div className="p-3 rounded-lg bg-bg02 border border-stroke01">
+              <div className="font-semibold text-sm text-text01 mb-1">Regulatory Compliance</div>
+              <div className="text-xs text-text02">EU AI Act, GDPR, CCPA, and industry-specific regulations</div>
             </div>
-            <div className="p-3 rounded-lg bg-gray-50 border border-gray-200">
-              <div className="font-semibold text-sm text-gray-900 mb-1">Ethics Review Board</div>
-              <div className="text-xs text-gray-600">Regular reviews and approvals for AI model deployments</div>
+            <div className="p-3 rounded-lg bg-bg02 border border-stroke01">
+              <div className="font-semibold text-sm text-text01 mb-1">Ethics Review Board</div>
+              <div className="text-xs text-text02">Regular reviews and approvals for AI model deployments</div>
             </div>
-            <div className="p-3 rounded-lg bg-gray-50 border border-gray-200">
-              <div className="font-semibold text-sm text-gray-900 mb-1">Risk Assessment</div>
-              <div className="text-xs text-gray-600">Continuous monitoring and risk mitigation strategies</div>
+            <div className="p-3 rounded-lg bg-bg02 border border-stroke01">
+              <div className="font-semibold text-sm text-text01 mb-1">Risk Assessment</div>
+              <div className="text-xs text-text02">Continuous monitoring and risk mitigation strategies</div>
             </div>
           </div>
         </motion.div>
@@ -199,29 +199,29 @@ export default function ResponsibleAI({ onNavigate }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="rounded-3xl bg-white border border-gray-200 shadow-lg p-6"
+          className="rounded-3xl bg-white border border-stroke01 shadow-lg p-6"
         >
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-3 rounded-xl bg-indigo-100">
-              <Users className="w-6 h-6 text-indigo-600" />
+            <div className="p-3 rounded-xl bg-neutral01">
+              <Users className="w-6 h-6 text-primary" />
             </div>
-            <h2 className="text-xl font-bold text-gray-900">Human Oversight</h2>
+            <h2 className="text-xl font-bold text-text01">Human Oversight</h2>
           </div>
-          <p className="text-gray-600 text-sm mb-4">
+          <p className="text-text02 text-sm mb-4">
             Human-in-the-loop controls ensuring AI decisions are monitored, reviewed, and can be overridden.
           </p>
           <div className="space-y-3">
-            <div className="p-3 rounded-lg bg-gray-50 border border-gray-200">
-              <div className="font-semibold text-sm text-gray-900 mb-1">Escalation Protocols</div>
-              <div className="text-xs text-gray-600">Automatic escalation for high-risk decisions</div>
+            <div className="p-3 rounded-lg bg-bg02 border border-stroke01">
+              <div className="font-semibold text-sm text-text01 mb-1">Escalation Protocols</div>
+              <div className="text-xs text-text02">Automatic escalation for high-risk decisions</div>
             </div>
-            <div className="p-3 rounded-lg bg-gray-50 border border-gray-200">
-              <div className="font-semibold text-sm text-gray-900 mb-1">Human Review Queue</div>
-              <div className="text-xs text-gray-600">Dedicated workflow for human expert review</div>
+            <div className="p-3 rounded-lg bg-bg02 border border-stroke01">
+              <div className="font-semibold text-sm text-text01 mb-1">Human Review Queue</div>
+              <div className="text-xs text-text02">Dedicated workflow for human expert review</div>
             </div>
-            <div className="p-3 rounded-lg bg-gray-50 border border-gray-200">
-              <div className="font-semibold text-sm text-gray-900 mb-1">Override Capabilities</div>
-              <div className="text-xs text-gray-600">Authorized personnel can override AI decisions</div>
+            <div className="p-3 rounded-lg bg-bg02 border border-stroke01">
+              <div className="font-semibold text-sm text-text01 mb-1">Override Capabilities</div>
+              <div className="text-xs text-text02">Authorized personnel can override AI decisions</div>
             </div>
           </div>
         </motion.div>
@@ -232,37 +232,37 @@ export default function ResponsibleAI({ onNavigate }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6 }}
-        className="rounded-3xl bg-white border border-gray-200 shadow-lg p-6"
+        className="rounded-3xl bg-white border border-stroke01 shadow-lg p-6"
       >
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-[#780096]/10">
-              <TrendingUp className="w-5 h-5 text-[#780096]" />
+            <div className="p-2 rounded-lg bg-pinkTP/10">
+              <TrendingUp className="w-5 h-5 text-pinkTP" />
             </div>
-            <h2 className="text-xl font-bold text-gray-900">Compliance Status</h2>
+            <h2 className="text-xl font-bold text-text01">Compliance Status</h2>
           </div>
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200">
-            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-xs font-semibold text-emerald-700">All Systems Compliant</span>
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-success01 border border-success01">
+            <div className="w-2 h-2 rounded-full bg-success010 animate-pulse" />
+            <span className="text-xs font-semibold text-success02">All Systems Compliant</span>
           </div>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="p-4 rounded-xl bg-blue-50 border border-blue-200 text-center">
-            <div className="text-2xl font-bold text-blue-700 mb-1">100%</div>
-            <div className="text-xs text-gray-600">Data Encryption</div>
+          <div className="p-4 rounded-xl bg-neutral01 border border-neutral01 text-center">
+            <div className="text-2xl font-bold text-neutral02 mb-1">100%</div>
+            <div className="text-xs text-text02">Data Encryption</div>
           </div>
-          <div className="p-4 rounded-xl bg-green-50 border border-green-200 text-center">
-            <div className="text-2xl font-bold text-green-700 mb-1">98.5%</div>
-            <div className="text-xs text-gray-600">Bias Detection Coverage</div>
+          <div className="p-4 rounded-xl bg-success01 border border-success01 text-center">
+            <div className="text-2xl font-bold text-success02 mb-1">98.5%</div>
+            <div className="text-xs text-text02">Bias Detection Coverage</div>
           </div>
-          <div className="p-4 rounded-xl bg-purple-50 border border-purple-200 text-center">
-            <div className="text-2xl font-bold text-purple-700 mb-1">100%</div>
-            <div className="text-xs text-gray-600">Audit Trail Coverage</div>
+          <div className="p-4 rounded-xl bg-pinkTP/10 border border-pinkTP/40 text-center">
+            <div className="text-2xl font-bold text-textLink mb-1">100%</div>
+            <div className="text-xs text-text02">Audit Trail Coverage</div>
           </div>
-          <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-center">
+          <div className="p-4 rounded-xl bg-alert01 border border-alert01 text-center">
             <div className="text-2xl font-bold text-amber-700 mb-1">24/7</div>
-            <div className="text-xs text-gray-600">Monitoring Active</div>
+            <div className="text-xs text-text02">Monitoring Active</div>
           </div>
         </div>
       </motion.div>
@@ -272,30 +272,30 @@ export default function ResponsibleAI({ onNavigate }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7 }}
-        className="rounded-3xl bg-white border border-gray-200 shadow-lg p-6"
+        className="rounded-3xl bg-white border border-stroke01 shadow-lg p-6"
       >
         <div className="flex items-center gap-3 mb-4">
-          <div className="p-2 rounded-lg bg-gray-100">
-            <FileText className="w-5 h-5 text-gray-700" />
+          <div className="p-2 rounded-lg bg-bg03">
+            <FileText className="w-5 h-5 text-text01" />
           </div>
-          <h2 className="text-xl font-bold text-gray-900">Documentation & Resources</h2>
+          <h2 className="text-xl font-bold text-text01">Documentation & Resources</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="p-4 rounded-lg border border-gray-200 hover:border-[#780096] transition-colors cursor-pointer">
-            <div className="font-semibold text-sm text-gray-900 mb-1">AI Ethics Policy</div>
-            <div className="text-xs text-gray-600">Comprehensive policy document outlining ethical guidelines</div>
+          <div className="p-4 rounded-lg border border-stroke01 hover:border-pinkTP transition-colors cursor-pointer">
+            <div className="font-semibold text-sm text-text01 mb-1">AI Ethics Policy</div>
+            <div className="text-xs text-text02">Comprehensive policy document outlining ethical guidelines</div>
           </div>
-          <div className="p-4 rounded-lg border border-gray-200 hover:border-[#780096] transition-colors cursor-pointer">
-            <div className="font-semibold text-sm text-gray-900 mb-1">Compliance Reports</div>
-            <div className="text-xs text-gray-600">Monthly compliance and audit reports</div>
+          <div className="p-4 rounded-lg border border-stroke01 hover:border-pinkTP transition-colors cursor-pointer">
+            <div className="font-semibold text-sm text-text01 mb-1">Compliance Reports</div>
+            <div className="text-xs text-text02">Monthly compliance and audit reports</div>
           </div>
-          <div className="p-4 rounded-lg border border-gray-200 hover:border-[#780096] transition-colors cursor-pointer">
-            <div className="font-semibold text-sm text-gray-900 mb-1">Bias Assessment Framework</div>
-            <div className="text-xs text-gray-600">Methodology for detecting and mitigating bias</div>
+          <div className="p-4 rounded-lg border border-stroke01 hover:border-pinkTP transition-colors cursor-pointer">
+            <div className="font-semibold text-sm text-text01 mb-1">Bias Assessment Framework</div>
+            <div className="text-xs text-text02">Methodology for detecting and mitigating bias</div>
           </div>
-          <div className="p-4 rounded-lg border border-gray-200 hover:border-[#780096] transition-colors cursor-pointer">
-            <div className="font-semibold text-sm text-gray-900 mb-1">Incident Response Plan</div>
-            <div className="text-xs text-gray-600">Procedures for handling AI-related incidents</div>
+          <div className="p-4 rounded-lg border border-stroke01 hover:border-pinkTP transition-colors cursor-pointer">
+            <div className="font-semibold text-sm text-text01 mb-1">Incident Response Plan</div>
+            <div className="text-xs text-text02">Procedures for handling AI-related incidents</div>
           </div>
         </div>
       </motion.div>

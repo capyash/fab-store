@@ -5,13 +5,13 @@
 
 export default function ViewToggle({ value, onChange }) {
   return (
-    <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1 border border-gray-200">
+    <div className="flex items-center gap-1 bg-bg03 rounded-lg p-1 border border-stroke01">
       <button
         onClick={() => onChange("agent")}
         className={`px-4 py-1.5 text-sm font-medium rounded transition-all ${
           value === "agent"
-            ? "bg-white text-[#780096] shadow-sm"
-            : "text-gray-600 hover:text-gray-900"
+            ? "bg-white text-pinkTP shadow-sm"
+            : "text-text02 hover:text-text01"
         }`}
       >
         Agent Performance
@@ -20,8 +20,8 @@ export default function ViewToggle({ value, onChange }) {
         onClick={() => onChange("category")}
         className={`px-4 py-1.5 text-sm font-medium rounded transition-all ${
           value === "category"
-            ? "bg-white text-[#780096] shadow-sm"
-            : "text-gray-600 hover:text-gray-900"
+            ? "bg-white text-pinkTP shadow-sm"
+            : "text-text02 hover:text-text01"
         }`}
       >
         Workflow Categories

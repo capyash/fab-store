@@ -46,9 +46,9 @@ export const fabPlatforms = [
       "A reusable platform for building SOP-native solutions across industries. Provides AI-powered SOP matching, reasoning, and compliance guardrails that can be configured for any regulated domain.",
     highlights: ["SOP orchestration", "Multi-industry support", "AI reasoning engine", "Compliance guardrails"],
     tags: ["Platform", "Cross-Industry", "Live", "SOP-native"],
-    accent: "from-[#780096] to-[#780096]",
+    accent: "from-pinkTP to-pinkTP",
     statusColor: "bg-emerald-100 text-emerald-700",
-    categoryColor: "text-[#780096]",
+    categoryColor: "text-pinkTP",
     stack: ["RAG", "GPT-4", "LangChain", "SOP Engine"],
     documentation: {
       overview: "SOP Executor is a platform that enables rapid development of SOP-native solutions for regulated industries. It provides a complete AI reasoning engine, SOP matching capabilities, and compliance guardrails out of the box.",

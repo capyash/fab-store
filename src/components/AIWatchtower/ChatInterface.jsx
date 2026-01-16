@@ -48,13 +48,13 @@ export default function ChatInterface({
   }
 
   return (
-    <div className="mt-6 border-t border-gray-200 pt-4">
+    <div className="mt-6 border-t border-stroke01 pt-4">
       <button
         onClick={() => setChatExpanded(!chatExpanded)}
-        className="w-full flex items-center justify-between p-3 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors mb-3"
+        className="w-full flex items-center justify-between p-3 rounded-lg bg-bg03 hover:bg-stroke01 transition-colors mb-3"
       >
-        <span className="font-semibold text-gray-700">Ask about this {itemLabel}</span>
-        <span className="text-sm text-gray-500">{chatExpanded ? "Collapse" : "Expand"}</span>
+        <span className="font-semibold text-text01">Ask about this {itemLabel}</span>
+        <span className="text-sm text-text03">{chatExpanded ? "Collapse" : "Expand"}</span>
       </button>
 
       <AnimatePresence>
@@ -68,8 +68,8 @@ export default function ChatInterface({
             {/* Messages */}
             <div className="space-y-3 max-h-64 overflow-y-auto">
               {allMessages.length === 0 && (
-                <div className="text-center py-8 text-gray-500 text-sm">
-                  <Bot className="w-8 h-8 mx-auto mb-2 text-gray-400" />
+                <div className="text-center py-8 text-text03 text-sm">
+                  <Bot className="w-8 h-8 mx-auto mb-2 text-text03" />
                   <p>Ask questions about this {itemLabel}</p>
                 </div>
               )}
@@ -80,22 +80,22 @@ export default function ChatInterface({
                   className={`flex gap-3 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                 >
                   {msg.role === "ai" && (
-                    <div className="p-1.5 rounded-full bg-indigo-100">
-                      <Bot className="w-4 h-4 text-indigo-600" />
+                    <div className="p-1.5 rounded-full bg-neutral01">
+                      <Bot className="w-4 h-4 text-primary" />
                     </div>
                   )}
                   <div
                     className={`max-w-[80%] rounded-lg p-3 ${
                       msg.role === "user"
-                        ? "bg-indigo-600 text-white"
-                        : "bg-white border border-gray-200 text-gray-900"
+                        ? "bg-primary text-white"
+                        : "bg-white border border-stroke01 text-text01"
                     }`}
                   >
                     <p className="text-sm whitespace-pre-wrap">{msg.text}</p>
                   </div>
                   {msg.role === "user" && (
-                    <div className="p-1.5 rounded-full bg-gray-100">
-                      <User className="w-4 h-4 text-gray-600" />
+                    <div className="p-1.5 rounded-full bg-bg03">
+                      <User className="w-4 h-4 text-text02" />
                     </div>
                   )}
                 </div>
@@ -103,14 +103,14 @@ export default function ChatInterface({
 
               {thinking && !streamingMessage && (
                 <div className="flex gap-3 justify-start">
-                  <div className="p-1.5 rounded-full bg-indigo-100">
-                    <Bot className="w-4 h-4 text-indigo-600 animate-pulse" />
+                  <div className="p-1.5 rounded-full bg-neutral01">
+                    <Bot className="w-4 h-4 text-primary animate-pulse" />
                   </div>
-                  <div className="bg-white border border-gray-200 rounded-lg p-3">
+                  <div className="bg-white border border-stroke01 rounded-lg p-3">
                     <div className="flex gap-1">
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                      <div className="w-2 h-2 bg-text03 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                      <div className="w-2 h-2 bg-text03 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                      <div className="w-2 h-2 bg-text03 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
                     </div>
                   </div>
                 </div>
@@ -126,7 +126,7 @@ export default function ChatInterface({
                   <button
                     key={idx}
                     onClick={() => onSendMessage(suggestion)}
-                    className="px-3 py-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
+                    className="px-3 py-1.5 rounded-full text-xs font-medium bg-bg03 text-text01 hover:bg-stroke01 transition-colors"
                   >
                     {suggestion}
                   </button>
@@ -144,12 +144,12 @@ export default function ChatInterface({
                 onKeyPress={handleKeyPress}
                 placeholder={`Ask about this ${itemLabel}...`}
                 disabled={thinking}
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:bg-gray-100"
+                className="flex-1 px-4 py-2 border border-stroke01 rounded-lg focus:ring-2 focus:ring-neutral010 focus:border-transparent disabled:bg-bg03"
               />
               <button
                 onClick={handleSend}
                 disabled={!input.trim() || thinking}
-                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+                className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-textLink disabled:bg-stroke01 disabled:cursor-not-allowed transition-colors"
               >
                 <Send className="w-4 h-4" />
               </button>

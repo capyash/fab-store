@@ -13,9 +13,9 @@ export default function TemplateCloner({ template, onClose, onClone }) {
     category: template.category,
     industry: template.industry,
     primaryColor: template.accent?.includes("#") 
-      ? template.accent.match(/#[0-9A-Fa-f]{6}/)?.[0] || "#780096"
-      : "#780096",
-    secondaryColor: "#780096",
+      ? template.accent.match(/#[0-9A-Fa-f]{6}/)?.[0] || "pinkTP"
+      : "pinkTP",
+    secondaryColor: "pinkTP",
     description: template.description,
   });
 
@@ -30,7 +30,7 @@ export default function TemplateCloner({ template, onClose, onClone }) {
       description: customization.description,
       accent: `from-[${customization.primaryColor.replace('#', '')}] to-[${customization.secondaryColor.replace('#', '')}]`,
       status: "Preview",
-      statusColor: "bg-amber-100 text-amber-700",
+      statusColor: "bg-alert01 text-amber-700",
       isCloned: true,
       clonedFrom: template.id,
       clonedAt: new Date().toISOString(),
@@ -49,7 +49,7 @@ export default function TemplateCloner({ template, onClose, onClone }) {
         className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden flex flex-col"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-[#780096] text-white">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-stroke01 bg-pinkTP text-white">
           <div className="flex items-center gap-3">
             <Copy className="w-5 h-5" />
             <div>
@@ -66,7 +66,7 @@ export default function TemplateCloner({ template, onClose, onClone }) {
         </div>
 
         {/* Progress Steps */}
-        <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
+        <div className="px-6 py-4 border-b border-stroke01 bg-bg02">
           <div className="flex items-center justify-between">
             {[1, 2, 3].map((s) => (
               <div key={s} className="flex items-center flex-1">
@@ -74,15 +74,15 @@ export default function TemplateCloner({ template, onClose, onClone }) {
                   <div
                     className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm transition-colors ${
                       step >= s
-                        ? "bg-[#780096] text-white"
-                        : "bg-gray-200 text-gray-500"
+                        ? "bg-pinkTP text-white"
+                        : "bg-stroke01 text-text03"
                     }`}
                   >
                     {step > s ? <Check className="w-4 h-4" /> : s}
                   </div>
                   <span
                     className={`text-sm font-medium ml-2 ${
-                      step >= s ? "text-gray-900" : "text-gray-500"
+                      step >= s ? "text-text01" : "text-text03"
                     }`}
                   >
                     {s === 1 ? "Basic Info" : s === 2 ? "Customize" : "Review"}
@@ -91,7 +91,7 @@ export default function TemplateCloner({ template, onClose, onClone }) {
                 {s < 3 && (
                   <div
                     className={`flex-1 h-0.5 mx-4 ${
-                      step > s ? "bg-[#780096]" : "bg-gray-200"
+                      step > s ? "bg-pinkTP" : "bg-stroke01"
                     }`}
                   />
                 )}
@@ -112,13 +112,13 @@ export default function TemplateCloner({ template, onClose, onClone }) {
                 className="space-y-6"
               >
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                    <FileText className="w-5 h-5 text-[#780096]" />
+                  <h3 className="text-lg font-semibold text-text01 mb-4 flex items-center gap-2">
+                    <FileText className="w-5 h-5 text-pinkTP" />
                     Basic Information
                   </h3>
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-text01 mb-2">
                         Template Name *
                       </label>
                       <input
@@ -127,12 +127,12 @@ export default function TemplateCloner({ template, onClose, onClone }) {
                         onChange={(e) =>
                           setCustomization({ ...customization, name: e.target.value })
                         }
-                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                        className="w-full px-4 py-2.5 border border-stroke01 rounded-lg focus:ring-2 focus:ring-pinkTP focus:border-transparent"
                         placeholder="Enter template name"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-text01 mb-2">
                         Tagline
                       </label>
                       <input
@@ -141,13 +141,13 @@ export default function TemplateCloner({ template, onClose, onClone }) {
                         onChange={(e) =>
                           setCustomization({ ...customization, tagline: e.target.value })
                         }
-                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                        className="w-full px-4 py-2.5 border border-stroke01 rounded-lg focus:ring-2 focus:ring-pinkTP focus:border-transparent"
                         placeholder="Enter tagline"
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-medium text-text01 mb-2">
                           Category
                         </label>
                         <input
@@ -156,11 +156,11 @@ export default function TemplateCloner({ template, onClose, onClone }) {
                           onChange={(e) =>
                             setCustomization({ ...customization, category: e.target.value })
                           }
-                          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                          className="w-full px-4 py-2.5 border border-stroke01 rounded-lg focus:ring-2 focus:ring-pinkTP focus:border-transparent"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-medium text-text01 mb-2">
                           Industry
                         </label>
                         <input
@@ -169,12 +169,12 @@ export default function TemplateCloner({ template, onClose, onClone }) {
                           onChange={(e) =>
                             setCustomization({ ...customization, industry: e.target.value })
                           }
-                          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                          className="w-full px-4 py-2.5 border border-stroke01 rounded-lg focus:ring-2 focus:ring-pinkTP focus:border-transparent"
                         />
                       </div>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-text01 mb-2">
                         Description
                       </label>
                       <textarea
@@ -183,7 +183,7 @@ export default function TemplateCloner({ template, onClose, onClone }) {
                           setCustomization({ ...customization, description: e.target.value })
                         }
                         rows={4}
-                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+                        className="w-full px-4 py-2.5 border border-stroke01 rounded-lg focus:ring-2 focus:ring-pinkTP focus:border-transparent"
                         placeholder="Enter description"
                       />
                     </div>
@@ -201,14 +201,14 @@ export default function TemplateCloner({ template, onClose, onClone }) {
                 className="space-y-6"
               >
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                    <Palette className="w-5 h-5 text-[#780096]" />
+                  <h3 className="text-lg font-semibold text-text01 mb-4 flex items-center gap-2">
+                    <Palette className="w-5 h-5 text-pinkTP" />
                     Customize Appearance
                   </h3>
                   <div className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-medium text-text01 mb-2">
                           Primary Color
                         </label>
                         <div className="flex items-center gap-2">
@@ -221,7 +221,7 @@ export default function TemplateCloner({ template, onClose, onClone }) {
                                 primaryColor: e.target.value,
                               })
                             }
-                            className="w-16 h-12 border border-gray-300 rounded-lg cursor-pointer"
+                            className="w-16 h-12 border border-stroke01 rounded-lg cursor-pointer"
                           />
                           <input
                             type="text"
@@ -232,13 +232,13 @@ export default function TemplateCloner({ template, onClose, onClone }) {
                                 primaryColor: e.target.value,
                               })
                             }
-                            className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
-                            placeholder="#780096"
+                            className="flex-1 px-4 py-2.5 border border-stroke01 rounded-lg focus:ring-2 focus:ring-pinkTP focus:border-transparent"
+                            placeholder="pinkTP"
                           />
                         </div>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-medium text-text01 mb-2">
                           Secondary Color
                         </label>
                         <div className="flex items-center gap-2">
@@ -251,7 +251,7 @@ export default function TemplateCloner({ template, onClose, onClone }) {
                                 secondaryColor: e.target.value,
                               })
                             }
-                            className="w-16 h-12 border border-gray-300 rounded-lg cursor-pointer"
+                            className="w-16 h-12 border border-stroke01 rounded-lg cursor-pointer"
                           />
                           <input
                             type="text"
@@ -262,14 +262,14 @@ export default function TemplateCloner({ template, onClose, onClone }) {
                                 secondaryColor: e.target.value,
                               })
                             }
-                            className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#780096] focus:border-transparent"
-                            placeholder="#780096"
+                            className="flex-1 px-4 py-2.5 border border-stroke01 rounded-lg focus:ring-2 focus:ring-pinkTP focus:border-transparent"
+                            placeholder="pinkTP"
                           />
                         </div>
                       </div>
                     </div>
-                    <div className="p-4 rounded-lg border-2 border-dashed border-gray-200 bg-gray-50">
-                      <p className="text-sm font-medium text-gray-700 mb-2">Preview</p>
+                    <div className="p-4 rounded-lg border-2 border-dashed border-stroke01 bg-bg02">
+                      <p className="text-sm font-medium text-text01 mb-2">Preview</p>
                       <div
                         className="h-20 rounded-lg flex items-center justify-center text-white font-semibold"
                         style={{
@@ -293,46 +293,46 @@ export default function TemplateCloner({ template, onClose, onClone }) {
                 className="space-y-6"
               >
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                    <Sparkles className="w-5 h-5 text-[#780096]" />
+                  <h3 className="text-lg font-semibold text-text01 mb-4 flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-pinkTP" />
                     Review & Create
                   </h3>
                   <div className="space-y-4">
-                    <div className="p-6 rounded-xl border border-gray-200 bg-gray-50">
-                      <h4 className="font-semibold text-gray-900 mb-4">Template Summary</h4>
+                    <div className="p-6 rounded-xl border border-stroke01 bg-bg02">
+                      <h4 className="font-semibold text-text01 mb-4">Template Summary</h4>
                       <div className="space-y-3 text-sm">
                         <div className="flex justify-between">
-                          <span className="text-gray-600">Name:</span>
-                          <span className="font-medium text-gray-900">{customization.name}</span>
+                          <span className="text-text02">Name:</span>
+                          <span className="font-medium text-text01">{customization.name}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-600">Category:</span>
-                          <span className="font-medium text-gray-900">{customization.category}</span>
+                          <span className="text-text02">Category:</span>
+                          <span className="font-medium text-text01">{customization.category}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-600">Industry:</span>
-                          <span className="font-medium text-gray-900">{customization.industry}</span>
+                          <span className="text-text02">Industry:</span>
+                          <span className="font-medium text-text01">{customization.industry}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-600">Based on:</span>
-                          <span className="font-medium text-gray-900">{template.name}</span>
+                          <span className="text-text02">Based on:</span>
+                          <span className="font-medium text-text01">{template.name}</span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-gray-600">Colors:</span>
+                          <span className="text-text02">Colors:</span>
                           <div className="flex items-center gap-2">
                             <div
-                              className="w-6 h-6 rounded border border-gray-300"
+                              className="w-6 h-6 rounded border border-stroke01"
                               style={{ backgroundColor: customization.primaryColor }}
                             />
                             <div
-                              className="w-6 h-6 rounded border border-gray-300"
+                              className="w-6 h-6 rounded border border-stroke01"
                               style={{ backgroundColor: customization.secondaryColor }}
                             />
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div className="p-4 rounded-lg bg-blue-50 border border-blue-200">
+                    <div className="p-4 rounded-lg bg-neutral01 border border-neutral01">
                       <p className="text-sm text-blue-800">
                         <strong>Note:</strong> This will create a new template based on {template.name}. 
                         You can further customize it after creation.
@@ -346,16 +346,16 @@ export default function TemplateCloner({ template, onClose, onClone }) {
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200 bg-gray-50">
+        <div className="flex items-center justify-between px-6 py-4 border-t border-stroke01 bg-bg02">
           <button
             onClick={step > 1 ? () => setStep(step - 1) : onClose}
-            className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900"
+            className="px-4 py-2 text-sm font-medium text-text01 hover:text-text01"
           >
             {step > 1 ? "Back" : "Cancel"}
           </button>
           <button
             onClick={step < 3 ? () => setStep(step + 1) : handleClone}
-            className="px-6 py-2.5 rounded-lg bg-gradient-to-r from-[#780096] to-[#780096] text-white font-semibold text-sm hover:shadow-lg transition-all flex items-center gap-2"
+            className="px-6 py-2.5 rounded-lg bg-gradient-to-r from-pinkTP to-pinkTP text-white font-semibold text-sm hover:shadow-lg transition-all flex items-center gap-2"
           >
             {step < 3 ? (
               <>

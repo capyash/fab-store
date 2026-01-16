@@ -26,25 +26,25 @@ export function Button({
 
   const variantClasses = {
     primary: {
-      base: "bg-[#2E2E2E] text-white rounded-lg",
-      hover: "hover:bg-[#4A4A4A]",
-      active: "active:bg-[#666666]",
-      disabled: "disabled:bg-[#E0E0E0] disabled:text-[#A0A0A0]",
-      focus: "focus:ring-[#2E2E2E]",
+      base: "bg-buttonPrimary text-white rounded-lg",
+      hover: "hover:bg-buttonPrimary-hover",
+      active: "active:bg-buttonPrimary-active",
+      disabled: "disabled:bg-buttonPrimary-disabled disabled:text-buttonText-disabled",
+      focus: "focus:ring-buttonPrimary",
     },
     secondary: {
-      base: "bg-white text-[#2E2E2E] border border-[#2E2E2E] rounded-lg",
-      hover: "hover:bg-[#F5F5F5]",
-      active: "active:bg-[#E6E6E5]",
-      disabled: "disabled:bg-white disabled:border-[#E0E0E0] disabled:text-[#A0A0A0]",
-      focus: "focus:ring-[#2E2E2E]",
+      base: "bg-white text-buttonPrimary border border-buttonPrimary rounded-lg",
+      hover: "hover:bg-hover",
+      active: "active:bg-select",
+      disabled: "disabled:bg-white disabled:border-buttonPrimary-disabled disabled:text-buttonText-disabled",
+      focus: "focus:ring-buttonPrimary",
     },
     tertiary: {
-      base: "bg-transparent text-[#2E2E2E] rounded-lg",
+      base: "bg-transparent text-buttonPrimary rounded-lg",
       hover: "hover:underline",
       active: "active:underline",
-      disabled: "disabled:text-[#A0A0A0]",
-      focus: "focus:ring-[#2E2E2E]",
+      disabled: "disabled:text-buttonText-disabled",
+      focus: "focus:ring-buttonPrimary",
     },
   };
 

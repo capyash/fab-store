@@ -24,31 +24,31 @@ export default function CategoryPerformanceCard({ category }) {
   const failedPercent = total > 0 ? Math.round((failed / total) * 100) : 0;
   
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-6">
+    <div className="rounded-lg border border-stroke01 bg-white p-6">
       <div className="flex items-center gap-3 mb-4">
-        <div className="p-2 rounded-lg bg-[#780096]/10">
-          <Icon className="w-5 h-5 text-[#780096]" />
+        <div className="p-2 rounded-lg bg-pinkTP/10">
+          <Icon className="w-5 h-5 text-pinkTP" />
         </div>
-        <div className="font-bold text-gray-900">{category.category_name}</div>
+        <div className="font-bold text-text01">{category.category_name}</div>
       </div>
       
       <div className="mb-4">
-        <div className="text-2xl font-bold text-gray-900 mb-1">{total.toLocaleString()}</div>
-        <div className="text-sm text-gray-500">Total Tickets</div>
+        <div className="text-2xl font-bold text-text01 mb-1">{total.toLocaleString()}</div>
+        <div className="text-sm text-text03">Total Tickets</div>
       </div>
       
       <div className="space-y-2 mb-4">
         <div className="flex items-center justify-between text-sm">
-          <span className="text-gray-600">Auto-resolved</span>
-          <span className="font-semibold text-green-600">{autoResolved} ({autoPercent}%)</span>
+          <span className="text-text02">Auto-resolved</span>
+          <span className="font-semibold text-success03">{autoResolved} ({autoPercent}%)</span>
         </div>
         <div className="flex items-center justify-between text-sm">
-          <span className="text-gray-600">Escalated</span>
-          <span className="font-semibold text-amber-600">{escalated} ({escalatedPercent}%)</span>
+          <span className="text-text02">Escalated</span>
+          <span className="font-semibold text-alert02">{escalated} ({escalatedPercent}%)</span>
         </div>
         <div className="flex items-center justify-between text-sm">
-          <span className="text-gray-600">Failed</span>
-          <span className="font-semibold text-red-600">{failed} ({failedPercent}%)</span>
+          <span className="text-text02">Failed</span>
+          <span className="font-semibold text-error03">{failed} ({failedPercent}%)</span>
         </div>
       </div>
       
@@ -60,7 +60,7 @@ export default function CategoryPerformanceCard({ category }) {
             cy="18"
             r="16"
             fill="none"
-            stroke="#e5e7eb"
+            stroke="var(--color-stroke01)"
             strokeWidth="4"
           />
           <circle
@@ -68,7 +68,7 @@ export default function CategoryPerformanceCard({ category }) {
             cy="18"
             r="16"
             fill="none"
-            stroke="#10b981"
+            stroke="var(--color-success03)"
             strokeWidth="4"
             strokeDasharray={`${autoPercent} ${100 - autoPercent}`}
             strokeLinecap="round"
@@ -78,7 +78,7 @@ export default function CategoryPerformanceCard({ category }) {
             cy="18"
             r="16"
             fill="none"
-            stroke="#f59e0b"
+            stroke="var(--color-alert02)"
             strokeWidth="4"
             strokeDasharray={`${escalatedPercent} ${100 - escalatedPercent}`}
             strokeDashoffset={`-${autoPercent}`}
@@ -89,7 +89,7 @@ export default function CategoryPerformanceCard({ category }) {
             cy="18"
             r="16"
             fill="none"
-            stroke="#ef4444"
+            stroke="var(--color-error03)"
             strokeWidth="4"
             strokeDasharray={`${failedPercent} ${100 - failedPercent}`}
             strokeDashoffset={`-${autoPercent + escalatedPercent}`}
@@ -98,22 +98,22 @@ export default function CategoryPerformanceCard({ category }) {
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center">
-            <div className="text-lg font-bold text-gray-900">{category.success_rate?.toFixed(0) || 0}%</div>
-            <div className="text-xs text-gray-500">Success</div>
+            <div className="text-lg font-bold text-text01">{category.success_rate?.toFixed(0) || 0}%</div>
+            <div className="text-xs text-text03">Success</div>
           </div>
         </div>
       </div>
       
-      <div className="mt-4 pt-4 border-t border-gray-100 grid grid-cols-2 gap-4 text-sm">
+      <div className="mt-4 pt-4 border-t border-bg03 grid grid-cols-2 gap-4 text-sm">
         <div>
-          <div className="text-gray-500">Auto MTR</div>
-          <div className="font-semibold text-gray-900">
+          <div className="text-text03">Auto MTR</div>
+          <div className="font-semibold text-text01">
             {((category.avg_latency_ms || 0) / 1000 / 60).toFixed(1)} min
           </div>
         </div>
         <div>
-          <div className="text-gray-500">Escalated MTR</div>
-          <div className="font-semibold text-gray-900">8.5 min</div>
+          <div className="text-text03">Escalated MTR</div>
+          <div className="font-semibold text-text01">8.5 min</div>
         </div>
       </div>
     </div>

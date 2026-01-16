@@ -3,4 +3,4 @@
 * All hardcoded colors should be replaced with theme color variables.
 * All non-theme colors should be replaced with theme colors.
 * All typography styles should be updated to use the defined styles.
-* There is no dark mode currently available in slate theme.
+* There is no dark mode currently available in slate theme, remove all dark mode functionality.

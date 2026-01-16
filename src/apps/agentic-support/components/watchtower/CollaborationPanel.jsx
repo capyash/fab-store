@@ -10,22 +10,22 @@ const PANEL_CONFIGS = {
     title: "Autonomous Agent Chain",
     description: "AI agents collaborating without human intervention",
     icon: Bot,
-    gradient: "from-green-500 to-emerald-600",
-    borderColor: "border-green-300",
+    gradient: "from-success010 to-success03",
+    borderColor: "border-success03",
   },
   ai_to_human: {
     title: "AI-to-Human Handoff",
     description: "AI agents escalating to human experts",
     icon: ArrowRight,
-    gradient: "from-purple-500 to-pink-600",
+    gradient: "from-pinkTP/100 to-pinkTP",
     borderColor: "border-purple-300",
   },
   human_to_ai: {
     title: "Human-Initiated AI Assist",
     description: "Humans delegating tasks to AI agents",
     icon: User,
-    gradient: "from-blue-500 to-indigo-600",
-    borderColor: "border-blue-300",
+    gradient: "from-neutral010 to-primary",
+    borderColor: "border-neutral02",
   },
 };
 
@@ -40,29 +40,29 @@ export default function CollaborationPanel({ type, data }) {
           <Icon className="w-5 h-5" />
         </div>
         <div>
-          <div className="font-bold text-gray-900">{config.title}</div>
-          <div className="text-xs text-gray-500">{config.description}</div>
+          <div className="font-bold text-text01">{config.title}</div>
+          <div className="text-xs text-text03">{config.description}</div>
         </div>
       </div>
       
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <div className="text-xs text-gray-500 mb-1">Volume</div>
-          <div className="text-2xl font-bold text-gray-900">{data.volume?.toLocaleString() || 0}</div>
+          <div className="text-xs text-text03 mb-1">Volume</div>
+          <div className="text-2xl font-bold text-text01">{data.volume?.toLocaleString() || 0}</div>
         </div>
         <div>
-          <div className="text-xs text-gray-500 mb-1">
+          <div className="text-xs text-text03 mb-1">
             {type === "autonomous" ? "Success Rate" : type === "ai_to_human" ? "Handoff Rate" : "Delegation Rate"}
           </div>
-          <div className="text-2xl font-bold text-gray-900">
+          <div className="text-2xl font-bold text-text01">
             {data.success_rate || data.handoff_rate || data.delegation_rate || 0}%
           </div>
         </div>
         <div>
-          <div className="text-xs text-gray-500 mb-1">
+          <div className="text-xs text-text03 mb-1">
             {type === "autonomous" ? "Avg Latency" : type === "ai_to_human" ? "Handoff Time" : "Time Saved"}
           </div>
-          <div className="text-lg font-semibold text-gray-700">
+          <div className="text-lg font-semibold text-text01">
             {type === "autonomous" 
               ? `${(data.avg_latency_ms / 1000).toFixed(1)}s`
               : type === "ai_to_human"
@@ -71,10 +71,10 @@ export default function CollaborationPanel({ type, data }) {
           </div>
         </div>
         <div>
-          <div className="text-xs text-gray-500 mb-1">
+          <div className="text-xs text-text03 mb-1">
             {type === "autonomous" ? "Cost/Resolution" : type === "ai_to_human" ? "Human Resolution" : "AI Success"}
           </div>
-          <div className="text-lg font-semibold text-gray-700">
+          <div className="text-lg font-semibold text-text01">
             {type === "autonomous"
               ? `$${data.cost_per_resolution_usd?.toFixed(2) || "0.00"}`
               : type === "ai_to_human"

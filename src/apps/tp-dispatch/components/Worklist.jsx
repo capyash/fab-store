@@ -59,13 +59,13 @@ export default function TPDispatchWorklist({ onSelectWorkOrder, onNavigate }) {
         <div className="flex items-center gap-4">
           <button
             onClick={() => onNavigate("dispatch")}
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="p-2 rounded-lg hover:bg-bg03 transition-colors"
           >
-            <ArrowLeft className="w-5 h-5 text-gray-600" />
+            <ArrowLeft className="w-5 h-5 text-text02" />
           </button>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Work Orders</h1>
-            <p className="text-sm text-gray-600">Manage and track field service work orders</p>
+            <h1 className="text-2xl font-bold text-text01">Work Orders</h1>
+            <p className="text-sm text-text02">Manage and track field service work orders</p>
           </div>
         </div>
       </div>
@@ -73,19 +73,19 @@ export default function TPDispatchWorklist({ onSelectWorkOrder, onNavigate }) {
       {/* Filters */}
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-text03" />
           <input
             type="text"
             placeholder="Search work orders..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full pl-10 pr-4 py-2 border border-stroke01 rounded-lg focus:ring-2 focus:ring-neutral010 focus:border-transparent"
           />
         </div>
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          className="px-4 py-2 border border-stroke01 rounded-lg focus:ring-2 focus:ring-neutral010"
         >
           <option value="all">All Statuses</option>
           <option value="pending">Pending</option>
@@ -96,7 +96,7 @@ export default function TPDispatchWorklist({ onSelectWorkOrder, onNavigate }) {
         <select
           value={priorityFilter}
           onChange={(e) => setPriorityFilter(e.target.value)}
-          className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          className="px-4 py-2 border border-stroke01 rounded-lg focus:ring-2 focus:ring-neutral010"
         >
           <option value="all">All Priorities</option>
           <option value="high">High</option>
@@ -115,7 +115,7 @@ export default function TPDispatchWorklist({ onSelectWorkOrder, onNavigate }) {
             />
             <button
               onClick={() => onSelectWorkOrder?.(wo)}
-              className="absolute top-2 right-2 p-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-sm"
+              className="absolute top-2 right-2 p-1.5 rounded-lg bg-primary text-white hover:bg-textLink transition-colors shadow-sm"
               title="Open in AI Watchtower"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -127,7 +127,7 @@ export default function TPDispatchWorklist({ onSelectWorkOrder, onNavigate }) {
       </div>
 
       {filteredWorkOrders.length === 0 && (
-        <div className="text-center py-12 text-gray-500">
+        <div className="text-center py-12 text-text03">
           <p>No work orders found matching your filters.</p>
         </div>
       )}

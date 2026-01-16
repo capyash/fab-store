@@ -1625,14 +1625,14 @@ export default function KnowledgeBase({ onNavigate }) {
       {/* Header */}
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center shadow-md">
+          <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-pinkTP to-pinkTP flex items-center justify-center shadow-md">
             <BookOpen className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
+            <h1 className="text-xl sm:text-2xl font-bold text-text01">
               Knowledge Base
             </h1>
-            <p className="text-xs sm:text-sm text-gray-500">
+            <p className="text-xs sm:text-sm text-text03">
               Manage categories, upload documents, and vectorize knowledge for
               agentic workflows
             </p>
@@ -1641,7 +1641,7 @@ export default function KnowledgeBase({ onNavigate }) {
         <div className="flex items-center gap-3">
           <button
             onClick={() => onNavigate?.("store")}
-            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] font-medium text-gray-700 bg-white hover:bg-gray-50 rounded-lg border border-gray-200 shadow-sm"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] font-medium text-text01 bg-white hover:bg-bg02 rounded-lg border border-stroke01 shadow-sm"
           >
             <Store className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Store</span>
@@ -1651,41 +1651,41 @@ export default function KnowledgeBase({ onNavigate }) {
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="rounded-xl border border-gray-200 bg-white px-4 py-3">
-          <div className="text-[11px] uppercase tracking-wide text-gray-500">
+        <div className="rounded-xl border border-stroke01 bg-white px-4 py-3">
+          <div className="text-[11px] uppercase tracking-wide text-text03">
             Categories
           </div>
-          <div className="mt-1 text-2xl font-bold text-gray-900">
+          <div className="mt-1 text-2xl font-bold text-text01">
             {kb.categories.length}
           </div>
         </div>
-        <div className="rounded-xl border border-gray-200 bg-white px-4 py-3">
-          <div className="text-[11px] uppercase tracking-wide text-gray-500">
+        <div className="rounded-xl border border-stroke01 bg-white px-4 py-3">
+          <div className="text-[11px] uppercase tracking-wide text-text03">
             Total Vectors
           </div>
-          <div className="mt-1 text-2xl font-bold text-indigo-600">
+          <div className="mt-1 text-2xl font-bold text-primary">
             {totalVectors}
           </div>
         </div>
-        <div className="rounded-xl border border-gray-200 bg-white px-4 py-3">
-          <div className="text-[11px] uppercase tracking-wide text-gray-500">
+        <div className="rounded-xl border border-stroke01 bg-white px-4 py-3">
+          <div className="text-[11px] uppercase tracking-wide text-text03">
             Documents
           </div>
-          <div className="mt-1 text-2xl font-bold text-gray-900">
+          <div className="mt-1 text-2xl font-bold text-text01">
             {kb.categories.reduce((sum, cat) => sum + cat.documentCount, 0)}
           </div>
         </div>
       </div>
 
       {/* Categories List */}
-      <div className="rounded-2xl bg-white border border-gray-200 shadow-sm">
+      <div className="rounded-2xl bg-white border border-stroke01 shadow-sm">
         {/* Header with Search and Filters */}
-        <div className="px-6 py-4 border-b border-gray-200">
+        <div className="px-6 py-4 border-b border-stroke01">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-sm font-semibold text-gray-900">
+            <h2 className="text-sm font-semibold text-text01">
               Categories
               {filteredAndSortedCategories.length !== kb.categories.length && (
-                <span className="ml-2 text-xs font-normal text-gray-500">
+                <span className="ml-2 text-xs font-normal text-text03">
                   ({filteredAndSortedCategories.length} of {kb.categories.length})
                 </span>
               )}
@@ -1707,7 +1707,7 @@ export default function KnowledgeBase({ onNavigate }) {
                     }
                   }}
                   disabled={isSeeding}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-600 text-white text-xs font-medium hover:bg-purple-700 disabled:opacity-50"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-pinkTP text-white text-xs font-medium hover:bg-textLink disabled:opacity-50"
                 >
                   {isSeeding ? (
                     <>
@@ -1724,7 +1724,7 @@ export default function KnowledgeBase({ onNavigate }) {
               )}
               <button
                 onClick={() => setShowCreateModal(true)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-xs font-medium hover:bg-indigo-700"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-white text-xs font-medium hover:bg-textLink"
               >
                 <Plus className="w-3.5 h-3.5" />
                 New Category
@@ -1737,18 +1737,18 @@ export default function KnowledgeBase({ onNavigate }) {
             <div className="flex flex-col sm:flex-row gap-3">
               {/* Search */}
               <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-text03" />
                 <input
                   type="text"
                   placeholder="Search categories by name or description..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full pl-10 pr-10 py-2 border border-stroke01 rounded-lg text-sm focus:ring-2 focus:ring-neutral010 focus:border-transparent"
                 />
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery("")}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-text03 hover:text-text02"
                     title="Clear search"
                   >
                     <X className="w-4 h-4" />
@@ -1760,7 +1760,7 @@ export default function KnowledgeBase({ onNavigate }) {
               <select
                 value={filterBy}
                 onChange={(e) => setFilterBy(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white"
+                className="px-3 py-2 border border-stroke01 rounded-lg text-sm focus:ring-2 focus:ring-neutral010 focus:border-transparent bg-white"
               >
                 <option value="all">All Categories</option>
                 <option value="with-vectors">With Vectors</option>
@@ -1771,7 +1771,7 @@ export default function KnowledgeBase({ onNavigate }) {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white"
+                className="px-3 py-2 border border-stroke01 rounded-lg text-sm focus:ring-2 focus:ring-neutral010 focus:border-transparent bg-white"
               >
                 <option value="name">Sort by Name</option>
                 <option value="vectors">Sort by Vectors</option>
@@ -1784,7 +1784,7 @@ export default function KnowledgeBase({ onNavigate }) {
 
         <div className="p-6">
           {kb.categories.length === 0 ? (
-            <div className="text-center py-12 text-gray-400">
+            <div className="text-center py-12 text-text03">
               {isSeeding ? (
                 <>
                   <Loader2 className="w-12 h-12 mx-auto mb-3 opacity-50 animate-spin" />
@@ -1804,7 +1804,7 @@ export default function KnowledgeBase({ onNavigate }) {
               )}
             </div>
           ) : filteredAndSortedCategories.length === 0 ? (
-            <div className="text-center py-12 text-gray-400">
+            <div className="text-center py-12 text-text03">
               <Search className="w-12 h-12 mx-auto mb-3 opacity-50" />
               <p className="text-sm">No categories match your search</p>
               <p className="text-xs mt-1">
@@ -1820,10 +1820,10 @@ export default function KnowledgeBase({ onNavigate }) {
                 
                 // Color scheme based on vector count
                 const getColorScheme = () => {
-                  if (vectorCount === 0) return { bg: "from-gray-50 to-gray-100", border: "border-gray-200", accent: "text-gray-500" };
-                  if (vectorCount < 10) return { bg: "from-blue-50 to-indigo-50", border: "border-blue-200", accent: "text-blue-600" };
-                  if (vectorCount < 30) return { bg: "from-indigo-50 to-purple-50", border: "border-indigo-300", accent: "text-indigo-600" };
-                  return { bg: "from-purple-50 to-pink-50", border: "border-purple-300", accent: "text-purple-600" };
+                  if (vectorCount === 0) return { bg: "from-bg02 to-bg03", border: "border-stroke01", accent: "text-text03" };
+                  if (vectorCount < 10) return { bg: "from-neutral01 to-neutral01", border: "border-neutral01", accent: "text-neutral02" };
+                  if (vectorCount < 30) return { bg: "from-neutral01 to-pinkTP/10", border: "border-primary/60", accent: "text-primary" };
+                  return { bg: "from-pinkTP/10 to-pinkTP/10", border: "border-purple-300", accent: "text-pinkTP" };
                 };
                 
                 const colors = getColorScheme();
@@ -1837,7 +1837,7 @@ export default function KnowledgeBase({ onNavigate }) {
                     className={`group relative rounded-xl border-2 overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-[1.02] ${
                       selectedCategory?.id === category.id
                         ? `${colors.border} bg-gradient-to-br ${colors.bg} shadow-lg scale-[1.02]`
-                        : `border-gray-200 bg-white hover:${colors.border}`
+                        : `border-stroke01 bg-white hover:${colors.border}`
                     }`}
                     onClick={() => setSelectedCategory(category)}
                   >
@@ -1848,13 +1848,13 @@ export default function KnowledgeBase({ onNavigate }) {
                           {(() => {
                             const CategoryIcon = getCategoryIcon(category.id);
                             return (
-                              <div className={`w-10 h-10 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center flex-shrink-0 shadow-sm`}>
+                              <div className={`w-10 h-10 rounded-lg bg-gradient-to-br from-neutral010 to-pinkTP flex items-center justify-center flex-shrink-0 shadow-sm`}>
                                 <CategoryIcon className="w-5 h-5 text-white" />
                               </div>
                             );
                           })()}
                           <div className="flex-1 min-w-0">
-                            <h3 className="text-sm font-bold text-gray-900 truncate group-hover:text-indigo-700 transition-colors">
+                            <h3 className="text-sm font-bold text-text01 truncate group-hover:text-textLink transition-colors">
                               {category.title}
                             </h3>
                           </div>
@@ -1864,7 +1864,7 @@ export default function KnowledgeBase({ onNavigate }) {
                             e.stopPropagation();
                             handleDeleteCategory(category.id);
                           }}
-                          className="ml-2 p-1.5 rounded-lg hover:bg-red-100 text-red-500 hover:text-red-700 transition-colors flex-shrink-0 opacity-0 group-hover:opacity-100"
+                          className="ml-2 p-1.5 rounded-lg hover:bg-error01 text-error010 hover:text-error02 transition-colors flex-shrink-0 opacity-0 group-hover:opacity-100"
                           title="Delete category"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -1874,41 +1874,41 @@ export default function KnowledgeBase({ onNavigate }) {
                     
                     {/* Content */}
                     <div className="px-4 py-3 bg-white">
-                      <p className="text-xs text-gray-600 line-clamp-2 mb-3 leading-relaxed">
+                      <p className="text-xs text-text02 line-clamp-2 mb-3 leading-relaxed">
                         {category.description || "No description"}
                       </p>
                       
                       {/* Stats Row */}
-                      <div className="flex items-center justify-between pt-3 border-t border-gray-100">
+                      <div className="flex items-center justify-between pt-3 border-t border-bg03">
                         <div className="flex items-center gap-3 text-[11px]">
                           <span className={`flex items-center gap-1.5 ${colors.accent}`}>
-                            <div className={`w-2 h-2 rounded-full bg-gradient-to-r from-indigo-400 to-purple-500 ${hasVectors ? 'animate-pulse' : ''}`} />
+                            <div className={`w-2 h-2 rounded-full bg-gradient-to-r from-primary to-pinkTP/100 ${hasVectors ? 'animate-pulse' : ''}`} />
                             <span className="font-bold">{vectorCount}</span>
-                            <span className="text-gray-400">vectors</span>
+                            <span className="text-text03">vectors</span>
                           </span>
-                          <span className="flex items-center gap-1.5 text-gray-600">
-                            <FileText className="w-3.5 h-3.5 text-gray-400" />
+                          <span className="flex items-center gap-1.5 text-text02">
+                            <FileText className="w-3.5 h-3.5 text-text03" />
                             <span className="font-semibold">{docCount}</span>
-                            <span className="text-gray-400">docs</span>
+                            <span className="text-text03">docs</span>
                           </span>
                         </div>
                         {hasVectors && (
-                          <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-700 text-[10px] font-semibold border border-emerald-200">
-                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse" />
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-gradient-to-r from-success01 to-neutral01 text-success02 text-[10px] font-semibold border border-success01">
+                            <div className="w-1.5 h-1.5 rounded-full bg-success010 mr-1.5 animate-pulse" />
                             Ready
                           </span>
                         )}
                       </div>
                       
                       {/* Action Buttons */}
-                      <div className="mt-3 pt-3 border-t border-gray-100 space-y-2">
+                      <div className="mt-3 pt-3 border-t border-bg03 space-y-2">
                         {/* Edit Category Button */}
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
                             handleEditCategory(category);
                           }}
-                          className="flex items-center justify-center gap-1.5 w-full px-3 py-2 rounded-lg bg-gradient-to-r from-gray-50 to-gray-100 hover:from-gray-100 hover:to-gray-200 text-gray-700 text-xs font-medium transition-colors border border-gray-200"
+                          className="flex items-center justify-center gap-1.5 w-full px-3 py-2 rounded-lg bg-gradient-to-r from-bg02 to-bg03 hover:from-bg03 hover:to-stroke01 text-text01 text-xs font-medium transition-colors border border-stroke01"
                         >
                           <Edit className="w-3.5 h-3.5" />
                           Edit Category
@@ -1927,8 +1927,8 @@ export default function KnowledgeBase({ onNavigate }) {
                           htmlFor={`file-upload-${category.id}`}
                           className={`flex items-center justify-center gap-1.5 w-full px-3 py-2 rounded-lg text-xs font-medium transition-colors border ${
                             uploadingCategoryId === category.id && (uploading || processing)
-                              ? "bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200"
-                              : "bg-gradient-to-r from-indigo-50 to-purple-50 hover:from-indigo-100 hover:to-purple-100 text-indigo-700 cursor-pointer border-indigo-200"
+                              ? "bg-bg03 text-text03 cursor-not-allowed border-stroke01"
+                              : "bg-gradient-to-r from-neutral01 to-pinkTP/10 hover:from-neutral01 hover:to-pinkTP/30 text-textLink cursor-pointer border-neutral02/40"
                           }`}
                         >
                           {uploadingCategoryId === category.id && (uploading || processing) ? (
@@ -1947,7 +1947,7 @@ export default function KnowledgeBase({ onNavigate }) {
                     </div>
                     
                     {/* Hover Accent Bar */}
-                    <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300`} />
+                    <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-neutral010 via-pinkTP/100 to-pinkTP/100 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300`} />
                   </motion.div>
                 );
               })}
@@ -1961,13 +1961,13 @@ export default function KnowledgeBase({ onNavigate }) {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="fixed bottom-6 right-6 bg-white border border-gray-200 shadow-lg rounded-xl p-4 z-50"
+          className="fixed bottom-6 right-6 bg-white border border-stroke01 shadow-lg rounded-xl p-4 z-50"
         >
           <div className="flex items-center gap-3">
-            <Loader2 className="w-5 h-5 animate-spin text-indigo-600" />
+            <Loader2 className="w-5 h-5 animate-spin text-primary" />
             <div>
-              <p className="text-sm font-semibold text-gray-900">Processing Document</p>
-              <p className="text-xs text-gray-500">Extracting text and vectorizing...</p>
+              <p className="text-sm font-semibold text-text01">Processing Document</p>
+              <p className="text-xs text-text03">Extracting text and vectorizing...</p>
             </div>
           </div>
         </motion.div>
@@ -1979,13 +1979,13 @@ export default function KnowledgeBase({ onNavigate }) {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="fixed bottom-6 right-6 bg-emerald-50 border border-emerald-200 shadow-lg rounded-xl p-4 z-50"
+          className="fixed bottom-6 right-6 bg-success01 border border-success01 shadow-lg rounded-xl p-4 z-50"
         >
           <div className="flex items-center gap-3">
-            <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+            <CheckCircle2 className="w-5 h-5 text-success03" />
             <div>
-              <p className="text-sm font-semibold text-emerald-900">Vectorization Complete</p>
-              <p className="text-xs text-emerald-700">
+              <p className="text-sm font-semibold text-success02">Vectorization Complete</p>
+              <p className="text-xs text-success02">
                 Created <strong>{vectorCount}</strong> vector embeddings
               </p>
             </div>
@@ -2001,14 +2001,14 @@ export default function KnowledgeBase({ onNavigate }) {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 p-6 border border-gray-200"
+              className="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 p-6 border border-stroke01"
             >
-              <h2 className="text-base font-semibold text-gray-900 mb-4">
+              <h2 className="text-base font-semibold text-text01 mb-4">
                 Create New Category
               </h2>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-1">
+                  <label className="block text-xs font-medium text-text01 mb-1">
                     Title *
                   </label>
                   <input
@@ -2018,11 +2018,11 @@ export default function KnowledgeBase({ onNavigate }) {
                       setNewCategory({ ...newCategory, title: e.target.value })
                     }
                     placeholder="e.g., Printer Troubleshooting"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-stroke01 rounded-lg text-sm focus:ring-2 focus:ring-primary focus:border-transparent"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-1">
+                  <label className="block text-xs font-medium text-text01 mb-1">
                     Description
                   </label>
                   <textarea
@@ -2035,7 +2035,7 @@ export default function KnowledgeBase({ onNavigate }) {
                     }
                     placeholder="Describe what this category covers..."
                     rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-stroke01 rounded-lg text-sm focus:ring-2 focus:ring-primary focus:border-transparent"
                   />
                 </div>
               </div>
@@ -2045,14 +2045,14 @@ export default function KnowledgeBase({ onNavigate }) {
                     setShowCreateModal(false);
                     setNewCategory({ title: "", description: "" });
                   }}
-                  className="px-3 py-1.5 rounded-lg text-xs font-medium text-gray-600 bg-gray-100 hover:bg-gray-200"
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium text-text02 bg-bg03 hover:bg-stroke01"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleCreateCategory}
                   disabled={!newCategory.title.trim()}
-                  className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-primary text-white hover:bg-textLink disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Create
                 </button>
@@ -2070,14 +2070,14 @@ export default function KnowledgeBase({ onNavigate }) {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 p-6 border border-gray-200"
+              className="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 p-6 border border-stroke01"
             >
-              <h2 className="text-base font-semibold text-gray-900 mb-4">
+              <h2 className="text-base font-semibold text-text01 mb-4">
                 Edit Category
               </h2>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-1">
+                  <label className="block text-xs font-medium text-text01 mb-1">
                     Title *
                   </label>
                   <input
@@ -2087,11 +2087,11 @@ export default function KnowledgeBase({ onNavigate }) {
                       setEditCategoryForm({ ...editCategoryForm, title: e.target.value })
                     }
                     placeholder="e.g., Printer Troubleshooting"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-stroke01 rounded-lg text-sm focus:ring-2 focus:ring-primary focus:border-transparent"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-1">
+                  <label className="block text-xs font-medium text-text01 mb-1">
                     Description
                   </label>
                   <textarea
@@ -2104,7 +2104,7 @@ export default function KnowledgeBase({ onNavigate }) {
                     }
                     placeholder="Describe what this category covers..."
                     rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-stroke01 rounded-lg text-sm focus:ring-2 focus:ring-primary focus:border-transparent"
                   />
                 </div>
               </div>
@@ -2114,14 +2114,14 @@ export default function KnowledgeBase({ onNavigate }) {
                     setEditingCategory(null);
                     setEditCategoryForm({ title: "", description: "" });
                   }}
-                  className="px-3 py-1.5 rounded-lg text-xs font-medium text-gray-600 bg-gray-100 hover:bg-gray-200"
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium text-text02 bg-bg03 hover:bg-stroke01"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleUpdateCategory}
                   disabled={!editCategoryForm.title.trim()}
-                  className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-primary text-white hover:bg-textLink disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Save Changes
                 </button>

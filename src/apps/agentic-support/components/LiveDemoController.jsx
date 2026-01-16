@@ -559,71 +559,76 @@ export default function LiveDemoController({ onInteractionCapture, onCreateGenes
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-lg shadow-lg flex-1 flex flex-col overflow-hidden border-2 border-gray-300"
+        className="bg-bg01 rounded-lg shadow-drop flex-1 flex flex-col overflow-hidden border-2 border-stroke01"
       >
-        <div className="flex items-center justify-between px-3 py-2 bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] border-b-2 border-gray-300">
+        <div className="flex items-center justify-between px-3 py-2 bg-gradient-to-r from-bg02 to-bg03 border-b-2 border-stroke01">
           <div className="flex items-center gap-2">
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-              className="w-5 h-5 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center shadow-lg"
+              className="w-5 h-5 rounded-full bg-gradient-to-br from-primary to-text02 flex items-center justify-center shadow-drop"
             >
-              <Sparkles className="w-3 h-3 text-white" />
+              <Sparkles className="w-3 h-3 text-bg01" />
             </motion.div>
             <div>
-              <div className="text-white font-bold text-xs">AI Interaction Hub</div>
-              <div className="text-white/80 text-[9px] font-medium">Multi-Channel Intelligence</div>
+              <div className="text-text01 font-bold text-xs">
+                AI Interaction Hub
+              </div>
+              <div className="text-text02 text-[9px] font-medium">
+                Multi-Channel Intelligence
+              </div>
             </div>
           </div>
           <div className="flex items-center gap-1.5">
             <motion.div
-              className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold bg-gradient-to-r from-emerald-400 to-green-500 text-white shadow-lg"
+              className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold bg-success03 text-bg01 shadow-drop"
               animate={{ scale: [1, 1.05, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
               <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-white"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-bg01 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-bg01"></span>
               </span>
               ACTIVE
             </motion.div>
-            <div className="text-[9px] font-mono text-white bg-white/30 px-2 py-0.5 rounded backdrop-blur-sm font-bold">
-              {Math.floor(elapsedTime / 60)}:{(elapsedTime % 60).toString().padStart(2, '0')}
+            <div className="text-[9px] font-mono text-text01 bg-bg01/30 px-2 py-0.5 rounded backdrop-blur-sm font-bold">
+              {Math.floor(elapsedTime / 60)}:
+              {(elapsedTime % 60).toString().padStart(2, "0")}
             </div>
           </div>
         </div>
 
         {/* Mode Selection - Compact */}
-        <div className="px-2 py-1.5 bg-gray-50 border-b-2 border-gray-300">
+        <div className="px-2 py-1.5 bg-bg02 border-b-2 border-stroke01">
           <div className="grid grid-cols-3 gap-1.5">
             <button
-              onClick={() => setDemoMode('auto')}
+              onClick={() => setDemoMode("auto")}
               className={`px-1.5 py-1 rounded text-[9px] font-bold transition-all ${
-                demoMode === 'auto'
-                  ? 'bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] text-white shadow-md scale-105'
-                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300 hover:border-gray-400'
+                demoMode === "auto"
+                  ? "bg-gradient-to-r from-select to-select/80 text-text01 border-stroke01 shadow-drop scale-105"
+                  : "bg-bg01 text-text01 hover:bg-hover border-stroke01"
               }`}
             >
               <Sparkles className="w-3 h-3 mx-auto mb-0.5" />
               <span className="text-[8px]">Auto</span>
             </button>
             <button
-              onClick={() => setDemoMode('manual')}
+              onClick={() => setDemoMode("manual")}
               className={`px-1.5 py-1 rounded text-[9px] font-bold transition-all ${
-                demoMode === 'manual'
-                  ? 'bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] text-white shadow-md scale-105'
-                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300 hover:border-gray-400'
+                demoMode === "manual"
+                  ? "bg-gradient-to-r from-select to-select/80 text-text01 shadow-drop scale-105"
+                  : "bg-bg01 text-text01 hover:bg-hover border border-stroke01"
               }`}
             >
               <Zap className="w-3 h-3 mx-auto mb-0.5" />
               <span className="text-[8px]">Manual</span>
             </button>
             <button
-              onClick={() => setDemoMode('live-voice')}
+              onClick={() => setDemoMode("live-voice")}
               className={`px-1.5 py-1 rounded text-[9px] font-bold transition-all ${
-                demoMode === 'live-voice'
-                  ? 'bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] text-white shadow-md scale-105'
-                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300 hover:border-gray-400'
+                demoMode === "live-voice"
+                  ? "bg-gradient-to-r from-select to-select/80 text-text01 shadow-drop scale-105"
+                  : "bg-bg01 text-text01 hover:bg-hover border border-stroke01"
               }`}
             >
               <Mic className="w-3 h-3 mx-auto mb-0.5" />
@@ -633,119 +638,133 @@ export default function LiveDemoController({ onInteractionCapture, onCreateGenes
         </div>
 
         {/* Controls and Active Channels - Compact */}
-        <div className="px-2 py-1.5 flex-1 flex flex-col bg-gradient-to-b from-white via-purple-50/30 to-white min-h-0 overflow-y-auto">
-          {demoMode === 'auto' && (
+        <div className="px-2 py-1.5 flex-1 flex flex-col bg-gradient-to-b from-bg01 via-bg02/30 to-bg01 min-h-0 overflow-y-auto">
+          {demoMode === "auto" && (
             <div className="space-y-1.5">
               <div className="flex items-center gap-1.5">
                 <button
                   onClick={() => setIsPlaying(!isPlaying)}
-                  className="flex-1 flex items-center justify-center gap-1.5 px-2 py-1.5 bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] text-white rounded font-bold hover:shadow-lg transition-all shadow-md text-[9px]"
+                  className="flex-1 flex items-center justify-center gap-1.5 px-2 py-1.5 bg-gradient-to-r from-buttonPrimary to-buttonPrimary-hover text-bg01 rounded font-bold hover:shadow-drop transition-all shadow-drop text-[9px]"
                 >
-                  {isPlaying ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
-                  {isPlaying ? 'Pause' : 'Start'}
+                  {isPlaying ? (
+                    <Pause className="w-3 h-3" />
+                  ) : (
+                    <Play className="w-3 h-3" />
+                  )}
+                  {isPlaying ? "Pause" : "Start"}
                 </button>
                 <button
                   onClick={resetDemo}
-                  className="px-2 py-1.5 bg-white hover:bg-gray-100 text-[#2E2E2E] rounded transition-all border border-gray-300 hover:border-gray-400"
+                  className="px-2 py-1.5 bg-bg01 hover:bg-hover text-text01 rounded transition-all border border-stroke01"
                   title="Reset"
                 >
                   <RotateCcw className="w-3 h-3" />
                 </button>
               </div>
-              
+
               {/* Active Channels Status - Compact */}
-              <div className="bg-gradient-to-br from-purple-50 to-indigo-50 border border-purple-200 rounded-lg p-1.5">
-                <div className="text-[9px] font-bold text-purple-900 mb-1 flex items-center gap-1">
+              <div className="bg-gradient-to-br from-bg02 to-bg03 border border-stroke01 rounded-lg p-1.5">
+                <div className="text-[9px] font-bold text-text01 mb-1 flex items-center gap-1">
                   <Activity className="w-3 h-3" />
                   Channels
                 </div>
                 <div className="grid grid-cols-2 gap-1">
-                  <div className="flex items-center gap-1 bg-white rounded px-1.5 py-0.5 border border-purple-200">
-                    <Phone className="w-2.5 h-2.5 text-purple-600" />
-                    <span className="text-[8px] font-semibold text-gray-700">Voice</span>
-                    <span className="ml-auto w-1 h-1 bg-green-500 rounded-full"></span>
+                  <div className="flex items-center gap-1 bg-bg01 rounded px-1.5 py-0.5 border border-stroke01">
+                    <Phone className="w-2.5 h-2.5 text-primary" />
+                    <span className="text-[8px] font-semibold text-text01">
+                      Voice
+                    </span>
+                    <span className="ml-auto w-1 h-1 bg-success03 rounded-full"></span>
                   </div>
-                  <div className="flex items-center gap-1 bg-white rounded px-1.5 py-0.5 border border-purple-200">
-                    <MessageSquare className="w-2.5 h-2.5 text-purple-600" />
-                    <span className="text-[8px] font-semibold text-gray-700">SMS</span>
-                    <span className="ml-auto w-1 h-1 bg-green-500 rounded-full"></span>
+                  <div className="flex items-center gap-1 bg-bg01 rounded px-1.5 py-0.5 border border-stroke01">
+                    <MessageSquare className="w-2.5 h-2.5 text-primary" />
+                    <span className="text-[8px] font-semibold text-text01">
+                      SMS
+                    </span>
+                    <span className="ml-auto w-1 h-1 bg-success03 rounded-full"></span>
                   </div>
-                  <div className="flex items-center gap-1 bg-white rounded px-1.5 py-0.5 border border-purple-200">
-                    <MessageSquare className="w-2.5 h-2.5 text-purple-600" />
-                    <span className="text-[8px] font-semibold text-gray-700">WhatsApp</span>
-                    <span className="ml-auto w-1 h-1 bg-green-500 rounded-full"></span>
+                  <div className="flex items-center gap-1 bg-bg01 rounded px-1.5 py-0.5 border border-stroke01">
+                    <MessageSquare className="w-2.5 h-2.5 text-primary" />
+                    <span className="text-[8px] font-semibold text-text01">
+                      WhatsApp
+                    </span>
+                    <span className="ml-auto w-1 h-1 bg-success03 rounded-full"></span>
                   </div>
-                  <div className="flex items-center gap-1 bg-white rounded px-1.5 py-0.5 border border-purple-200">
-                    <Mail className="w-2.5 h-2.5 text-purple-600" />
-                    <span className="text-[8px] font-semibold text-gray-700">Chat</span>
-                    <span className="ml-auto w-1 h-1 bg-green-500 rounded-full"></span>
+                  <div className="flex items-center gap-1 bg-bg01 rounded px-1.5 py-0.5 border border-stroke01">
+                    <Mail className="w-2.5 h-2.5 text-primary" />
+                    <span className="text-[8px] font-semibold text-text01">
+                      Chat
+                    </span>
+                    <span className="ml-auto w-1 h-1 bg-success03 rounded-full"></span>
                   </div>
                 </div>
               </div>
             </div>
           )}
 
-          {demoMode === 'live-voice' && (
+          {demoMode === "live-voice" && (
             <div className="space-y-1.5">
               <div className="flex items-center gap-1.5">
                 <button
                   onClick={isListening ? stopLiveVoice : startLiveVoice}
-                  className={`flex-1 flex items-center justify-center gap-1.5 px-2 py-1.5 rounded font-bold transition-all shadow-md text-[9px] ${
+                  className={`flex-1 flex items-center justify-center gap-1.5 px-2 py-1.5 rounded font-bold transition-all shadow-drop text-[9px] ${
                     isListening
-                      ? 'bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white'
-                      : 'bg-gradient-to-r from-[#2E2E2E] to-[#4A4A4A] text-white hover:shadow-lg'
+                      ? "bg-gradient-to-r from-error03 to-error02 hover:from-error02 hover:to-error03 text-bg01"
+                      : "bg-gradient-to-r from-buttonPrimary to-buttonPrimary-hover text-bg01 hover:shadow-drop"
                   }`}
                 >
                   <Mic className="w-3 h-3" />
-                  {isListening ? 'Stop' : 'Start'}
+                  {isListening ? "Stop" : "Start"}
                 </button>
                 {!hasSpeechAPI && (
-                  <span className="text-[8px] bg-red-100 text-red-700 px-1.5 py-0.5 rounded border border-red-200 font-semibold">
+                  <span className="text-[8px] bg-error01 text-error02 px-1.5 py-0.5 rounded border border-error02 font-semibold">
                     Chrome
                   </span>
                 )}
               </div>
-              {getCurrentProvider() === 'genesys' && (
-                <div className="text-[8px] text-gray-600 dark:text-gray-400 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded px-1.5 py-1">
-                  <span className="font-semibold">💡</span> Auto-creates Genesys conversation when finished.
+              {getCurrentProvider() === "genesys" && (
+                <div className="text-[8px] text-text02 bg-neutral01 border border-neutral02 rounded px-1.5 py-1">
+                  <span className="font-semibold">💡</span> Auto-creates Genesys
+                  conversation when finished.
                 </div>
               )}
             </div>
           )}
 
-          {demoMode === 'manual' && (
+          {demoMode === "manual" && (
             <div className="grid grid-cols-2 gap-1">
               <button
                 onClick={() => startVoiceSimulation(DEMO_SCENARIOS.voice[0])}
-                className="flex flex-col items-center gap-0.5 px-1.5 py-1.5 bg-white hover:bg-gray-100 text-gray-700 rounded text-[8px] font-bold transition-all border border-gray-300 hover:border-gray-400 shadow-sm"
+                className="flex flex-col items-center gap-0.5 px-1.5 py-1.5 bg-bg01 hover:bg-hover text-text01 rounded text-[8px] font-bold transition-all border border-stroke01 shadow-drop"
               >
-                <Phone className="w-3 h-3 text-[#780096]" />
+                <Phone className="w-3 h-3 text-primary" />
                 Voice
               </button>
               <button
-                onClick={() => receiveMessage('sms', DEMO_SCENARIOS.sms[0])}
-                className="flex flex-col items-center gap-0.5 px-1.5 py-1.5 bg-white hover:bg-gray-100 text-gray-700 rounded text-[8px] font-bold transition-all border border-gray-300 hover:border-gray-400 shadow-sm"
+                onClick={() => receiveMessage("sms", DEMO_SCENARIOS.sms[0])}
+                className="flex flex-col items-center gap-0.5 px-1.5 py-1.5 bg-bg01 hover:bg-hover text-text01 rounded text-[8px] font-bold transition-all border border-stroke01 shadow-drop"
               >
-                <MessageSquare className="w-3 h-3 text-[#780096]" />
+                <MessageSquare className="w-3 h-3 text-primary" />
                 SMS
               </button>
               <button
-                onClick={() => receiveMessage('whatsapp', DEMO_SCENARIOS.whatsapp[0])}
-                className="flex flex-col items-center gap-0.5 px-1.5 py-1.5 bg-white hover:bg-purple-50 text-gray-700 rounded text-[8px] font-bold transition-all border border-purple-200 hover:border-purple-300 shadow-sm"
+                onClick={() =>
+                  receiveMessage("whatsapp", DEMO_SCENARIOS.whatsapp[0])
+                }
+                className="flex flex-col items-center gap-0.5 px-1.5 py-1.5 bg-bg01 hover:bg-bg02 text-text01 rounded text-[8px] font-bold transition-all border border-stroke01 shadow-drop"
               >
-                <MessageSquare className="w-3 h-3 text-[#780096]" />
+                <MessageSquare className="w-3 h-3 text-primary" />
                 WhatsApp
               </button>
               <button
-                onClick={() => receiveMessage('chat', DEMO_SCENARIOS.chat[0])}
-                className="flex flex-col items-center gap-0.5 px-1.5 py-1.5 bg-white hover:bg-gray-100 text-gray-700 rounded text-[8px] font-bold transition-all border border-gray-300 hover:border-gray-400 shadow-sm"
+                onClick={() => receiveMessage("chat", DEMO_SCENARIOS.chat[0])}
+                className="flex flex-col items-center gap-0.5 px-1.5 py-1.5 bg-bg01 hover:bg-hover text-text01 rounded text-[8px] font-bold transition-all border border-stroke01 shadow-drop"
               >
-                <Mail className="w-3 h-3 text-[#780096]" />
+                <Mail className="w-3 h-3 text-primary" />
                 Chat
               </button>
             </div>
           )}
-
         </div>
       </motion.div>
 
@@ -756,56 +775,58 @@ export default function LiveDemoController({ onInteractionCapture, onCreateGenes
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="mt-2 bg-gradient-to-r from-red-600 to-pink-600 rounded-lg p-2.5 text-white shadow-xl border-2 border-red-400"
+            className="mt-2 bg-gradient-to-r from-error03 to-notifications rounded-lg p-2.5 text-bg01 shadow-drop border-2 border-error01"
           >
-                <div className="flex items-center gap-2">
-                  <motion.div 
-                    className="relative"
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 1, repeat: Infinity }}
-                  >
-                    <Phone className="w-4 h-4" />
-                    <span className="absolute -top-1 -right-1 h-2 w-2 bg-white rounded-full">
-                      <span className="absolute inset-0 bg-white rounded-full animate-ping" />
-                    </span>
-                  </motion.div>
-                  <div className="flex-1">
-                    <div className="font-bold text-[10px]">
-                      {currentChannel.type === 'voice' ? '📞 ACTIVE CALL' : `📱 ${currentChannel.type.toUpperCase()}`}
-                    </div>
-                    <div className="text-[9px] opacity-90 font-medium">
-                      {currentChannel.customerName}
-                    </div>
-                  </div>
-                  <motion.div
-                    animate={{ opacity: [1, 0.5, 1] }}
-                    transition={{ duration: 1, repeat: Infinity }}
-                    className="px-2 py-0.5 bg-white/20 rounded text-[8px] font-bold backdrop-blur border border-white/30"
-                  >
-                    ⬤ LIVE
-                  </motion.div>
+            <div className="flex items-center gap-2">
+              <motion.div
+                className="relative"
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 1, repeat: Infinity }}
+              >
+                <Phone className="w-4 h-4" />
+                <span className="absolute -top-1 -right-1 h-2 w-2 bg-bg01 rounded-full">
+                  <span className="absolute inset-0 bg-bg01 rounded-full animate-ping" />
+                </span>
+              </motion.div>
+              <div className="flex-1">
+                <div className="font-bold text-[10px]">
+                  {currentChannel.type === "voice"
+                    ? "📞 ACTIVE CALL"
+                    : `📱 ${currentChannel.type.toUpperCase()}`}
                 </div>
+                <div className="text-[9px] opacity-90 font-medium">
+                  {currentChannel.customerName}
+                </div>
+              </div>
+              <motion.div
+                animate={{ opacity: [1, 0.5, 1] }}
+                transition={{ duration: 1, repeat: Infinity }}
+                className="px-2 py-0.5 bg-bg01/20 rounded text-[8px] font-bold backdrop-blur border border-bg01/30"
+              >
+                ⬤ LIVE
+              </motion.div>
+            </div>
 
-                {liveTranscript && (
-                  <motion.div 
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    className="bg-black/30 backdrop-blur rounded mt-1.5 p-1.5 border border-white/20"
-                  >
-                    <div className="text-[8px] font-bold opacity-90 mb-0.5 flex items-center gap-1">
-                      <Radio className="w-2 h-2 animate-pulse" />
-                      TRANSCRIPTION
-                    </div>
-                    <div className="text-[10px] font-medium">
-                      "{liveTranscript}"
-                      <motion.span 
-                        className="inline-block w-0.5 h-3 bg-white ml-1 align-middle"
-                        animate={{ opacity: [1, 0] }}
-                        transition={{ duration: 0.7, repeat: Infinity }}
-                      />
-                    </div>
-                  </motion.div>
-                )}
+            {liveTranscript && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                className="bg-text01/30 backdrop-blur rounded mt-1.5 p-1.5 border border-bg01/20"
+              >
+                <div className="text-[8px] font-bold opacity-90 mb-0.5 flex items-center gap-1">
+                  <Radio className="w-2 h-2 animate-pulse" />
+                  TRANSCRIPTION
+                </div>
+                <div className="text-[10px] font-medium">
+                  "{liveTranscript}"
+                  <motion.span
+                    className="inline-block w-0.5 h-3 bg-bg01 ml-1 align-middle"
+                    animate={{ opacity: [1, 0] }}
+                    transition={{ duration: 0.7, repeat: Infinity }}
+                  />
+                </div>
+              </motion.div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

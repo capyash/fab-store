@@ -35,7 +35,7 @@ function Tooltip({ content, children }) {
     >
       {children}
       {open && (
-        <div className="absolute z-50 -top-2 left-1/2 -translate-x-1/2 -translate-y-full w-64 rounded-lg bg-gray-900 text-white text-xs px-3 py-2 shadow-xl border border-gray-700">
+        <div className="absolute z-50 -top-2 left-1/2 -translate-x-1/2 -translate-y-full w-64 rounded-lg bg-text01 text-white text-xs px-3 py-2 shadow-xl border border-text01">
           {content}
         </div>
       )}
@@ -279,7 +279,7 @@ export default function ArchitecturePage({ onBack }) {
   ];
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#F7F8FF]">
+    <div className="relative min-h-screen overflow-hidden bg-[bg02]">
       {/* Background to match FAB Store */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_18%,rgba(155,138,255,0.18),transparent_55%),radial-gradient(circle_at_75%_15%,rgba(118,196,255,0.16),transparent_55%),radial-gradient(circle_at_50%_85%,rgba(255,208,233,0.2),transparent_50%)] pointer-events-none" />
 
@@ -290,16 +290,16 @@ export default function ArchitecturePage({ onBack }) {
             <div className="flex items-center gap-4 flex-1 min-w-[260px]">
               <button
                 onClick={onBack}
-                className="p-2 rounded-lg hover:bg-gray-100 transition-colors border border-gray-200"
+                className="p-2 rounded-lg hover:bg-bg03 transition-colors border border-stroke01"
               >
-                <ArrowLeft className="w-5 h-5 text-gray-700" />
+                <ArrowLeft className="w-5 h-5 text-text01" />
               </button>
             <div className="flex items-center gap-3">
-              <div className="h-9 w-9 rounded-xl bg-white flex items-center justify-center shadow-md border border-gray-200">
+              <div className="h-9 w-9 rounded-xl bg-white flex items-center justify-center shadow-md border border-stroke01">
                 <img src="/tp-logo-new.png" alt="Store" className="h-7 w-auto object-contain" />
               </div>
               <div>
-                <p className="text-base md:text-lg font-semibold text-gray-900">
+                <p className="text-base md:text-lg font-semibold text-text01">
                   Enterprise Architecture Overview
                 </p>
               </div>
@@ -310,8 +310,8 @@ export default function ArchitecturePage({ onBack }) {
                 onClick={() => setViewMode("architecture")}
                 className={`px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-[0.85rem] font-semibold transition-all ${
                   viewMode === "architecture"
-                    ? "bg-[#780096] text-white shadow-lg"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300"
+                    ? "bg-pinkTP text-white shadow-lg"
+                    : "bg-bg03 text-text01 hover:bg-stroke01 border border-stroke01"
                 }`}
               >
                 Architecture
@@ -320,20 +320,20 @@ export default function ArchitecturePage({ onBack }) {
                 onClick={() => setViewMode("roi")}
                 className={`px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-[0.85rem] font-semibold transition-all ${
                   viewMode === "roi"
-                    ? "bg-[#780096] text-white shadow-lg"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300"
+                    ? "bg-pinkTP text-white shadow-lg"
+                    : "bg-bg03 text-text01 hover:bg-stroke01 border border-stroke01"
                 }`}
               >
                 ROI & Value
               </button>
               {/* Static user pill to match FAB Store header */}
-              <div className="hidden sm:flex items-center gap-2 rounded-full bg-white border border-gray-200 px-2.5 py-1 shadow-sm">
+              <div className="hidden sm:flex items-center gap-2 rounded-full bg-white border border-stroke01 px-2.5 py-1 shadow-sm">
                 <img
                   src="/vkv.jpeg"
                   alt="Vinod"
                   className="w-7 h-7 rounded-full object-cover"
                 />
-                <span className="text-xs md:text-sm font-medium text-gray-800">
+                <span className="text-xs md:text-sm font-medium text-text01">
                   Vinod
                 </span>
               </div>
@@ -355,17 +355,17 @@ export default function ArchitecturePage({ onBack }) {
                 <div className="space-y-3 md:space-y-4">
                   {/* Layer stack grouped into bands */}
                   {/* Band 1: FAB Store */}
-                  <section className="rounded-2xl bg-gradient-to-r from-indigo-100 via-indigo-50 to-sky-50 border border-indigo-200 shadow-md p-3 md:p-4 space-y-3">
+                  <section className="rounded-2xl bg-gradient-to-r from-neutral01 via-neutral01 to-neutral01 border border-neutral02/40 shadow-md p-3 md:p-4 space-y-3">
                     <div className="flex items-center justify-between flex-wrap gap-2">
                       <div>
-                        <p className="text-base md:text-lg font-semibold tracking-[0.18em] text-indigo-500 uppercase">
+                        <p className="text-base md:text-lg font-semibold tracking-[0.18em] text-neutral010 uppercase">
                           FAB Store
                         </p>
-                        <p className="text-xs md:text-sm text-gray-600 mt-1">
+                        <p className="text-xs md:text-sm text-text02 mt-1">
                           Experience layer for TP.ai applications and platforms.
                         </p>
                       </div>
-                      <div className="text-[11px] md:text-xs text-gray-600 text-right">
+                      <div className="text-[11px] md:text-xs text-text02 text-right">
                         <div>
                           <span className="font-semibold">Applications today:</span>{" "}
                           Cogniclaim · TP Resolve
@@ -391,96 +391,96 @@ export default function ArchitecturePage({ onBack }) {
                             transition={{ delay: idx * 0.05 }}
                             className={`relative w-full text-left p-4 md:p-5 rounded-xl border bg-white/95 transition-all duration-150 ${
                               isActive
-                                ? "border-[#780096]/60 shadow-md scale-[1.01]"
-                                : "border-gray-200/80 hover:border-[#2563EB]/50 hover:bg-white hover:shadow-md hover:scale-[1.01]"
+                                ? "border-pinkTP/60 shadow-md scale-[1.01]"
+                                : "border-stroke01/80 hover:border-[neutral02]/50 hover:bg-white hover:shadow-md hover:scale-[1.01]"
                             } ${isFabStore ? "md:col-span-2" : ""}`}
                           >
                             <div className="flex items-start gap-3">
                               <div className="pt-0.5">
-                                <layer.icon className="w-6 h-6 text-[#2563EB]" />
+                                <layer.icon className="w-6 h-6 text-[neutral02]" />
                               </div>
                               <div className="flex-1 space-y-1">
                                 <div className="flex items-center flex-wrap gap-2">
                                   {/* Band header already shows \"Platform Layer\" – keep subtitle + status only here */}
-                                  <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-gray-100 text-gray-700">
+                                  <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-bg03 text-text01">
                                     {layer.subtitle}
                                   </span>
                                   <span
                                     className={`px-2.5 py-1 rounded-full text-[10px] font-semibold ${
                                       layer.status === "Built"
-                                        ? "bg-green-100 text-green-700"
+                                        ? "bg-success01 text-success02"
                                         : layer.status === "Partially Built"
-                                        ? "bg-amber-100 text-amber-700"
-                                        : "bg-gray-100 text-gray-700"
+                                        ? "bg-alert01 text-amber-700"
+                                        : "bg-bg03 text-text01"
                                     }`}
                                   >
                                     {layer.status}
                                   </span>
                                 </div>
-                                <p className="text-[11px] md:text-xs text-gray-600">
+                                <p className="text-[11px] md:text-xs text-text02">
                                   {layer.description}
                                 </p>
 
                                 {layer.id === "fab-store" && (
                                   <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3 text-xs md:text-sm">
                                     {/* Applications box */}
-                                    <div className="rounded-xl border border-indigo-200 bg-indigo-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
-                                      <div className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
+                                    <div className="rounded-xl border border-neutral02/40 bg-neutral01 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                                      <div className="font-semibold text-text01 mb-1 text-sm md:text-base">
                                         Applications
                                       </div>
-                                      <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                                      <p className="text-[11px] md:text-xs text-text02 mb-1">
                                         TP.ai solutions launched from FAB Store for different industries.
                                       </p>
                                       <div className="flex flex-wrap gap-1.5">
-                                        <span className="px-2.5 py-1 rounded-full bg-white text-indigo-700 text-[11px] md:text-xs font-semibold border border-indigo-200">
+                                        <span className="px-2.5 py-1 rounded-full bg-white text-textLink text-[11px] md:text-xs font-semibold border border-neutral02/40">
                                           Cogniclaim
                                         </span>
-                                        <span className="px-2.5 py-1 rounded-full bg-white text-indigo-700 text-[11px] md:text-xs font-semibold border border-indigo-200">
+                                        <span className="px-2.5 py-1 rounded-full bg-white text-textLink text-[11px] md:text-xs font-semibold border border-neutral02/40">
                                           TP Resolve
                                         </span>
-                                        <span className="px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-800 text-[11px] md:text-xs font-semibold border border-indigo-200">
+                                        <span className="px-2.5 py-1 rounded-full bg-neutral01 text-indigo-800 text-[11px] md:text-xs font-semibold border border-neutral02/40">
                                           Future industry applications
                                         </span>
                                       </div>
                                     </div>
 
                                     {/* Platforms box */}
-                                    <div className="rounded-xl border border-indigo-200 bg-indigo-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
-                                      <div className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
+                                    <div className="rounded-xl border border-neutral02/40 bg-neutral01 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                                      <div className="font-semibold text-text01 mb-1 text-sm md:text-base">
                                         Platforms
                                       </div>
-                                      <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                                      <p className="text-[11px] md:text-xs text-text02 mb-1">
                                         Reusable engines (like SOP Executor) that multiple applications can build on.
                                       </p>
                                       <div className="flex flex-wrap gap-1.5">
-                                        <span className="px-2.5 py-1 rounded-full bg-white text-indigo-700 text-[11px] md:text-xs font-semibold border border-indigo-200">
+                                        <span className="px-2.5 py-1 rounded-full bg-white text-textLink text-[11px] md:text-xs font-semibold border border-neutral02/40">
                                           SOP Executor
                                         </span>
-                                        <span className="px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-800 text-[11px] md:text-xs font-semibold border border-indigo-200">
+                                        <span className="px-2.5 py-1 rounded-full bg-neutral01 text-indigo-800 text-[11px] md:text-xs font-semibold border border-neutral02/40">
                                           Platform 2 (Field Service)
                                         </span>
-                                        <span className="px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-800 text-[11px] md:text-xs font-semibold border border-indigo-200">
+                                        <span className="px-2.5 py-1 rounded-full bg-neutral01 text-indigo-800 text-[11px] md:text-xs font-semibold border border-neutral02/40">
                                           Platform 3 (CX / others)
                                         </span>
                                       </div>
                                     </div>
 
                                     {/* Models box */}
-                                    <div className="rounded-xl border border-indigo-200 bg-indigo-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
-                                      <div className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
+                                    <div className="rounded-xl border border-neutral02/40 bg-neutral01 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                                      <div className="font-semibold text-text01 mb-1 text-sm md:text-base">
                                         Models
                                       </div>
-                                      <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                                      <p className="text-[11px] md:text-xs text-text02 mb-1">
                                         Foundation models available to platforms and apps via the AI Engine.
                                       </p>
                                       <div className="flex flex-wrap gap-1.5">
-                                        <span className="px-2.5 py-1 rounded-full bg-white text-indigo-700 text-[11px] md:text-xs font-semibold border border-indigo-200">
+                                        <span className="px-2.5 py-1 rounded-full bg-white text-textLink text-[11px] md:text-xs font-semibold border border-neutral02/40">
                                           GPT‑4
                                         </span>
-                                        <span className="px-2.5 py-1 rounded-full bg-white text-indigo-700 text-[11px] md:text-xs font-semibold border border-indigo-200">
+                                        <span className="px-2.5 py-1 rounded-full bg-white text-textLink text-[11px] md:text-xs font-semibold border border-neutral02/40">
                                           GPT‑4o‑mini
                                         </span>
-                                        <span className="px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-800 text-[11px] md:text-xs font-semibold border border-indigo-200">
+                                        <span className="px-2.5 py-1 rounded-full bg-neutral01 text-indigo-800 text-[11px] md:text-xs font-semibold border border-neutral02/40">
                                           Azure / GCP models (future)
                                         </span>
                                       </div>
@@ -502,17 +502,17 @@ export default function ArchitecturePage({ onBack }) {
                   </section>
 
                   {/* Band 2A: Platform Layer */}
-                  <section className="rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50 to-violet-50 border border-emerald-100 p-3 md:p-4 space-y-3">
+                  <section className="rounded-2xl bg-gradient-to-r from-success01 via-neutral01 to-pinkTP/10 border border-success01 p-3 md:p-4 space-y-3">
                     <div className="flex items-center justify-between flex-wrap gap-2">
                       <div>
-                        <p className="text-base md:text-lg font-semibold tracking-[0.18em] text-emerald-500 uppercase">
+                        <p className="text-base md:text-lg font-semibold tracking-[0.18em] text-success010 uppercase">
                           Platform Layer
                         </p>
-                        <p className="text-xs md:text-sm text-gray-600 mt-1">
+                        <p className="text-xs md:text-sm text-text02 mt-1">
                           Reusable business platforms that every solution can plug into.
                         </p>
                       </div>
-                      <div className="text-[11px] md:text-xs text-gray-600 text-right">
+                      <div className="text-[11px] md:text-xs text-text02 text-right">
                         <div>
                           <span className="font-semibold">Current platform:</span>{" "}
                           SOP Executor
@@ -538,33 +538,33 @@ export default function ArchitecturePage({ onBack }) {
                             transition={{ delay: idx * 0.05 }}
                             className={`relative w-full text-left p-4 md:p-5 rounded-xl border bg-white/95 transition-all duration-150 ${
                               isActive
-                                ? "border-[#0F766E]/60 shadow-md scale-[1.01]"
-                                : "border-gray-200/80 hover:border-[#0F766E]/50 hover:bg-white hover:shadow-md hover:scale-[1.01]"
+                                ? "border-[success02]/60 shadow-md scale-[1.01]"
+                                : "border-stroke01/80 hover:border-[success02]/50 hover:bg-white hover:shadow-md hover:scale-[1.01]"
                             }`}
                           >
                             <div className="flex items-start gap-3">
                               <div className="pt-0.5">
-                                <layer.icon className="w-6 h-6 text-emerald-700" />
+                                <layer.icon className="w-6 h-6 text-success02" />
                               </div>
                               <div className="flex-1 space-y-1">
                                 <div className="flex items-center flex-wrap gap-2">
                                   {/* Band header already shows "Platform Layer" – show subtitle + status only here */}
-                                  <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-gray-100 text-gray-700">
+                                  <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-bg03 text-text01">
                                     {layer.subtitle}
                                   </span>
                                   <span
                                     className={`px-2.5 py-1 rounded-full text-[10px] font-semibold ${
                                       layer.status === "Built"
-                                        ? "bg-green-100 text-green-700"
+                                        ? "bg-success01 text-success02"
                                         : layer.status === "Partially Built"
-                                        ? "bg-amber-100 text-amber-700"
-                                        : "bg-gray-100 text-gray-700"
+                                        ? "bg-alert01 text-amber-700"
+                                        : "bg-bg03 text-text01"
                                     }`}
                                   >
                                     {layer.status}
                                   </span>
                                 </div>
-                                <p className="text-[11px] md:text-xs text-gray-600">
+                                <p className="text-[11px] md:text-xs text-text02">
                                   {layer.description}
                                 </p>
                               </div>
@@ -572,63 +572,63 @@ export default function ArchitecturePage({ onBack }) {
                             {layer.id === "platform" && (
                               <div className="mt-4 ml-12 grid grid-cols-1 md:grid-cols-3 gap-3 text-xs md:text-sm">
                                 {/* Components */}
-                                <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
-                                  <div className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
+                                <div className="rounded-xl border border-success01 bg-success01 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                                  <div className="font-semibold text-text01 mb-1 text-sm md:text-base">
                                     Components
                                   </div>
-                                  <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                                  <p className="text-[11px] md:text-xs text-text02 mb-1">
                                     Reusable UI building blocks shared across all applications.
                                   </p>
                                   <div className="flex flex-wrap gap-1.5">
-                                    <span className="px-2.5 py-1 rounded-full bg-white text-emerald-700 text-[11px] md:text-xs font-semibold border border-emerald-200">
+                                    <span className="px-2.5 py-1 rounded-full bg-white text-success02 text-[11px] md:text-xs font-semibold border border-success01">
                                       ReasoningCard
                                     </span>
-                                    <span className="px-2.5 py-1 rounded-full bg-white text-emerald-700 text-[11px] md:text-xs font-semibold border border-emerald-200">
+                                    <span className="px-2.5 py-1 rounded-full bg-white text-success02 text-[11px] md:text-xs font-semibold border border-success01">
                                       SOPViewer
                                     </span>
-                                    <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] md:text-xs font-semibold border border-emerald-200">
+                                    <span className="px-2.5 py-1 rounded-full bg-success01 text-success02 text-[11px] md:text-xs font-semibold border border-success01">
                                       Unified AI Console
                                     </span>
                                   </div>
                                 </div>
 
                                 {/* Platform services */}
-                                <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
-                                  <div className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
+                                <div className="rounded-xl border border-success01 bg-success01 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                                  <div className="font-semibold text-text01 mb-1 text-sm md:text-base">
                                     Platform Services
                                   </div>
-                                  <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                                  <p className="text-[11px] md:text-xs text-text02 mb-1">
                                     Common SOP and workflow APIs consumed by every application.
                                   </p>
                                   <div className="flex flex-wrap gap-1.5">
-                                    <span className="px-2.5 py-1 rounded-full bg-white text-emerald-700 text-[11px] md:text-xs font-semibold border border-emerald-200">
+                                    <span className="px-2.5 py-1 rounded-full bg-white text-success02 text-[11px] md:text-xs font-semibold border border-success01">
                                       SOP APIs
                                     </span>
-                                    <span className="px-2.5 py-1 rounded-full bg-white text-emerald-700 text-[11px] md:text-xs font-semibold border border-emerald-200">
+                                    <span className="px-2.5 py-1 rounded-full bg-white text-success02 text-[11px] md:text-xs font-semibold border border-success01">
                                       Chat / Analysis
                                     </span>
-                                    <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] md:text-xs font-semibold border border-emerald-200">
+                                    <span className="px-2.5 py-1 rounded-full bg-success01 text-success02 text-[11px] md:text-xs font-semibold border border-success01">
                                       Orchestration hooks
                                     </span>
                                   </div>
                                 </div>
 
                                 {/* Governance */}
-                                <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
-                                  <div className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
+                                <div className="rounded-xl border border-success01 bg-success01 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                                  <div className="font-semibold text-text01 mb-1 text-sm md:text-base">
                                     Governance
                                   </div>
-                                  <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                                  <p className="text-[11px] md:text-xs text-text02 mb-1">
                                     Centralised auth, logging and guardrails for all AI‑driven flows.
                                   </p>
                                   <div className="flex flex-wrap gap-1.5">
-                                    <span className="px-2.5 py-1 rounded-full bg-white text-emerald-700 text-[11px] md:text-xs font-semibold border border-emerald-200">
+                                    <span className="px-2.5 py-1 rounded-full bg-white text-success02 text-[11px] md:text-xs font-semibold border border-success01">
                                       Auth & roles
                                     </span>
-                                    <span className="px-2.5 py-1 rounded-full bg-white text-emerald-700 text-[11px] md:text-xs font-semibold border border-emerald-200">
+                                    <span className="px-2.5 py-1 rounded-full bg-white text-success02 text-[11px] md:text-xs font-semibold border border-success01">
                                       Logging
                                     </span>
-                                    <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] md:text-xs font-semibold border border-emerald-200">
+                                    <span className="px-2.5 py-1 rounded-full bg-success01 text-success02 text-[11px] md:text-xs font-semibold border border-success01">
                                       Guardrails & policies
                                     </span>
                                   </div>
@@ -637,13 +637,13 @@ export default function ArchitecturePage({ onBack }) {
                             )}
 
                             {layer.id !== "platform" && (
-                              <ul className="mt-3 grid grid-cols-1 gap-1.5 text-xs md:text-sm text-gray-700 ml-12">
+                              <ul className="mt-3 grid grid-cols-1 gap-1.5 text-xs md:text-sm text-text01 ml-12">
                                 {visibleBullets.map((b) => (
                                   <li
                                     key={b}
-                                    className="flex items-start gap-2 rounded-lg bg-emerald-50 px-3 py-1.5"
+                                    className="flex items-start gap-2 rounded-lg bg-success01 px-3 py-1.5"
                                   >
-                                    <ChevronRight className="w-3 h-3 mt-1 text-emerald-700" />
+                                    <ChevronRight className="w-3 h-3 mt-1 text-success02" />
                                     <span>{b}</span>
                                   </li>
                                 ))}
@@ -656,17 +656,17 @@ export default function ArchitecturePage({ onBack }) {
                   </section>
 
                   {/* Band 2B: AI Engine & Orchestration */}
-                  <section className="rounded-2xl bg-gradient-to-r from-cyan-50 via-sky-50 to-emerald-50 border border-cyan-100 p-3 md:p-4 space-y-3">
+                  <section className="rounded-2xl bg-gradient-to-r from-neutral01 via-neutral01 to-success01 border border-neutral01 p-3 md:p-4 space-y-3">
                     <div className="flex items-center justify-between flex-wrap gap-2">
                       <div>
                         <p className="text-base md:text-lg font-semibold tracking-[0.18em] text-cyan-600 uppercase">
                           AI Engine & Agentic Layer
                         </p>
-                        <p className="text-xs md:text-sm text-gray-600 mt-1">
+                        <p className="text-xs md:text-sm text-text02 mt-1">
                           How models, agents, and orchestration work together behind the scenes.
                         </p>
                       </div>
-                      <div className="text-[11px] md:text-xs text-gray-600 text-right">
+                      <div className="text-[11px] md:text-xs text-text02 text-right">
                         <div>
                           <span className="font-semibold">Models:</span>{" "}
                           GPT‑4 · GPT‑4o‑mini (Azure / GCP‑ready)
@@ -677,59 +677,59 @@ export default function ArchitecturePage({ onBack }) {
                     <motion.div
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="rounded-xl border border-cyan-100 bg-white/95 p-4 md:p-5 shadow-sm transition-all duration-150 hover:border-cyan-300 hover:shadow-md hover:scale-[1.01]"
+                      className="rounded-xl border border-neutral01 bg-white/95 p-4 md:p-5 shadow-sm transition-all duration-150 hover:border-neutral02 hover:shadow-md hover:scale-[1.01]"
                     >
                       <div className="flex items-start gap-3 mb-3">
                         <Brain className="w-6 h-6 text-cyan-700" />
                         <div className="flex-1">
                           <div className="flex items-center flex-wrap gap-2">
-                            <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-cyan-50 text-cyan-700 border border-cyan-200">
+                            <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-neutral01 text-cyan-700 border border-neutral01">
                               Orchestration · Agents · Models
                             </span>
                           </div>
-                          <p className="mt-1 text-[11px] md:text-xs text-gray-600">
+                          <p className="mt-1 text-[11px] md:text-xs text-text02">
                             Multi‑step reasoning, SOP matching and orchestration shared by all TP.ai platforms and applications.
                           </p>
                         </div>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs md:text-sm mt-4">
                         {/* Orchestration */}
-                        <div className="rounded-xl border border-cyan-100 bg-cyan-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
-                          <div className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
+                        <div className="rounded-xl border border-neutral01 bg-neutral01 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                          <div className="font-semibold text-text01 mb-1 text-sm md:text-base">
                             Orchestration Layer
                           </div>
-                          <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                          <p className="text-[11px] md:text-xs text-text02 mb-1">
                             Routes and sequences calls between UIs, platforms, AI and data services.
                           </p>
-                          <ul className="space-y-1 text-gray-700 text-[11px] md:text-xs">
+                          <ul className="space-y-1 text-text01 text-[11px] md:text-xs">
                             <li>API gateway & routing (Express routes, auth hooks)</li>
                             <li>Planned workflow engine & event bus for complex flows</li>
                             <li>Central place for enforcing policies & cross‑cutting rules</li>
                           </ul>
                         </div>
                         {/* Agentic management */}
-                        <div className="rounded-xl border border-cyan-100 bg-cyan-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
-                          <div className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
+                        <div className="rounded-xl border border-neutral01 bg-neutral01 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                          <div className="font-semibold text-text01 mb-1 text-sm md:text-base">
                             Agentic Management
                           </div>
-                          <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                          <p className="text-[11px] md:text-xs text-text02 mb-1">
                             Coordinates which AI agents run when, and how they hand off to each other.
                           </p>
-                          <ul className="space-y-1 text-gray-700 text-[11px] md:text-xs">
+                          <ul className="space-y-1 text-text01 text-[11px] md:text-xs">
                             <li>Implements multi‑agent chains (Analysis → SOP Match → Risk → Recommendation)</li>
                             <li>Tracks agent responsibilities and hand‑offs</li>
                             <li>Planned: full agent registry and monitoring</li>
                           </ul>
                         </div>
                         {/* AI services */}
-                        <div className="rounded-xl border border-cyan-100 bg-cyan-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
-                          <div className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
+                        <div className="rounded-xl border border-neutral01 bg-neutral01 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                          <div className="font-semibold text-text01 mb-1 text-sm md:text-base">
                             AI Services Layer
                           </div>
-                          <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                          <p className="text-[11px] md:text-xs text-text02 mb-1">
                             Provides GPT‑4/4o‑based reasoning, RAG and streaming responses.
                           </p>
-                          <ul className="space-y-1 text-gray-700 text-[11px] md:text-xs">
+                          <ul className="space-y-1 text-text01 text-[11px] md:text-xs">
                             <li>GPT‑4 / GPT‑4o‑mini via LangChain (frontend) and Node (backend)</li>
                             <li>Multi‑agent reasoning with confidence scoring</li>
                             <li>RAG against SOP data + Server‑Sent Events for live streaming</li>
@@ -740,17 +740,17 @@ export default function ArchitecturePage({ onBack }) {
                   </section>
 
                   {/* Band 3A: Backend / Execution Engine */}
-                  <section className="rounded-2xl bg-gradient-to-r from-sky-50 via-white to-slate-50 border border-slate-300 shadow-md p-4 md:p-5 space-y-3">
+                  <section className="rounded-2xl bg-gradient-to-r from-neutral01 via-white to-bg02 border border-stroke01 shadow-md p-4 md:p-5 space-y-3">
                     <div className="flex items-center justify-between flex-wrap gap-2">
                       <div>
-                        <p className="text-base md:text-lg font-semibold tracking-[0.18em] text-slate-600 uppercase">
+                        <p className="text-base md:text-lg font-semibold tracking-[0.18em] text-text02 uppercase">
                           Backend Execution Engine
                         </p>
-                        <p className="text-xs md:text-sm text-gray-600 mt-1">
+                        <p className="text-xs md:text-sm text-text02 mt-1">
                           Node/Express services that expose AI and data to the outside world.
                         </p>
                       </div>
-                      <div className="text-[11px] md:text-xs text-gray-600 text-right">
+                      <div className="text-[11px] md:text-xs text-text02 text-right">
                         <div className="font-semibold">
                           APIs today: <span className="font-normal">/ai/analyze · /ai/chat · /health</span>
                         </div>
@@ -769,78 +769,78 @@ export default function ArchitecturePage({ onBack }) {
                             transition={{ delay: idx * 0.05 }}
                             className={`relative w-full text-left p-4 md:p-5 rounded-xl border bg-white/95 transition-all duration-150 ${
                               isActive
-                                ? "border-slate-500/70 shadow-md scale-[1.01]"
-                                : "border-gray-200/80 hover:border-slate-500/60 hover:bg-white hover:shadow-md hover:scale-[1.01]"
+                                ? "border-text03/70 shadow-md scale-[1.01]"
+                                : "border-stroke01/80 hover:border-text03/60 hover:bg-white hover:shadow-md hover:scale-[1.01]"
                             }`}
                           >
                             <div className="flex items-start gap-3">
                               <div className="pt-0.5">
-                                <layer.icon className="w-6 h-6 text-slate-700" />
+                                <layer.icon className="w-6 h-6 text-text01" />
                               </div>
                               <div className="flex-1 space-y-1">
                                 <div className="flex items-center flex-wrap gap-2">
-                                  <h2 className="text-sm md:text-base font-semibold text-gray-900">
+                                  <h2 className="text-sm md:text-base font-semibold text-text01">
                                     {layer.name}
                                   </h2>
-                                  <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-gray-100 text-gray-700">
+                                  <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-bg03 text-text01">
                                     {layer.subtitle}
                                   </span>
-                                  <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-green-100 text-green-700">
+                                  <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-success01 text-success02">
                                     {layer.status}
                                   </span>
                                 </div>
-                                <p className="text-[11px] md:text-xs text-gray-600">
+                                <p className="text-[11px] md:text-xs text-text02">
                                   {layer.description}
                                 </p>
                                 {/* Highlight key backend capabilities as chips, similar to other bands */}
                                 <div className="mt-3 grid grid-cols-1 md:grid-cols-3 gap-3 text-xs md:text-sm">
-                                  <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
-                                    <div className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
+                                  <div className="rounded-xl border border-stroke01 bg-bg02 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                                    <div className="font-semibold text-text01 mb-1 text-sm md:text-base">
                                       APIs
                                     </div>
-                                    <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                                    <p className="text-[11px] md:text-xs text-text02 mb-1">
                                       Public endpoints that surface AI reasoning and chat into UIs and systems.
                                     </p>
                                     <div className="flex flex-wrap gap-1.5">
-                                      <span className="px-2.5 py-1 rounded-full bg-white text-slate-800 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                      <span className="px-2.5 py-1 rounded-full bg-white text-text01 text-[11px] md:text-xs font-semibold border border-stroke01">
                                         /ai/analyze
                                       </span>
-                                      <span className="px-2.5 py-1 rounded-full bg-white text-slate-800 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                      <span className="px-2.5 py-1 rounded-full bg-white text-text01 text-[11px] md:text-xs font-semibold border border-stroke01">
                                         /ai/chat
                                       </span>
-                                      <span className="px-2.5 py-1 rounded-full bg-slate-100 text-slate-900 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                      <span className="px-2.5 py-1 rounded-full bg-bg03 text-text01 text-[11px] md:text-xs font-semibold border border-stroke01">
                                         /health
                                       </span>
                                     </div>
                                   </div>
-                                  <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
-                                    <div className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
+                                  <div className="rounded-xl border border-stroke01 bg-bg02 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                                    <div className="font-semibold text-text01 mb-1 text-sm md:text-base">
                                       Streaming
                                     </div>
-                                    <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                                    <p className="text-[11px] md:text-xs text-text02 mb-1">
                                       Keeps leaders and agents updated in real time as AI thinks.
                                     </p>
                                     <div className="flex flex-wrap gap-1.5">
-                                      <span className="px-2.5 py-1 rounded-full bg-white text-slate-800 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                      <span className="px-2.5 py-1 rounded-full bg-white text-text01 text-[11px] md:text-xs font-semibold border border-stroke01">
                                         SSE reasoning
                                       </span>
-                                      <span className="px-2.5 py-1 rounded-full bg-slate-100 text-slate-900 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                      <span className="px-2.5 py-1 rounded-full bg-bg03 text-text01 text-[11px] md:text-xs font-semibold border border-stroke01">
                                         Live chat updates
                                       </span>
                                     </div>
                                   </div>
-                                  <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
-                                    <div className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
+                                  <div className="rounded-xl border border-stroke01 bg-bg02 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                                    <div className="font-semibold text-text01 mb-1 text-sm md:text-base">
                                       Integration Ready
                                     </div>
-                                    <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                                    <p className="text-[11px] md:text-xs text-text02 mb-1">
                                       Designed to plug into TP client systems and event streams.
                                     </p>
                                     <div className="flex flex-wrap gap-1.5">
-                                      <span className="px-2.5 py-1 rounded-full bg-white text-slate-800 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                      <span className="px-2.5 py-1 rounded-full bg-white text-text01 text-[11px] md:text-xs font-semibold border border-stroke01">
                                         TP client systems
                                       </span>
-                                      <span className="px-2.5 py-1 rounded-full bg-slate-100 text-slate-900 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                      <span className="px-2.5 py-1 rounded-full bg-bg03 text-text01 text-[11px] md:text-xs font-semibold border border-stroke01">
                                         Queues / events
                                       </span>
                                     </div>
@@ -855,17 +855,17 @@ export default function ArchitecturePage({ onBack }) {
                   </section>
 
                   {/* Band 3B: Data & Infrastructure */}
-                  <section className="rounded-2xl bg-gradient-to-r from-teal-50 via-white to-slate-50 border border-slate-300 shadow-md p-4 md:p-5 space-y-3">
+                  <section className="rounded-2xl bg-gradient-to-r from-neutral01 via-white to-bg02 border border-stroke01 shadow-md p-4 md:p-5 space-y-3">
                     <div className="flex items-center justify-between flex-wrap gap-2">
                       <div>
-                        <p className="text-base md:text-lg font-semibold tracking-[0.18em] text-slate-700 uppercase">
+                        <p className="text-base md:text-lg font-semibold tracking-[0.18em] text-text01 uppercase">
                           Data & Infrastructure
                         </p>
-                        <p className="text-xs md:text-sm text-slate-600 mt-1">
+                        <p className="text-xs md:text-sm text-text02 mt-1">
                           Where SOPs, claims/cases and configuration actually live and scale.
                         </p>
                       </div>
-                      <div className="text-[11px] md:text-xs text-slate-200 text-right">
+                      <div className="text-[11px] md:text-xs text-stroke01 text-right">
                         <div>
                           <span className="font-semibold">Cloud targets:</span>{" "}
                           Azure · GCP · AWS · Client VPC
@@ -882,85 +882,85 @@ export default function ArchitecturePage({ onBack }) {
                             initial={{ opacity: 0, y: 8 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: idx * 0.05 }}
-                            className="relative w-full text-left p-4 md:p-5 rounded-xl border border-slate-200 bg-white text-gray-900"
+                            className="relative w-full text-left p-4 md:p-5 rounded-xl border border-stroke01 bg-white text-text01"
                           >
                             <div className="flex items-start gap-3">
                               <div className="pt-0.5">
-                                <layer.icon className="w-6 h-6 text-slate-700" />
+                                <layer.icon className="w-6 h-6 text-text01" />
                               </div>
                               <div className="flex-1 space-y-1">
                                 <div className="flex items-center flex-wrap gap-2">
                                   {/* Title already shown in band header above; keep only subtitle + status here */}
-                                  <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-800 border border-slate-200">
+                                  <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-bg03 text-text01 border border-stroke01">
                                     {layer.subtitle}
                                   </span>
-                                  <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-amber-50 text-amber-700">
+                                  <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-alert01 text-amber-700">
                                     {layer.status}
                                   </span>
                                 </div>
-                                <p className="text-[11px] md:text-xs text-slate-100/90">
+                                <p className="text-[11px] md:text-xs text-bg03/90">
                                   {layer.description}
                                 </p>
 
                                 <div className="mt-4 ml-2 grid grid-cols-1 md:grid-cols-3 gap-3 text-xs md:text-sm">
                                   {/* APIs */}
-                                  <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
-                                    <div className="font-semibold text-slate-900 mb-2 text-sm md:text-base">
+                                  <div className="rounded-xl border border-stroke01 bg-bg02 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                                    <div className="font-semibold text-text01 mb-2 text-sm md:text-base">
                                       APIs
                                     </div>
-                                    <p className="text-[11px] md:text-xs text-slate-600 mb-1">
+                                    <p className="text-[11px] md:text-xs text-text02 mb-1">
                                       Unified REST endpoints that expose AI reasoning, SOP lookup and core operations.
                                     </p>
                                     <div className="flex flex-wrap gap-1.5">
-                                      <span className="px-2.5 py-1 rounded-full bg-white text-slate-800 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                      <span className="px-2.5 py-1 rounded-full bg-white text-text01 text-[11px] md:text-xs font-semibold border border-stroke01">
                                         Claims / Cases
                                       </span>
-                                      <span className="px-2.5 py-1 rounded-full bg-white text-slate-800 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                      <span className="px-2.5 py-1 rounded-full bg-white text-text01 text-[11px] md:text-xs font-semibold border border-stroke01">
                                         SOP APIs
                                       </span>
-                                      <span className="px-2.5 py-1 rounded-full bg-slate-100 text-slate-900 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                      <span className="px-2.5 py-1 rounded-full bg-bg03 text-text01 text-[11px] md:text-xs font-semibold border border-stroke01">
                                         Event / webhook endpoints
                                       </span>
                                     </div>
                                   </div>
 
                                   {/* Data stores */}
-                                  <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
-                                    <div className="font-semibold text-slate-900 mb-2 text-sm md:text-base">
+                                  <div className="rounded-xl border border-stroke01 bg-bg02 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                                    <div className="font-semibold text-text01 mb-2 text-sm md:text-base">
                                       Data Stores
                                     </div>
-                                    <p className="text-[11px] md:text-xs text-slate-600 mb-1">
+                                    <p className="text-[11px] md:text-xs text-text02 mb-1">
                                       Central stores for SOP content, claims/cases, embeddings and configuration.
                                     </p>
                                     <div className="flex flex-wrap gap-1.5">
-                                      <span className="px-2.5 py-1 rounded-full bg-white text-slate-800 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                      <span className="px-2.5 py-1 rounded-full bg-white text-text01 text-[11px] md:text-xs font-semibold border border-stroke01">
                                         SOP library
                                       </span>
-                                      <span className="px-2.5 py-1 rounded-full bg-white text-slate-800 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                      <span className="px-2.5 py-1 rounded-full bg-white text-text01 text-[11px] md:text-xs font-semibold border border-stroke01">
                                         Vector index
                                       </span>
-                                      <span className="px-2.5 py-1 rounded-full bg-slate-100 text-slate-900 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                      <span className="px-2.5 py-1 rounded-full bg-bg03 text-text01 text-[11px] md:text-xs font-semibold border border-stroke01">
                                         Claim / case stores
                                       </span>
                                     </div>
                                   </div>
 
                                   {/* Ops & tooling */}
-                                  <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 transition-colors duration-150 hover:bg-white">
-                                    <div className="font-semibold text-slate-900 mb-2 text-sm md:text-base">
+                                  <div className="rounded-xl border border-stroke01 bg-bg02 px-4 py-3 transition-colors duration-150 hover:bg-white">
+                                    <div className="font-semibold text-text01 mb-2 text-sm md:text-base">
                                       Ops & Tooling
                                     </div>
-                                    <p className="text-[11px] md:text-xs text-slate-600 mb-1">
+                                    <p className="text-[11px] md:text-xs text-text02 mb-1">
                                       Monitoring, deployment and observability to keep models and services healthy.
                                     </p>
                                     <div className="flex flex-wrap gap-1.5">
-                                      <span className="px-2.5 py-1 rounded-full bg-white text-slate-800 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                      <span className="px-2.5 py-1 rounded-full bg-white text-text01 text-[11px] md:text-xs font-semibold border border-stroke01">
                                         Monitoring
                                       </span>
-                                      <span className="px-2.5 py-1 rounded-full bg-white text-slate-800 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                      <span className="px-2.5 py-1 rounded-full bg-white text-text01 text-[11px] md:text-xs font-semibold border border-stroke01">
                                         Logging
                                       </span>
-                                      <span className="px-2.5 py-1 rounded-full bg-slate-100 text-slate-900 text-[11px] md:text-xs font-semibold border border-slate-200">
+                                      <span className="px-2.5 py-1 rounded-full bg-bg03 text-text01 text-[11px] md:text-xs font-semibold border border-stroke01">
                                         Azure / GCP / AWS deploys
                                       </span>
                                     </div>
@@ -975,67 +975,67 @@ export default function ArchitecturePage({ onBack }) {
                   </section>
 
                   {/* Cross-cutting concerns */}
-                  <div className="rounded-2xl bg-gradient-to-r from-gray-50 via-white to-gray-50 border border-gray-200 shadow-sm p-4 md:p-5 space-y-3">
+                  <div className="rounded-2xl bg-gradient-to-r from-bg02 via-white to-bg02 border border-stroke01 shadow-sm p-4 md:p-5 space-y-3">
                     <div className="flex items-center justify-between flex-wrap gap-2">
                       <div className="flex items-center gap-2">
-                        <Shield className="w-5 h-5 text-gray-700" />
+                        <Shield className="w-5 h-5 text-text01" />
                         <div>
-                          <p className="text-sm md:text-base font-semibold text-gray-900">
+                          <p className="text-sm md:text-base font-semibold text-text01">
                             Cross‑Cutting Controls
                           </p>
-                          <p className="text-[11px] md:text-xs text-gray-600">
+                          <p className="text-[11px] md:text-xs text-text02">
                             Security, observability and compliance applied across every layer above.
                           </p>
                         </div>
                       </div>
-                      <div className="text-[11px] md:text-xs text-gray-600 text-right">
-                        <span className="px-2.5 py-1 rounded-full bg-green-50 text-green-700 font-semibold border border-green-100">
+                      <div className="text-[11px] md:text-xs text-text02 text-right">
+                        <span className="px-2.5 py-1 rounded-full bg-success01 text-success02 font-semibold border border-success01">
                           Security / Observability – Built · Compliance – Partially Built
                         </span>
                       </div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-[11px] md:text-xs">
-                      <div className="rounded-xl border border-gray-200 bg-white px-4 py-3 transition-colors duration-150 hover:bg-gray-50">
+                      <div className="rounded-xl border border-stroke01 bg-white px-4 py-3 transition-colors duration-150 hover:bg-bg02">
                         <div className="flex items-center gap-2 mb-1">
-                          <Lock className="w-4 h-4 text-red-600" />
-                          <span className="font-semibold text-gray-900">
+                          <Lock className="w-4 h-4 text-error03" />
+                          <span className="font-semibold text-text01">
                             Security
                           </span>
                         </div>
-                        <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                        <p className="text-[11px] md:text-xs text-text02 mb-1">
                           Protects access to FAB Store, platforms and APIs.
                         </p>
-                        <ul className="space-y-1 text-gray-700">
+                        <ul className="space-y-1 text-text01">
                           <li>AuthContext-based sign‑in & session</li>
                           <li>CORS and API security on backend routes</li>
                         </ul>
                       </div>
-                      <div className="rounded-xl border border-gray-200 bg-white px-4 py-3 transition-colors duration-150 hover:bg-gray-50">
+                      <div className="rounded-xl border border-stroke01 bg-white px-4 py-3 transition-colors duration-150 hover:bg-bg02">
                         <div className="flex items-center gap-2 mb-1">
-                          <Activity className="w-4 h-4 text-blue-600" />
-                          <span className="font-semibold text-gray-900">
+                          <Activity className="w-4 h-4 text-neutral02" />
+                          <span className="font-semibold text-text01">
                             Observability
                           </span>
                         </div>
-                        <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                        <p className="text-[11px] md:text-xs text-text02 mb-1">
                           Makes AI behaviour and flows traceable for operations teams.
                         </p>
-                        <ul className="space-y-1 text-gray-700">
+                        <ul className="space-y-1 text-text01">
                           <li>AI agent metrics & reasoning traces</li>
                           <li>Error handling and streaming telemetry</li>
                         </ul>
                       </div>
-                      <div className="rounded-xl border border-gray-200 bg-white px-4 py-3 transition-colors duration-150 hover:bg-gray-50">
+                      <div className="rounded-xl border border-stroke01 bg-white px-4 py-3 transition-colors duration-150 hover:bg-bg02">
                         <div className="flex items-center gap-2 mb-1">
-                          <FileText className="w-4 h-4 text-green-600" />
-                          <span className="font-semibold text-gray-900">
+                          <FileText className="w-4 h-4 text-success03" />
+                          <span className="font-semibold text-text01">
                             Compliance
                           </span>
                         </div>
-                        <p className="text-[11px] md:text-xs text-gray-600 mb-1">
+                        <p className="text-[11px] md:text-xs text-text02 mb-1">
                           Links AI decisions back to SOPs and steps for auditability.
                         </p>
-                        <ul className="space-y-1 text-gray-700">
+                        <ul className="space-y-1 text-text01">
                           <li>SOP-linked reasoning and decisions</li>
                           <li>Traceability from recommendation → SOP → step</li>
                         </ul>
@@ -1055,10 +1055,10 @@ export default function ArchitecturePage({ onBack }) {
                 className="space-y-8"
               >
                 <div className="text-center">
-                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+                  <h2 className="text-3xl md:text-4xl font-bold text-text01 mb-3">
                     Platform ROI & Value
                   </h2>
-                  <p className="text-base md:text-lg text-gray-600">
+                  <p className="text-base md:text-lg text-text02">
                     How FAB Store + SOP Executor translate into measurable business outcomes.
                   </p>
                 </div>
@@ -1067,7 +1067,7 @@ export default function ArchitecturePage({ onBack }) {
                   {roiMetrics.map((m) => (
                     <div
                       key={m.label}
-                      className="bg-gradient-to-br from-[#780096] to-[#780096] rounded-2xl text-white p-5 shadow-xl"
+                      className="bg-gradient-to-br from-pinkTP to-pinkTP rounded-2xl text-white p-5 shadow-xl"
                     >
                       <div className="flex items-center justify-between mb-4">
                         <m.icon className="w-7 h-7 opacity-90" />
@@ -1086,11 +1086,11 @@ export default function ArchitecturePage({ onBack }) {
                   ))}
                 </div>
 
-                <div className="bg-white rounded-2xl p-6 md:p-8 shadow-xl border border-gray-200">
-                  <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+                <div className="bg-white rounded-2xl p-6 md:p-8 shadow-xl border border-stroke01">
+                  <h3 className="text-2xl font-semibold text-text01 mb-4">
                     Why this architecture matters for Teleperformance
                   </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-gray-700">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-text01">
                     <div>
                       <h4 className="font-semibold mb-2">Strategic</h4>
                       <p>

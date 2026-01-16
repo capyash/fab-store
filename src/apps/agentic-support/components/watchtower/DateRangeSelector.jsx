@@ -16,11 +16,11 @@ export default function DateRangeSelector({ value, onChange }) {
   
   return (
     <div className="flex items-center gap-2">
-      <Calendar className="w-4 h-4 text-gray-500" />
+      <Calendar className="w-4 h-4 text-text03" />
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="px-3 py-1.5 text-sm border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#780096] focus:border-transparent"
+        className="px-3 py-1.5 text-sm border border-stroke01 rounded-lg bg-white text-text01 focus:outline-none focus:ring-2 focus:ring-pinkTP focus:border-transparent"
       >
         {options.map((opt) => (
           <option key={opt.value} value={opt.value}>

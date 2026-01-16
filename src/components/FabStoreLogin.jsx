@@ -63,7 +63,7 @@ export default function FabStoreLogin({ onBack, onLoginSuccess }) {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             onClick={onBack}
-            className="absolute -top-16 left-0 inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-[#5C36C8] bg-white/95 border border-[#DCD3FF] shadow-[0_10px_30px_rgba(92,54,200,0.12)] hover:-translate-x-[2px] transition-all"
+            className="absolute -top-16 left-0 inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-pinkTP bg-white/95 border border-[stroke01] shadow-[0_10px_30px_rgba(92,54,200,0.12)] hover:-translate-x-[2px] transition-all"
           >
             <ArrowRight className="w-4 h-4 rotate-180" />
             Back to Store
@@ -76,21 +76,21 @@ export default function FabStoreLogin({ onBack, onLoginSuccess }) {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="space-y-8 text-gray-900"
+            className="space-y-8 text-text01"
           >
             <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#E4DAFF] bg-white text-[#5C36C8] font-semibold shadow-sm">
-                <Sparkles className="w-4 h-4 text-[#FDBA5C]" />
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[stroke01] bg-white text-pinkTP font-semibold shadow-sm">
+                <Sparkles className="w-4 h-4 text-[alert02]" />
                 TP.ai FAB
               </div>
               <h1 className="text-4xl md:text-5xl font-bold leading-tight">
                 Unlock every experience
                 <br />
-                <span className="bg-gradient-to-r from-[#F9DEFF] via-[#C3A1FF] to-[#7AD5FF] bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[tertiary] via-[tertiary] to-[neutral01] bg-clip-text text-transparent">
                   with one identity
                 </span>
               </h1>
-              <p className="text-lg text-gray-600 max-w-md">
+              <p className="text-lg text-text02 max-w-md">
                 Access Cogniclaim, Assist, Collect, Banking Command, and all TP.ai solutions from a single secure login.
               </p>
             </div>
@@ -108,9 +108,9 @@ export default function FabStoreLogin({ onBack, onLoginSuccess }) {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.4, delay: 0.2 + idx * 0.1 }}
-                    className="flex items-center gap-3 text-gray-600"
+                    className="flex items-center gap-3 text-text02"
                   >
-                    <div className="p-2 rounded-lg border border-[#E2DEFF] bg-white text-[#5C36C8]">
+                    <div className="p-2 rounded-lg border border-pinkTP/10 bg-white text-pinkTP">
                       <Icon className="w-5 h-5" />
                     </div>
                     <span className="font-medium">{item.text}</span>
@@ -129,10 +129,10 @@ export default function FabStoreLogin({ onBack, onLoginSuccess }) {
           >
             <div className="bg-white rounded-[32px] border border-white/70 p-8 shadow-[0_35px_90px_rgba(34,22,95,0.17)]">
               <div className="flex items-center justify-center gap-3 mb-6">
-                <div className="p-2 rounded-xl bg-gradient-to-br from-[#7B4CFF] to-[#5B35C1] text-white shadow-lg">
+                <div className="p-2 rounded-xl bg-gradient-to-br from-pinkTP to-[textLink] text-white shadow-lg">
                   <Lock className="w-6 h-6" />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900">Sign in to FAB</h2>
+                <h2 className="text-2xl font-bold text-text01">Sign in to FAB</h2>
               </div>
 
               <form onSubmit={onSubmit} className="space-y-5">
@@ -140,45 +140,45 @@ export default function FabStoreLogin({ onBack, onLoginSuccess }) {
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-3"
+                    className="text-sm text-error03 bg-error01 border border-error01 rounded-xl px-4 py-3"
                   >
                     {error}
                   </motion.div>
                 )}
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Email</label>
+                  <label className="text-sm font-medium text-text01">Email</label>
                   <input
                     type="email"
-                    className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#D3C6FF]/60 focus:border-[#D3C6FF]/60 transition-all"
+                    className="w-full bg-white border border-stroke01 rounded-xl px-4 py-3 text-text01 placeholder-text03 focus:outline-none focus:ring-2 focus:ring-[tertiary]/60 focus:border-[tertiary]/60 transition-all"
                     value={email}
                     readOnly
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Password</label>
+                  <label className="text-sm font-medium text-text01">Password</label>
                   <input
                     type="password"
-                    className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#D3C6FF]/60 focus:border-[#D3C6FF]/60 transition-all"
+                    className="w-full bg-white border border-stroke01 rounded-xl px-4 py-3 text-text01 placeholder-text03 focus:outline-none focus:ring-2 focus:ring-[tertiary]/60 focus:border-[tertiary]/60 transition-all"
                     value={password}
                     readOnly
                   />
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <label className="flex items-center gap-2 text-sm text-gray-600">
+                  <label className="flex items-center gap-2 text-sm text-text02">
                     <input
                       type="checkbox"
                       checked={remember}
                       onChange={(e) => setRemember(e.target.checked)}
-                      className="rounded border-gray-300 text-[#5C36C8] focus:ring-[#CBB7FF]/50"
+                      className="rounded border-stroke01 text-pinkTP focus:ring-[tertiary]/50"
                     />
                     Remember me
                   </label>
                   <button
                     type="button"
-                    className="text-sm text-[#5C36C8] font-semibold hover:text-[#2E0F73] transition-colors"
+                    className="text-sm text-pinkTP font-semibold hover:text-[textLink] transition-colors"
                     onClick={() => alert("Contact IT helpdesk to reset your password.")}
                   >
                     Forgot password?
@@ -190,11 +190,11 @@ export default function FabStoreLogin({ onBack, onLoginSuccess }) {
                   disabled={loading}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full bg-gradient-to-r from-[#8F4BFF] via-[#A45BFF] to-[#4F8BFF] text-white rounded-xl py-3.5 text-sm font-semibold hover:shadow-lg hover:shadow-[#8F4BFF]/25 disabled:opacity-70 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
+                  className="w-full bg-gradient-to-r from-pinkTP via-pinkTP to-[neutral02] text-white rounded-xl py-3.5 text-sm font-semibold hover:shadow-lg hover:shadow-/25 disabled:opacity-70 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
                 >
                   {loading ? (
                     <>
-                      <div className="w-4 h-4 border-2 border-gray-900/30 border-t-gray-900 rounded-full animate-spin" />
+                      <div className="w-4 h-4 border-2 border-text01/30 border-t-text01 rounded-full animate-spin" />
                       Signing in…
                     </>
                   ) : (

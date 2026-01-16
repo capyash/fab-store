@@ -112,10 +112,10 @@ export default function Watchtower({ onNavigate }) {
       <div className="mb-6">
         <div className="flex items-center justify-between mb-4">
           <div className="flex-1">
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            <h1 className="text-2xl font-bold text-text01 mb-2">
               AI Watchtower
             </h1>
-            <p className="text-gray-600">
+            <p className="text-text02">
               Real-time agent orchestration & workflow intelligence
             </p>
           </div>
@@ -126,13 +126,13 @@ export default function Watchtower({ onNavigate }) {
             <button
               onClick={fetchMetrics}
               disabled={loading}
-              className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-600 hover:text-[#780096] rounded-lg hover:bg-gray-100 transition-colors"
+              className="flex items-center gap-2 px-3 py-1.5 text-sm text-text02 hover:text-pinkTP rounded-lg hover:bg-bg03 transition-colors"
               title="Refresh"
             >
               <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
             </button>
             {lastUpdate && (
-              <span className="text-xs text-gray-500">
+              <span className="text-xs text-text03">
                 Updated {lastUpdate.toLocaleTimeString()}
               </span>
             )}
@@ -147,8 +147,8 @@ export default function Watchtower({ onNavigate }) {
         className="mb-6"
       >
         <div className="mb-4">
-          <h2 className="text-lg font-bold text-gray-900">Interaction Entry Points</h2>
-          <p className="text-sm text-gray-500">Volume by customer contact channel</p>
+          <h2 className="text-lg font-bold text-text01">Interaction Entry Points</h2>
+          <p className="text-sm text-text03">Volume by customer contact channel</p>
         </div>
         <div className="flex gap-4 overflow-x-auto pb-2">
           {channels.map((channel) => (
@@ -192,8 +192,8 @@ export default function Watchtower({ onNavigate }) {
           className="mb-6"
         >
           <div className="mb-4">
-            <h2 className="text-lg font-bold text-gray-900">AI Agent Orchestration</h2>
-            <p className="text-sm text-gray-500">Individual agent performance & collaboration patterns</p>
+            <h2 className="text-lg font-bold text-text01">AI Agent Orchestration</h2>
+            <p className="text-sm text-text03">Individual agent performance & collaboration patterns</p>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="space-y-4">
@@ -208,7 +208,7 @@ export default function Watchtower({ onNavigate }) {
                 />
               ))}
             </div>
-            <div className="rounded-lg border border-gray-200 bg-white">
+            <div className="rounded-lg border border-stroke01 bg-white">
               <CollaborationFlow agents={agents} />
             </div>
           </div>
@@ -221,13 +221,13 @@ export default function Watchtower({ onNavigate }) {
           className="mb-6"
         >
           <div className="mb-4">
-            <h2 className="text-lg font-bold text-gray-900">Workflow Category Performance</h2>
-            <p className="text-sm text-gray-500">Resolution distribution by device issue category</p>
+            <h2 className="text-lg font-bold text-text01">Workflow Category Performance</h2>
+            <p className="text-sm text-text03">Resolution distribution by device issue category</p>
           </div>
           
           {/* Stacked Bar Chart with Category-Specific Data */}
-          <div className="rounded-lg border border-gray-200 bg-white p-6 mb-6">
-            <div className="text-sm text-gray-600 mb-4">Volume Distribution by Category</div>
+          <div className="rounded-lg border border-stroke01 bg-white p-6 mb-6">
+            <div className="text-sm text-text02 mb-4">Volume Distribution by Category</div>
             <div className="h-64 flex items-end gap-6">
               {categories.map((cat) => {
                 const total = cat.total_tickets || 0;
@@ -244,43 +244,43 @@ export default function Watchtower({ onNavigate }) {
                   <div key={cat.category_id} className="flex-1 flex flex-col items-center">
                     <div className="w-full flex flex-col-reverse gap-0.5" style={{ height: barHeight }}>
                       <div
-                        className="bg-green-100 border border-green-300 rounded-t"
+                        className="bg-success01 border border-success03 rounded-t"
                         style={{ height: `${(auto / total) * 100}%` }}
                         title={`Auto-resolved: ${auto} (${Math.round((auto / total) * 100)}%)`}
                       />
                       <div
-                        className="bg-amber-100 border border-amber-300"
+                        className="bg-alert01 border border-alert02"
                         style={{ height: `${(escalated / total) * 100}%` }}
                         title={`Escalated: ${escalated} (${Math.round((escalated / total) * 100)}%)`}
                       />
                       <div
-                        className="bg-red-100 border border-red-300 rounded-b"
+                        className="bg-error01 border border-error03 rounded-b"
                         style={{ height: `${(failed / total) * 100}%` }}
                         title={`Failed: ${failed} (${Math.round((failed / total) * 100)}%)`}
                       />
                     </div>
-                    <div className="mt-3 text-xs font-medium text-gray-700 text-center">
+                    <div className="mt-3 text-xs font-medium text-text01 text-center">
                       {cat.category_name.split(" ")[0]}
                     </div>
-                    <div className="mt-1 text-xs text-gray-500">
+                    <div className="mt-1 text-xs text-text03">
                       {total.toLocaleString()} total
                     </div>
                   </div>
                 );
               })}
             </div>
-            <div className="flex items-center justify-center gap-6 mt-6 pt-4 border-t border-gray-100">
+            <div className="flex items-center justify-center gap-6 mt-6 pt-4 border-t border-bg03">
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-green-100 border border-green-300 rounded" />
-                <span className="text-xs text-gray-600">AI Auto-Resolved</span>
+                <div className="w-3 h-3 bg-success01 border border-success03 rounded" />
+                <span className="text-xs text-text02">AI Auto-Resolved</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-amber-100 border border-amber-300 rounded" />
-                <span className="text-xs text-gray-600">Escalated</span>
+                <div className="w-3 h-3 bg-alert01 border border-alert02 rounded" />
+                <span className="text-xs text-text02">Escalated</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-red-100 border border-red-300 rounded" />
-                <span className="text-xs text-gray-600">Failed</span>
+                <div className="w-3 h-3 bg-error01 border border-error03 rounded" />
+                <span className="text-xs text-text02">Failed</span>
               </div>
             </div>
           </div>
@@ -302,8 +302,8 @@ export default function Watchtower({ onNavigate }) {
         className="mb-6"
       >
         <div className="mb-4">
-          <h2 className="text-lg font-bold text-gray-900">Agent Collaboration Modes</h2>
-          <p className="text-sm text-gray-500">How AI agents work together and with humans</p>
+          <h2 className="text-lg font-bold text-text01">Agent Collaboration Modes</h2>
+          <p className="text-sm text-text03">How AI agents work together and with humans</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {collaboration && (
@@ -333,8 +333,8 @@ export default function Watchtower({ onNavigate }) {
         className="mb-6"
       >
         <div className="mb-4">
-          <h2 className="text-lg font-bold text-gray-900">Performance Insights by Device Category</h2>
-          <p className="text-sm text-gray-500">AI vs Human resolution comparison</p>
+          <h2 className="text-lg font-bold text-text01">Performance Insights by Device Category</h2>
+          <p className="text-sm text-text03">AI vs Human resolution comparison</p>
         </div>
         <div className="flex gap-4 overflow-x-auto pb-2">
           {insights.map((insight) => (
@@ -342,14 +342,14 @@ export default function Watchtower({ onNavigate }) {
               key={insight.category_id}
               className={`flex-shrink-0 w-96 rounded-lg border p-6 bg-white ${
                 insight.ai_handled.resolution_rate > insight.human_handled.resolution_rate
-                  ? "border-green-200"
-                  : "border-gray-200"
+                  ? "border-success01"
+                  : "border-stroke01"
               }`}
             >
-              <div className="font-bold text-gray-900 mb-4">{insight.category_name}</div>
+              <div className="font-bold text-text01 mb-4">{insight.category_name}</div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <div className="text-xs text-gray-500 mb-2">AI-Handled</div>
+                  <div className="text-xs text-text03 mb-2">AI-Handled</div>
                   <div className="space-y-1 text-sm">
                     <div>Resolution: {insight.ai_handled.resolution_rate}%</div>
                     <div>Time: {formatTime(insight.ai_handled.avg_time_seconds)}</div>
@@ -358,7 +358,7 @@ export default function Watchtower({ onNavigate }) {
                   </div>
                 </div>
                 <div>
-                  <div className="text-xs text-gray-500 mb-2">Human-Handled</div>
+                  <div className="text-xs text-text03 mb-2">Human-Handled</div>
                   <div className="space-y-1 text-sm">
                     <div>Resolution: {insight.human_handled.resolution_rate}%</div>
                     <div>Time: {formatTime(insight.human_handled.avg_time_seconds)}</div>
@@ -380,11 +380,11 @@ export default function Watchtower({ onNavigate }) {
       >
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="text-lg font-bold text-gray-900">System Health & Anomalies</h2>
-            <p className="text-sm text-gray-500">Real-time alerts and performance anomalies</p>
+            <h2 className="text-lg font-bold text-text01">System Health & Anomalies</h2>
+            <p className="text-sm text-text03">Real-time alerts and performance anomalies</p>
           </div>
           {alerts.length > 3 && (
-            <button className="text-sm text-[#780096] hover:underline">
+            <button className="text-sm text-pinkTP hover:underline">
               View All &gt;
             </button>
           )}

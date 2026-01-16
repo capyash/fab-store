@@ -51,7 +51,7 @@ export default function TPDispatchHomeDashboard({ onSelectWorkOrder, onNavigate 
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="rounded-2xl bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 p-8 text-white shadow-lg"
+        className="rounded-2xl bg-gradient-to-br from-neutral010 via-neutral02 to-primary p-8 text-white shadow-lg"
       >
         <div className="flex items-start justify-between">
           <div className="flex-1">
@@ -61,7 +61,7 @@ export default function TPDispatchHomeDashboard({ onSelectWorkOrder, onNavigate 
               </div>
               <div>
                 <h1 className="text-2xl font-bold">AI Watchtower</h1>
-                <p className="text-blue-100 text-sm">Real-time field service insights and optimization</p>
+                <p className="text-neutral01 text-sm">Real-time field service insights and optimization</p>
               </div>
             </div>
             <div className="mt-4 flex items-center gap-4">
@@ -74,19 +74,19 @@ export default function TPDispatchHomeDashboard({ onSelectWorkOrder, onNavigate 
         <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
             <div className="text-2xl font-bold">{stats.totalWorkOrders}</div>
-            <div className="text-xs text-blue-100 mt-1">Total Work Orders</div>
+            <div className="text-xs text-neutral01 mt-1">Total Work Orders</div>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
             <div className="text-2xl font-bold">{stats.pending}</div>
-            <div className="text-xs text-blue-100 mt-1">Pending</div>
+            <div className="text-xs text-neutral01 mt-1">Pending</div>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
             <div className="text-2xl font-bold">{stats.inProgress}</div>
-            <div className="text-xs text-blue-100 mt-1">In Progress</div>
+            <div className="text-xs text-neutral01 mt-1">In Progress</div>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
             <div className="text-2xl font-bold">{stats.urgent}</div>
-            <div className="text-xs text-blue-100 mt-1">Urgent</div>
+            <div className="text-xs text-neutral01 mt-1">Urgent</div>
           </div>
         </div>
       </motion.div>
@@ -95,32 +95,32 @@ export default function TPDispatchHomeDashboard({ onSelectWorkOrder, onNavigate 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <motion.button
           onClick={() => onNavigate("dispatch/worklist")}
-          className="p-4 rounded-xl border border-gray-200 bg-white hover:shadow-md transition-shadow text-left"
+          className="p-4 rounded-xl border border-stroke01 bg-white hover:shadow-md transition-shadow text-left"
         >
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="font-semibold text-gray-900">View All Work Orders</h3>
-              <p className="text-sm text-gray-600 mt-1">Browse and manage all work orders</p>
+              <h3 className="font-semibold text-text01">View All Work Orders</h3>
+              <p className="text-sm text-text02 mt-1">Browse and manage all work orders</p>
             </div>
-            <ArrowRight className="w-5 h-5 text-gray-400" />
+            <ArrowRight className="w-5 h-5 text-text03" />
           </div>
         </motion.button>
         <motion.button
-          className="p-4 rounded-xl border border-gray-200 bg-white hover:shadow-md transition-shadow text-left"
+          className="p-4 rounded-xl border border-stroke01 bg-white hover:shadow-md transition-shadow text-left"
         >
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="font-semibold text-gray-900">Schedule Optimization</h3>
-              <p className="text-sm text-gray-600 mt-1">AI-powered route and schedule optimization</p>
+              <h3 className="font-semibold text-text01">Schedule Optimization</h3>
+              <p className="text-sm text-text02 mt-1">AI-powered route and schedule optimization</p>
             </div>
-            <Calendar className="w-5 h-5 text-gray-400" />
+            <Calendar className="w-5 h-5 text-text03" />
           </div>
         </motion.button>
       </div>
 
       {/* Recent Work Orders */}
       <div>
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Priority Work Orders</h2>
+        <h2 className="text-lg font-semibold text-text01 mb-4">Priority Work Orders</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {recentWorkOrders.map((wo) => (
             <div key={wo.id} className="relative">
@@ -130,7 +130,7 @@ export default function TPDispatchHomeDashboard({ onSelectWorkOrder, onNavigate 
               />
               <button
                 onClick={() => onSelectWorkOrder?.(wo)}
-                className="absolute top-2 right-2 p-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-sm"
+                className="absolute top-2 right-2 p-1.5 rounded-lg bg-primary text-white hover:bg-textLink transition-colors shadow-sm"
                 title="Open in AI Watchtower"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

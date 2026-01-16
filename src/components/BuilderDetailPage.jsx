@@ -88,27 +88,27 @@ export default function BuilderDetailPage({ onBack }) {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F7F8FF]">
+    <div className="min-h-screen bg-[bg02]">
       <div className="max-w-7xl mx-auto px-4 md:px-10 py-8">
         {/* Header */}
         <div className="mb-8">
           <button
             onClick={onBack}
-            className="flex items-center gap-2 text-[#780096] hover:text-[#780096] transition-colors mb-4"
+            className="flex items-center gap-2 text-pinkTP hover:text-pinkTP transition-colors mb-4"
           >
             <ArrowLeft className="w-4 h-4" />
             <span className="font-medium">Back to Store</span>
           </button>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center shadow-lg">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-pinkTP to-pinkTP flex items-center justify-center shadow-lg">
               <Code className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h1 className="text-4xl font-bold text-gray-900">FAB Builder</h1>
-              <p className="text-lg text-gray-600 mt-1">AI-Native Low-Code/No-Code Platform</p>
+              <h1 className="text-4xl font-bold text-text01">FAB Builder</h1>
+              <p className="text-lg text-text02 mt-1">AI-Native Low-Code/No-Code Platform</p>
             </div>
           </div>
-          <p className="text-gray-700 max-w-3xl leading-relaxed">
+          <p className="text-text01 max-w-3xl leading-relaxed">
             Build production-ready applications faster with our AI-powered visual builder. Create apps using 67 pre-built components, 
             configure data models, and deploy with one click. Integrated with SOP Executor and Field Service platforms for intelligent, 
             compliant applications.
@@ -117,22 +117,22 @@ export default function BuilderDetailPage({ onBack }) {
 
         {/* Key Features */}
         <section className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Key Features</h2>
+          <h2 className="text-2xl font-bold text-text01 mb-6">Key Features</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {features.map((feature, idx) => {
               const Icon = feature.icon;
               return (
                 <div
                   key={idx}
-                  className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
+                  className="bg-white rounded-2xl p-6 border border-stroke01 shadow-sm hover:shadow-md transition-shadow"
                 >
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#780096]/10 to-[#780096]/10 flex items-center justify-center shrink-0">
-                      <Icon className="w-6 h-6 text-[#780096]" />
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-pinkTP/10 to-pinkTP/10 flex items-center justify-center shrink-0">
+                      <Icon className="w-6 h-6 text-pinkTP" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature.title}</h3>
-                      <p className="text-gray-600 text-sm leading-relaxed">{feature.description}</p>
+                      <h3 className="text-lg font-semibold text-text01 mb-2">{feature.title}</h3>
+                      <p className="text-text02 text-sm leading-relaxed">{feature.description}</p>
                     </div>
                   </div>
                 </div>
@@ -143,23 +143,23 @@ export default function BuilderDetailPage({ onBack }) {
 
         {/* Component Library */}
         <section className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Component Library (67 Components)</h2>
+          <h2 className="text-2xl font-bold text-text01 mb-6">Component Library (67 Components)</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {componentCategories.map((category, idx) => (
               <div
                 key={idx}
-                className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm"
+                className="bg-white rounded-xl p-5 border border-stroke01 shadow-sm"
               >
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-semibold text-gray-900">{category.name}</h3>
-                  <span className="text-xs font-medium text-[#780096] bg-[#780096]/10 px-2 py-1 rounded-full">
+                  <h3 className="font-semibold text-text01">{category.name}</h3>
+                  <span className="text-xs font-medium text-pinkTP bg-pinkTP/10 px-2 py-1 rounded-full">
                     {category.count}
                   </span>
                 </div>
                 <ul className="space-y-1.5">
                   {category.items.map((item, itemIdx) => (
-                    <li key={itemIdx} className="text-sm text-gray-600 flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#780096]/30" />
+                    <li key={itemIdx} className="text-sm text-text02 flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-pinkTP/30" />
                       {item}
                     </li>
                   ))}
@@ -171,52 +171,52 @@ export default function BuilderDetailPage({ onBack }) {
 
         {/* Workflow */}
         <section className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">How It Works</h2>
-          <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm">
+          <h2 className="text-2xl font-bold text-text01 mb-6">How It Works</h2>
+          <div className="bg-white rounded-2xl p-8 border border-stroke01 shadow-sm">
             <div className="space-y-6">
               <div className="flex gap-6">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center text-white font-bold shrink-0">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pinkTP to-pinkTP flex items-center justify-center text-white font-bold shrink-0">
                   1
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Choose Your Path</h3>
-                  <p className="text-gray-600 text-sm">
+                  <h3 className="font-semibold text-text01 mb-2">Choose Your Path</h3>
+                  <p className="text-text02 text-sm">
                     Start with <strong>AI-Powered Creation</strong> (describe your app) or <strong>Manual Builder</strong> (step-by-step). 
                     Both paths capture basic app information upfront (name, tagline, description, platform, industry).
                   </p>
                 </div>
               </div>
               <div className="flex gap-6">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center text-white font-bold shrink-0">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pinkTP to-pinkTP flex items-center justify-center text-white font-bold shrink-0">
                   2
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Configure Data Model</h3>
-                  <p className="text-gray-600 text-sm">
+                  <h3 className="font-semibold text-text01 mb-2">Configure Data Model</h3>
+                  <p className="text-text02 text-sm">
                     Define your entities with full field type support (Text, Number, Date, Boolean, Reference, File, Enum, JSON). 
                     Set properties (Required, Default, Validation) and relationships (One-to-Many, Many-to-Many, One-to-One).
                   </p>
                 </div>
               </div>
               <div className="flex gap-6">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center text-white font-bold shrink-0">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pinkTP to-pinkTP flex items-center justify-center text-white font-bold shrink-0">
                   3
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Build Your UI</h3>
-                  <p className="text-gray-600 text-sm">
+                  <h3 className="font-semibold text-text01 mb-2">Build Your UI</h3>
+                  <p className="text-text02 text-sm">
                     Drag and drop components from the library onto your canvas. Configure properties in the right panel. 
                     See live preview in real-time. Switch between desktop, tablet, and mobile views. Create multiple pages.
                   </p>
                 </div>
               </div>
               <div className="flex gap-6">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#780096] to-[#780096] flex items-center justify-center text-white font-bold shrink-0">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pinkTP to-pinkTP flex items-center justify-center text-white font-bold shrink-0">
                   4
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Generate & Deploy</h3>
-                  <p className="text-gray-600 text-sm">
+                  <h3 className="font-semibold text-text01 mb-2">Generate & Deploy</h3>
+                  <p className="text-text02 text-sm">
                     Generate complete app structure with code generation. Save to "My Space" for further customization. 
                     Publish to FAB Store (Admin) or submit for review (Developer). AI Watchtower auto-integrates with your entities.
                   </p>
@@ -228,56 +228,56 @@ export default function BuilderDetailPage({ onBack }) {
 
         {/* Platform Integration */}
         <section className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Platform Integration</h2>
+          <h2 className="text-2xl font-bold text-text01 mb-6">Platform Integration</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
+            <div className="bg-white rounded-2xl p-6 border border-stroke01 shadow-sm">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center">
-                  <Layers className="w-5 h-5 text-[#780096]" />
+                <div className="w-10 h-10 rounded-lg bg-pinkTP/20 flex items-center justify-center">
+                  <Layers className="w-5 h-5 text-pinkTP" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900">SOP Executor</h3>
+                <h3 className="text-lg font-semibold text-text01">SOP Executor</h3>
               </div>
-              <p className="text-gray-600 text-sm mb-4">
+              <p className="text-text02 text-sm mb-4">
                 Auto-integrate SOP Reasoning Cards and SOP Viewer components. Your entities automatically connect to AI reasoning engine 
                 for intelligent decision-making with SOP matching and compliance guardrails.
               </p>
-              <ul className="space-y-2 text-sm text-gray-600">
+              <ul className="space-y-2 text-sm text-text02">
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-[#780096]" />
+                  <CheckCircle className="w-4 h-4 text-pinkTP" />
                   <span>SOP Reasoning Card component</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-[#780096]" />
+                  <CheckCircle className="w-4 h-4 text-pinkTP" />
                   <span>SOP Viewer component</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-[#780096]" />
+                  <CheckCircle className="w-4 h-4 text-pinkTP" />
                   <span>Auto AI Watchtower integration</span>
                 </li>
               </ul>
             </div>
-            <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
+            <div className="bg-white rounded-2xl p-6 border border-stroke01 shadow-sm">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-blue-600" />
+                <div className="w-10 h-10 rounded-lg bg-neutral01 flex items-center justify-center">
+                  <Zap className="w-5 h-5 text-neutral02" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900">Field Service Platform</h3>
+                <h3 className="text-lg font-semibold text-text01">Field Service Platform</h3>
               </div>
-              <p className="text-gray-600 text-sm mb-4">
+              <p className="text-text02 text-sm mb-4">
                 Auto-integrate Work Order Cards and Asset Cards. Connect to routing optimization, scheduling AI, and SLA tracking 
                 for intelligent field service management.
               </p>
-              <ul className="space-y-2 text-sm text-gray-600">
+              <ul className="space-y-2 text-sm text-text02">
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-blue-600" />
+                  <CheckCircle className="w-4 h-4 text-neutral02" />
                   <span>Work Order Card component</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-blue-600" />
+                  <CheckCircle className="w-4 h-4 text-neutral02" />
                   <span>Asset Card component</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-blue-600" />
+                  <CheckCircle className="w-4 h-4 text-neutral02" />
                   <span>Routing & Scheduling AI</span>
                 </li>
               </ul>
@@ -287,32 +287,32 @@ export default function BuilderDetailPage({ onBack }) {
 
         {/* Templates */}
         <section className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Pre-built Templates</h2>
+          <h2 className="text-2xl font-bold text-text01 mb-6">Pre-built Templates</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
-              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#780096]/10 to-[#780096]/10 flex items-center justify-center mb-4">
-                <BarChart3 className="w-6 h-6 text-[#780096]" />
+            <div className="bg-white rounded-xl p-6 border border-stroke01 shadow-sm">
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-pinkTP/10 to-pinkTP/10 flex items-center justify-center mb-4">
+                <BarChart3 className="w-6 h-6 text-pinkTP" />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Dashboard Layout</h3>
-              <p className="text-sm text-gray-600">
+              <h3 className="font-semibold text-text01 mb-2">Dashboard Layout</h3>
+              <p className="text-sm text-text02">
                 Complete dashboard with metrics grid, analytics charts, and data tables. Perfect for executive dashboards and KPI monitoring.
               </p>
             </div>
-            <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
-              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#780096]/10 to-[#780096]/10 flex items-center justify-center mb-4">
-                <Layers className="w-6 h-6 text-[#780096]" />
+            <div className="bg-white rounded-xl p-6 border border-stroke01 shadow-sm">
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-pinkTP/10 to-pinkTP/10 flex items-center justify-center mb-4">
+                <Layers className="w-6 h-6 text-pinkTP" />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Form Layout</h3>
-              <p className="text-sm text-gray-600">
+              <h3 className="font-semibold text-text01 mb-2">Form Layout</h3>
+              <p className="text-sm text-text02">
                 Complete form with validation, input fields, and submission handling. Ideal for data entry and workflow forms.
               </p>
             </div>
-            <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
-              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#780096]/10 to-[#780096]/10 flex items-center justify-center mb-4">
-                <Database className="w-6 h-6 text-[#780096]" />
+            <div className="bg-white rounded-xl p-6 border border-stroke01 shadow-sm">
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-pinkTP/10 to-pinkTP/10 flex items-center justify-center mb-4">
+                <Database className="w-6 h-6 text-pinkTP" />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Detail View</h3>
-              <p className="text-sm text-gray-600">
+              <h3 className="font-semibold text-text01 mb-2">Detail View</h3>
+              <p className="text-sm text-text02">
                 Detail page with header sections, key metrics cards, and detail containers. Great for item detail pages and profile views.
               </p>
             </div>
@@ -321,23 +321,23 @@ export default function BuilderDetailPage({ onBack }) {
 
         {/* Access Control */}
         <section className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Access Control</h2>
-          <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
-            <p className="text-gray-600 mb-4">
+          <h2 className="text-2xl font-bold text-text01 mb-6">Access Control</h2>
+          <div className="bg-white rounded-2xl p-6 border border-stroke01 shadow-sm">
+            <p className="text-text02 mb-4">
               FAB Builder is available to <strong>Admin</strong> and <strong>Developer</strong> roles. Users can only launch and use published applications.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="p-4 rounded-lg bg-purple-50 border border-purple-200">
-                <h4 className="font-semibold text-gray-900 mb-1">Admin</h4>
-                <p className="text-sm text-gray-600">Full access, can publish directly</p>
+              <div className="p-4 rounded-lg bg-pinkTP/10 border border-pinkTP/40">
+                <h4 className="font-semibold text-text01 mb-1">Admin</h4>
+                <p className="text-sm text-text02">Full access, can publish directly</p>
               </div>
-              <div className="p-4 rounded-lg bg-blue-50 border border-blue-200">
-                <h4 className="font-semibold text-gray-900 mb-1">Developer</h4>
-                <p className="text-sm text-gray-600">Build and edit, submit for review</p>
+              <div className="p-4 rounded-lg bg-neutral01 border border-neutral01">
+                <h4 className="font-semibold text-text01 mb-1">Developer</h4>
+                <p className="text-sm text-text02">Build and edit, submit for review</p>
               </div>
-              <div className="p-4 rounded-lg bg-gray-50 border border-gray-200">
-                <h4 className="font-semibold text-gray-900 mb-1">User</h4>
-                <p className="text-sm text-gray-600">Use published apps only</p>
+              <div className="p-4 rounded-lg bg-bg02 border border-stroke01">
+                <h4 className="font-semibold text-text01 mb-1">User</h4>
+                <p className="text-sm text-text02">Use published apps only</p>
               </div>
             </div>
           </div>

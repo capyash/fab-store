@@ -9,15 +9,15 @@ export default function AssetCard({ asset, onSelect }) {
   const getStatusColor = (status) => {
     switch (status?.toLowerCase()) {
       case "operational":
-        return "bg-emerald-100 text-emerald-700";
+        return "bg-success01 text-success02";
       case "maintenance required":
-        return "bg-amber-100 text-amber-700";
+        return "bg-alert01 text-amber-700";
       case "critical":
-        return "bg-red-100 text-red-700";
+        return "bg-error01 text-error02";
       case "under maintenance":
-        return "bg-blue-100 text-blue-700";
+        return "bg-neutral01 text-neutral02";
       default:
-        return "bg-gray-100 text-gray-700";
+        return "bg-bg03 text-text01";
     }
   };
 
@@ -38,7 +38,7 @@ export default function AssetCard({ asset, onSelect }) {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+      className="rounded-xl border border-stroke01 bg-white shadow-sm hover:shadow-md transition-shadow cursor-pointer"
       onClick={() => onSelect?.(asset)}
     >
       <div className="p-4 space-y-3">
@@ -46,9 +46,9 @@ export default function AssetCard({ asset, onSelect }) {
         <div className="flex items-start justify-between">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
-              <h3 className="font-semibold text-gray-900">{asset.id}</h3>
+              <h3 className="font-semibold text-text01">{asset.id}</h3>
             </div>
-            <p className="text-sm text-gray-600">{asset.name || asset.model}</p>
+            <p className="text-sm text-text02">{asset.name || asset.model}</p>
           </div>
           <span className={`px-2.5 py-1 rounded-full text-xs font-semibold flex items-center gap-1 ${getStatusColor(asset.status)}`}>
             {getStatusIcon(asset.status)}
@@ -59,27 +59,27 @@ export default function AssetCard({ asset, onSelect }) {
         {/* Details */}
         <div className="space-y-2 text-sm">
           {asset.customer && (
-            <div className="flex items-center gap-2 text-gray-600">
-              <Package className="w-4 h-4 text-gray-400" />
+            <div className="flex items-center gap-2 text-text02">
+              <Package className="w-4 h-4 text-text03" />
               <span>{asset.customer.name || asset.customer}</span>
             </div>
           )}
           {asset.location && (
-            <div className="flex items-center gap-2 text-gray-600">
-              <Package className="w-4 h-4 text-gray-400" />
+            <div className="flex items-center gap-2 text-text02">
+              <Package className="w-4 h-4 text-text03" />
               <span>{asset.location.address || asset.location}</span>
             </div>
           )}
           {asset.lastMaintenance && (
-            <div className="flex items-center gap-2 text-gray-600">
-              <Clock className="w-4 h-4 text-gray-400" />
+            <div className="flex items-center gap-2 text-text02">
+              <Clock className="w-4 h-4 text-text03" />
               <span>Last maintenance: {new Date(asset.lastMaintenance).toLocaleDateString()}</span>
             </div>
           )}
           {asset.nextMaintenance && (
             <div className="flex items-center gap-2">
-              <Clock className={`w-4 h-4 ${new Date(asset.nextMaintenance) < new Date() ? "text-red-500" : "text-gray-400"}`} />
-              <span className={`text-sm ${new Date(asset.nextMaintenance) < new Date() ? "text-red-600 font-medium" : "text-gray-600"}`}>
+              <Clock className={`w-4 h-4 ${new Date(asset.nextMaintenance) < new Date() ? "text-error010" : "text-text03"}`} />
+              <span className={`text-sm ${new Date(asset.nextMaintenance) < new Date() ? "text-error03 font-medium" : "text-text02"}`}>
                 Next maintenance: {new Date(asset.nextMaintenance).toLocaleDateString()}
               </span>
             </div>

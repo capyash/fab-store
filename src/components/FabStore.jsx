@@ -1,1814 +1,1814 @@
-import { useMemo, useState, useEffect } from "react";
-import { Sparkles, Search, ArrowRight, ChevronDown, User, LogOut, ArrowLeft, Layers, Copy } from "lucide-react";
-import { fabApps } from "../data/fabApps";
-import { fabModels } from "../data/fabModels";
-import { fabAgents } from "../data/fabAgents";
-import { fabPlatforms, getEnrichedPlatforms } from "../data/fabPlatforms";
-import { applicationTemplates, getTemplatesByIndustry } from "../data/templates";
-import StoreFooter from "./StoreFooter";
-import PlatformDetail from "./PlatformDetail";
-import TemplateCloner from "./TemplateCloner";
-import MySpace from "./MySpace";
-import AppBuilder from "./AppBuilder";
-import BuilderDetailPage from "./BuilderDetailPage";
-import PlatformsHub from "./PlatformsHub";
-import AgenticSupportDemo from "./AgenticSupportDemo";
-import KnowledgeHub from "./KnowledgeHub";
-import PricingPage from "./PricingPage";
-import ArchitecturePage from "./ArchitecturePage";
-import AppLogo from "./AppLogo";
-import { useAuth } from "../auth/AuthContext";
-import { usePermissions } from "../hooks/usePermissions";
-import RoleSwitcher from "./RoleSwitcher";
+import { useMemo, useState, useEffect } from"react";
+import { Sparkles, Search, ArrowRight, ChevronDown, User, LogOut, ArrowLeft, Layers, Copy } from"lucide-react";
+import { fabApps } from"../data/fabApps";
+import { fabModels } from"../data/fabModels";
+import { fabAgents } from"../data/fabAgents";
+import { fabPlatforms, getEnrichedPlatforms } from"../data/fabPlatforms";
+import { applicationTemplates, getTemplatesByIndustry } from"../data/templates";
+import StoreFooter from"./StoreFooter";
+import PlatformDetail from"./PlatformDetail";
+import TemplateCloner from"./TemplateCloner";
+import MySpace from"./MySpace";
+import AppBuilder from"./AppBuilder";
+import BuilderDetailPage from"./BuilderDetailPage";
+import PlatformsHub from"./PlatformsHub";
+import AgenticSupportDemo from"./AgenticSupportDemo";
+import KnowledgeHub from"./KnowledgeHub";
+import PricingPage from"./PricingPage";
+import ArchitecturePage from"./ArchitecturePage";
+import AppLogo from"./AppLogo";
+import { useAuth } from"../auth/AuthContext";
+import { usePermissions } from"../hooks/usePermissions";
+import RoleSwitcher from"./RoleSwitcher";
 
 // Store Logo Component - uses image if available, falls back to AppLogo
 function StoreLogo() {
-  const [imageError, setImageError] = useState(false);
-  
-  // Make logo much larger and more visible, especially on smaller screens like laptops
-  // Remove any background/shadow/box styling for clean appearance
-  if (!imageError) {
-    return (
-      <img 
-        src="/fab-store-logo-store.png" 
-        alt="TP.ai FAB Store" 
-        className="h-16 sm:h-20 md:h-24 lg:h-20 xl:h-24 w-auto object-contain"
-        style={{ 
-          minHeight: '64px',
-          maxHeight: 'none',
-          imageRendering: 'auto',
-          display: 'block',
-          background: 'transparent'
-        }}
-        onError={() => setImageError(true)}
-      />
-    );
-  }
-  
-  // Fallback to AppLogo if image doesn't exist - show icon on landing page
-  return <AppLogo appName="Store" className="h-16 sm:h-20 md:h-24 lg:h-20 xl:h-24" showIcon={true} />;
+ const [imageError, setImageError] = useState(false);
+ 
+ // Make logo much larger and more visible, especially on smaller screens like laptops
+ // Remove any background/shadow/box styling for clean appearance
+ if (!imageError) {
+  return (
+   <img 
+    src="/fab-store-logo-store.png" 
+    alt="TP.ai FAB Store" 
+    className="h-16 sm:h-20 md:h-24 lg:h-20 xl:h-24 w-auto object-contain"
+    style={{ 
+     minHeight: '64px',
+     maxHeight: 'none',
+     imageRendering: 'auto',
+     display: 'block',
+     background: 'transparent'
+    }}
+    onError={() => setImageError(true)}
+   />
+  );
+ }
+ 
+ // Fallback to AppLogo if image doesn't exist - show icon on landing page
+ return <AppLogo appName="Store" className="h-16 sm:h-20 md:h-24 lg:h-20 xl:h-24" showIcon={true} />;
 }
 
 const sortOptions = [
-  { value: "name", label: "Alphabetical" },
-  { value: "status", label: "Status (Live → Coming)" },
+ { value:"name", label:"Alphabetical" },
+ { value:"status", label:"Status (Live → Coming)" },
 ];
 
-const statusPriority = { Live: 0, Preview: 1, Beta: 2, "Coming Soon": 3 };
+const statusPriority = { Live: 0, Preview: 1, Beta: 2,"Coming Soon": 3 };
 
 function FabStore({ onLaunch, readOnly = false, onRequestLogin, onNavigate }) {
-  const { isAuthenticated } = useAuth();
-  const permissions = usePermissions();
-  const [search, setSearch] = useState("");
-  const [industry, setIndustry] = useState("All");
-  const [sort, setSort] = useState("status");
-  const [showDemoForm, setShowDemoForm] = useState(false);
-  const [activeNav, setActiveNav] = useState("store");
-  const [modalCategory, setModalCategory] = useState("All");
-  const [modalModality, setModalModality] = useState("All");
-  const [selectedPlatform, setSelectedPlatform] = useState(null);
-  const [platformCategory, setPlatformCategory] = useState("All");
-  const [platformIndustry, setPlatformIndustry] = useState("All");
-  const [templateIndustry, setTemplateIndustry] = useState("All");
-  const [cloningTemplate, setCloningTemplate] = useState(null);
-  const [clonedTemplates, setClonedTemplates] = useState(() => {
-    // Load cloned templates from localStorage
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("fabStore.clonedTemplates");
-      return stored ? JSON.parse(stored) : [];
-    }
-    return [];
+ const { isAuthenticated } = useAuth();
+ const permissions = usePermissions();
+ const [search, setSearch] = useState("");
+ const [industry, setIndustry] = useState("All");
+ const [sort, setSort] = useState("status");
+ const [showDemoForm, setShowDemoForm] = useState(false);
+ const [activeNav, setActiveNav] = useState("store");
+ const [modalCategory, setModalCategory] = useState("All");
+ const [modalModality, setModalModality] = useState("All");
+ const [selectedPlatform, setSelectedPlatform] = useState(null);
+ const [platformCategory, setPlatformCategory] = useState("All");
+ const [platformIndustry, setPlatformIndustry] = useState("All");
+ const [templateIndustry, setTemplateIndustry] = useState("All");
+ const [cloningTemplate, setCloningTemplate] = useState(null);
+ const [clonedTemplates, setClonedTemplates] = useState(() => {
+  // Load cloned templates from localStorage
+  if (typeof window !=="undefined") {
+   const stored = localStorage.getItem("fabStore.clonedTemplates");
+   return stored ? JSON.parse(stored) : [];
+  }
+  return [];
+ });
+ const [showBuilder, setShowBuilder] = useState(false);
+ const [editingApp, setEditingApp] = useState(null);
+ const [showBuilderDetail, setShowBuilderDetail] = useState(false);
+ const [showPlatformsHub, setShowPlatformsHub] = useState(false);
+ const [showKnowledgeHub, setShowKnowledgeHub] = useState(false);
+ const [showPricing, setShowPricing] = useState(false);
+ const [showArchitecture, setShowArchitecture] = useState(false);
+ const [mySpaceVersion, setMySpaceVersion] = useState(0);
+
+ const industries = useMemo(() => {
+  // Curated list of key industries, enriched from actual apps and templates
+  const base = new Set([
+  "Healthcare",
+  "Financial Services",
+  "Contact Center",
+  "Banking",
+  "Travel",
+  "Manufacturing",
+  "Retail",
+  ]);
+  fabApps.forEach((app) => {
+   if (app.industry) base.add(app.industry);
   });
-  const [showBuilder, setShowBuilder] = useState(false);
-  const [editingApp, setEditingApp] = useState(null);
-  const [showBuilderDetail, setShowBuilderDetail] = useState(false);
-  const [showPlatformsHub, setShowPlatformsHub] = useState(false);
-  const [showKnowledgeHub, setShowKnowledgeHub] = useState(false);
-  const [showPricing, setShowPricing] = useState(false);
-  const [showArchitecture, setShowArchitecture] = useState(false);
-  const [mySpaceVersion, setMySpaceVersion] = useState(0);
+  applicationTemplates.forEach((template) => {
+   if (template.industry) base.add(template.industry);
+  });
+  return ["All", ...Array.from(base)];
+ }, []);
 
-  const industries = useMemo(() => {
-    // Curated list of key industries, enriched from actual apps and templates
-    const base = new Set([
-      "Healthcare",
-      "Financial Services",
-      "Contact Center",
-      "Banking",
-      "Travel",
-      "Manufacturing",
-      "Retail",
-    ]);
-    fabApps.forEach((app) => {
-      if (app.industry) base.add(app.industry);
-    });
-    applicationTemplates.forEach((template) => {
-      if (template.industry) base.add(template.industry);
-    });
-    return ["All", ...Array.from(base)];
-  }, []);
+ const filteredTemplates = useMemo(() => {
+  const query = search.toLowerCase();
+  const templates = getTemplatesByIndustry(templateIndustry);
+  return templates.filter((template) => {
+   // Exclude cloned/copy variants from the public template catalogue
+   if (typeof template.name ==="string") {
+    const nameLower = template.name.toLowerCase();
+    if (nameLower.includes("(copy)") || nameLower.includes(" copy")) {
+     return false;
+    }
+   }
+   const matchesQuery =
+    !query ||
+    template.name.toLowerCase().includes(query) ||
+    template.description.toLowerCase().includes(query) ||
+    template.tags?.some((tag) => tag.toLowerCase().includes(query));
+   return matchesQuery;
+  });
+ }, [templateIndustry, search]);
 
-  const filteredTemplates = useMemo(() => {
-    const query = search.toLowerCase();
-    const templates = getTemplatesByIndustry(templateIndustry);
-    return templates.filter((template) => {
-      // Exclude cloned/copy variants from the public template catalogue
-      if (typeof template.name === "string") {
-        const nameLower = template.name.toLowerCase();
-        if (nameLower.includes("(copy)") || nameLower.includes(" copy")) {
-          return false;
+ const modalCategories = useMemo(() => {
+  const unique = Array.from(new Set(fabModels.map((model) => model.category)));
+  return ["All", ...unique];
+ }, []);
+
+ const modalModalities = useMemo(() => {
+  const unique = Array.from(new Set(fabModels.map((model) => model.modality)));
+  return ["All", ...unique];
+ }, []);
+
+ const platformIndustries = useMemo(() => {
+  const base = new Set([
+  "Healthcare",
+  "Financial Services",
+  "Contact Center",
+  "Banking",
+  "Travel",
+  ]);
+  fabPlatforms.forEach((platform) => {
+   if (platform.industry) base.add(platform.industry);
+  });
+  return ["All", ...Array.from(base)];
+ }, []);
+
+ const filteredPlatforms = useMemo(() => {
+  const query = search.toLowerCase();
+  const enrichedPlatforms = getEnrichedPlatforms();
+  const base = enrichedPlatforms.filter((platform) => {
+   const matchesIndustry = platformIndustry ==="All" || platform.industry === platformIndustry;
+   const matchesQuery =
+    !query ||
+    platform.name.toLowerCase().includes(query) ||
+    platform.description.toLowerCase().includes(query) ||
+    platform.tags?.some((tag) => tag.toLowerCase().includes(query));
+   return matchesIndustry && matchesQuery;
+  });
+  return base.sort((a, b) => {
+   const pa = statusPriority[a.status] ?? 99;
+   const pb = statusPriority[b.status] ?? 99;
+   if (pa !== pb) return pa - pb;
+   // Sort by solution count (descending) as secondary sort
+   const aCount = a.metrics?.solutionCount || 0;
+   const bCount = b.metrics?.solutionCount || 0;
+   if (aCount !== bCount) return bCount - aCount;
+   return a.name.localeCompare(b.name);
+  });
+ }, [platformCategory, platformIndustry, search]);
+
+ // Combine original apps with any cloned templates (used for hero/spotlight, My Space, etc.)
+ const allApps = useMemo(() => {
+  return [...fabApps, ...clonedTemplates];
+ }, [clonedTemplates]);
+
+ const filteredApps = useMemo(() => {
+  const query = search.toLowerCase();
+  // Only show first-class solutions in the catalogue.
+  // Hide any cloned/copied templates (internal helper apps).
+  const base = fabApps.filter((app) => {
+   const matchesIndustry = industry ==="All" || app.industry === industry;
+   const matchesQuery =
+    !query ||
+    app.name.toLowerCase().includes(query) ||
+    app.description.toLowerCase().includes(query) ||
+    app.tags?.some((tag) => tag.toLowerCase().includes(query));
+   // Exclude any apps with"(Copy)" or"(copy)" in the name (cloned templates)
+   // Handle multiple copies like"(Copy) (Copy)" or"(copy) (copy)"
+   let isCopy = false;
+   if (typeof app.name ==="string") {
+    const nameLower = app.name.toLowerCase();
+    isCopy = nameLower.includes("(copy)") || nameLower.includes(" copy");
+   }
+   return matchesIndustry && matchesQuery && !isCopy;
+  });
+  return base.sort((a, b) => {
+   if (sort ==="name") return a.name.localeCompare(b.name);
+   const pa = statusPriority[a.status] ?? 99;
+   const pb = statusPriority[b.status] ?? 99;
+   if (pa !== pb) return pa - pb;
+   return a.name.localeCompare(b.name);
+  });
+ }, [industry, search, sort]);
+
+ const filteredModals = useMemo(() => {
+  return fabModels.filter((model) => {
+   const matchesCategory = modalCategory ==="All" || model.category === modalCategory;
+   const matchesModality = modalModality ==="All" || model.modality === modalModality;
+   return matchesCategory && matchesModality;
+  });
+ }, [modalCategory, modalModality]);
+
+ const handleSectionNavigate = (target) => {
+  if (target ==="builder-detail") {
+   setShowBuilderDetail(true);
+   setActiveNav("builder-detail");
+   setShowPlatformsHub(false);
+   setShowKnowledgeHub(false);
+   setShowPricing(false);
+   setShowArchitecture(false);
+  } else if (target ==="platforms-hub") {
+   setShowPlatformsHub(true);
+   setActiveNav("platforms-hub");
+   setShowBuilderDetail(false);
+   setShowKnowledgeHub(false);
+   setShowPricing(false);
+   setShowArchitecture(false);
+  } else if (target ==="knowledge-hub") {
+   setShowKnowledgeHub(true);
+   setActiveNav("knowledge-hub");
+   setShowBuilderDetail(false);
+   setShowPlatformsHub(false);
+   setShowPricing(false);
+   setShowArchitecture(false);
+  } else if (target ==="pricing") {
+   setShowPricing(true);
+   setActiveNav("pricing");
+   setShowBuilderDetail(false);
+   setShowPlatformsHub(false);
+   setShowKnowledgeHub(false);
+   setShowArchitecture(false);
+  } else if (target ==="architecture") {
+   setShowArchitecture(true);
+   setActiveNav("architecture");
+   setShowBuilderDetail(false);
+   setShowPlatformsHub(false);
+   setShowKnowledgeHub(false);
+   setShowPricing(false);
+  } else {
+   setActiveNav(target);
+   setSelectedPlatform(null);
+   setShowBuilderDetail(false);
+   setShowPlatformsHub(false);
+   setShowKnowledgeHub(false);
+   setShowPricing(false);
+   setShowArchitecture(false);
+  }
+  window.scrollTo({ top: 0, behavior:"smooth" });
+ };
+
+ const handlePlatformSelect = (platform) => {
+  setSelectedPlatform(platform);
+  window.scrollTo({ top: 0, behavior:"smooth" });
+ };
+
+ const handlePlatformBack = () => {
+  setSelectedPlatform(null);
+ };
+
+ const handleCloneTemplate = (template) => {
+  // Create a new cloned app entry and immediately open it in the builder
+  const newClonedTemplates = [...clonedTemplates, template];
+  setClonedTemplates(newClonedTemplates);
+
+  if (typeof window !=="undefined") {
+   localStorage.setItem("fabStore.clonedTemplates", JSON.stringify(newClonedTemplates));
+  }
+
+  setCloningTemplate(null);
+
+  // Navigate to My Space and open the cloned app in the builder for editing
+  setActiveNav("myspace");
+  if (permissions.canAccessAppBuilder) {
+   setEditingApp(template);
+   setShowBuilder(true);
+  }
+ };
+
+ // Filter out cloned/copy apps from spotlight and hero
+ const cleanApps = allApps.filter((app) => {
+  if (typeof app.name ==="string") {
+   const nameLower = app.name.toLowerCase();
+   // Exclude any apps with"(Copy)" or"(copy)" in the name (cloned templates)
+   // Handle multiple copies like"(Copy) (Copy)" or"(copy) (copy)"
+   if (nameLower.includes("(copy)") || nameLower.includes(" copy")) {
+    return false;
+   }
+  }
+  return true;
+ });
+ 
+ const spotlightApps = cleanApps.slice(0, 2);
+ const heroSlides = cleanApps.slice(0, 4).map((app, idx) => ({
+  ...app,
+  previewPanels: [
+   {
+    title: `${app.name} Command`,
+    description:"Ops cockpit · KPI streak · SLA health",
+    pill:"Live control",
+   },
+   {
+    title:"AI Telemetry",
+    description:"Reasoning traces · Confidence bands",
+    pill: idx % 2 === 0 ?"FAB Core" :"Roadmap",
+   },
+  ],
+ }));
+ const pipelineApps = allApps.filter((app) => {
+  // Exclude Live apps
+  if (app.status ==="Live") return false;
+  // Exclude any apps with"(Copy)" or"(copy)" in the name (cloned templates)
+  // Handle multiple copies like"(Copy) (Copy)" or"(copy) (copy)"
+  if (typeof app.name ==="string") {
+   const nameLower = app.name.toLowerCase();
+   if (nameLower.includes("(copy)") || nameLower.includes(" copy")) {
+    return false;
+   }
+  }
+  return true;
+ });
+
+ return (
+  <div className="relative min-h-screen overflow-hidden bg-[bg02]">
+   <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_18%,rgba(155,138,255,0.18),transparent_55%),radial-gradient(circle_at_75%_15%,rgba(118,196,255,0.16),transparent_55%),radial-gradient(circle_at_50%_85%,rgba(255,208,233,0.2),transparent_50%)] pointer-events-none" />
+   <div className="relative flex flex-col min-h-screen">
+    <TopNav
+     search={search}
+     onSearchChange={setSearch}
+     readOnly={readOnly}
+     onRequestLogin={onRequestLogin}
+     onRequestDemo={() => setShowDemoForm(true)}
+     onNavSelect={handleSectionNavigate}
+     active={activeNav}
+    />
+    <div className="space-y-10 pb-16 pt-6 flex-1">
+     {activeNav ==="store" && (
+      <>
+       <HeroCarousel slides={heroSlides} readOnly={readOnly} onRequestLogin={onRequestLogin} onLaunch={onLaunch} />
+
+       {/* Applications Section */}
+       <section className="px-4 md:px-10">
+        <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_45px_85px_rgba(15,10,45,0.15)] p-6 md:p-10 space-y-6 backdrop-blur">
+         <div className="flex flex-col gap-3">
+          <div className="text-xs font-semibold uppercase tracking-[0.35em] text-pinkTP">Applications</div>
+          <p className="text-sm text-text02">
+           AI-native applications built on our enterprise platforms—ready to deploy or customize for your organization. 
+           All applications include AI Watchtower for intelligent reasoning, SOP compliance, and audit trails.
+          </p>
+          <div className="flex items-center gap-4 text-xs text-text03">
+           <span>5 Live Applications</span>
+           <span>•</span>
+           <span>Healthcare, Financial Services, Field Service</span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+           <FilterPill label="Industry" activeValue={industry} options={industries} onSelect={setIndustry} />
+           <SortSelect value={sort} onChange={setSort} />
+          </div>
+         </div>
+
+         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+          {filteredApps.map((app) => (
+           <AppCard 
+            key={app.id} 
+            app={app} 
+            onLaunch={onLaunch} 
+            readOnly={readOnly} 
+            onRequestLogin={onRequestLogin}
+            onPlatformClick={handlePlatformSelect}
+            onCloneTemplate={() => setCloningTemplate(app)}
+           />
+          ))}
+          {filteredApps.length === 0 && (
+           <div className="col-span-full text-center py-12 text-text03">
+            No apps found. Try a different search term.
+           </div>
+          )}
+         </div>
+        </div>
+       </section>
+       <SectionRow
+        title="Coming Soon"
+        subtitle="Preview releases, beta programs, and roadmap initiatives"
+        apps={pipelineApps}
+        readOnly={readOnly}
+        onRequestLogin={onRequestLogin}
+        onLaunch={onLaunch}
+       />
+      </>
+     )}
+
+     {activeNav ==="modals" && (
+      <ModelGallery
+       models={filteredModals}
+       totalModels={fabModels}
+       readOnly={readOnly}
+       onRequestLogin={onRequestLogin}
+       categoryOptions={modalCategories}
+       modalityOptions={modalModalities}
+       activeCategory={modalCategory}
+       activeModality={modalModality}
+       onCategoryChange={setModalCategory}
+       onModalityChange={setModalModality}
+      />
+     )}
+
+     {activeNav ==="agents" && (
+      <AgentGallery
+       agents={fabAgents}
+       readOnly={readOnly}
+       onRequestLogin={onRequestLogin}
+      />
+     )}
+
+     {activeNav ==="templates" && (
+      <section className="px-4 md:px-10">
+       <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_45px_85px_rgba(15,10,45,0.15)] p-6 md:p-10 space-y-6 backdrop-blur">
+        <div className="flex flex-col gap-3">
+         <div>
+          <div className="text-xs font-semibold uppercase tracking-[0.35em] text-pinkTP">Template Marketplace</div>
+          <p className="text-sm text-text02 mt-1">
+           Clone and customize pre-built templates to create your own solutions
+          </p>
+         </div>
+         <div className="flex flex-wrap gap-2">
+          <FilterPill label="Industry" activeValue={templateIndustry} options={industries} onSelect={setTemplateIndustry} />
+          <SortSelect value={sort} onChange={setSort} />
+         </div>
+        </div>
+
+        {/* Pre-built Templates */}
+        {filteredTemplates.length > 0 && (
+         <div>
+          <h3 className="text-lg font-semibold text-text01 mb-4">Pre-built Templates</h3>
+          <p className="text-sm text-text02 mb-4">
+           Production-ready, industry-specific application templates with AI capabilities pre-configured
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+           {filteredTemplates.map((template) => (
+            <AppCard 
+             key={template.id} 
+             app={template} 
+             onLaunch={onLaunch} 
+             readOnly={readOnly} 
+             onRequestLogin={onRequestLogin}
+             onPlatformClick={handlePlatformSelect}
+             onCloneTemplate={() => setCloningTemplate(template)}
+            />
+           ))}
+          </div>
+         </div>
+        )}
+
+        {/* Original Live Apps as Templates */}
+        <div>
+         <h3 className="text-lg font-semibold text-text01 mb-4">Live Applications (Available as Templates)</h3>
+         <p className="text-sm text-text02 mb-4">
+          Clone battle-tested, production applications to create your own customized versions
+         </p>
+         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+          {fabApps.filter((app) => app.status ==="Live").map((app) => (
+           <AppCard 
+            key={app.id} 
+            app={app} 
+            onLaunch={onLaunch} 
+            readOnly={readOnly} 
+            onRequestLogin={onRequestLogin}
+            onPlatformClick={handlePlatformSelect}
+            onCloneTemplate={() => setCloningTemplate(app)}
+           />
+          ))}
+         </div>
+        </div>
+
+        {/* Cloned Templates */}
+        {clonedTemplates.length > 0 && (
+         <div>
+          <h3 className="text-lg font-semibold text-text01 mb-4">Your Cloned Templates</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+           {clonedTemplates.map((app) => (
+            <AppCard 
+             key={app.id} 
+             app={app} 
+             onLaunch={onLaunch} 
+             readOnly={readOnly} 
+             onRequestLogin={onRequestLogin}
+             onPlatformClick={handlePlatformSelect}
+             onCloneTemplate={() => setCloningTemplate(app)}
+            />
+           ))}
+          </div>
+         </div>
+        )}
+
+        {clonedTemplates.length === 0 && (
+         <div className="text-center py-12 text-text03">
+          <Copy className="w-12 h-12 mx-auto mb-4 text-text03" />
+          <p className="text-sm">No cloned templates yet. Clone a template to get started!</p>
+         </div>
+        )}
+       </div>
+      </section>
+     )}
+
+     {activeNav ==="platforms" && !selectedPlatform && (
+      <section className="px-4 md:px-10">
+       <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_45px_85px_rgba(15,10,45,0.15)] p-6 md:p-10 space-y-6 backdrop-blur">
+        <div className="flex flex-col gap-3">
+         <div className="text-xs font-semibold uppercase tracking-[0.35em] text-pinkTP">Platform Catalog</div>
+         <div className="flex flex-wrap gap-2">
+          <FilterPill label="Industry" activeValue={platformIndustry} options={platformIndustries} onSelect={setPlatformIndustry} />
+         </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+         {filteredPlatforms.map((platform) => (
+          <PlatformCard key={platform.id} platform={platform} onSelect={handlePlatformSelect} />
+         ))}
+         {filteredPlatforms.length === 0 && (
+          <div className="col-span-full text-center py-12 text-text03">
+           No platforms found. Try a different search term.
+          </div>
+         )}
+        </div>
+       </div>
+      </section>
+     )}
+
+     {activeNav ==="platforms" && selectedPlatform && (
+      <PlatformDetail platform={selectedPlatform} onBack={handlePlatformBack} onLaunch={onLaunch} readOnly={readOnly} onRequestLogin={onRequestLogin} />
+     )}
+
+     {activeNav ==="myspace" && isAuthenticated && permissions.canAccessMySpace && (
+      <MySpace
+       key={mySpaceVersion}
+       onLaunchBuilder={() => {
+        if (isAuthenticated && permissions.canAccessAppBuilder) {
+         setShowBuilder(true);
+         setEditingApp(null);
+        } else {
+         onRequestLogin?.();
         }
-      }
-      const matchesQuery =
-        !query ||
-        template.name.toLowerCase().includes(query) ||
-        template.description.toLowerCase().includes(query) ||
-        template.tags?.some((tag) => tag.toLowerCase().includes(query));
-      return matchesQuery;
-    });
-  }, [templateIndustry, search]);
+       }}
+       onEditApp={(app) => {
+        if (permissions.canEditApps) {
+         setEditingApp(app);
+         setShowBuilder(true);
+        }
+       }}
+       onViewApp={(app) => {
+        // Built-in apps (Cogniclaim, Resolve, Lend, Dispatch, Inventory) use launchKey routing
+        const builtInLaunchKeys = new Set(["home","resolve","lend","dispatch","inventory"]);
+        const isBuiltIn = builtInLaunchKeys.has(app.launchKey);
 
-  const modalCategories = useMemo(() => {
-    const unique = Array.from(new Set(fabModels.map((model) => model.category)));
-    return ["All", ...unique];
-  }, []);
+        if (isBuiltIn && app.launchKey) {
+         onLaunch?.(app.launchKey);
+         return;
+        }
 
-  const modalModalities = useMemo(() => {
-    const unique = Array.from(new Set(fabModels.map((model) => model.modality)));
-    return ["All", ...unique];
-  }, []);
+        // Custom / builder-created apps: open in AppBuilder so user can run them from there
+        if (permissions.canAccessAppBuilder) {
+         setEditingApp(app);
+         setShowBuilder(true);
+        }
+       }}
+      />
+     )}
 
-  const platformIndustries = useMemo(() => {
-    const base = new Set([
-      "Healthcare",
-      "Financial Services",
-      "Contact Center",
-      "Banking",
-      "Travel",
-    ]);
-    fabPlatforms.forEach((platform) => {
-      if (platform.industry) base.add(platform.industry);
-    });
-    return ["All", ...Array.from(base)];
-  }, []);
+     {showBuilder && isAuthenticated && permissions.canAccessAppBuilder && (
+      <AppBuilder
+       app={editingApp}
+       onClose={() => {
+        setShowBuilder(false);
+        setEditingApp(null);
+       }}
+       onSave={(appData) => {
+        const userApps = JSON.parse(localStorage.getItem("fabStore.userApps") ||"[]");
+        const existingIndex = userApps.findIndex((a) => a.id === appData.id);
+        const appToSave = {
+         ...appData,
+         lastModified: new Date().toISOString(),
+         status: appData.status ||"Workspace",
+        };
+        if (existingIndex >= 0) {
+         userApps[existingIndex] = appToSave;
+        } else {
+         userApps.push(appToSave);
+        }
+        localStorage.setItem("fabStore.userApps", JSON.stringify(userApps));
+        // Force MySpace to remount and pick up latest apps
+        setMySpaceVersion((v) => v + 1);
+        setShowBuilder(false);
+        setEditingApp(null);
+        if (activeNav !=="myspace") {
+         handleSectionNavigate("myspace");
+        }
+       }}
+      />
+     )}
 
-  const filteredPlatforms = useMemo(() => {
-    const query = search.toLowerCase();
-    const enrichedPlatforms = getEnrichedPlatforms();
-    const base = enrichedPlatforms.filter((platform) => {
-      const matchesIndustry = platformIndustry === "All" || platform.industry === platformIndustry;
-      const matchesQuery =
-        !query ||
-        platform.name.toLowerCase().includes(query) ||
-        platform.description.toLowerCase().includes(query) ||
-        platform.tags?.some((tag) => tag.toLowerCase().includes(query));
-      return matchesIndustry && matchesQuery;
-    });
-    return base.sort((a, b) => {
-      const pa = statusPriority[a.status] ?? 99;
-      const pb = statusPriority[b.status] ?? 99;
-      if (pa !== pb) return pa - pb;
-      // Sort by solution count (descending) as secondary sort
-      const aCount = a.metrics?.solutionCount || 0;
-      const bCount = b.metrics?.solutionCount || 0;
-      if (aCount !== bCount) return bCount - aCount;
-      return a.name.localeCompare(b.name);
-    });
-  }, [platformCategory, platformIndustry, search]);
+     {activeNav ==="about" && (
+      <section className="px-4 md:px-10 space-y-6">
+       <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_35px_85px_rgba(15,10,45,0.12)] p-8 space-y-6 backdrop-blur">
+        <div>
+         <p className="text-xs font-semibold uppercase tracking-[0.35em] text-pinkTP">About FAB Store</p>
+         <h2 className="text-3xl font-semibold text-text01 mt-2">Operational AI built with guardrails</h2>
+        </div>
+        <p className="text-text01 leading-relaxed">
+         Teleperformance FAB is an enterprise AI platform that combines human-centered operations knowledge with intelligent orchestration. 
+         Build applications faster with our AI-native platforms, reusable models, and production-ready templates—all with built-in 
+         compliance and SOP-native guardrails.
+        </p>
 
-  // Combine original apps with any cloned templates (used for hero/spotlight, My Space, etc.)
-  const allApps = useMemo(() => {
-    return [...fabApps, ...clonedTemplates];
-  }, [clonedTemplates]);
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+         <div className="p-6 rounded-xl bg-gradient-to-br from-buttonPrimary/5 to-buttonPrimary/5 border border-buttonPrimary/20">
+          <div className="text-3xl font-bold text-buttonPrimary mb-2">5</div>
+          <div className="text-sm font-medium text-text01">Live Applications</div>
+          <div className="text-xs text-text03 mt-1">Production-ready solutions</div>
+         </div>
+         <div className="p-6 rounded-xl bg-gradient-to-br from-buttonPrimary/5 to-buttonPrimary/5 border border-buttonPrimary/20">
+          <div className="text-3xl font-bold text-buttonPrimary mb-2">2</div>
+          <div className="text-sm font-medium text-text01">AI Platforms</div>
+          <div className="text-xs text-text03 mt-1">SOP Executor & Field Service</div>
+         </div>
+         <div className="p-6 rounded-xl bg-gradient-to-br from-buttonPrimary/5 to-buttonPrimary/5 border border-buttonPrimary/20">
+          <div className="text-3xl font-bold text-buttonPrimary mb-2">67</div>
+          <div className="text-sm font-medium text-text01">Builder Components</div>
+          <div className="text-xs text-text03 mt-1">Low-code/no-code platform</div>
+         </div>
+        </div>
 
-  const filteredApps = useMemo(() => {
-    const query = search.toLowerCase();
-    // Only show first-class solutions in the catalogue.
-    // Hide any cloned/copied templates (internal helper apps).
-    const base = fabApps.filter((app) => {
-      const matchesIndustry = industry === "All" || app.industry === industry;
-      const matchesQuery =
-        !query ||
-        app.name.toLowerCase().includes(query) ||
-        app.description.toLowerCase().includes(query) ||
-        app.tags?.some((tag) => tag.toLowerCase().includes(query));
-      // Exclude any apps with "(Copy)" or "(copy)" in the name (cloned templates)
-      // Handle multiple copies like "(Copy) (Copy)" or "(copy) (copy)"
-      let isCopy = false;
-      if (typeof app.name === "string") {
-        const nameLower = app.name.toLowerCase();
-        isCopy = nameLower.includes("(copy)") || nameLower.includes(" copy");
-      }
-      return matchesIndustry && matchesQuery && !isCopy;
-    });
-    return base.sort((a, b) => {
-      if (sort === "name") return a.name.localeCompare(b.name);
-      const pa = statusPriority[a.status] ?? 99;
-      const pb = statusPriority[b.status] ?? 99;
-      if (pa !== pb) return pa - pb;
-      return a.name.localeCompare(b.name);
-    });
-  }, [industry, search, sort]);
+        <div className="mt-8 pt-8 border-t border-stroke01">
+         <h3 className="text-xl font-semibold text-text01 mb-4">Key Capabilities</h3>
+         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="flex items-start gap-3">
+           <div className="w-2 h-2 rounded-full bg-buttonPrimary mt-2 shrink-0" />
+           <div>
+            <div className="font-medium text-text01">AI-Native Platforms</div>
+            <div className="text-sm text-text02">Reusable infrastructure with built-in AI reasoning, compliance, and orchestration</div>
+           </div>
+          </div>
+          <div className="flex items-start gap-3">
+           <div className="w-2 h-2 rounded-full bg-buttonPrimary mt-2 shrink-0" />
+           <div>
+            <div className="font-medium text-text01">Low-Code/No-Code Builder</div>
+            <div className="text-sm text-text02">Visual app builder with 67 components and AI-powered generation</div>
+           </div>
+          </div>
+          <div className="flex items-start gap-3">
+           <div className="w-2 h-2 rounded-full bg-buttonPrimary mt-2 shrink-0" />
+           <div>
+            <div className="font-medium text-text01">Role-Based Access</div>
+            <div className="text-sm text-text02">Admin, Developer, and User personas with granular permissions</div>
+           </div>
+          </div>
+          <div className="flex items-start gap-3">
+           <div className="w-2 h-2 rounded-full bg-buttonPrimary mt-2 shrink-0" />
+           <div>
+            <div className="font-medium text-text01">Production-Ready Templates</div>
+            <div className="text-sm text-text02">Clone battle-tested applications and customize for your needs</div>
+           </div>
+          </div>
+         </div>
+        </div>
 
-  const filteredModals = useMemo(() => {
-    return fabModels.filter((model) => {
-      const matchesCategory = modalCategory === "All" || model.category === modalCategory;
-      const matchesModality = modalModality === "All" || model.modality === modalModality;
-      return matchesCategory && matchesModality;
-    });
-  }, [modalCategory, modalModality]);
+        <p className="text-sm text-text03 mt-6">
+         Need more detail? Reach out via Request Demo and we'll line up a deep dive.
+        </p>
+       </div>
+      </section>
+     )}
 
-  const handleSectionNavigate = (target) => {
-    if (target === "builder-detail") {
-      setShowBuilderDetail(true);
-      setActiveNav("builder-detail");
-      setShowPlatformsHub(false);
-      setShowKnowledgeHub(false);
-      setShowPricing(false);
-      setShowArchitecture(false);
-    } else if (target === "platforms-hub") {
-      setShowPlatformsHub(true);
-      setActiveNav("platforms-hub");
-      setShowBuilderDetail(false);
-      setShowKnowledgeHub(false);
-      setShowPricing(false);
-      setShowArchitecture(false);
-    } else if (target === "knowledge-hub") {
-      setShowKnowledgeHub(true);
-      setActiveNav("knowledge-hub");
-      setShowBuilderDetail(false);
-      setShowPlatformsHub(false);
-      setShowPricing(false);
-      setShowArchitecture(false);
-    } else if (target === "pricing") {
-      setShowPricing(true);
-      setActiveNav("pricing");
-      setShowBuilderDetail(false);
-      setShowPlatformsHub(false);
-      setShowKnowledgeHub(false);
-      setShowArchitecture(false);
-    } else if (target === "architecture") {
-      setShowArchitecture(true);
-      setActiveNav("architecture");
-      setShowBuilderDetail(false);
-      setShowPlatformsHub(false);
-      setShowKnowledgeHub(false);
-      setShowPricing(false);
-    } else {
-      setActiveNav(target);
-      setSelectedPlatform(null);
-      setShowBuilderDetail(false);
-      setShowPlatformsHub(false);
-      setShowKnowledgeHub(false);
-      setShowPricing(false);
-      setShowArchitecture(false);
-    }
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const handlePlatformSelect = (platform) => {
-    setSelectedPlatform(platform);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const handlePlatformBack = () => {
-    setSelectedPlatform(null);
-  };
-
-  const handleCloneTemplate = (template) => {
-    // Create a new cloned app entry and immediately open it in the builder
-    const newClonedTemplates = [...clonedTemplates, template];
-    setClonedTemplates(newClonedTemplates);
-
-    if (typeof window !== "undefined") {
-      localStorage.setItem("fabStore.clonedTemplates", JSON.stringify(newClonedTemplates));
-    }
-
-    setCloningTemplate(null);
-
-    // Navigate to My Space and open the cloned app in the builder for editing
-    setActiveNav("myspace");
-    if (permissions.canAccessAppBuilder) {
-      setEditingApp(template);
-      setShowBuilder(true);
-    }
-  };
-
-  // Filter out cloned/copy apps from spotlight and hero
-  const cleanApps = allApps.filter((app) => {
-    if (typeof app.name === "string") {
-      const nameLower = app.name.toLowerCase();
-      // Exclude any apps with "(Copy)" or "(copy)" in the name (cloned templates)
-      // Handle multiple copies like "(Copy) (Copy)" or "(copy) (copy)"
-      if (nameLower.includes("(copy)") || nameLower.includes(" copy")) {
-        return false;
-      }
-    }
-    return true;
-  });
-  
-  const spotlightApps = cleanApps.slice(0, 2);
-  const heroSlides = cleanApps.slice(0, 4).map((app, idx) => ({
-    ...app,
-    previewPanels: [
-      {
-        title: `${app.name} Command`,
-        description: "Ops cockpit · KPI streak · SLA health",
-        pill: "Live control",
-      },
-      {
-        title: "AI Telemetry",
-        description: "Reasoning traces · Confidence bands",
-        pill: idx % 2 === 0 ? "FAB Core" : "Roadmap",
-      },
-    ],
-  }));
-  const pipelineApps = allApps.filter((app) => {
-    // Exclude Live apps
-    if (app.status === "Live") return false;
-    // Exclude any apps with "(Copy)" or "(copy)" in the name (cloned templates)
-    // Handle multiple copies like "(Copy) (Copy)" or "(copy) (copy)"
-    if (typeof app.name === "string") {
-      const nameLower = app.name.toLowerCase();
-      if (nameLower.includes("(copy)") || nameLower.includes(" copy")) {
-        return false;
-      }
-    }
-    return true;
-  });
-
-  return (
-    <div className="relative min-h-screen overflow-hidden bg-[#F7F8FF]">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_18%,rgba(155,138,255,0.18),transparent_55%),radial-gradient(circle_at_75%_15%,rgba(118,196,255,0.16),transparent_55%),radial-gradient(circle_at_50%_85%,rgba(255,208,233,0.2),transparent_50%)] pointer-events-none" />
-      <div className="relative flex flex-col min-h-screen">
-        <TopNav
-          search={search}
-          onSearchChange={setSearch}
-          readOnly={readOnly}
-          onRequestLogin={onRequestLogin}
-          onRequestDemo={() => setShowDemoForm(true)}
-          onNavSelect={handleSectionNavigate}
-          active={activeNav}
+     {(activeNav ==="builder-detail" || showBuilderDetail) && (
+      <>
+       {isAuthenticated ? (
+        <BuilderDetailPage 
+         onBack={() => {
+          setShowBuilderDetail(false);
+          handleSectionNavigate("store");
+         }} 
         />
-        <div className="space-y-10 pb-16 pt-6 flex-1">
-          {activeNav === "store" && (
-            <>
-              <HeroCarousel slides={heroSlides} readOnly={readOnly} onRequestLogin={onRequestLogin} onLaunch={onLaunch} />
+       ) : (
+        <div className="px-4 md:px-10 py-8">
+         <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_45px_85px_rgba(15,10,45,0.15)] p-6 md:p-10 text-center">
+          <h2 className="text-2xl font-bold text-text01 mb-2">Sign In Required</h2>
+          <p className="text-text02 mb-6">Please sign in to access the FAB Builder.</p>
+          <button
+           onClick={() => {
+            setShowBuilderDetail(false);
+            onRequestLogin?.();
+           }}
+           className="px-6 py-3 bg-buttonPrimary text-white rounded-lg font-semibold hover:bg-buttonPrimary-hover active:bg-buttonPrimary-active transition-all"
+          >
+           Sign In
+          </button>
+         </div>
+        </div>
+       )}
+      </>
+     )}
 
-              {/* Applications Section */}
-              <section className="px-4 md:px-10">
-                <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_45px_85px_rgba(15,10,45,0.15)] p-6 md:p-10 space-y-6 backdrop-blur">
-                  <div className="flex flex-col gap-3">
-                    <div className="text-xs font-semibold uppercase tracking-[0.35em] text-[#5C36C8]">Applications</div>
-                    <p className="text-sm text-gray-600">
-                      AI-native applications built on our enterprise platforms—ready to deploy or customize for your organization. 
-                      All applications include AI Watchtower for intelligent reasoning, SOP compliance, and audit trails.
-                    </p>
-                    <div className="flex items-center gap-4 text-xs text-gray-500">
-                      <span>5 Live Applications</span>
-                      <span>•</span>
-                      <span>Healthcare, Financial Services, Field Service</span>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      <FilterPill label="Industry" activeValue={industry} options={industries} onSelect={setIndustry} />
-                      <SortSelect value={sort} onChange={setSort} />
-                    </div>
-                  </div>
+     {(activeNav ==="platforms-hub" || showPlatformsHub) && (
+      <PlatformsHub 
+       onBack={() => {
+        setShowPlatformsHub(false);
+        handleSectionNavigate("store");
+       }} 
+       onNavigate={handleSectionNavigate}
+      />
+     )}
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-                    {filteredApps.map((app) => (
-                      <AppCard 
-                        key={app.id} 
-                        app={app} 
-                        onLaunch={onLaunch} 
-                        readOnly={readOnly} 
-                        onRequestLogin={onRequestLogin}
-                        onPlatformClick={handlePlatformSelect}
-                        onCloneTemplate={() => setCloningTemplate(app)}
-                      />
-                    ))}
-                    {filteredApps.length === 0 && (
-                      <div className="col-span-full text-center py-12 text-gray-500 dark:text-gray-400">
-                        No apps found. Try a different search term.
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </section>
-              <SectionRow
-                title="Coming Soon"
-                subtitle="Preview releases, beta programs, and roadmap initiatives"
-                apps={pipelineApps}
-                readOnly={readOnly}
-                onRequestLogin={onRequestLogin}
-                onLaunch={onLaunch}
-              />
-            </>
-          )}
+     {activeNav ==="agentic-support-demo" && (
+      <AgenticSupportDemo
+       onBack={() => {
+        handleSectionNavigate("platforms-hub");
+       }}
+      />
+     )}
 
-          {activeNav === "modals" && (
-            <ModelGallery
-              models={filteredModals}
-              totalModels={fabModels}
-              readOnly={readOnly}
-              onRequestLogin={onRequestLogin}
-              categoryOptions={modalCategories}
-              modalityOptions={modalModalities}
-              activeCategory={modalCategory}
-              activeModality={modalModality}
-              onCategoryChange={setModalCategory}
-              onModalityChange={setModalModality}
-            />
-          )}
+     {(activeNav ==="knowledge-hub" || showKnowledgeHub) && (
+      <KnowledgeHub 
+       onBack={() => {
+        setShowKnowledgeHub(false);
+        handleSectionNavigate("store");
+       }} 
+       onNavigate={handleSectionNavigate}
+      />
+     )}
 
-          {activeNav === "agents" && (
-            <AgentGallery
-              agents={fabAgents}
-              readOnly={readOnly}
-              onRequestLogin={onRequestLogin}
-            />
-          )}
+     {(activeNav ==="pricing" || showPricing) && (
+      <PricingPage 
+       onBack={() => {
+        setShowPricing(false);
+        handleSectionNavigate("store");
+       }}
+      />
+     )}
 
-          {activeNav === "templates" && (
-            <section className="px-4 md:px-10">
-              <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_45px_85px_rgba(15,10,45,0.15)] p-6 md:p-10 space-y-6 backdrop-blur">
-                <div className="flex flex-col gap-3">
-                  <div>
-                    <div className="text-xs font-semibold uppercase tracking-[0.35em] text-[#5C36C8]">Template Marketplace</div>
-                    <p className="text-sm text-gray-600 mt-1">
-                      Clone and customize pre-built templates to create your own solutions
-                    </p>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    <FilterPill label="Industry" activeValue={templateIndustry} options={industries} onSelect={setTemplateIndustry} />
-                    <SortSelect value={sort} onChange={setSort} />
-                  </div>
-                </div>
-
-                {/* Pre-built Templates */}
-                {filteredTemplates.length > 0 && (
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Pre-built Templates</h3>
-                    <p className="text-sm text-gray-600 mb-4">
-                      Production-ready, industry-specific application templates with AI capabilities pre-configured
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-                      {filteredTemplates.map((template) => (
-                        <AppCard 
-                          key={template.id} 
-                          app={template} 
-                          onLaunch={onLaunch} 
-                          readOnly={readOnly} 
-                          onRequestLogin={onRequestLogin}
-                          onPlatformClick={handlePlatformSelect}
-                          onCloneTemplate={() => setCloningTemplate(template)}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Original Live Apps as Templates */}
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Live Applications (Available as Templates)</h3>
-                  <p className="text-sm text-gray-600 mb-4">
-                    Clone battle-tested, production applications to create your own customized versions
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-                    {fabApps.filter((app) => app.status === "Live").map((app) => (
-                      <AppCard 
-                        key={app.id} 
-                        app={app} 
-                        onLaunch={onLaunch} 
-                        readOnly={readOnly} 
-                        onRequestLogin={onRequestLogin}
-                        onPlatformClick={handlePlatformSelect}
-                        onCloneTemplate={() => setCloningTemplate(app)}
-                      />
-                    ))}
-                  </div>
-                </div>
-
-                {/* Cloned Templates */}
-                {clonedTemplates.length > 0 && (
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Your Cloned Templates</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-                      {clonedTemplates.map((app) => (
-                        <AppCard 
-                          key={app.id} 
-                          app={app} 
-                          onLaunch={onLaunch} 
-                          readOnly={readOnly} 
-                          onRequestLogin={onRequestLogin}
-                          onPlatformClick={handlePlatformSelect}
-                          onCloneTemplate={() => setCloningTemplate(app)}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {clonedTemplates.length === 0 && (
-                  <div className="text-center py-12 text-gray-500">
-                    <Copy className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-                    <p className="text-sm">No cloned templates yet. Clone a template to get started!</p>
-                  </div>
-                )}
-              </div>
-            </section>
-          )}
-
-          {activeNav === "platforms" && !selectedPlatform && (
-            <section className="px-4 md:px-10">
-              <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_45px_85px_rgba(15,10,45,0.15)] p-6 md:p-10 space-y-6 backdrop-blur">
-                <div className="flex flex-col gap-3">
-                  <div className="text-xs font-semibold uppercase tracking-[0.35em] text-[#5C36C8]">Platform Catalog</div>
-                  <div className="flex flex-wrap gap-2">
-                    <FilterPill label="Industry" activeValue={platformIndustry} options={platformIndustries} onSelect={setPlatformIndustry} />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-                  {filteredPlatforms.map((platform) => (
-                    <PlatformCard key={platform.id} platform={platform} onSelect={handlePlatformSelect} />
-                  ))}
-                  {filteredPlatforms.length === 0 && (
-                    <div className="col-span-full text-center py-12 text-gray-500 dark:text-gray-400">
-                      No platforms found. Try a different search term.
-                    </div>
-                  )}
-                </div>
-              </div>
-            </section>
-          )}
-
-          {activeNav === "platforms" && selectedPlatform && (
-            <PlatformDetail platform={selectedPlatform} onBack={handlePlatformBack} onLaunch={onLaunch} readOnly={readOnly} onRequestLogin={onRequestLogin} />
-          )}
-
-          {activeNav === "myspace" && isAuthenticated && permissions.canAccessMySpace && (
-            <MySpace
-              key={mySpaceVersion}
-              onLaunchBuilder={() => {
-                if (isAuthenticated && permissions.canAccessAppBuilder) {
-                  setShowBuilder(true);
-                  setEditingApp(null);
-                } else {
-                  onRequestLogin?.();
-                }
-              }}
-              onEditApp={(app) => {
-                if (permissions.canEditApps) {
-                  setEditingApp(app);
-                  setShowBuilder(true);
-                }
-              }}
-              onViewApp={(app) => {
-                // Built-in apps (Cogniclaim, Resolve, Lend, Dispatch, Inventory) use launchKey routing
-                const builtInLaunchKeys = new Set(["home", "resolve", "lend", "dispatch", "inventory"]);
-                const isBuiltIn = builtInLaunchKeys.has(app.launchKey);
-
-                if (isBuiltIn && app.launchKey) {
-                  onLaunch?.(app.launchKey);
-                  return;
-                }
-
-                // Custom / builder-created apps: open in AppBuilder so user can run them from there
-                if (permissions.canAccessAppBuilder) {
-                  setEditingApp(app);
-                  setShowBuilder(true);
-                }
-              }}
-            />
-          )}
-
-          {showBuilder && isAuthenticated && permissions.canAccessAppBuilder && (
-            <AppBuilder
-              app={editingApp}
-              onClose={() => {
-                setShowBuilder(false);
-                setEditingApp(null);
-              }}
-              onSave={(appData) => {
-                const userApps = JSON.parse(localStorage.getItem("fabStore.userApps") || "[]");
-                const existingIndex = userApps.findIndex((a) => a.id === appData.id);
-                const appToSave = {
-                  ...appData,
-                  lastModified: new Date().toISOString(),
-                  status: appData.status || "Workspace",
-                };
-                if (existingIndex >= 0) {
-                  userApps[existingIndex] = appToSave;
-                } else {
-                  userApps.push(appToSave);
-                }
-                localStorage.setItem("fabStore.userApps", JSON.stringify(userApps));
-                // Force MySpace to remount and pick up latest apps
-                setMySpaceVersion((v) => v + 1);
-                setShowBuilder(false);
-                setEditingApp(null);
-                if (activeNav !== "myspace") {
-                  handleSectionNavigate("myspace");
-                }
-              }}
-            />
-          )}
-
-          {activeNav === "about" && (
-            <section className="px-4 md:px-10 space-y-6">
-              <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_35px_85px_rgba(15,10,45,0.12)] p-8 space-y-6 backdrop-blur">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#5C36C8]">About FAB Store</p>
-                  <h2 className="text-3xl font-semibold text-gray-900 mt-2">Operational AI built with guardrails</h2>
-                </div>
-                <p className="text-gray-700 leading-relaxed">
-                  Teleperformance FAB is an enterprise AI platform that combines human-centered operations knowledge with intelligent orchestration. 
-                  Build applications faster with our AI-native platforms, reusable models, and production-ready templates—all with built-in 
-                  compliance and SOP-native guardrails.
-                </p>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-                  <div className="p-6 rounded-xl bg-gradient-to-br from-[#2E2E2E]/5 to-[#2E2E2E]/5 border border-[#2E2E2E]/20">
-                    <div className="text-3xl font-bold text-[#2E2E2E] mb-2">5</div>
-                    <div className="text-sm font-medium text-gray-700">Live Applications</div>
-                    <div className="text-xs text-gray-500 mt-1">Production-ready solutions</div>
-                  </div>
-                  <div className="p-6 rounded-xl bg-gradient-to-br from-[#2E2E2E]/5 to-[#2E2E2E]/5 border border-[#2E2E2E]/20">
-                    <div className="text-3xl font-bold text-[#2E2E2E] mb-2">2</div>
-                    <div className="text-sm font-medium text-gray-700">AI Platforms</div>
-                    <div className="text-xs text-gray-500 mt-1">SOP Executor & Field Service</div>
-                  </div>
-                  <div className="p-6 rounded-xl bg-gradient-to-br from-[#2E2E2E]/5 to-[#2E2E2E]/5 border border-[#2E2E2E]/20">
-                    <div className="text-3xl font-bold text-[#2E2E2E] mb-2">67</div>
-                    <div className="text-sm font-medium text-gray-700">Builder Components</div>
-                    <div className="text-xs text-gray-500 mt-1">Low-code/no-code platform</div>
-                  </div>
-                </div>
-
-                <div className="mt-8 pt-8 border-t border-gray-200">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Key Capabilities</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-[#2E2E2E] mt-2 shrink-0" />
-                      <div>
-                        <div className="font-medium text-gray-900">AI-Native Platforms</div>
-                        <div className="text-sm text-gray-600">Reusable infrastructure with built-in AI reasoning, compliance, and orchestration</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-[#2E2E2E] mt-2 shrink-0" />
-                      <div>
-                        <div className="font-medium text-gray-900">Low-Code/No-Code Builder</div>
-                        <div className="text-sm text-gray-600">Visual app builder with 67 components and AI-powered generation</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-[#2E2E2E] mt-2 shrink-0" />
-                      <div>
-                        <div className="font-medium text-gray-900">Role-Based Access</div>
-                        <div className="text-sm text-gray-600">Admin, Developer, and User personas with granular permissions</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-[#2E2E2E] mt-2 shrink-0" />
-                      <div>
-                        <div className="font-medium text-gray-900">Production-Ready Templates</div>
-                        <div className="text-sm text-gray-600">Clone battle-tested applications and customize for your needs</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <p className="text-sm text-gray-500 mt-6">
-                  Need more detail? Reach out via Request Demo and we'll line up a deep dive.
-                </p>
-              </div>
-            </section>
-          )}
-
-          {(activeNav === "builder-detail" || showBuilderDetail) && (
-            <>
-              {isAuthenticated ? (
-                <BuilderDetailPage 
-                  onBack={() => {
-                    setShowBuilderDetail(false);
-                    handleSectionNavigate("store");
-                  }} 
-                />
-              ) : (
-                <div className="px-4 md:px-10 py-8">
-                  <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_45px_85px_rgba(15,10,45,0.15)] p-6 md:p-10 text-center">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-2">Sign In Required</h2>
-                    <p className="text-gray-600 mb-6">Please sign in to access the FAB Builder.</p>
-                    <button
-                      onClick={() => {
-                        setShowBuilderDetail(false);
-                        onRequestLogin?.();
-                      }}
-                      className="px-6 py-3 bg-[#2E2E2E] text-white rounded-lg font-semibold hover:bg-[#4A4A4A] active:bg-[#666666] transition-all"
-                    >
-                      Sign In
-                    </button>
-                  </div>
-                </div>
-              )}
-            </>
-          )}
-
-          {(activeNav === "platforms-hub" || showPlatformsHub) && (
-            <PlatformsHub 
-              onBack={() => {
-                setShowPlatformsHub(false);
-                handleSectionNavigate("store");
-              }} 
-              onNavigate={handleSectionNavigate}
-            />
-          )}
-
-          {activeNav === "agentic-support-demo" && (
-            <AgenticSupportDemo
-              onBack={() => {
-                handleSectionNavigate("platforms-hub");
-              }}
-            />
-          )}
-
-          {(activeNav === "knowledge-hub" || showKnowledgeHub) && (
-            <KnowledgeHub 
-              onBack={() => {
-                setShowKnowledgeHub(false);
-                handleSectionNavigate("store");
-              }} 
-              onNavigate={handleSectionNavigate}
-            />
-          )}
-
-          {(activeNav === "pricing" || showPricing) && (
-            <PricingPage 
-              onBack={() => {
-                setShowPricing(false);
-                handleSectionNavigate("store");
-              }}
-            />
-          )}
-
-          {(activeNav === "architecture" || showArchitecture) && (
-            <ArchitecturePage 
-              onBack={() => {
-                setShowArchitecture(false);
-                handleSectionNavigate("store");
-              }}
-            />
-          )}
-      </div>
-      <StoreFooter onNavigate={handleSectionNavigate} />
-      <DemoRequestModal open={showDemoForm} onClose={() => setShowDemoForm(false)} />
-      {cloningTemplate && (
-        <TemplateCloner
-          template={cloningTemplate}
-          onClose={() => setCloningTemplate(null)}
-          onClone={handleCloneTemplate}
-        />
-      )}
-    </div>
+     {(activeNav ==="architecture" || showArchitecture) && (
+      <ArchitecturePage 
+       onBack={() => {
+        setShowArchitecture(false);
+        handleSectionNavigate("store");
+       }}
+      />
+     )}
+   </div>
+   <StoreFooter onNavigate={handleSectionNavigate} />
+   <DemoRequestModal open={showDemoForm} onClose={() => setShowDemoForm(false)} />
+   {cloningTemplate && (
+    <TemplateCloner
+     template={cloningTemplate}
+     onClose={() => setCloningTemplate(null)}
+     onClone={handleCloneTemplate}
+    />
+   )}
   </div>
-  );
+ </div>
+ );
 }
 
 export default FabStore;
 
 function TopNav({ search, onSearchChange, readOnly, onRequestLogin, onRequestDemo, onNavSelect, active }) {
-  const { isAuthenticated, user, logout } = useAuth();
-  const permissions = usePermissions();
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
+ const { isAuthenticated, user, logout } = useAuth();
+ const permissions = usePermissions();
+ const [userMenuOpen, setUserMenuOpen] = useState(false);
 
-  const navItems = [
-    { label: "Store", key: "store" },
-    { label: "Models", key: "modals" },
-    { label: "Agents", key: "agents" },
-    { label: "Platforms", key: "platforms" },
-    ...(permissions.canCloneTemplates ? [{ label: "Templates", key: "templates" }] : []),
-    ...(permissions.canAccessMySpace ? [{ label: "My Space", key: "myspace" }] : []),
-    { label: "Pricing", key: "pricing" },
-    { label: "About", key: "about" },
-  ];
-  return (
-    <header className="sticky top-0 z-20 bg-white/95 backdrop-blur-xl border-b border-white/60 shadow-[0_12px_30px_rgba(15,14,63,0.08)] text-gray-900">
-      <div className="w-full px-4 lg:px-12 py-4 flex items-center gap-6 flex-wrap">
-        <div className="flex items-center gap-4 flex-1 min-w-[280px]">
-        <div className="flex items-center bg-transparent">
-          {/* Use image logo for Store - place your logo image at /public/fab-store-logo-store.png */}
-          <StoreLogo />
-        </div>
-          <span className="hidden sm:block h-6 w-px bg-gray-200" />
-          <nav className="flex items-center gap-5 text-sm font-semibold text-gray-500">
-            {navItems.map(({ label, key }) => {
-              const isActive = key === active;
-              return (
-              <button
-                  key={key}
-                  onClick={() => onNavSelect?.(key)}
-                  className={`relative pb-2 transition ${
-                    isActive ? "text-gray-900" : "text-gray-500 hover:text-[#5C36C8]"
-                  }`}
-              >
-                {label}
-                {isActive && <span className="absolute left-0 right-0 bottom-0 h-[2px] rounded-full bg-gray-900" />}
-              </button>
-            );
-          })}
-          </nav>
-        </div>
-        <div className="flex items-center gap-3 flex-1 justify-end min-w-[260px]">
-          <div className="relative flex-1 min-w-[220px] md:min-w-[320px]">
-            <Search className="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
-            <input
-              value={search}
-              onChange={(e) => onSearchChange(e.target.value)}
-              placeholder="Search applications, AI models, platforms, industries..."
-              className="w-full pl-12 pr-4 py-2.5 rounded-full border border-white shadow-[0_12px_40px_rgba(22,19,70,0.12)] bg-white text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#D9CCFF]/60"
-            />
+ const navItems = [
+  { label:"Store", key:"store" },
+  { label:"Models", key:"modals" },
+  { label:"Agents", key:"agents" },
+  { label:"Platforms", key:"platforms" },
+  ...(permissions.canCloneTemplates ? [{ label:"Templates", key:"templates" }] : []),
+  ...(permissions.canAccessMySpace ? [{ label:"My Space", key:"myspace" }] : []),
+  { label:"Pricing", key:"pricing" },
+  { label:"About", key:"about" },
+ ];
+ return (
+  <header className="sticky top-0 z-20 bg-white/95 backdrop-blur-xl border-b border-white/60 shadow-[0_12px_30px_rgba(15,14,63,0.08)] text-text01">
+   <div className="w-full px-4 lg:px-12 py-4 flex items-center gap-6 flex-wrap">
+    <div className="flex items-center gap-4 flex-1 min-w-[280px]">
+    <div className="flex items-center bg-transparent">
+     {/* Use image logo for Store - place your logo image at /public/fab-store-logo-store.png */}
+     <StoreLogo />
+    </div>
+     <span className="hidden sm:block h-6 w-px bg-stroke01" />
+     <nav className="flex items-center gap-5 text-sm font-semibold text-text03">
+      {navItems.map(({ label, key }) => {
+       const isActive = key === active;
+       return (
+       <button
+         key={key}
+         onClick={() => onNavSelect?.(key)}
+         className={`relative pb-2 transition ${
+          isActive ?"text-text01" :"text-text03 hover:text-pinkTP"
+         }`}
+       >
+        {label}
+        {isActive && <span className="absolute left-0 right-0 bottom-0 h-[2px] rounded-full bg-text01" />}
+       </button>
+      );
+     })}
+     </nav>
+    </div>
+    <div className="flex items-center gap-3 flex-1 justify-end min-w-[260px]">
+     <div className="relative flex-1 min-w-[220px] md:min-w-[320px]">
+      <Search className="w-4 h-4 text-text03 absolute left-4 top-1/2 -translate-y-1/2" />
+      <input
+       value={search}
+       onChange={(e) => onSearchChange(e.target.value)}
+       placeholder="Search applications, AI models, platforms, industries..."
+       className="w-full pl-12 pr-4 py-2.5 rounded-full border border-white shadow-[0_12px_40px_rgba(22,19,70,0.12)] bg-white text-sm text-text01 placeholder-text03 focus:outline-none focus:ring-2 focus:ring-pinkTP/20/60"
+      />
+     </div>
+     <button
+      type="button"
+      onClick={onRequestDemo}
+      className="hidden sm:inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-buttonPrimary bg-white border border-buttonPrimary hover:bg-hover active:bg-select transition-all shadow-sm"
+     >
+      Request demo
+     </button>
+
+     {(!isAuthenticated || readOnly) ? (
+      <button
+       onClick={onRequestLogin}
+       className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-buttonPrimary text-sm font-semibold text-white shadow-lg hover:bg-buttonPrimary-hover active:bg-buttonPrimary-active transition-all"
+      >
+       <User className="w-4 h-4" />
+       Sign in
+      </button>
+     ) : (
+      <div className="relative">
+       <button
+        type="button"
+        onClick={() => setUserMenuOpen((open) => !open)}
+        className="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/90 border border-stroke01 shadow-sm hover:bg-white transition-colors"
+        title={user?.name ||"User"}
+       >
+        <img
+         src={user?.avatar ||"/vkv.jpeg"}
+         alt={user?.name ||"User"}
+         className="w-full h-full rounded-full object-cover"
+        />
+        <ChevronDown
+         className={`absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 text-text02 bg-white rounded-full border-2 border-white shadow-sm transition-transform ${userMenuOpen ?"rotate-180" :""}`}
+        />
+       </button>
+
+       {userMenuOpen && (
+        <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-stroke01 py-2 z-50">
+         <div className="px-4 py-3 border-b border-bg03">
+          <div className="flex items-center gap-3 mb-3">
+           <img
+            src={user?.avatar ||"/vkv.jpeg"}
+            alt={user?.name ||"User"}
+            className="w-12 h-12 rounded-full object-cover border-2 border-stroke01"
+           />
+           <div className="flex-1 min-w-0">
+            <p className="text-sm font-semibold text-text01 truncate">
+             {user?.name ||"Vinod Kumar V"}
+            </p>
+            {user?.email && (
+             <p className="text-xs text-text03 truncate mt-0.5">{user.email}</p>
+            )}
+           </div>
           </div>
-          <button
-            type="button"
-            onClick={onRequestDemo}
-            className="hidden sm:inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-[#2E2E2E] bg-white border border-[#2E2E2E] hover:bg-[#F5F5F5] active:bg-[#E6E6E5] transition-all shadow-sm"
-          >
-            Request demo
-          </button>
-
-          {(!isAuthenticated || readOnly) ? (
-            <button
-              onClick={onRequestLogin}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#2E2E2E] text-sm font-semibold text-white shadow-lg hover:bg-[#4A4A4A] active:bg-[#666666] transition-all"
-            >
-              <User className="w-4 h-4" />
-              Sign in
-            </button>
-          ) : (
-            <div className="relative">
-              <button
-                type="button"
-                onClick={() => setUserMenuOpen((open) => !open)}
-                className="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/90 border border-gray-200 shadow-sm hover:bg-white transition-colors"
-                title={user?.name || "User"}
-              >
-                <img
-                  src={user?.avatar || "/vkv.jpeg"}
-                  alt={user?.name || "User"}
-                  className="w-full h-full rounded-full object-cover"
-                />
-                <ChevronDown
-                  className={`absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 text-gray-600 bg-white rounded-full border-2 border-white shadow-sm transition-transform ${userMenuOpen ? "rotate-180" : ""}`}
-                />
-              </button>
-
-              {userMenuOpen && (
-                <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-200 py-2 z-50">
-                  <div className="px-4 py-3 border-b border-gray-100">
-                    <div className="flex items-center gap-3 mb-3">
-                      <img
-                        src={user?.avatar || "/vkv.jpeg"}
-                        alt={user?.name || "User"}
-                        className="w-12 h-12 rounded-full object-cover border-2 border-gray-200"
-                      />
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-gray-900 truncate">
-                          {user?.name || "Vinod Kumar V"}
-                        </p>
-                        {user?.email && (
-                          <p className="text-xs text-gray-500 truncate mt-0.5">{user.email}</p>
-                        )}
-                      </div>
-                    </div>
-                    {user?.role && (
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Role:</span>
-                        <span className="text-xs text-[#2E2E2E] font-semibold capitalize px-2 py-0.5 rounded-full bg-[#2E2E2E]/10">
-                          {user.role}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="px-4 py-2 border-b border-gray-100">
-                    <RoleSwitcher />
-                  </div>
-                  <div className="px-4 py-2">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setUserMenuOpen(false);
-                        logout();
-                      }}
-                      className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors rounded-lg"
-                    >
-                      <LogOut className="w-4 h-4" />
-                      <span>Logout</span>
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
+          {user?.role && (
+           <div className="flex items-center gap-2">
+            <span className="text-xs font-medium text-text03 uppercase tracking-wide">Role:</span>
+            <span className="text-xs text-buttonPrimary font-semibold capitalize px-2 py-0.5 rounded-full bg-buttonPrimary/10">
+             {user.role}
+            </span>
+           </div>
           )}
+         </div>
+         <div className="px-4 py-2 border-b border-bg03">
+          <RoleSwitcher />
+         </div>
+         <div className="px-4 py-2">
+          <button
+           type="button"
+           onClick={() => {
+            setUserMenuOpen(false);
+            logout();
+           }}
+           className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-text01 hover:bg-error01 hover:text-error03 transition-colors rounded-lg"
+          >
+           <LogOut className="w-4 h-4" />
+           <span>Logout</span>
+          </button>
+         </div>
         </div>
+       )}
       </div>
-    </header>
-  );
+     )}
+    </div>
+   </div>
+  </header>
+ );
 }
 
 function HeroCarousel({ slides, readOnly, onRequestLogin, onLaunch }) {
-  const [index, setIndex] = useState(0);
-  useEffect(() => {
-    if (!slides.length) return;
-    const id = setInterval(() => {
-      setIndex((prev) => (prev + 1) % slides.length);
-    }, 5000);
-    return () => clearInterval(id);
-  }, [slides.length]);
+ const [index, setIndex] = useState(0);
+ useEffect(() => {
+  if (!slides.length) return;
+  const id = setInterval(() => {
+   setIndex((prev) => (prev + 1) % slides.length);
+  }, 5000);
+  return () => clearInterval(id);
+ }, [slides.length]);
 
-  const activeSlide = slides[index];
-  if (!activeSlide) return null;
+ const activeSlide = slides[index];
+ if (!activeSlide) return null;
 
-  const sideSlides = [];
-  const targetCount = Math.min(2, Math.max(0, slides.length - 1));
-  for (let offset = 1; sideSlides.length < targetCount; offset += 1) {
-    const candidate = slides[(index + offset) % slides.length];
-    if (candidate.id !== activeSlide.id && !sideSlides.find((s) => s.id === candidate.id)) {
-      sideSlides.push(candidate);
-    }
-    if (offset > slides.length * 2) break;
+ const sideSlides = [];
+ const targetCount = Math.min(2, Math.max(0, slides.length - 1));
+ for (let offset = 1; sideSlides.length < targetCount; offset += 1) {
+  const candidate = slides[(index + offset) % slides.length];
+  if (candidate.id !== activeSlide.id && !sideSlides.find((s) => s.id === candidate.id)) {
+   sideSlides.push(candidate);
   }
+  if (offset > slides.length * 2) break;
+ }
 
-  const interactCard = {
-    id: "interact-preview",
-    category: "Experience",
-    status: "Concept",
-    statusColor: "bg-[#F8EFFF] text-[#6F34E8]",
-    name: "Interact",
-    description: "AI-guided co-pilots that amplify human-centered experiences across voice, chat, and in-context surfaces.",
-    tags: ["Human-in-loop", "AI Personas"],
-    metrics: [
-      { label: "Channels", value: "Voice · Chat · Canvas" },
-      { label: "Persona sync", value: "Realtime" },
-    ],
-    industry: "Cross-vertical",
-    vertical: "Engagement",
-  };
+ const interactCard = {
+  id:"interact-preview",
+  category:"Experience",
+  status:"Concept",
+  statusColor:"bg-pinkTP/5 text-pinkTP",
+  name:"Interact",
+  description:"AI-guided co-pilots that amplify human-centered experiences across voice, chat, and in-context surfaces.",
+  tags: ["Human-in-loop","AI Personas"],
+  metrics: [
+   { label:"Channels", value:"Voice · Chat · Canvas" },
+   { label:"Persona sync", value:"Realtime" },
+  ],
+  industry:"Cross-vertical",
+  vertical:"Engagement",
+ };
 
-  const secondaryCards = [...sideSlides];
-  if (secondaryCards.length < 2) {
-    secondaryCards.push(interactCard);
-  }
+ const secondaryCards = [...sideSlides];
+ if (secondaryCards.length < 2) {
+  secondaryCards.push(interactCard);
+ }
 
-  return (
-    <section className="px-4 md:px-10 space-y-6">
-      <div className="w-full grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(220px,0.55fr)] items-stretch">
-        <div className="relative overflow-hidden rounded-[30px] bg-gradient-to-br from-white via-[#F2F5FF] to-[#E6E9FF] text-gray-900 shadow-[0_18px_50px_rgba(105,128,255,0.18)] border border-white/60 min-h-[320px]">
-          <div className="absolute inset-0 opacity-60 bg-[radial-gradient(circle_at_top_left,_rgba(114,102,255,0.25),_transparent_60%)]" />
-          <div className="relative grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] p-6 md:p-8 items-start">
-            <div className="space-y-6 max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-[#E2DEFF] text-xs uppercase tracking-[0.4em] text-[#6F54E8]">
-                <Sparkles className="w-4 h-4 text-[#F5B52A]" />
-                AI-Native Platform
-              </div>
-              <div className="space-y-3 max-w-2xl">
-                <p className="text-sm uppercase tracking-[0.35em] text-[#989898]">{activeSlide.category}</p>
-                <h1 className="text-4xl md:text-5xl font-bold text-[#2E2E2E]">{activeSlide.name}</h1>
-                <p className="text-base md:text-lg text-[#2E2E2E] leading-relaxed">{activeSlide.description}</p>
-                <div className="flex items-center gap-2 pt-2">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-700">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    {activeSlide.status}
-                  </span>
-                  {activeSlide.platformId && (
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-xs font-medium text-indigo-700">
-                      Platform-Powered
-                    </span>
-                  )}
-                </div>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {activeSlide.tags?.slice(0, 4).map((tag) => (
-                  <span key={tag} className="px-3 py-1 rounded-full text-xs uppercase tracking-wide bg-white text-gray-700 border border-gray-100">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <div className="flex flex-wrap gap-3">
-                <button
-                  onClick={() => {
-                    if (readOnly) {
-                      onRequestLogin?.();
-                      return;
-                    }
-                    if (activeSlide.launchKey) {
-                      onLaunch?.(activeSlide.launchKey);
-                    }
-                  }}
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#2E2E2E] text-white font-semibold text-sm shadow-lg hover:bg-[#4A4A4A] active:bg-[#666666] transition-all"
-                >
-                  Launch {activeSlide.name}
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-                <button className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-[#2E2E2E] text-[#2E2E2E] font-semibold text-sm bg-white hover:bg-[#F5F5F5] active:bg-[#E6E6E5] transition-all">
-                  Watch product film
-                </button>
-                {readOnly && (
-                  <button
-                    onClick={onRequestLogin}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white border border-[#2E2E2E] text-[#2E2E2E] font-semibold text-sm hover:bg-[#F5F5F5] active:bg-[#E6E6E5] transition-all"
-                  >
-                    Sign in to launch
-                  </button>
-                )}
-              </div>
-              <div className="flex flex-wrap gap-6 text-sm text-gray-600">
-                {activeSlide.metrics?.slice(0, 3).map((metric) => (
-                  <div key={metric.label}>
-                    <div className="text-[11px] uppercase tracking-[0.35em] text-[#989898] font-semibold">{metric.label}</div>
-                    <div className="text-2xl font-semibold text-[#2E2E2E]">{metric.value}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="rounded-[28px] bg-white shadow-[0_30px_80px_rgba(20,16,66,0.15)] border border-[#E8E7FF] p-6 space-y-5">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.4em] text-gray-400">In-market telemetry</p>
-                  <h3 className="text-xl font-semibold text-[#2E2E2E]">FAB intelligence feed</h3>
-                </div>
-                <span className="inline-flex items-center gap-2 rounded-full px-3 py-1 bg-[#F4F1FF] text-[#5C36C8] text-xs font-semibold">
-                  <span className="h-2 w-2 rounded-full bg-[#4ADE80] animate-pulse" />
-                  Live · FAB shared core
-                </span>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {[
-                  { label: "Active sessions", value: "1,284", delta: "+12%" },
-                  { label: "Playbooks triggered", value: "436", delta: "+8%" },
-                  { label: "Median confidence", value: "96.4%", delta: "+2.1 pts" },
-                  { label: "SLA streak", value: "42 hrs", delta: "stable" },
-                ].map((stat) => (
-                  <div key={stat.label} className="rounded-2xl border border-gray-100 px-4 py-3 bg-gray-50">
-                    <p className="text-[11px] uppercase tracking-[0.35em] text-gray-400 font-semibold">{stat.label}</p>
-                    <div className="flex items-baseline gap-2">
-                      <p className="text-xl font-semibold text-[#2E2E2E]">{stat.value}</p>
-                      <span className="text-xs text-[#989898]">{stat.delta}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="flex flex-wrap items-center gap-3 text-xs text-gray-500">
-                <span className="uppercase tracking-[0.35em] text-gray-400 font-semibold">Trusted by</span>
-                {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="h-8 w-8 rounded-full bg-gradient-to-br from-[#E5E1FF] to-[#F7F4FF] border border-white shadow" />
-                ))}
-                <span className="text-gray-400">+18 enterprise teams</span>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {["Claims", "Banking", "Telco", "Retail", "Healthcare"].map((chip) => (
-                  <button
-                    key={chip}
-                    className="px-3 py-1.5 rounded-lg border border-[#2E2E2E] text-sm text-[#2E2E2E] bg-white hover:bg-[#F5F5F5] active:bg-[#E6E6E5] transition-all"
-                  >
-                    {chip}
-                  </button>
-                ))}
-              </div>
-              <button className="inline-flex items-center gap-2 rounded-lg px-4 py-2 border border-[#2E2E2E] text-[#2E2E2E] font-semibold bg-white hover:bg-[#F5F5F5] active:bg-[#E6E6E5] transition-all text-sm">
-                View store insights
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
+ return (
+  <section className="px-4 md:px-10 space-y-6">
+   <div className="w-full grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(220px,0.55fr)] items-stretch">
+    <div className="relative overflow-hidden rounded-[30px] bg-gradient-to-br from-white via-[bg02] to-[bg03] text-text01 shadow-[0_18px_50px_rgba(105,128,255,0.18)] border border-white/60 min-h-[320px]">
+     <div className="absolute inset-0 opacity-60 bg-[radial-gradient(circle_at_top_left,_rgba(114,102,255,0.25),_transparent_60%)]" />
+     <div className="relative grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] p-6 md:p-8 items-start">
+      <div className="space-y-6 max-w-3xl">
+       <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-pinkTP/10 text-xs uppercase tracking-[0.4em] text-pinkTP">
+        <Sparkles className="w-4 h-4 text-[alert02]" />
+        AI-Native Platform
+       </div>
+       <div className="space-y-3 max-w-2xl">
+        <p className="text-sm uppercase tracking-[0.35em] text-text03">{activeSlide.category}</p>
+        <h1 className="text-4xl md:text-5xl font-bold text-buttonPrimary">{activeSlide.name}</h1>
+        <p className="text-base md:text-lg text-buttonPrimary leading-relaxed">{activeSlide.description}</p>
+        <div className="flex items-center gap-2 pt-2">
+         <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-success01 border border-success01 text-xs font-semibold text-success02">
+          <span className="w-1.5 h-1.5 rounded-full bg-success010 animate-pulse"></span>
+          {activeSlide.status}
+         </span>
+         {activeSlide.platformId && (
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral01 border border-neutral02/40 text-xs font-medium text-textLink">
+           Platform-Powered
+          </span>
+         )}
         </div>
-        <div className="grid h-full gap-4 lg:grid-rows-2 bg-gradient-to-br from-white/70 via-[#F4F5FF]/80 to-white/70 rounded-[30px] p-4 border border-white/60 shadow-[0_18px_50px_rgba(105,128,255,0.1)]">
-          {secondaryCards.slice(0, 2).map((slide) => (
-            <MiniSpotlightCard
-              key={slide.id}
-              slide={slide}
-              disabled={slide.id === "interact-preview"}
-              onSelect={() => {
-                if (slide.id === "interact-preview") return;
-                const target = slides.findIndex((item) => item.id === slide.id);
-                if (target >= 0) setIndex(target);
-              }}
-            />
-          ))}
-        </div>
-      </div>
-      <div className="w-full flex justify-center gap-2">
-        {slides.map((slide, i) => (
-          <button
-            key={slide.id}
-            onClick={() => setIndex(i)}
-            className={`h-2 rounded-full transition-all ${i === index ? "w-8 bg-[#6F54E8]" : "w-3 bg-gray-300/50"}`}
-          />
+       </div>
+       <div className="flex flex-wrap gap-2">
+        {activeSlide.tags?.slice(0, 4).map((tag) => (
+         <span key={tag} className="px-3 py-1 rounded-full text-xs uppercase tracking-wide bg-white text-text01 border border-bg03">
+          {tag}
+         </span>
         ))}
+       </div>
+       <div className="flex flex-wrap gap-3">
+        <button
+         onClick={() => {
+          if (readOnly) {
+           onRequestLogin?.();
+           return;
+          }
+          if (activeSlide.launchKey) {
+           onLaunch?.(activeSlide.launchKey);
+          }
+         }}
+         className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-buttonPrimary text-white font-semibold text-sm shadow-lg hover:bg-buttonPrimary-hover active:bg-buttonPrimary-active transition-all"
+        >
+         Launch {activeSlide.name}
+         <ArrowRight className="w-4 h-4" />
+        </button>
+        <button className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-buttonPrimary text-buttonPrimary font-semibold text-sm bg-white hover:bg-hover active:bg-select transition-all">
+         Watch product film
+        </button>
+        {readOnly && (
+         <button
+          onClick={onRequestLogin}
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white border border-buttonPrimary text-buttonPrimary font-semibold text-sm hover:bg-hover active:bg-select transition-all"
+         >
+          Sign in to launch
+         </button>
+        )}
+       </div>
+       <div className="flex flex-wrap gap-6 text-sm text-text02">
+        {activeSlide.metrics?.slice(0, 3).map((metric) => (
+         <div key={metric.label}>
+          <div className="text-[11px] uppercase tracking-[0.35em] text-text03 font-semibold">{metric.label}</div>
+          <div className="text-2xl font-semibold text-buttonPrimary">{metric.value}</div>
+         </div>
+        ))}
+       </div>
       </div>
-    </section>
-  );
+      <div className="rounded-[28px] bg-white shadow-[0_30px_80px_rgba(20,16,66,0.15)] border border-[stroke01] p-6 space-y-5">
+       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div>
+         <p className="text-xs uppercase tracking-[0.4em] text-text03">In-market telemetry</p>
+         <h3 className="text-xl font-semibold text-buttonPrimary">FAB intelligence feed</h3>
+        </div>
+        <span className="inline-flex items-center gap-2 rounded-full px-3 py-1 bg-[tertiary] text-pinkTP text-xs font-semibold">
+         <span className="h-2 w-2 rounded-full bg-[success03] animate-pulse" />
+         Live · FAB shared core
+        </span>
+       </div>
+       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {[
+         { label:"Active sessions", value:"1,284", delta:"+12%" },
+         { label:"Playbooks triggered", value:"436", delta:"+8%" },
+         { label:"Median confidence", value:"96.4%", delta:"+2.1 pts" },
+         { label:"SLA streak", value:"42 hrs", delta:"stable" },
+        ].map((stat) => (
+         <div key={stat.label} className="rounded-2xl border border-bg03 px-4 py-3 bg-bg02">
+          <p className="text-[11px] uppercase tracking-[0.35em] text-text03 font-semibold">{stat.label}</p>
+          <div className="flex items-baseline gap-2">
+           <p className="text-xl font-semibold text-buttonPrimary">{stat.value}</p>
+           <span className="text-xs text-text03">{stat.delta}</span>
+          </div>
+         </div>
+        ))}
+       </div>
+       <div className="flex flex-wrap items-center gap-3 text-xs text-text03">
+        <span className="uppercase tracking-[0.35em] text-text03 font-semibold">Trusted by</span>
+        {[1, 2, 3, 4].map((i) => (
+         <div key={i} className="h-8 w-8 rounded-full bg-gradient-to-br from-[tertiary] to-[bg01] border border-white shadow" />
+        ))}
+        <span className="text-text03">+18 enterprise teams</span>
+       </div>
+       <div className="flex flex-wrap gap-2">
+        {["Claims","Banking","Telco","Retail","Healthcare"].map((chip) => (
+         <button
+          key={chip}
+          className="px-3 py-1.5 rounded-lg border border-buttonPrimary text-sm text-buttonPrimary bg-white hover:bg-hover active:bg-select transition-all"
+         >
+          {chip}
+         </button>
+        ))}
+       </div>
+       <button className="inline-flex items-center gap-2 rounded-lg px-4 py-2 border border-buttonPrimary text-buttonPrimary font-semibold bg-white hover:bg-hover active:bg-select transition-all text-sm">
+        View store insights
+        <ArrowRight className="w-4 h-4" />
+       </button>
+      </div>
+     </div>
+    </div>
+    <div className="grid h-full gap-4 lg:grid-rows-2 bg-gradient-to-br from-white/70 via-[bg02]/80 to-white/70 rounded-[30px] p-4 border border-white/60 shadow-[0_18px_50px_rgba(105,128,255,0.1)]">
+     {secondaryCards.slice(0, 2).map((slide) => (
+      <MiniSpotlightCard
+       key={slide.id}
+       slide={slide}
+       disabled={slide.id ==="interact-preview"}
+       onSelect={() => {
+        if (slide.id ==="interact-preview") return;
+        const target = slides.findIndex((item) => item.id === slide.id);
+        if (target >= 0) setIndex(target);
+       }}
+      />
+     ))}
+    </div>
+   </div>
+   <div className="w-full flex justify-center gap-2">
+    {slides.map((slide, i) => (
+     <button
+      key={slide.id}
+      onClick={() => setIndex(i)}
+      className={`h-2 rounded-full transition-all ${i === index ?"w-8 bg-pinkTP" :"w-3 bg-stroke01/50"}`}
+     />
+    ))}
+   </div>
+  </section>
+ );
 }
 
 function MiniSpotlightCard({ slide, onSelect, disabled = false }) {
-  if (!slide) return null;
-  const baseClasses =
-    "rounded-[18px] border bg-white shadow-[0_14px_35px_rgba(20,16,66,0.12)] px-4 py-4 text-left flex flex-col gap-2 transition h-full";
-  return (
-    <button
-      type="button"
-      onClick={disabled ? undefined : onSelect}
-      className={`${baseClasses} ${disabled ? "border-dashed border-[#E2DEFF] text-gray-500 bg-white/80 cursor-default" : "border-white hover:border-[#6F54E8]"}`}
-    >
-      <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-gray-500">
-        <span>{slide.category}</span>
-        <span className={`px-2 py-0.5 rounded-full ${slide.statusColor || "bg-gray-100 text-gray-700"}`}>{slide.status}</span>
-      </div>
-      <div className="space-y-1">
-        <p className="text-lg font-semibold text-gray-900">{slide.name}</p>
-        <p className="text-sm text-gray-500 line-clamp-2">{slide.description}</p>
-        <div className="flex flex-wrap gap-2 text-[11px] text-gray-600">
-          {slide.tags?.slice(0, 2).map((tag) => (
-            <span key={tag} className="px-2 py-0.5 rounded-full bg-gray-100">
-              {tag}
-            </span>
-          ))}
-          {slide.metrics?.slice(0, 2).map((metric) => (
-            <span key={metric.label} className="px-2 py-0.5 rounded-full bg-gray-100 text-gray-700 font-semibold">
-              {metric.label}: {metric.value}
-            </span>
-          ))}
-        </div>
-      </div>
-      <div className="flex items-center justify-between text-xs text-gray-500 uppercase tracking-[0.2em]">
-        <span>{slide.industry}</span>
-        <span>{slide.vertical ?? slide.category}</span>
-      </div>
-      {!disabled && <span className="text-sm font-semibold text-[#6F54E8]">View spotlight →</span>}
-      {disabled && <span className="text-sm font-semibold text-gray-400">Interact preview</span>}
-    </button>
-  );
+ if (!slide) return null;
+ const baseClasses =
+ "rounded-[18px] border bg-white shadow-[0_14px_35px_rgba(20,16,66,0.12)] px-4 py-4 text-left flex flex-col gap-2 transition h-full";
+ return (
+  <button
+   type="button"
+   onClick={disabled ? undefined : onSelect}
+   className={`${baseClasses} ${disabled ?"border-dashed border-pinkTP/10 text-text03 bg-white/80 cursor-default" :"border-white hover:border-pinkTP"}`}
+  >
+   <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-text03">
+    <span>{slide.category}</span>
+    <span className={`px-2 py-0.5 rounded-full ${slide.statusColor ||"bg-bg03 text-text01"}`}>{slide.status}</span>
+   </div>
+   <div className="space-y-1">
+    <p className="text-lg font-semibold text-text01">{slide.name}</p>
+    <p className="text-sm text-text03 line-clamp-2">{slide.description}</p>
+    <div className="flex flex-wrap gap-2 text-[11px] text-text02">
+     {slide.tags?.slice(0, 2).map((tag) => (
+      <span key={tag} className="px-2 py-0.5 rounded-full bg-bg03">
+       {tag}
+      </span>
+     ))}
+     {slide.metrics?.slice(0, 2).map((metric) => (
+      <span key={metric.label} className="px-2 py-0.5 rounded-full bg-bg03 text-text01 font-semibold">
+       {metric.label}: {metric.value}
+      </span>
+     ))}
+    </div>
+   </div>
+   <div className="flex items-center justify-between text-xs text-text03 uppercase tracking-[0.2em]">
+    <span>{slide.industry}</span>
+    <span>{slide.vertical ?? slide.category}</span>
+   </div>
+   {!disabled && <span className="text-sm font-semibold text-pinkTP">View spotlight →</span>}
+   {disabled && <span className="text-sm font-semibold text-text03">Interact preview</span>}
+  </button>
+ );
 }
 
 function SectionRow({ title, subtitle, apps, readOnly, onRequestLogin, onLaunch }) {
-  if (!apps.length) return null;
-  return (
-    <section className="px-6 md:px-10 space-y-4">
-      <div className="flex items-center justify-between gap-4">
-        <div>
-          <h3 className="text-2xl font-semibold text-gray-900">{title}</h3>
-          <p className="text-sm text-gray-500">{subtitle}</p>
-        </div>
-        <button className="text-sm font-semibold text-[#5C36C8] hover:text-[#2D0B7A]">Show all</button>
-      </div>
-      <div className="overflow-x-auto pb-2">
-        <div className="flex gap-4 min-w-full snap-x snap-mandatory">
-          {apps.map((app) => (
-            <MiniAppTile
-              key={app.id}
-              app={app}
-              readOnly={readOnly}
-              onRequestLogin={onRequestLogin}
-              onLaunch={onLaunch}
-            />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+ if (!apps.length) return null;
+ return (
+  <section className="px-6 md:px-10 space-y-4">
+   <div className="flex items-center justify-between gap-4">
+    <div>
+     <h3 className="text-2xl font-semibold text-text01">{title}</h3>
+     <p className="text-sm text-text03">{subtitle}</p>
+    </div>
+    <button className="text-sm font-semibold text-pinkTP hover:text-[textLink]">Show all</button>
+   </div>
+   <div className="overflow-x-auto pb-2">
+    <div className="flex gap-4 min-w-full snap-x snap-mandatory">
+     {apps.map((app) => (
+      <MiniAppTile
+       key={app.id}
+       app={app}
+       readOnly={readOnly}
+       onRequestLogin={onRequestLogin}
+       onLaunch={onLaunch}
+      />
+     ))}
+    </div>
+   </div>
+  </section>
+ );
 }
 
 function AgentGallery({ agents, readOnly, onRequestLogin }) {
-  const categories = Array.from(new Set(agents.map((agent) => agent.category)));
-  const frameworks = Array.from(new Set(agents.map((agent) => agent.framework)));
-  const [activeCategory, setActiveCategory] = useState("All");
-  const [activeFramework, setActiveFramework] = useState("All");
+ const categories = Array.from(new Set(agents.map((agent) => agent.category)));
+ const frameworks = Array.from(new Set(agents.map((agent) => agent.framework)));
+ const [activeCategory, setActiveCategory] = useState("All");
+ const [activeFramework, setActiveFramework] = useState("All");
 
-  const filteredAgents = useMemo(() => {
-    return agents.filter((agent) => {
-      const matchesCategory = activeCategory === "All" || agent.category === activeCategory;
-      const matchesFramework = activeFramework === "All" || agent.framework === activeFramework;
-      return matchesCategory && matchesFramework;
-    });
-  }, [agents, activeCategory, activeFramework]);
+ const filteredAgents = useMemo(() => {
+  return agents.filter((agent) => {
+   const matchesCategory = activeCategory ==="All" || agent.category === activeCategory;
+   const matchesFramework = activeFramework ==="All" || agent.framework === activeFramework;
+   return matchesCategory && matchesFramework;
+  });
+ }, [agents, activeCategory, activeFramework]);
 
-  return (
-    <section id="fab-agents" className="px-4 md:px-10">
-      <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_45px_85px_rgba(15,10,45,0.15)] p-6 md:p-10 space-y-6 backdrop-blur">
-        <div className="flex flex-col gap-3">
-          <div className="text-xs font-semibold uppercase tracking-[0.35em] text-[#5C36C8]">Agents</div>
-          <p className="text-sm text-gray-600">
-            Specialized AI agents for reasoning, execution, and decision-making—orchestrated workflows powered by LangGraph and LangChain.
-          </p>
-          <div className="flex flex-wrap gap-2">
-            <FilterPill 
-              label="Category" 
-              activeValue={activeCategory} 
-              options={["All", ...categories]} 
-              onSelect={setActiveCategory} 
-            />
-            <FilterPill 
-              label="Framework" 
-              activeValue={activeFramework} 
-              options={["All", ...frameworks]} 
-              onSelect={setActiveFramework} 
-            />
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-          {filteredAgents.length > 0 ? (
-            filteredAgents.map((agent) => (
-              <AgentCard key={agent.id} agent={agent} readOnly={readOnly} onRequestLogin={onRequestLogin} />
-            ))
-          ) : (
-            <div className="col-span-full text-center py-12 text-gray-500">No agents match this filter.</div>
-          )}
-        </div>
-      </div>
-    </section>
-  );
+ return (
+  <section id="fab-agents" className="px-4 md:px-10">
+   <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_45px_85px_rgba(15,10,45,0.15)] p-6 md:p-10 space-y-6 backdrop-blur">
+    <div className="flex flex-col gap-3">
+     <div className="text-xs font-semibold uppercase tracking-[0.35em] text-pinkTP">Agents</div>
+     <p className="text-sm text-text02">
+      Specialized AI agents for reasoning, execution, and decision-making—orchestrated workflows powered by LangGraph and LangChain.
+     </p>
+     <div className="flex flex-wrap gap-2">
+      <FilterPill 
+       label="Category" 
+       activeValue={activeCategory} 
+       options={["All", ...categories]} 
+       onSelect={setActiveCategory} 
+      />
+      <FilterPill 
+       label="Framework" 
+       activeValue={activeFramework} 
+       options={["All", ...frameworks]} 
+       onSelect={setActiveFramework} 
+      />
+     </div>
+    </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+     {filteredAgents.length > 0 ? (
+      filteredAgents.map((agent) => (
+       <AgentCard key={agent.id} agent={agent} readOnly={readOnly} onRequestLogin={onRequestLogin} />
+      ))
+     ) : (
+      <div className="col-span-full text-center py-12 text-text03">No agents match this filter.</div>
+     )}
+    </div>
+   </div>
+  </section>
+ );
 }
 
 function AgentCard({ agent, readOnly, onRequestLogin }) {
-  return (
-    <div className="rounded-[28px] border border-white/40 bg-white/95 shadow-[0_20px_50px_rgba(18,12,64,0.15)] flex flex-col overflow-hidden">
-      <div className="h-1.5 w-full bg-gradient-to-r from-[#6F54E8] to-[#780096]" />
-      <div className="p-6 flex flex-col gap-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center flex-wrap gap-2 text-xs uppercase tracking-wide text-gray-500">
-            <span>{agent.category}</span>
-            <span className={`px-2 py-0.5 rounded-full ${
-              agent.maturity === "Production" 
-                ? "bg-emerald-50 text-emerald-700 border border-emerald-200" 
-                : agent.maturity === "Beta"
-                ? "bg-amber-50 text-amber-700 border border-amber-200"
-                : "bg-gray-100 text-gray-700"
-            }`}>{agent.signal}</span>
-          </div>
-          <span className="px-2.5 py-1 rounded-full bg-[#2E2E2E]/10 text-[#2E2E2E] text-[10px] font-semibold">
-            {agent.framework}
-          </span>
-        </div>
-        <div>
-          <h3 className="text-xl font-semibold text-gray-900">{agent.name}</h3>
-          <p className="text-sm text-gray-600 font-medium">{agent.description}</p>
-        </div>
-        <p className="text-sm text-gray-600 flex-1">{agent.definition}</p>
-
-        <div className="flex flex-wrap gap-3 text-[11px] text-gray-600">
-          <div className="rounded-2xl border border-gray-200/80 px-3 py-1.5">
-            <p className="uppercase tracking-wide text-gray-500 font-semibold">Inputs</p>
-            <p className="font-semibold text-gray-900">{agent.inputs.join(" · ")}</p>
-          </div>
-          <div className="rounded-2xl border border-gray-200/80 px-3 py-1.5">
-            <p className="uppercase tracking-wide text-gray-500 font-semibold">Outputs</p>
-            <p className="font-semibold text-gray-900">{agent.outputs.join(" · ")}</p>
-          </div>
-        </div>
-
-        {agent.metrics && agent.metrics.length > 0 && (
-          <div className="grid grid-cols-2 gap-3 text-[11px]">
-            {agent.metrics.map((metric) => (
-              <div key={metric.label} className="rounded-2xl border border-gray-200/80 px-3 py-1.5">
-                <p className="uppercase tracking-wide text-gray-500 font-semibold">{metric.label}</p>
-                <p className="font-semibold text-gray-900">{metric.value}</p>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {agent.stack && agent.stack.length > 0 && (
-          <div className="rounded-2xl border border-[#2E2E2E]/20 bg-[#2E2E2E]/5 px-3 py-1.5">
-            <p className="uppercase tracking-wide text-[#2E2E2E] font-semibold text-[11px]">Stack</p>
-            <p className="font-semibold text-[#2E2E2E] text-sm">{agent.stack.join(" · ")}</p>
-          </div>
-        )}
-
-        {agent.applications && agent.applications.length > 0 && (
-          <div className="flex flex-wrap gap-1.5">
-            {agent.applications.map((app) => (
-              <span key={app} className="px-2 py-0.5 rounded-full bg-[#780096]/10 text-[#780096] text-[10px] font-medium">
-                {app}
-              </span>
-            ))}
-          </div>
-        )}
-
-        <button
-          type="button"
-          onClick={() => {
-            if (readOnly) {
-              onRequestLogin?.();
-              return;
-            }
-          }}
-          className="mt-auto inline-flex items-center justify-center gap-2 rounded-lg border border-[#2E2E2E] px-4 py-2.5 text-sm font-semibold text-[#2E2E2E] bg-white hover:bg-[#F5F5F5] active:bg-[#E6E6E5] transition-all"
-        >
-          {readOnly ? "Sign in to view" : agent.ctaLabel || "View Details"}
-          <ArrowRight className="w-4 h-4" />
-        </button>
-      </div>
+ return (
+  <div className="rounded-[28px] border border-white/40 bg-white/95 shadow-[0_20px_50px_rgba(18,12,64,0.15)] flex flex-col overflow-hidden">
+   <div className="h-1.5 w-full bg-gradient-to-r from-pinkTP to-pinkTP" />
+   <div className="p-6 flex flex-col gap-4">
+    <div className="flex items-center justify-between">
+     <div className="flex items-center flex-wrap gap-2 text-xs uppercase tracking-wide text-text03">
+      <span>{agent.category}</span>
+      <span className={`px-2 py-0.5 rounded-full ${
+       agent.maturity ==="Production" 
+        ?"bg-success01 text-success02 border border-success01" 
+        : agent.maturity ==="Beta"
+        ?"bg-alert01 text-amber-700 border border-alert01"
+        :"bg-bg03 text-text01"
+      }`}>{agent.signal}</span>
+     </div>
+     <span className="px-2.5 py-1 rounded-full bg-buttonPrimary/10 text-buttonPrimary text-[10px] font-semibold">
+      {agent.framework}
+     </span>
     </div>
-  );
+    <div>
+     <h3 className="text-xl font-semibold text-text01">{agent.name}</h3>
+     <p className="text-sm text-text02 font-medium">{agent.description}</p>
+    </div>
+    <p className="text-sm text-text02 flex-1">{agent.definition}</p>
+
+    <div className="flex flex-wrap gap-3 text-[11px] text-text02">
+     <div className="rounded-2xl border border-stroke01/80 px-3 py-1.5">
+      <p className="uppercase tracking-wide text-text03 font-semibold">Inputs</p>
+      <p className="font-semibold text-text01">{agent.inputs.join(" ·")}</p>
+     </div>
+     <div className="rounded-2xl border border-stroke01/80 px-3 py-1.5">
+      <p className="uppercase tracking-wide text-text03 font-semibold">Outputs</p>
+      <p className="font-semibold text-text01">{agent.outputs.join(" ·")}</p>
+     </div>
+    </div>
+
+    {agent.metrics && agent.metrics.length > 0 && (
+     <div className="grid grid-cols-2 gap-3 text-[11px]">
+      {agent.metrics.map((metric) => (
+       <div key={metric.label} className="rounded-2xl border border-stroke01/80 px-3 py-1.5">
+        <p className="uppercase tracking-wide text-text03 font-semibold">{metric.label}</p>
+        <p className="font-semibold text-text01">{metric.value}</p>
+       </div>
+      ))}
+     </div>
+    )}
+
+    {agent.stack && agent.stack.length > 0 && (
+     <div className="rounded-2xl border border-buttonPrimary/20 bg-buttonPrimary/5 px-3 py-1.5">
+      <p className="uppercase tracking-wide text-buttonPrimary font-semibold text-[11px]">Stack</p>
+      <p className="font-semibold text-buttonPrimary text-sm">{agent.stack.join(" ·")}</p>
+     </div>
+    )}
+
+    {agent.applications && agent.applications.length > 0 && (
+     <div className="flex flex-wrap gap-1.5">
+      {agent.applications.map((app) => (
+       <span key={app} className="px-2 py-0.5 rounded-full bg-pinkTP/10 text-pinkTP text-[10px] font-medium">
+        {app}
+       </span>
+      ))}
+     </div>
+    )}
+
+    <button
+     type="button"
+     onClick={() => {
+      if (readOnly) {
+       onRequestLogin?.();
+       return;
+      }
+     }}
+     className="mt-auto inline-flex items-center justify-center gap-2 rounded-lg border border-buttonPrimary px-4 py-2.5 text-sm font-semibold text-buttonPrimary bg-white hover:bg-hover active:bg-select transition-all"
+    >
+     {readOnly ?"Sign in to view" : agent.ctaLabel ||"View Details"}
+     <ArrowRight className="w-4 h-4" />
+    </button>
+   </div>
+  </div>
+ );
 }
 
 function ModelGallery({
-  models,
-  totalModels,
-  readOnly,
-  onRequestLogin,
-  categoryOptions,
-  modalityOptions,
-  activeCategory,
-  activeModality,
-  onCategoryChange,
-  onModalityChange,
+ models,
+ totalModels,
+ readOnly,
+ onRequestLogin,
+ categoryOptions,
+ modalityOptions,
+ activeCategory,
+ activeModality,
+ onCategoryChange,
+ onModalityChange,
 }) {
-  const productionTotal = totalModels?.filter((m) => m.maturity === "Production").length ?? 0;
-  return (
-    <section id="fab-modals" className="px-4 md:px-10">
-      <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_35px_85px_rgba(14,10,60,0.15)] p-6 md:p-10 space-y-8 backdrop-blur">
-        <div className="flex flex-col gap-4">
-          <div>
-            <div className="text-xs font-semibold uppercase tracking-[0.35em] text-[#5C36C8]">Models</div>
-            <p className="text-sm text-gray-600 mt-1">Reusable AI intelligence modules—reasoning engines, orchestrators, and specialized models ready to integrate into your applications</p>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <FilterPill label="Modality" activeValue={activeModality} options={modalityOptions} onSelect={onModalityChange} />
-            <FilterPill label="Category" activeValue={activeCategory} options={categoryOptions} onSelect={onCategoryChange} />
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
-          {models.length > 0 ? (
-            models.map((model) => (
-              <ModelCard key={model.id} model={model} readOnly={readOnly} onRequestLogin={onRequestLogin} />
-            ))
-          ) : (
-            <div className="col-span-full text-center py-12 text-gray-500">No AI models match this filter.</div>
-          )}
-        </div>
-      </div>
-    </section>
-  );
+ const productionTotal = totalModels?.filter((m) => m.maturity ==="Production").length ?? 0;
+ return (
+  <section id="fab-modals" className="px-4 md:px-10">
+   <div className="rounded-[32px] bg-white/95 border border-white/40 shadow-[0_35px_85px_rgba(14,10,60,0.15)] p-6 md:p-10 space-y-8 backdrop-blur">
+    <div className="flex flex-col gap-4">
+     <div>
+      <div className="text-xs font-semibold uppercase tracking-[0.35em] text-pinkTP">Models</div>
+      <p className="text-sm text-text02 mt-1">Reusable AI intelligence modules—reasoning engines, orchestrators, and specialized models ready to integrate into your applications</p>
+     </div>
+     <div className="flex flex-wrap gap-2">
+      <FilterPill label="Modality" activeValue={activeModality} options={modalityOptions} onSelect={onModalityChange} />
+      <FilterPill label="Category" activeValue={activeCategory} options={categoryOptions} onSelect={onCategoryChange} />
+     </div>
+    </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
+     {models.length > 0 ? (
+      models.map((model) => (
+       <ModelCard key={model.id} model={model} readOnly={readOnly} onRequestLogin={onRequestLogin} />
+      ))
+     ) : (
+      <div className="col-span-full text-center py-12 text-text03">No AI models match this filter.</div>
+     )}
+    </div>
+   </div>
+  </section>
+ );
 }
 
 function ModelCard({ model, readOnly, onRequestLogin }) {
-  return (
-    <article className="rounded-[24px] border border-gray-200/70 bg-white shadow-[0_20px_45px_rgba(15,10,55,0.12)] p-5 flex flex-col gap-4">
-      <div className="flex items-center justify-between text-xs uppercase tracking-[0.35em] text-gray-500">
-        <span>{model.category}</span>
-        <span className="px-2 py-0.5 rounded-full bg-gray-100 text-gray-700">{model.modality}</span>
-      </div>
-      <div className="space-y-1">
-        <div className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.35em] text-[#6F54E8] font-semibold">
-          <span
-            className={`h-2 w-2 rounded-full ${
-              model.maturity === "Production"
-                ? "bg-emerald-400"
-                : model.maturity === "Beta"
-                ? "bg-amber-400"
-                : "bg-gray-300"
-            }`}
-          />
-          {model.signal}
-        </div>
-        <h3 className="text-xl font-semibold text-gray-900">{model.name}</h3>
-        <p className="text-sm text-gray-600">{model.description}</p>
-      </div>
-      <div className="grid grid-cols-1 gap-2 text-xs text-gray-600">
-        <div className="rounded-2xl border border-gray-200 px-3 py-2 bg-gray-50/60">
-          <p className="uppercase tracking-wide text-gray-400">Inputs</p>
-          <p>{model.inputs.join(" · ")}</p>
-        </div>
-        <div className="rounded-2xl border border-gray-200 px-3 py-2 bg-gray-50/60">
-          <p className="uppercase tracking-wide text-gray-400">Outputs</p>
-          <p>{model.outputs.join(" · ")}</p>
-        </div>
-      </div>
-      <div className="grid grid-cols-2 gap-3 text-xs text-gray-600">
-        {model.metrics.map((metric) => (
-          <div key={metric.label} className="rounded-2xl border border-gray-200 px-3 py-2 bg-white">
-            <p className="uppercase tracking-wide text-gray-400">{metric.label}</p>
-            <p className="text-lg font-semibold text-gray-900">{metric.value}</p>
-          </div>
-        ))}
-      </div>
-      <div className="text-xs text-gray-500">
-        <p className="uppercase tracking-wide text-gray-400">Stack</p>
-        <p className="text-gray-700">{model.stack.join(" · ")}</p>
-      </div>
-      <button
-        type="button"
-        onClick={() => {
-          if (readOnly) {
-            onRequestLogin?.();
-            return;
-          }
-        }}
-        className="mt-auto inline-flex items-center justify-between rounded-lg border border-[#2E2E2E] px-4 py-2 text-sm font-semibold text-[#2E2E2E] bg-white hover:bg-[#F5F5F5] active:bg-[#E6E6E5] transition-all"
-      >
-        {readOnly ? "Sign in to orchestrate" : model.ctaLabel}
-        <ArrowRight className="w-4 h-4" />
-      </button>
-    </article>
-  );
+ return (
+  <article className="rounded-[24px] border border-stroke01/70 bg-white shadow-[0_20px_45px_rgba(15,10,55,0.12)] p-5 flex flex-col gap-4">
+   <div className="flex items-center justify-between text-xs uppercase tracking-[0.35em] text-text03">
+    <span>{model.category}</span>
+    <span className="px-2 py-0.5 rounded-full bg-bg03 text-text01">{model.modality}</span>
+   </div>
+   <div className="space-y-1">
+    <div className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.35em] text-pinkTP font-semibold">
+     <span
+      className={`h-2 w-2 rounded-full ${
+       model.maturity ==="Production"
+        ?"bg-success03"
+        : model.maturity ==="Beta"
+        ?"bg-alert02"
+        :"bg-stroke01"
+      }`}
+     />
+     {model.signal}
+    </div>
+    <h3 className="text-xl font-semibold text-text01">{model.name}</h3>
+    <p className="text-sm text-text02">{model.description}</p>
+   </div>
+   <div className="grid grid-cols-1 gap-2 text-xs text-text02">
+    <div className="rounded-2xl border border-stroke01 px-3 py-2 bg-bg02/60">
+     <p className="uppercase tracking-wide text-text03">Inputs</p>
+     <p>{model.inputs.join(" ·")}</p>
+    </div>
+    <div className="rounded-2xl border border-stroke01 px-3 py-2 bg-bg02/60">
+     <p className="uppercase tracking-wide text-text03">Outputs</p>
+     <p>{model.outputs.join(" ·")}</p>
+    </div>
+   </div>
+   <div className="grid grid-cols-2 gap-3 text-xs text-text02">
+    {model.metrics.map((metric) => (
+     <div key={metric.label} className="rounded-2xl border border-stroke01 px-3 py-2 bg-white">
+      <p className="uppercase tracking-wide text-text03">{metric.label}</p>
+      <p className="text-lg font-semibold text-text01">{metric.value}</p>
+     </div>
+    ))}
+   </div>
+   <div className="text-xs text-text03">
+    <p className="uppercase tracking-wide text-text03">Stack</p>
+    <p className="text-text01">{model.stack.join(" ·")}</p>
+   </div>
+   <button
+    type="button"
+    onClick={() => {
+     if (readOnly) {
+      onRequestLogin?.();
+      return;
+     }
+    }}
+    className="mt-auto inline-flex items-center justify-between rounded-lg border border-buttonPrimary px-4 py-2 text-sm font-semibold text-buttonPrimary bg-white hover:bg-hover active:bg-select transition-all"
+   >
+    {readOnly ?"Sign in to orchestrate" : model.ctaLabel}
+    <ArrowRight className="w-4 h-4" />
+   </button>
+  </article>
+ );
 }
 
 function MiniAppTile({ app, readOnly, onRequestLogin, onLaunch }) {
-  const displayName =
-    typeof app.name === "string"
-      ? app.name.replace(/\s*\(copy\)/gi, "").trim()
-      : app.name;
-  return (
-    <div className="snap-start min-w-[280px] max-w-sm rounded-3xl border border-white/30 bg-white/90 backdrop-blur shadow-[0_25px_45px_rgba(12,8,45,0.18)] p-5 flex flex-col gap-4">
-      <div className="flex items-center justify-between text-xs uppercase tracking-wide">
-        <div className="flex items-center gap-2">
-          <span className={app.categoryColor}>{app.category}</span>
-          <span>•</span>
-          <span className={`px-2 py-0.5 rounded-full ${app.statusColor || "bg-gray-100 text-gray-700"}`}>{app.status}</span>
-        </div>
-        <div className="flex items-center gap-2 text-gray-400">
-          <span className="inline-flex items-center gap-1 text-[11px] font-medium">
-            ★ {app.rating ?? "4.9"}
-          </span>
-          <button
-            type="button"
-            className="p-1.5 rounded-lg border border-[#2E2E2E] text-[#2E2E2E] hover:bg-[#F5F5F5] active:bg-[#E6E6E5] transition-all"
-            aria-label="Favorite"
-          >
-            ♥
-          </button>
-        </div>
-      </div>
-      <div>
-        <h4 className="text-lg font-semibold text-gray-900">{displayName}</h4>
-        <p className="text-sm text-gray-500">{app.tagline}</p>
-      </div>
-      <div className="grid grid-cols-2 gap-2 text-[11px] text-gray-500">
-        <div className="rounded-2xl border border-gray-200 px-3 py-2">
-          <p className="uppercase tracking-wide text-gray-400">Industry</p>
-          <p className="font-semibold text-gray-700">{app.industry}</p>
-        </div>
-        <div className="rounded-2xl border border-gray-200 px-3 py-2">
-          <p className="uppercase tracking-wide text-gray-400">Vertical</p>
-          <p className="font-semibold text-gray-700">{app.vertical ?? app.category}</p>
-        </div>
-      </div>
-      <div className="text-xs text-gray-600">
-        <p className="uppercase tracking-wide text-gray-400">USP</p>
-        <p>{app.usp ?? "AI + SOP-native orchestration"}</p>
-      </div>
-      <div className="text-xs text-gray-600">
-        <p className="uppercase tracking-wide text-gray-400">Models</p>
-        <p>{app.models ?? "GPT-4o mini · Sonnet 3.5 · FAB RAG"}</p>
-      </div>
-      <div className="text-xs text-gray-500 flex flex-wrap gap-1">
-        {(app.tagsOverride ?? app.tags)?.map((tag) => (
-          <span key={tag} className="px-2 py-0.5 rounded-full bg-gray-100 text-gray-600">
-            {tag}
-          </span>
-        ))}
-      </div>
-      <button
-        onClick={() => {
-          if (readOnly) {
-            onRequestLogin?.();
-            return;
-          }
-          if (app.launchKey) {
-            onLaunch?.(app.launchKey);
-          }
-        }}
-        className="mt-auto inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#2E2E2E] text-white text-sm font-semibold shadow-lg hover:bg-[#4A4A4A] active:bg-[#666666] transition-all"
-      >
-        {readOnly ? "Sign in" : app.ctaLabel || "Open"}
-        <ArrowRight className="w-4 h-4" />
-      </button>
+ const displayName =
+  typeof app.name ==="string"
+   ? app.name.replace(/\s*\(copy\)/gi,"").trim()
+   : app.name;
+ return (
+  <div className="snap-start min-w-[280px] max-w-sm rounded-3xl border border-white/30 bg-white/90 backdrop-blur shadow-[0_25px_45px_rgba(12,8,45,0.18)] p-5 flex flex-col gap-4">
+   <div className="flex items-center justify-between text-xs uppercase tracking-wide">
+    <div className="flex items-center gap-2">
+     <span className={app.categoryColor}>{app.category}</span>
+     <span>•</span>
+     <span className={`px-2 py-0.5 rounded-full ${app.statusColor ||"bg-bg03 text-text01"}`}>{app.status}</span>
     </div>
-  );
+    <div className="flex items-center gap-2 text-text03">
+     <span className="inline-flex items-center gap-1 text-[11px] font-medium">
+      ★ {app.rating ??"4.9"}
+     </span>
+     <button
+      type="button"
+      className="p-1.5 rounded-lg border border-buttonPrimary text-buttonPrimary hover:bg-hover active:bg-select transition-all"
+      aria-label="Favorite"
+     >
+      ♥
+     </button>
+    </div>
+   </div>
+   <div>
+    <h4 className="text-lg font-semibold text-text01">{displayName}</h4>
+    <p className="text-sm text-text03">{app.tagline}</p>
+   </div>
+   <div className="grid grid-cols-2 gap-2 text-[11px] text-text03">
+    <div className="rounded-2xl border border-stroke01 px-3 py-2">
+     <p className="uppercase tracking-wide text-text03">Industry</p>
+     <p className="font-semibold text-text01">{app.industry}</p>
+    </div>
+    <div className="rounded-2xl border border-stroke01 px-3 py-2">
+     <p className="uppercase tracking-wide text-text03">Vertical</p>
+     <p className="font-semibold text-text01">{app.vertical ?? app.category}</p>
+    </div>
+   </div>
+   <div className="text-xs text-text02">
+    <p className="uppercase tracking-wide text-text03">USP</p>
+    <p>{app.usp ??"AI + SOP-native orchestration"}</p>
+   </div>
+   <div className="text-xs text-text02">
+    <p className="uppercase tracking-wide text-text03">Models</p>
+    <p>{app.models ??"GPT-4o mini · Sonnet 3.5 · FAB RAG"}</p>
+   </div>
+   <div className="text-xs text-text03 flex flex-wrap gap-1">
+    {(app.tagsOverride ?? app.tags)?.map((tag) => (
+     <span key={tag} className="px-2 py-0.5 rounded-full bg-bg03 text-text02">
+      {tag}
+     </span>
+    ))}
+   </div>
+   <button
+    onClick={() => {
+     if (readOnly) {
+      onRequestLogin?.();
+      return;
+     }
+     if (app.launchKey) {
+      onLaunch?.(app.launchKey);
+     }
+    }}
+    className="mt-auto inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-buttonPrimary text-white text-sm font-semibold shadow-lg hover:bg-buttonPrimary-hover active:bg-buttonPrimary-active transition-all"
+   >
+    {readOnly ?"Sign in" : app.ctaLabel ||"Open"}
+    <ArrowRight className="w-4 h-4" />
+   </button>
+  </div>
+ );
 }
 
 function PlatformCard({ platform, onSelect }) {
-  const metrics = platform.metrics || { solutionCount: 0, industries: [], liveSolutions: 0 };
-  
-  return (
-    <div 
-      onClick={() => onSelect?.(platform)}
-      className="rounded-[28px] border border-white/40 bg-white/95 shadow-[0_20px_50px_rgba(18,12,64,0.15)] flex flex-col overflow-hidden cursor-pointer hover:shadow-[0_25px_60px_rgba(18,12,64,0.2)] transition-shadow"
-    >
-      <div className={`h-1.5 w-full bg-gradient-to-r ${platform.accent}`} />
-      <div className="p-6 flex flex-col gap-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center flex-wrap gap-2 text-xs uppercase tracking-wide text-gray-500">
-            <span className={platform.categoryColor}>{platform.category}</span>
-            <span className={`px-2 py-0.5 rounded-full ${platform.statusColor || "bg-gray-100 text-gray-700"}`}>{platform.status}</span>
-          </div>
-          {metrics.solutionCount > 0 && (
-            <div className="px-2.5 py-1 rounded-full bg-[#2E2E2E]/10 text-[#2E2E2E] text-[10px] font-semibold">
-              {metrics.solutionCount} {metrics.solutionCount === 1 ? 'Solution' : 'Solutions'}
-            </div>
-          )}
-        </div>
-        <div>
-          <h3 className="text-xl font-semibold text-gray-900">{platform.name}</h3>
-          <p className="text-sm text-gray-600 font-medium">{platform.tagline}</p>
-        </div>
-        <p className="text-sm text-gray-600 flex-1">{platform.description}</p>
-
-        <div className="flex flex-wrap gap-3 text-[11px] text-gray-600">
-          <div className="rounded-2xl border border-gray-200/80 px-3 py-1.5">
-            <p className="uppercase tracking-wide text-gray-500 font-semibold">Solutions Built</p>
-            <p className="font-semibold text-gray-900">{metrics.solutionCount || 0}</p>
-          </div>
-          <div className="rounded-2xl border border-gray-200/80 px-3 py-1.5">
-            <p className="uppercase tracking-wide text-gray-500 font-semibold">Industries</p>
-            <p className="font-semibold text-gray-900">
-              {metrics.industriesCount > 0 
-                ? `${metrics.industriesCount} ${metrics.industriesCount === 1 ? 'Industry' : 'Industries'}`
-                : platform.industry}
-            </p>
-          </div>
-          {metrics.liveSolutions > 0 && (
-            <div className="rounded-2xl border border-emerald-200/80 bg-emerald-50/50 px-3 py-1.5">
-              <p className="uppercase tracking-wide text-emerald-600 font-semibold">Live</p>
-              <p className="font-semibold text-emerald-700">{metrics.liveSolutions}</p>
-            </div>
-          )}
-        </div>
-
-        {metrics.industries && metrics.industries.length > 0 && (
-          <div className="flex flex-wrap gap-2">
-            {metrics.industries.slice(0, 3).map((industry, idx) => (
-              <span key={idx} className="px-2 py-1 rounded-full bg-[#2E2E2E]/10 text-[#2E2E2E] text-[10px] font-medium">
-                {industry}
-              </span>
-            ))}
-            {metrics.industries.length > 3 && (
-              <span className="px-2 py-1 rounded-full bg-gray-100 text-gray-600 text-[10px] font-medium">
-                +{metrics.industries.length - 3} more
-              </span>
-            )}
-          </div>
-        )}
-
-        <div className="flex flex-wrap gap-2 text-[10px] uppercase tracking-wide text-gray-600">
-          {platform.highlights?.slice(0, 3).map((highlight, idx) => (
-            <span key={idx} className="px-2 py-1 rounded-full bg-gray-100 text-gray-700">
-              {highlight}
-            </span>
-          ))}
-        </div>
-
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onSelect?.(platform);
-          }}
-          className="mt-2 w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-[#2E2E2E] text-white font-semibold text-sm hover:bg-[#4A4A4A] active:bg-[#666666] transition-all shadow-lg"
-        >
-          View Platform
-          <ArrowRight className="w-4 h-4" />
-        </button>
+ const metrics = platform.metrics || { solutionCount: 0, industries: [], liveSolutions: 0 };
+ 
+ return (
+  <div 
+   onClick={() => onSelect?.(platform)}
+   className="rounded-[28px] border border-white/40 bg-white/95 shadow-[0_20px_50px_rgba(18,12,64,0.15)] flex flex-col overflow-hidden cursor-pointer hover:shadow-[0_25px_60px_rgba(18,12,64,0.2)] transition-shadow"
+  >
+   <div className={`h-1.5 w-full bg-gradient-to-r ${platform.accent}`} />
+   <div className="p-6 flex flex-col gap-4">
+    <div className="flex items-center justify-between">
+     <div className="flex items-center flex-wrap gap-2 text-xs uppercase tracking-wide text-text03">
+      <span className={platform.categoryColor}>{platform.category}</span>
+      <span className={`px-2 py-0.5 rounded-full ${platform.statusColor ||"bg-bg03 text-text01"}`}>{platform.status}</span>
+     </div>
+     {metrics.solutionCount > 0 && (
+      <div className="px-2.5 py-1 rounded-full bg-buttonPrimary/10 text-buttonPrimary text-[10px] font-semibold">
+       {metrics.solutionCount} {metrics.solutionCount === 1 ? 'Solution' : 'Solutions'}
       </div>
+     )}
     </div>
-  );
+    <div>
+     <h3 className="text-xl font-semibold text-text01">{platform.name}</h3>
+     <p className="text-sm text-text02 font-medium">{platform.tagline}</p>
+    </div>
+    <p className="text-sm text-text02 flex-1">{platform.description}</p>
+
+    <div className="flex flex-wrap gap-3 text-[11px] text-text02">
+     <div className="rounded-2xl border border-stroke01/80 px-3 py-1.5">
+      <p className="uppercase tracking-wide text-text03 font-semibold">Solutions Built</p>
+      <p className="font-semibold text-text01">{metrics.solutionCount || 0}</p>
+     </div>
+     <div className="rounded-2xl border border-stroke01/80 px-3 py-1.5">
+      <p className="uppercase tracking-wide text-text03 font-semibold">Industries</p>
+      <p className="font-semibold text-text01">
+       {metrics.industriesCount > 0 
+        ? `${metrics.industriesCount} ${metrics.industriesCount === 1 ? 'Industry' : 'Industries'}`
+        : platform.industry}
+      </p>
+     </div>
+     {metrics.liveSolutions > 0 && (
+      <div className="rounded-2xl border border-success01/80 bg-success01/50 px-3 py-1.5">
+       <p className="uppercase tracking-wide text-success03 font-semibold">Live</p>
+       <p className="font-semibold text-success02">{metrics.liveSolutions}</p>
+      </div>
+     )}
+    </div>
+
+    {metrics.industries && metrics.industries.length > 0 && (
+     <div className="flex flex-wrap gap-2">
+      {metrics.industries.slice(0, 3).map((industry, idx) => (
+       <span key={idx} className="px-2 py-1 rounded-full bg-buttonPrimary/10 text-buttonPrimary text-[10px] font-medium">
+        {industry}
+       </span>
+      ))}
+      {metrics.industries.length > 3 && (
+       <span className="px-2 py-1 rounded-full bg-bg03 text-text02 text-[10px] font-medium">
+        +{metrics.industries.length - 3} more
+       </span>
+      )}
+     </div>
+    )}
+
+    <div className="flex flex-wrap gap-2 text-[10px] uppercase tracking-wide text-text02">
+     {platform.highlights?.slice(0, 3).map((highlight, idx) => (
+      <span key={idx} className="px-2 py-1 rounded-full bg-bg03 text-text01">
+       {highlight}
+      </span>
+     ))}
+    </div>
+
+    <button
+     onClick={(e) => {
+      e.stopPropagation();
+      onSelect?.(platform);
+     }}
+     className="mt-2 w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-buttonPrimary text-white font-semibold text-sm hover:bg-buttonPrimary-hover active:bg-buttonPrimary-active transition-all shadow-lg"
+    >
+     View Platform
+     <ArrowRight className="w-4 h-4" />
+    </button>
+   </div>
+  </div>
+ );
 }
 
 function AppCard({ app, onLaunch, readOnly, onRequestLogin, onPlatformClick, onCloneTemplate }) {
-  const permissions = usePermissions();
-  const platform = app.platformId ? fabPlatforms.find((p) => p.id === app.platformId) : null;
-  const isTemplate = app.status === "Template";
-  const displayName =
-    typeof app.name === "string"
-      ? app.name.replace(/\s*\(copy\)/gi, "").trim()
-      : app.name;
+ const permissions = usePermissions();
+ const platform = app.platformId ? fabPlatforms.find((p) => p.id === app.platformId) : null;
+ const isTemplate = app.status ==="Template";
+ const displayName =
+  typeof app.name ==="string"
+   ? app.name.replace(/\s*\(copy\)/gi,"").trim()
+   : app.name;
 
-  return (
-    <div className="rounded-[28px] border border-white/40 bg-white/95 shadow-[0_20px_50px_rgba(18,12,64,0.15)] flex flex-col overflow-hidden">
-      <div className={`h-1.5 w-full bg-gradient-to-r ${app.accent}`} />
-      <div className="p-6 flex flex-col gap-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center flex-wrap gap-2 text-xs uppercase tracking-wide text-gray-500">
-            <span className={app.categoryColor}>{app.category}</span>
-            <span className={`px-2 py-0.5 rounded-full ${app.statusColor || "bg-gray-100 text-gray-700"}`}>{app.status}</span>
-          </div>
-          {platform && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onPlatformClick?.(platform);
-              }}
-              className="px-2.5 py-1 rounded-full bg-[#2E2E2E]/10 text-[#2E2E2E] text-[10px] font-semibold hover:bg-[#2E2E2E]/20 transition-colors flex items-center gap-1"
-              title={`Built on ${platform.name}`}
-            >
-              <Layers className="w-3 h-3" />
-              {platform.name}
-            </button>
-          )}
-        </div>
-        <div>
-        <h3 className="text-xl font-semibold text-gray-900">{displayName}</h3>
-          <p className="text-sm text-gray-600 font-medium">{app.tagline}</p>
-        </div>
-        <p className="text-sm text-gray-600 flex-1">{app.description}</p>
-
-        <div className="flex flex-wrap gap-3 text-[11px] text-gray-600">
-          <div className="rounded-2xl border border-gray-200/80 px-3 py-1.5">
-            <p className="uppercase tracking-wide text-gray-500 font-semibold">Industry</p>
-            <p className="font-semibold text-gray-900">{app.industry}</p>
-          </div>
-          <div className="rounded-2xl border border-gray-200/80 px-3 py-1.5">
-            <p className="uppercase tracking-wide text-gray-500 font-semibold">Vertical</p>
-            <p className="font-semibold text-gray-900">{app.vertical ?? app.category}</p>
-          </div>
-          {platform && (
-            <div className="rounded-2xl border border-[#2E2E2E]/20 bg-[#2E2E2E]/5 px-3 py-1.5">
-              <p className="uppercase tracking-wide text-[#2E2E2E] font-semibold">Platform</p>
-              <p className="font-semibold text-[#2E2E2E]">{platform.name}</p>
-            </div>
-          )}
-        </div>
-
-        <div className="flex flex-wrap gap-2 text-[10px] uppercase tracking-wide text-gray-600">
-          {app.tags?.map((tag) => (
-            <span key={tag} className="px-2 py-0.5 rounded-full bg-gray-50 text-gray-600">
-              {tag}
-            </span>
-          ))}
-          {app.isCloned && (
-            <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-semibold">
-              Cloned
-            </span>
-          )}
-        </div>
-
-        <div className="flex flex-col gap-2 mt-auto">
-          <button
-            type="button"
-            onClick={() => {
-              if (readOnly) {
-                onRequestLogin?.();
-                return;
-              }
-
-              // For template cards, primary CTA is to use/clone the template
-              if (isTemplate) {
-                onCloneTemplate?.(app);
-                return;
-              }
-
-              if (app.launchKey) {
-                onLaunch?.(app.launchKey);
-              }
-            }}
-            className="inline-flex items-center justify-between rounded-lg border border-[#2E2E2E] px-4 py-2.5 text-sm font-semibold text-[#2E2E2E] bg-white hover:bg-[#F5F5F5] active:bg-[#E6E6E5] transition-all"
-          >
-            {readOnly
-              ? "Sign in to launch"
-              : isTemplate
-              ? "Use Template"
-              : app.ctaLabel || "Open"}
-            <ArrowRight className="w-4 h-4" />
-          </button>
-          {!readOnly && permissions.canCloneTemplates && !isTemplate && (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                onCloneTemplate?.(app);
-              }}
-              className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#2E2E2E] bg-white px-4 py-2 text-sm font-semibold text-[#2E2E2E] hover:bg-[#F5F5F5] active:bg-[#E6E6E5] transition-all"
-            >
-              <Copy className="w-4 h-4" />
-              Clone Template
-            </button>
-          )}
-        </div>
-      </div>
+ return (
+  <div className="rounded-[28px] border border-white/40 bg-white/95 shadow-[0_20px_50px_rgba(18,12,64,0.15)] flex flex-col overflow-hidden">
+   <div className={`h-1.5 w-full bg-gradient-to-r ${app.accent}`} />
+   <div className="p-6 flex flex-col gap-4">
+    <div className="flex items-center justify-between">
+     <div className="flex items-center flex-wrap gap-2 text-xs uppercase tracking-wide text-text03">
+      <span className={app.categoryColor}>{app.category}</span>
+      <span className={`px-2 py-0.5 rounded-full ${app.statusColor ||"bg-bg03 text-text01"}`}>{app.status}</span>
+     </div>
+     {platform && (
+      <button
+       onClick={(e) => {
+        e.stopPropagation();
+        onPlatformClick?.(platform);
+       }}
+       className="px-2.5 py-1 rounded-full bg-buttonPrimary/10 text-buttonPrimary text-[10px] font-semibold hover:bg-buttonPrimary/20 transition-colors flex items-center gap-1"
+       title={`Built on ${platform.name}`}
+      >
+       <Layers className="w-3 h-3" />
+       {platform.name}
+      </button>
+     )}
     </div>
-  );
+    <div>
+    <h3 className="text-xl font-semibold text-text01">{displayName}</h3>
+     <p className="text-sm text-text02 font-medium">{app.tagline}</p>
+    </div>
+    <p className="text-sm text-text02 flex-1">{app.description}</p>
+
+    <div className="flex flex-wrap gap-3 text-[11px] text-text02">
+     <div className="rounded-2xl border border-stroke01/80 px-3 py-1.5">
+      <p className="uppercase tracking-wide text-text03 font-semibold">Industry</p>
+      <p className="font-semibold text-text01">{app.industry}</p>
+     </div>
+     <div className="rounded-2xl border border-stroke01/80 px-3 py-1.5">
+      <p className="uppercase tracking-wide text-text03 font-semibold">Vertical</p>
+      <p className="font-semibold text-text01">{app.vertical ?? app.category}</p>
+     </div>
+     {platform && (
+      <div className="rounded-2xl border border-buttonPrimary/20 bg-buttonPrimary/5 px-3 py-1.5">
+       <p className="uppercase tracking-wide text-buttonPrimary font-semibold">Platform</p>
+       <p className="font-semibold text-buttonPrimary">{platform.name}</p>
+      </div>
+     )}
+    </div>
+
+    <div className="flex flex-wrap gap-2 text-[10px] uppercase tracking-wide text-text02">
+     {app.tags?.map((tag) => (
+      <span key={tag} className="px-2 py-0.5 rounded-full bg-bg02 text-text02">
+       {tag}
+      </span>
+     ))}
+     {app.isCloned && (
+      <span className="px-2 py-0.5 rounded-full bg-alert01 text-amber-700 font-semibold">
+       Cloned
+      </span>
+     )}
+    </div>
+
+    <div className="flex flex-col gap-2 mt-auto">
+     <button
+      type="button"
+      onClick={() => {
+       if (readOnly) {
+        onRequestLogin?.();
+        return;
+       }
+
+       // For template cards, primary CTA is to use/clone the template
+       if (isTemplate) {
+        onCloneTemplate?.(app);
+        return;
+       }
+
+       if (app.launchKey) {
+        onLaunch?.(app.launchKey);
+       }
+      }}
+      className="inline-flex items-center justify-between rounded-lg border border-buttonPrimary px-4 py-2.5 text-sm font-semibold text-buttonPrimary bg-white hover:bg-hover active:bg-select transition-all"
+     >
+      {readOnly
+       ?"Sign in to launch"
+       : isTemplate
+       ?"Use Template"
+       : app.ctaLabel ||"Open"}
+      <ArrowRight className="w-4 h-4" />
+     </button>
+     {!readOnly && permissions.canCloneTemplates && !isTemplate && (
+      <button
+       type="button"
+       onClick={(e) => {
+        e.stopPropagation();
+        onCloneTemplate?.(app);
+       }}
+       className="inline-flex items-center justify-center gap-2 rounded-lg border border-buttonPrimary bg-white px-4 py-2 text-sm font-semibold text-buttonPrimary hover:bg-hover active:bg-select transition-all"
+      >
+       <Copy className="w-4 h-4" />
+       Clone Template
+      </button>
+     )}
+    </div>
+   </div>
+  </div>
+ );
 }
 
 function FilterPill({ label, activeValue, options, onSelect }) {
-  return (
-    <div className="flex flex-wrap items-center gap-2 bg-white border border-gray-200 rounded-2xl px-3 py-2 text-xs font-semibold text-gray-700 shadow-[0_6px_18px_rgba(15,14,63,0.08)]">
-      <span className="uppercase tracking-wide text-gray-500">{label}</span>
-      {options.map((option) => (
-        <button
-          key={option}
-          onClick={() => onSelect(option)}
-          className={`px-2.5 py-1 rounded-xl transition ${
-            activeValue === option
-              ? "bg-[#2E2E2E] text-white shadow"
-              : "text-[#2E2E2E] hover:bg-[#F5F5F5]"
-          }`}
-        >
-          {option}
-        </button>
-      ))}
-    </div>
-  );
+ return (
+  <div className="flex flex-wrap items-center gap-2 bg-white border border-stroke01 rounded-2xl px-3 py-2 text-xs font-semibold text-text01 shadow-[0_6px_18px_rgba(15,14,63,0.08)]">
+   <span className="uppercase tracking-wide text-text03">{label}</span>
+   {options.map((option) => (
+    <button
+     key={option}
+     onClick={() => onSelect(option)}
+     className={`px-2.5 py-1 rounded-xl transition ${
+      activeValue === option
+       ?"bg-buttonPrimary text-white shadow"
+       :"text-buttonPrimary hover:bg-hover"
+     }`}
+    >
+     {option}
+    </button>
+   ))}
+  </div>
+ );
 }
 
 function SortSelect({ value, onChange }) {
-  return (
-    <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-2xl px-3 py-2 text-xs font-semibold text-gray-700 shadow-[0_6px_18px_rgba(15,14,63,0.08)]">
-      <span className="uppercase tracking-wide text-gray-500">Sort</span>
-      <div className="relative">
-        <select
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="appearance-none bg-transparent pr-6"
-        >
-          {sortOptions.map((option) => (
-            <option key={option.value} value={option.value} className="bg-white text-gray-900">
-              {option.label}
-            </option>
-          ))}
-        </select>
-        <ChevronDown className="w-4 h-4 absolute right-0 top-1/2 -translate-y-1/2 text-gray-400" />
-      </div>
-    </div>
-  );
+ return (
+  <div className="flex items-center gap-2 bg-white border border-stroke01 rounded-2xl px-3 py-2 text-xs font-semibold text-text01 shadow-[0_6px_18px_rgba(15,14,63,0.08)]">
+   <span className="uppercase tracking-wide text-text03">Sort</span>
+   <div className="relative">
+    <select
+     value={value}
+     onChange={(e) => onChange(e.target.value)}
+     className="appearance-none bg-transparent pr-6"
+    >
+     {sortOptions.map((option) => (
+      <option key={option.value} value={option.value} className="bg-white text-text01">
+       {option.label}
+      </option>
+     ))}
+    </select>
+    <ChevronDown className="w-4 h-4 absolute right-0 top-1/2 -translate-y-1/2 text-text03" />
+   </div>
+  </div>
+ );
 }
 
 function DemoRequestModal({ open, onClose }) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [company, setCompany] = useState("");
-  const [notes, setNotes] = useState("");
+ const [name, setName] = useState("");
+ const [email, setEmail] = useState("");
+ const [company, setCompany] = useState("");
+ const [notes, setNotes] = useState("");
 
-  if (!open) return null;
+ if (!open) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
-      <div className="max-w-lg w-full rounded-3xl bg-white shadow-[0_30px_80px_rgba(15,14,63,0.25)] border border-gray-100 p-6 space-y-5">
-        <div>
-          <p className="text-xs uppercase tracking-[0.4em] text-gray-400">TP.ai FAB</p>
-          <h3 className="text-2xl font-semibold text-gray-900 mt-1">Schedule a briefing</h3>
-          <p className="text-sm text-gray-500 mt-1">
-            Share a few details and we’ll align a live walkthrough tailored to your use case.
-          </p>
-        </div>
-        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-          <div className="grid gap-3 sm:grid-cols-2">
-            <label className="text-sm text-gray-600 space-y-1">
-              <span>Full name</span>
-              <input
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#CBB7FF]/50"
-                placeholder="Alex Morgan"
-                required
-              />
-            </label>
-            <label className="text-sm text-gray-600 space-y-1">
-              <span>Work email</span>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#CBB7FF]/50"
-                placeholder="you@company.com"
-                required
-              />
-            </label>
-          </div>
-          <label className="text-sm text-gray-600 space-y-1">
-            <span>Company / Program</span>
-            <input
-              value={company}
-              onChange={(e) => setCompany(e.target.value)}
-              className="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#CBB7FF]/50"
-              placeholder="Teleperformance Claims Ops"
-            />
-          </label>
-          <label className="text-sm text-gray-600 space-y-1">
-            <span>Focus areas</span>
-            <textarea
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              rows={4}
-              className="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#CBB7FF]/50"
-              placeholder="Example: Claims AI + compliance guardrails, demo priority queue and SOP mapping…"
-            />
-          </label>
-          <div className="flex items-center justify-between text-xs text-gray-400">
-            <span>We’ll follow up within one business day.</span>
-            <button type="button" onClick={onClose} className="text-gray-500 hover:text-gray-700">
-              Close
-            </button>
-          </div>
-          <button
-            type="submit"
-            className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-[#2E2E2E] text-white text-sm font-semibold py-3 shadow-lg hover:bg-[#4A4A4A] active:bg-[#666666] transition-all"
-          >
-            Submit request
-          </button>
-        </form>
-      </div>
+ return (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
+   <div className="max-w-lg w-full rounded-3xl bg-white shadow-[0_30px_80px_rgba(15,14,63,0.25)] border border-bg03 p-6 space-y-5">
+    <div>
+     <p className="text-xs uppercase tracking-[0.4em] text-text03">TP.ai FAB</p>
+     <h3 className="text-2xl font-semibold text-text01 mt-1">Schedule a briefing</h3>
+     <p className="text-sm text-text03 mt-1">
+      Share a few details and we’ll align a live walkthrough tailored to your use case.
+     </p>
     </div>
-  );
+    <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+     <div className="grid gap-3 sm:grid-cols-2">
+      <label className="text-sm text-text02 space-y-1">
+       <span>Full name</span>
+       <input
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        className="w-full rounded-xl border border-stroke01 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[tertiary]/50"
+        placeholder="Alex Morgan"
+        required
+       />
+      </label>
+      <label className="text-sm text-text02 space-y-1">
+       <span>Work email</span>
+       <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="w-full rounded-xl border border-stroke01 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[tertiary]/50"
+        placeholder="you@company.com"
+        required
+       />
+      </label>
+     </div>
+     <label className="text-sm text-text02 space-y-1">
+      <span>Company / Program</span>
+      <input
+       value={company}
+       onChange={(e) => setCompany(e.target.value)}
+       className="w-full rounded-xl border border-stroke01 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[tertiary]/50"
+       placeholder="Teleperformance Claims Ops"
+      />
+     </label>
+     <label className="text-sm text-text02 space-y-1">
+      <span>Focus areas</span>
+      <textarea
+       value={notes}
+       onChange={(e) => setNotes(e.target.value)}
+       rows={4}
+       className="w-full rounded-xl border border-stroke01 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[tertiary]/50"
+       placeholder="Example: Claims AI + compliance guardrails, demo priority queue and SOP mapping…"
+      />
+     </label>
+     <div className="flex items-center justify-between text-xs text-text03">
+      <span>We’ll follow up within one business day.</span>
+      <button type="button" onClick={onClose} className="text-text03 hover:text-text01">
+       Close
+      </button>
+     </div>
+     <button
+      type="submit"
+      className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-buttonPrimary text-white text-sm font-semibold py-3 shadow-lg hover:bg-buttonPrimary-hover active:bg-buttonPrimary-active transition-all"
+     >
+      Submit request
+     </button>
+    </form>
+   </div>
+  </div>
+ );
 }
 

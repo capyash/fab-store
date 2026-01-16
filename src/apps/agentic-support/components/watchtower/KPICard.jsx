@@ -12,14 +12,14 @@ const KPI_ICONS = {
 };
 
 const KPI_COLORS = {
-  self_heal: "text-green-600 bg-green-50",
-  resolution_time: "text-blue-600 bg-blue-50",
-  cost_efficiency: "text-gray-700 bg-gray-50",
+  self_heal: "text-success03 bg-success01",
+  resolution_time: "text-neutral02 bg-neutral01",
+  cost_efficiency: "text-text01 bg-bg02",
 };
 
 export default function KPICard({ type, value, subtitle, trend }) {
   const Icon = KPI_ICONS[type] || CheckCircle2;
-  const colorClass = KPI_COLORS[type] || "text-gray-700 bg-gray-50";
+  const colorClass = KPI_COLORS[type] || "text-text01 bg-bg02";
   
   // Generate mock sparkline data
   const sparklineData = Array.from({ length: 12 }, () => Math.random() * 100);
@@ -28,15 +28,15 @@ export default function KPICard({ type, value, subtitle, trend }) {
   const range = maxValue - minValue || 1;
   
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+    <div className="rounded-lg border border-stroke01 bg-white p-6 shadow-sm">
       <div className="flex items-center gap-3 mb-4">
         <div className={`p-2 rounded-lg ${colorClass}`}>
           <Icon className={`w-5 h-5 ${colorClass.split(' ')[0]}`} />
         </div>
-        <div className="text-sm text-gray-600">{subtitle}</div>
+        <div className="text-sm text-text02">{subtitle}</div>
       </div>
       
-      <div className="text-3xl font-semibold text-gray-900 mb-2">{value}</div>
+      <div className="text-3xl font-semibold text-text01 mb-2">{value}</div>
       
       {/* Mini Sparkline */}
       <div className="h-10 mt-4 flex items-end gap-0.5">
@@ -45,7 +45,7 @@ export default function KPICard({ type, value, subtitle, trend }) {
           return (
             <div
               key={idx}
-              className="flex-1 bg-gray-300 rounded-t"
+              className="flex-1 bg-stroke01 rounded-t"
               style={{ height: `${height}%` }}
             />
           );

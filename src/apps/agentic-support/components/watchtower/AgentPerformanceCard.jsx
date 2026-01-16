@@ -16,9 +16,9 @@ const AGENT_DESCRIPTIONS = {
 export default function AgentPerformanceCard({ agent, onClick }) {
   const successRate = agent.success_rate || 0;
   const getStatusColor = (rate) => {
-    if (rate >= 90) return "text-green-600 bg-green-50 border-green-200";
-    if (rate >= 70) return "text-yellow-600 bg-yellow-50 border-yellow-200";
-    return "text-red-600 bg-red-50 border-red-200";
+    if (rate >= 90) return "text-success03 bg-success01 border-success01";
+    if (rate >= 70) return "text-alert02 bg-alert01 border-alert01";
+    return "text-error03 bg-error01 border-error01";
   };
   
   const getStatusIcon = (rate) => {
@@ -33,18 +33,18 @@ export default function AgentPerformanceCard({ agent, onClick }) {
   return (
     <div
       onClick={onClick}
-      className="rounded-lg border border-gray-200 bg-white p-5 hover:border-gray-300 hover:shadow-sm transition-all cursor-pointer"
+      className="rounded-lg border border-stroke01 bg-white p-5 hover:border-stroke01 hover:shadow-sm transition-all cursor-pointer"
     >
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-[#780096]/10">
-            <Bot className="w-5 h-5 text-[#780096]" />
+          <div className="p-2 rounded-lg bg-pinkTP/10">
+            <Bot className="w-5 h-5 text-pinkTP" />
           </div>
           <div>
-            <div className="font-bold text-gray-900">
+            <div className="font-bold text-text01">
               {agent.agent_name.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase())}
             </div>
-            <div className="text-xs text-gray-500 mt-1">
+            <div className="text-xs text-text03 mt-1">
               {AGENT_DESCRIPTIONS[agent.agent_name] || "AI Agent"}
             </div>
           </div>
@@ -57,32 +57,32 @@ export default function AgentPerformanceCard({ agent, onClick }) {
       
       <div className="grid grid-cols-2 gap-3 mb-4">
         <div>
-          <div className="text-xs text-gray-500">Executions</div>
-          <div className="text-lg font-bold text-gray-900">{agent.execution_count?.toLocaleString() || 0}</div>
+          <div className="text-xs text-text03">Executions</div>
+          <div className="text-lg font-bold text-text01">{agent.execution_count?.toLocaleString() || 0}</div>
         </div>
         <div>
-          <div className="text-xs text-gray-500">Avg Latency</div>
-          <div className="text-lg font-bold text-gray-900">{agent.avg_latency_ms?.toFixed(0) || 0}ms</div>
+          <div className="text-xs text-text03">Avg Latency</div>
+          <div className="text-lg font-bold text-text01">{agent.avg_latency_ms?.toFixed(0) || 0}ms</div>
         </div>
         <div>
-          <div className="text-xs text-gray-500">Tokens</div>
-          <div className="text-sm font-semibold text-gray-700">
+          <div className="text-xs text-text03">Tokens</div>
+          <div className="text-sm font-semibold text-text01">
             {(agent.total_tokens / 1000).toFixed(1)}K
           </div>
         </div>
         <div>
-          <div className="text-xs text-gray-500">Cost</div>
-          <div className="text-sm font-semibold text-gray-700">
+          <div className="text-xs text-text03">Cost</div>
+          <div className="text-sm font-semibold text-text01">
             ${agent.total_cost_usd?.toFixed(2) || "0.00"}
           </div>
         </div>
       </div>
       
       {/* Progress Bar */}
-      <div className="w-full bg-gray-200 rounded-full h-2">
+      <div className="w-full bg-stroke01 rounded-full h-2">
         <div
           className={`h-2 rounded-full transition-all ${
-            successRate >= 90 ? "bg-green-500" : successRate >= 70 ? "bg-yellow-500" : "bg-red-500"
+            successRate >= 90 ? "bg-success010" : successRate >= 70 ? "bg-alert010" : "bg-error010"
           }`}
           style={{ width: `${successRate}%` }}
         />

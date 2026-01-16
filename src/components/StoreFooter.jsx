@@ -54,7 +54,7 @@ export default function StoreFooter({ onNavigate }) {
   ];
 
   return (
-    <footer className="relative overflow-hidden bg-gradient-to-br from-[#0B0A24] via-[#121036] to-[#1F1457] border-t border-white/10 mt-auto text-white">
+    <footer className="relative overflow-hidden bg-gradient-to-br from-[buttonPrimary] via-[buttonPrimary] to-[textLink] border-t border-white/10 mt-auto text-white">
       <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_15%_25%,rgba(147,112,255,0.35),transparent_45%),radial-gradient(circle_at_85%_15%,rgba(0,227,255,0.25),transparent_40%)]" />
       <div className="absolute inset-0 opacity-[0.12] bg-[linear-gradient(120deg,rgba(255,255,255,0.07)_1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:220px_220px]" />
       <div className="relative">
@@ -82,8 +82,8 @@ export default function StoreFooter({ onNavigate }) {
                         }}
                         className={`text-sm transition-colors flex items-center gap-2 ${
                           isClickable
-                            ? "text-[#96ABFF] hover:text-white cursor-pointer"
-                            : "text-[#96ABFF]/70 cursor-default"
+                            ? "text-[neutral01] hover:text-white cursor-pointer"
+                            : "text-[neutral01]/70 cursor-default"
                         }`}
                         disabled={!isClickable}
                       >
@@ -112,7 +112,7 @@ export default function StoreFooter({ onNavigate }) {
               <div className="relative">
                 <button
                   onClick={() => setLanguageOpen(!languageOpen)}
-                  className="flex items-center gap-2 text-sm text-[#96ABFF] hover:text-white transition-colors"
+                  className="flex items-center gap-2 text-sm text-[neutral01] hover:text-white transition-colors"
                 >
                   <Globe className="w-4 h-4" />
                   <span>English (United States)</span>
@@ -123,7 +123,7 @@ export default function StoreFooter({ onNavigate }) {
                   />
                 </button>
                 {languageOpen && (
-                  <div className="absolute bottom-full left-0 mb-2 w-48 bg-[#0F1025] border border-white/15 rounded-lg shadow-2xl py-2 z-50">
+                  <div className="absolute bottom-full left-0 mb-2 w-48 bg-[buttonPrimary] border border-white/15 rounded-lg shadow-2xl py-2 z-50">
                     {["English (United States)", "Español", "Français", "Deutsch"].map(
                       (lang) => (
                         <button
@@ -142,18 +142,18 @@ export default function StoreFooter({ onNavigate }) {
               {/* Privacy Choices */}
               <button
                 onClick={() => setPrivacyChoicesOpen(!privacyChoicesOpen)}
-                className="flex items-center gap-2 text-sm text-[#96ABFF] hover:text-white transition-colors"
+                className="flex items-center gap-2 text-sm text-[neutral01] hover:text-white transition-colors"
               >
                 <div className="relative w-4 h-4">
-                  <Check className="w-3 h-3 absolute top-0 left-0 text-green-600" />
-                  <X className="w-3 h-3 absolute bottom-0 right-0 text-red-600" />
+                  <Check className="w-3 h-3 absolute top-0 left-0 text-success03" />
+                  <X className="w-3 h-3 absolute bottom-0 right-0 text-error03" />
                 </div>
                 <span>Your Privacy Choices</span>
               </button>
             </div>
 
             {/* Right side - Legal Links */}
-            <div className="flex flex-wrap items-center gap-4 text-sm text-[#96ABFF]">
+            <div className="flex flex-wrap items-center gap-4 text-sm text-[neutral01]">
               {legalLinks.map((link) => (
                 <button key={link} className="hover:text-white transition-colors">
                   {link}
