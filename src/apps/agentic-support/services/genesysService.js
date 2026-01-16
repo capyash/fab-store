@@ -170,8 +170,22 @@ async function genesysApiRequest(endpoint, options = {}) {
         accessToken: token,
         apiEndpoint: apiBase,
       });
-      
-      const response = await fetch(`${backendProxyUrl}/api/v1/genesys/api/${apiPath}?${queryParams}`, {
+
+        let urlParts = `${backendProxyUrl}/api/v1/genesys/api/${apiPath}?${queryParams}`.split('?');
+        let finalUrl = "";
+        switch(urlParts.length){
+          case 1:
+          case 2:
+            finalUrl= urlParts.join("?")
+            break;
+          default:
+            finalUrl = urlParts[0] + "?" + urlParts.slice(1).join("&");
+        }
+
+        // console.log(urlParts);
+        // urlParts.searchParams.forEach((key, value) => console.log(key, value));
+    
+        const response = await fetch(finalUrl, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -316,6 +330,10 @@ export async function getConversations(options = {}) {
       pageSize: pageSize.toString(),
       pageNumber: pageNumber.toString(),
     });
+
+    // url = new URL(`/api/v2/conversations`);
+    // let searchParams = url.searchParams;
+    // searchParams.append(params);
 
     const response = await genesysApiRequest(`/api/v2/conversations?${params}`);
     
