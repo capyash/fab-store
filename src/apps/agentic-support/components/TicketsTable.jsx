@@ -1,6 +1,19 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { getTickets } from "../services/ticketsService";
-import { Loader2, AlertCircle, RefreshCw, Sparkles, BookOpen, ExternalLink, Cloud, FileText } from "lucide-react";
+import {
+  Loader2,
+  AlertCircle,
+  RefreshCw,
+  Sparkles,
+  BookOpen,
+  ExternalLink,
+  Cloud,
+  FileText,
+  MessageSquare,
+  Cpu,
+  Brain,
+  CheckCircle2,
+} from "lucide-react";
 
 const HEADERS = [
   { key: "id", label: "TICKET ID" },
@@ -78,7 +91,7 @@ export default function TicketsTable({ onSelect }) {
   const [sortKey, setSortKey] = useState("createdAt");
   const [sortDir, setSortDir] = useState("desc");
   const [page, setPage] = useState(1);
-  const pageSize = 5;
+  const pageSize = 10;
   const [expandedId, setExpandedId] = useState(null);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
@@ -345,40 +358,103 @@ export default function TicketsTable({ onSelect }) {
                   </tr>
                   {expandedId === ticket.id && (
                     <tr>
-                      <td colSpan={HEADERS.length + 1} className="px-4 py-4 bg-gray-50 dark:bg-gray-800/30">
-                        <div className="space-y-3">
-                          <div>
-                            <p className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Customer Issue:</p>
-                            <p className="text-sm text-gray-900 dark:text-gray-100">{ticket.interactionText || "—"}</p>
+                      <td
+                        colSpan={HEADERS.length + 1}
+                        className="px-4 py-4 bg-gray-50 dark:bg-gray-800/30"
+                      >
+                        <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 p-4 shadow-sm">
+                          {/* Header strip */}
+                          <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center gap-2">
+                              <div className="w-6 h-6 rounded-full bg-[#780096]/10 flex items-center justify-center">
+                                <Sparkles className="w-3.5 h-3.5 text-[#780096]" />
+                              </div>
+                              <span className="text-xs font-semibold text-gray-700 dark:text-gray-200 tracking-wide">
+                                AI INCIDENT SUMMARY
+                              </span>
+                            </div>
+                            <span className="text-[10px] px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 font-medium">
+                              Ticket&nbsp;{ticket.ticketId || ticket.id}
+                            </span>
                           </div>
-                          {ticket.detectedDevice && (
-                            <div>
-                              <p className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Detected Device:</p>
-                              <p className="text-sm text-gray-900 dark:text-gray-100 capitalize">{ticket.detectedDevice}</p>
+
+                          <div className="grid gap-4 md:grid-cols-2">
+                            {/* Left column: issue + device */}
+                            <div className="space-y-3">
+                              <div>
+                                <div className="flex items-center gap-2 mb-1">
+                                  <MessageSquare className="w-3.5 h-3.5 text-gray-600 dark:text-gray-300" />
+                                  <p className="text-xs font-semibold text-gray-700 dark:text-gray-300">
+                                    Customer Issue
+                                  </p>
+                                </div>
+                                <p className="text-sm text-gray-900 dark:text-gray-100 leading-snug">
+                                  {ticket.interactionText || "—"}
+                                </p>
+                              </div>
+
+                              {ticket.detectedDevice && (
+                                <div>
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <Cpu className="w-3.5 h-3.5 text-gray-600 dark:text-gray-300" />
+                                    <p className="text-xs font-semibold text-gray-700 dark:text-gray-300">
+                                      Detected Device
+                                    </p>
+                                  </div>
+                                  <p className="text-sm text-gray-900 dark:text-gray-100 capitalize">
+                                    {ticket.detectedDevice}
+                                  </p>
+                                </div>
+                              )}
                             </div>
-                          )}
-                          {ticket.diagnosis && (
-                            <div>
-                              <p className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">AI Diagnosis:</p>
-                              <p className="text-sm text-gray-900 dark:text-gray-100">{ticket.diagnosis.root_cause || ticket.diagnosis}</p>
+
+                            {/* Right column: diagnosis + actions */}
+                            <div className="space-y-3">
+                              {ticket.diagnosis && (
+                                <div>
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <Brain className="w-3.5 h-3.5 text-gray-600 dark:text-gray-300" />
+                                    <p className="text-xs font-semibold text-gray-700 dark:text-gray-300">
+                                      AI Diagnosis
+                                    </p>
+                                  </div>
+                                  <p className="text-sm text-gray-900 dark:text-gray-100 leading-snug">
+                                    {ticket.diagnosis.root_cause || ticket.diagnosis}
+                                  </p>
+                                </div>
+                              )}
+
+                              {ticket.escalationReason && (
+                                <div>
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <AlertCircle className="w-3.5 h-3.5 text-amber-600" />
+                                    <p className="text-xs font-semibold text-gray-700 dark:text-gray-300">
+                                      Escalation Reason
+                                    </p>
+                                  </div>
+                                  <p className="text-sm text-gray-900 dark:text-gray-100 leading-snug">
+                                    {ticket.escalationReason}
+                                  </p>
+                                </div>
+                              )}
+
+                              {ticket.actions && ticket.actions.length > 0 && (
+                                <div>
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                                    <p className="text-xs font-semibold text-gray-700 dark:text-gray-300">
+                                      Actions Taken
+                                    </p>
+                                  </div>
+                                  <ul className="text-sm text-gray-900 dark:text-gray-100 space-y-1 list-disc list-inside">
+                                    {ticket.actions.map((action, idx) => (
+                                      <li key={idx}>{action.name || action}</li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
                             </div>
-                          )}
-                          {ticket.escalationReason && (
-                            <div>
-                              <p className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Escalation Reason:</p>
-                              <p className="text-sm text-gray-900 dark:text-gray-100">{ticket.escalationReason}</p>
-                            </div>
-                          )}
-                          {ticket.actions && ticket.actions.length > 0 && (
-                            <div>
-                              <p className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Actions Taken:</p>
-                              <ul className="list-disc list-inside text-sm text-gray-900 dark:text-gray-100 space-y-1">
-                                {ticket.actions.map((action, idx) => (
-                                  <li key={idx}>{action.name || action}</li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
+                          </div>
                         </div>
                       </td>
                     </tr>

@@ -2,9 +2,11 @@ import SolutionLayout from "../../../components/SolutionLayout";
 
 const AGENTIC_SUPPORT_NAV_ITEMS = [
   { key: "agentic", label: "Console", iconName: "HeadsetMic" },
+  { key: "agentic/inbox", label: "Inbox", iconName: "Inbox" },
   { key: "agentic/watchtower", label: "AI Watchtower", iconName: "Activity" },
   { key: "agentic/executive", label: "Reports & Analytics", iconName: "BarChart3" },
   { key: "agentic/knowledge-base", label: "Knowledge Base", iconName: "BookOpen" },
+  { key: "agentic/responsible-ai", label: "Responsible AI", iconName: "Shield" },
   { key: "agentic/admin", label: "Admin", iconName: "Settings" },
 ];
 

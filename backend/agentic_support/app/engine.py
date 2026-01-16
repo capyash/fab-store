@@ -87,7 +87,7 @@ class WorkflowEngine:
             telemetry=req.telemetry,
             entitlement=req.entitlement,
         )
-        result = await self.intent_agent.run(ctx, tmp_state)
+        result = await self.intent_agent._run_with_metrics(ctx, tmp_state)
         intent_value = (result.diagnosis or {}).get("intent", WorkflowType.printer_offline.value)
         try:
             return WorkflowType(intent_value)
@@ -108,16 +108,16 @@ class WorkflowEngine:
             state.stage = WorkflowStage.diagnosing
             state.attempts = 1
 
-            # 1) Diagnostic
-            state = await self.diagnostic_agent.run(ctx, state)
+            # 1) Diagnostic (with metrics tracking)
+            state = await self.diagnostic_agent._run_with_metrics(ctx, state)
             await self._persist(state)
 
-            # 2) Action
-            state = await self.action_agent.run(ctx, state)
+            # 2) Action (with metrics tracking)
+            state = await self.action_agent._run_with_metrics(ctx, state)
             await self._persist(state)
 
-            # 3) Verification
-            state = await self.verification_agent.run(ctx, state)
+            # 3) Verification (with metrics tracking)
+            state = await self.verification_agent._run_with_metrics(ctx, state)
             await self._persist(state)
 
             # 4) Optional second attempt if verification failed and rules allow
@@ -134,16 +134,16 @@ class WorkflowEngine:
                             "data": {"attempt": state.attempts},
                         }
                     )
-                    # Re-run diagnostics and actions with updated attempt count
-                    state = await self.diagnostic_agent.run(ctx, state)
+                    # Re-run diagnostics and actions with updated attempt count (with metrics)
+                    state = await self.diagnostic_agent._run_with_metrics(ctx, state)
                     await self._persist(state)
-                    state = await self.action_agent.run(ctx, state)
+                    state = await self.action_agent._run_with_metrics(ctx, state)
                     await self._persist(state)
-                    state = await self.verification_agent.run(ctx, state)
+                    state = await self.verification_agent._run_with_metrics(ctx, state)
                     await self._persist(state)
 
-            # 5) Escalation / Closure
-            state = await self.escalation_agent.run(ctx, state)
+            # 5) Escalation / Closure (with metrics tracking)
+            state = await self.escalation_agent._run_with_metrics(ctx, state)
             # Generate summary & resolution text
             state = self._generate_summary(state)
             await self._persist(state)
